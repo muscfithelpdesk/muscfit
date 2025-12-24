@@ -215,7 +215,7 @@ export default function AdminOrderManagement() {
   const [expandedOrders, setExpandedOrders] = useState(new Set());
 
   const handleStatusChange = (orderId, newStatus) => {
-    setOrders(orders?.map(order => 
+    setOrders(orders?.map(order =>
       order?.id === orderId ? { ...order, orderStatus: newStatus } : order
     ));
   };
@@ -234,14 +234,14 @@ export default function AdminOrderManagement() {
 
   const filteredOrders = orders?.filter(order => {
     const matchesSearch = order?.id?.toLowerCase()?.includes(searchQuery?.toLowerCase()) ||
-                         order?.customer?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase()) ||
-                         order?.customer?.email?.toLowerCase()?.includes(searchQuery?.toLowerCase());
+      order?.customer?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase()) ||
+      order?.customer?.email?.toLowerCase()?.includes(searchQuery?.toLowerCase());
     const matchesStatus = filterStatus === 'All' || order?.orderStatus === filterStatus;
     const matchesPayment = filterPaymentMethod === 'All' || order?.paymentMethod === filterPaymentMethod;
     return matchesSearch && matchesStatus && matchesPayment;
   });
 
-  const totalRevenue = orders?.reduce((sum, order) => 
+  const totalRevenue = orders?.reduce((sum, order) =>
     order?.paymentStatus === 'Paid' ? sum + order?.totalAmount : sum, 0
   );
 
@@ -303,7 +303,7 @@ export default function AdminOrderManagement() {
   )?.sort((a, b) => b?.totalSpent - a?.totalSpent)?.slice(0, 5);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-[80px]">
       {/* Header */}
       <div className="bg-surface border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -372,7 +372,7 @@ export default function AdminOrderManagement() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                 <XAxis dataKey="date" stroke="#888" />
                 <YAxis stroke="#888" />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
                   formatter={(value) => [`₹${value?.toLocaleString('en-IN')}`, 'Revenue']}
                 />
@@ -422,7 +422,7 @@ export default function AdminOrderManagement() {
               <XAxis dataKey="method" stroke="#888" />
               <YAxis yAxisId="left" orientation="left" stroke="#888" />
               <YAxis yAxisId="right" orientation="right" stroke="#888" />
-              <Tooltip 
+              <Tooltip
                 contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
                 formatter={(value, name) => {
                   if (name === 'Revenue') return [`₹${value?.toLocaleString('en-IN')}`, name];

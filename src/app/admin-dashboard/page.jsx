@@ -9,151 +9,151 @@ import { supabase } from '@/lib/supabase';
 
 // Mock data for orders
 const mockOrders = [
-{
-  id: 'ORD-2024-001',
-  customer: { name: 'Rahul Sharma', email: 'rahul.sharma@example.com', phone: '9876543210' },
-  orderDate: '2024-12-20',
-  totalAmount: 4599,
-  paymentMethod: 'UPI',
-  paymentStatus: 'Paid',
-  orderStatus: 'Delivered',
-  items: [
-  { name: 'Performance Compression Tee', quantity: 2, price: 1299 },
-  { name: 'Elite Training Shorts', quantity: 1, price: 2001 }],
+  {
+    id: 'ORD-2024-001',
+    customer: { name: 'Rahul Sharma', email: 'rahul.sharma@example.com', phone: '9876543210' },
+    orderDate: '2024-12-20',
+    totalAmount: 4599,
+    paymentMethod: 'UPI',
+    paymentStatus: 'Paid',
+    orderStatus: 'Delivered',
+    items: [
+      { name: 'Performance Compression Tee', quantity: 2, price: 1299 },
+      { name: 'Elite Training Shorts', quantity: 1, price: 2001 }],
 
-  shippingAddress: '123 MG Road, Bangalore, Karnataka 560001'
-},
-{
-  id: 'ORD-2024-002',
-  customer: { name: 'Priya Patel', email: 'priya.patel@example.com', phone: '9123456789' },
-  orderDate: '2024-12-21',
-  totalAmount: 8999,
-  paymentMethod: 'Credit Card',
-  paymentStatus: 'Paid',
-  orderStatus: 'Shipped',
-  items: [
-  { name: 'Premium Yoga Mat', quantity: 1, price: 2499 },
-  { name: 'Resistance Bands Set', quantity: 1, price: 1500 },
-  { name: 'Protein Shaker', quantity: 3, price: 1500 }],
+    shippingAddress: '123 MG Road, Bangalore, Karnataka 560001'
+  },
+  {
+    id: 'ORD-2024-002',
+    customer: { name: 'Priya Patel', email: 'priya.patel@example.com', phone: '9123456789' },
+    orderDate: '2024-12-21',
+    totalAmount: 8999,
+    paymentMethod: 'Credit Card',
+    paymentStatus: 'Paid',
+    orderStatus: 'Shipped',
+    items: [
+      { name: 'Premium Yoga Mat', quantity: 1, price: 2499 },
+      { name: 'Resistance Bands Set', quantity: 1, price: 1500 },
+      { name: 'Protein Shaker', quantity: 3, price: 1500 }],
 
-  shippingAddress: '456 Park Street, Mumbai, Maharashtra 400001'
-},
-{
-  id: 'ORD-2024-003',
-  customer: { name: 'Amit Kumar', email: 'amit.kumar@example.com', phone: '9988776655' },
-  orderDate: '2024-12-22',
-  totalAmount: 3299,
-  paymentMethod: 'Net Banking',
-  paymentStatus: 'Paid',
-  orderStatus: 'Processing',
-  items: [
-  { name: 'Running Shoes Pro', quantity: 1, price: 3299 }],
+    shippingAddress: '456 Park Street, Mumbai, Maharashtra 400001'
+  },
+  {
+    id: 'ORD-2024-003',
+    customer: { name: 'Amit Kumar', email: 'amit.kumar@example.com', phone: '9988776655' },
+    orderDate: '2024-12-22',
+    totalAmount: 3299,
+    paymentMethod: 'Net Banking',
+    paymentStatus: 'Paid',
+    orderStatus: 'Processing',
+    items: [
+      { name: 'Running Shoes Pro', quantity: 1, price: 3299 }],
 
-  shippingAddress: '789 Connaught Place, New Delhi, Delhi 110001'
-},
-{
-  id: 'ORD-2024-004',
-  customer: { name: 'Sneha Reddy', email: 'sneha.reddy@example.com', phone: '9876512340' },
-  orderDate: '2024-12-23',
-  totalAmount: 5499,
-  paymentMethod: 'COD',
-  paymentStatus: 'Pending',
-  orderStatus: 'Pending',
-  items: [
-  { name: 'Gym Bag Premium', quantity: 1, price: 1999 },
-  { name: 'Workout Gloves', quantity: 2, price: 1750 }],
+    shippingAddress: '789 Connaught Place, New Delhi, Delhi 110001'
+  },
+  {
+    id: 'ORD-2024-004',
+    customer: { name: 'Sneha Reddy', email: 'sneha.reddy@example.com', phone: '9876512340' },
+    orderDate: '2024-12-23',
+    totalAmount: 5499,
+    paymentMethod: 'COD',
+    paymentStatus: 'Pending',
+    orderStatus: 'Pending',
+    items: [
+      { name: 'Gym Bag Premium', quantity: 1, price: 1999 },
+      { name: 'Workout Gloves', quantity: 2, price: 1750 }],
 
-  shippingAddress: '321 Jubilee Hills, Hyderabad, Telangana 500033'
-},
-{
-  id: 'ORD-2024-005',
-  customer: { name: 'Vikram Singh', email: 'vikram.singh@example.com', phone: '9123498765' },
-  orderDate: '2024-12-19',
-  totalAmount: 12999,
-  paymentMethod: 'UPI',
-  paymentStatus: 'Paid',
-  orderStatus: 'Cancelled',
-  items: [
-  { name: 'Smart Fitness Watch', quantity: 1, price: 12999 }],
+    shippingAddress: '321 Jubilee Hills, Hyderabad, Telangana 500033'
+  },
+  {
+    id: 'ORD-2024-005',
+    customer: { name: 'Vikram Singh', email: 'vikram.singh@example.com', phone: '9123498765' },
+    orderDate: '2024-12-19',
+    totalAmount: 12999,
+    paymentMethod: 'UPI',
+    paymentStatus: 'Paid',
+    orderStatus: 'Cancelled',
+    items: [
+      { name: 'Smart Fitness Watch', quantity: 1, price: 12999 }],
 
-  shippingAddress: '654 Civil Lines, Jaipur, Rajasthan 302006'
-}];
+    shippingAddress: '654 Civil Lines, Jaipur, Rajasthan 302006'
+  }];
 
 
 // Mock data for products
 const mockProducts = [
-{
-  id: 'PROD-001',
-  name: 'Performance Compression Tee',
-  category: 'Men',
-  price: 1299,
-  stock: 45,
-  status: 'Active',
-  image: "https://img.rocket.new/generatedImages/rocket_gen_img_1241de563-1766566470696.png",
-  sales: 234,
-  views: 1250,
-  description: 'High-performance compression tee for intense workouts'
-},
-{
-  id: 'PROD-002',
-  name: 'Elite Training Shorts',
-  category: 'Men',
-  price: 2001,
-  stock: 12,
-  status: 'Active',
-  image: "https://img.rocket.new/generatedImages/rocket_gen_img_141043265-1765255836176.png",
-  sales: 189,
-  views: 980,
-  description: 'Lightweight training shorts with moisture-wicking technology'
-},
-{
-  id: 'PROD-003',
-  name: 'Premium Yoga Mat',
-  category: 'Women',
-  price: 2499,
-  stock: 0,
-  status: 'Out of Stock',
-  image: "https://img.rocket.new/generatedImages/rocket_gen_img_1708cbc1d-1766130106686.png",
-  sales: 456,
-  views: 2100,
-  description: 'Non-slip premium yoga mat with extra cushioning'
-},
-{
-  id: 'PROD-004',
-  name: 'Resistance Bands Set',
-  category: 'Compression',
-  price: 1500,
-  stock: 78,
-  status: 'Active',
-  image: "https://img.rocket.new/generatedImages/rocket_gen_img_1dc2f421c-1765027288584.png",
-  sales: 312,
-  views: 1450,
-  description: 'Complete resistance bands set for home workouts'
-},
-{
-  id: 'PROD-005',
-  name: 'Smart Fitness Watch',
-  category: 'Men',
-  price: 12999,
-  stock: 5,
-  status: 'Active',
-  image: "https://img.rocket.new/generatedImages/rocket_gen_img_13cf61033-1766566469210.png",
-  sales: 67,
-  views: 890,
-  description: 'Advanced fitness tracking with heart rate monitoring'
-},
-{
-  id: 'PROD-006',
-  name: 'Running Shoes Pro',
-  category: 'Women',
-  price: 3299,
-  stock: 0,
-  status: 'Draft',
-  image: "https://img.rocket.new/generatedImages/rocket_gen_img_19d012242-1764677610915.png",
-  sales: 0,
-  views: 120,
-  description: 'Professional running shoes with cushioned support'
-}];
+  {
+    id: 'PROD-001',
+    name: 'Performance Compression Tee',
+    category: 'Men',
+    price: 1299,
+    stock: 45,
+    status: 'Active',
+    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1241de563-1766566470696.png",
+    sales: 234,
+    views: 1250,
+    description: 'High-performance compression tee for intense workouts'
+  },
+  {
+    id: 'PROD-002',
+    name: 'Elite Training Shorts',
+    category: 'Men',
+    price: 2001,
+    stock: 12,
+    status: 'Active',
+    image: "https://img.rocket.new/generatedImages/rocket_gen_img_141043265-1765255836176.png",
+    sales: 189,
+    views: 980,
+    description: 'Lightweight training shorts with moisture-wicking technology'
+  },
+  {
+    id: 'PROD-003',
+    name: 'Premium Yoga Mat',
+    category: 'Women',
+    price: 2499,
+    stock: 0,
+    status: 'Out of Stock',
+    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1708cbc1d-1766130106686.png",
+    sales: 456,
+    views: 2100,
+    description: 'Non-slip premium yoga mat with extra cushioning'
+  },
+  {
+    id: 'PROD-004',
+    name: 'Resistance Bands Set',
+    category: 'Compression',
+    price: 1500,
+    stock: 78,
+    status: 'Active',
+    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1dc2f421c-1765027288584.png",
+    sales: 312,
+    views: 1450,
+    description: 'Complete resistance bands set for home workouts'
+  },
+  {
+    id: 'PROD-005',
+    name: 'Smart Fitness Watch',
+    category: 'Men',
+    price: 12999,
+    stock: 5,
+    status: 'Active',
+    image: "https://img.rocket.new/generatedImages/rocket_gen_img_13cf61033-1766566469210.png",
+    sales: 67,
+    views: 890,
+    description: 'Advanced fitness tracking with heart rate monitoring'
+  },
+  {
+    id: 'PROD-006',
+    name: 'Running Shoes Pro',
+    category: 'Women',
+    price: 3299,
+    stock: 0,
+    status: 'Draft',
+    image: "https://img.rocket.new/generatedImages/rocket_gen_img_19d012242-1764677610915.png",
+    sales: 0,
+    views: 120,
+    description: 'Professional running shoes with cushioned support'
+  }];
 
 
 const statusColors = {
@@ -225,7 +225,7 @@ function OrderRow({ order, onStatusChange, onToggleExpand, isExpanded }) {
         </td>
       </tr>
       {isExpanded &&
-      <tr className="bg-surface/50">
+        <tr className="bg-surface/50">
           <td colSpan="8" className="px-4 py-4">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
@@ -235,14 +235,14 @@ function OrderRow({ order, onStatusChange, onToggleExpand, isExpanded }) {
                 </h4>
                 <div className="space-y-2">
                   {order?.items?.map((item, idx) =>
-                <div key={idx} className="flex justify-between items-center p-2 bg-background rounded border border-border">
+                    <div key={idx} className="flex justify-between items-center p-2 bg-background rounded border border-border">
                       <div>
                         <div className="text-sm text-foreground">{item?.name}</div>
                         <div className="text-xs text-text-secondary">Qty: {item?.quantity}</div>
                       </div>
                       <div className="font-data text-sm font-semibold text-primary">₹{item?.price?.toLocaleString('en-IN')}</div>
                     </div>
-                )}
+                  )}
                 </div>
               </div>
               <div>
@@ -290,7 +290,7 @@ function ProductCard({ product, onEdit, onDelete, onImageClick }) {
           </span>
         </div>
         {product?.stock <= 10 && product?.stock > 0 &&
-        <div className="absolute top-2 left-2 z-10 bg-yellow-500/90 text-black px-2 py-1 rounded text-xs font-semibold">
+          <div className="absolute top-2 left-2 z-10 bg-yellow-500/90 text-black px-2 py-1 rounded text-xs font-semibold">
             Low Stock
           </div>
         }
@@ -412,7 +412,7 @@ export default function AdminDashboard() {
       }
 
       const isUserAdmin = user?.user_metadata?.role === 'admin' ||
-      user?.app_metadata?.role === 'admin';
+        user?.app_metadata?.role === 'admin';
 
       setIsAdmin(isUserAdmin);
 
@@ -431,9 +431,9 @@ export default function AdminDashboard() {
     try {
       setPromoLoading(true);
       const { data, error: fetchError } = await supabase?.
-      from('promo_codes')?.
-      select('*')?.
-      order('created_at', { ascending: false });
+        from('promo_codes')?.
+        select('*')?.
+        order('created_at', { ascending: false });
 
       if (fetchError) throw fetchError;
 
@@ -454,14 +454,14 @@ export default function AdminDashboard() {
       const { data: { user } } = await supabase?.auth?.getUser();
 
       const { data, error: createError } = await supabase?.
-      from('promo_codes')?.
-      insert([{
-        ...newPromoCode,
-        created_by: user?.id,
-        status: 'active'
-      }])?.
-      select()?.
-      single();
+        from('promo_codes')?.
+        insert([{
+          ...newPromoCode,
+          created_by: user?.id,
+          status: 'active'
+        }])?.
+        select()?.
+        single();
 
       if (createError) throw createError;
 
@@ -485,14 +485,14 @@ export default function AdminDashboard() {
   const updatePromoCodeStatus = async (id, newStatus) => {
     try {
       const { error: updateError } = await supabase?.
-      from('promo_codes')?.
-      update({ status: newStatus })?.
-      eq('id', id);
+        from('promo_codes')?.
+        update({ status: newStatus })?.
+        eq('id', id);
 
       if (updateError) throw updateError;
 
       setPromoCodes(promoCodes?.map((code) =>
-      code?.id === id ? { ...code, status: newStatus } : code
+        code?.id === id ? { ...code, status: newStatus } : code
       ));
       setPromoError(null);
     } catch (err) {
@@ -505,9 +505,9 @@ export default function AdminDashboard() {
 
     try {
       const { error: deleteError } = await supabase?.
-      from('promo_codes')?.
-      delete()?.
-      eq('id', id);
+        from('promo_codes')?.
+        delete()?.
+        eq('id', id);
 
       if (deleteError) throw deleteError;
 
@@ -538,7 +538,7 @@ export default function AdminDashboard() {
   // Order handlers
   const handleStatusChange = (orderId, newStatus) => {
     setOrders(orders?.map((order) =>
-    order?.id === orderId ? { ...order, orderStatus: newStatus } : order
+      order?.id === orderId ? { ...order, orderStatus: newStatus } : order
     ));
   };
 
@@ -568,7 +568,7 @@ export default function AdminDashboard() {
   const handleUpdateProduct = () => {
     if (selectedProduct) {
       setProducts(products?.map((p) =>
-      p?.id === selectedProduct?.id ? selectedProduct : p
+        p?.id === selectedProduct?.id ? selectedProduct : p
       ));
       setShowEditModal(false);
       setSelectedProduct(null);
@@ -597,8 +597,8 @@ export default function AdminDashboard() {
   // Filtering
   const filteredOrders = orders?.filter((order) => {
     const matchesSearch = order?.id?.toLowerCase()?.includes(orderSearchQuery?.toLowerCase()) ||
-    order?.customer?.name?.toLowerCase()?.includes(orderSearchQuery?.toLowerCase()) ||
-    order?.customer?.email?.toLowerCase()?.includes(orderSearchQuery?.toLowerCase());
+      order?.customer?.name?.toLowerCase()?.includes(orderSearchQuery?.toLowerCase()) ||
+      order?.customer?.email?.toLowerCase()?.includes(orderSearchQuery?.toLowerCase());
     const matchesStatus = filterStatus === 'All' || order?.orderStatus === filterStatus;
     const matchesPayment = filterPaymentMethod === 'All' || order?.paymentMethod === filterPaymentMethod;
     return matchesSearch && matchesStatus && matchesPayment;
@@ -606,7 +606,7 @@ export default function AdminDashboard() {
 
   const filteredProducts = products?.filter((product) => {
     const matchesSearch = product?.name?.toLowerCase()?.includes(productSearchQuery?.toLowerCase()) ||
-    product?.id?.toLowerCase()?.includes(productSearchQuery?.toLowerCase());
+      product?.id?.toLowerCase()?.includes(productSearchQuery?.toLowerCase());
     const matchesCategory = filterCategory === 'All' || product?.category === filterCategory;
     const matchesStatus = filterProductStatus === 'All' || product?.status === filterProductStatus;
     return matchesSearch && matchesCategory && matchesStatus;
@@ -614,7 +614,7 @@ export default function AdminDashboard() {
 
   // Analytics calculations
   const totalRevenue = orders?.reduce((sum, order) =>
-  order?.paymentStatus === 'Paid' ? sum + order?.totalAmount : sum, 0
+    order?.paymentStatus === 'Paid' ? sum + order?.totalAmount : sum, 0
   );
 
   const paymentMethodStats = orders?.reduce((acc, order) => {
@@ -648,7 +648,7 @@ export default function AdminDashboard() {
     method,
     count,
     revenue: orders?.filter((o) => o?.paymentMethod === method && o?.paymentStatus === 'Paid')?.
-    reduce((sum, o) => sum + o?.totalAmount, 0)
+      reduce((sum, o) => sum + o?.totalAmount, 0)
   }));
 
   const topCustomers = Object.values(
@@ -688,17 +688,17 @@ export default function AdminDashboard() {
   )?.map(([category, stats]) => ({ category, ...stats }));
 
   const topProducts = [...products]?.
-  sort((a, b) => b?.sales * b?.price - a?.sales * a?.price)?.
-  slice(0, 5);
+    sort((a, b) => b?.sales * b?.price - a?.sales * a?.price)?.
+    slice(0, 5);
 
   const tabs = [
-  { id: 'orders', label: 'Order Management', icon: 'ClipboardDocumentListIcon' },
-  { id: 'products', label: 'Product Inventory', icon: 'CubeIcon' },
-  { id: 'promos', label: 'Promo Codes', icon: 'TicketIcon' }];
+    { id: 'orders', label: 'Order Management', icon: 'ClipboardDocumentListIcon' },
+    { id: 'products', label: 'Product Inventory', icon: 'CubeIcon' },
+    { id: 'promos', label: 'Promo Codes', icon: 'TicketIcon' }];
 
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-[80px]">
       {/* Header */}
       <div className="bg-surface border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -715,13 +715,12 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex gap-1">
             {tabs?.map((tab) =>
-            <button
-              key={tab?.id}
-              onClick={() => setActiveTab(tab?.id)}
-              className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all ${
-              activeTab === tab?.id ?
-              'text-primary border-b-2 border-primary' : 'text-text-secondary hover:text-foreground'}`
-              }>
+              <button
+                key={tab?.id}
+                onClick={() => setActiveTab(tab?.id)}
+                className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all ${activeTab === tab?.id ?
+                    'text-primary border-b-2 border-primary' : 'text-text-secondary hover:text-foreground'}`
+                }>
                 <Icon name={tab?.icon} size={20} />
                 {tab?.label}
               </button>
@@ -733,7 +732,7 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Orders Tab */}
         {activeTab === 'orders' &&
-        <>
+          <>
             {/* Revenue Analytics */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-surface border border-border rounded-lg p-6">
@@ -791,8 +790,8 @@ export default function AdminDashboard() {
                     <XAxis dataKey="date" stroke="#888" />
                     <YAxis stroke="#888" />
                     <Tooltip
-                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
-                    formatter={(value) => [`₹${value?.toLocaleString('en-IN')}`, 'Revenue']} />
+                      contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
+                      formatter={(value) => [`₹${value?.toLocaleString('en-IN')}`, 'Revenue']} />
 
                     <Legend />
                     <Line type="monotone" dataKey="revenue" stroke="#8b5cf6" strokeWidth={2} name="Daily Revenue" />
@@ -808,18 +807,18 @@ export default function AdminDashboard() {
                 <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie
-                    data={statusDistribution}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name} ${(percent * 100)?.toFixed(0)}%`}
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value">
+                      data={statusDistribution}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, percent }) => `${name} ${(percent * 100)?.toFixed(0)}%`}
+                      outerRadius={100}
+                      fill="#8884d8"
+                      dataKey="value">
 
                       {statusDistribution?.map((entry, index) =>
-                    <Cell key={`cell-${index}`} fill={COLORS?.[index % COLORS?.length]} />
-                    )}
+                        <Cell key={`cell-${index}`} fill={COLORS?.[index % COLORS?.length]} />
+                      )}
                     </Pie>
                     <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }} />
                   </PieChart>
@@ -840,11 +839,11 @@ export default function AdminDashboard() {
                   <YAxis yAxisId="left" orientation="left" stroke="#888" />
                   <YAxis yAxisId="right" orientation="right" stroke="#888" />
                   <Tooltip
-                  contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
-                  formatter={(value, name) => {
-                    if (name === 'Revenue') return [`₹${value?.toLocaleString('en-IN')}`, name];
-                    return [value, name];
-                  }} />
+                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
+                    formatter={(value, name) => {
+                      if (name === 'Revenue') return [`₹${value?.toLocaleString('en-IN')}`, name];
+                      return [value, name];
+                    }} />
 
                   <Legend />
                   <Bar yAxisId="left" dataKey="count" fill="#8b5cf6" name="Order Count" />
@@ -871,7 +870,7 @@ export default function AdminDashboard() {
                   </thead>
                   <tbody>
                     {topCustomers?.map((customer, index) =>
-                  <tr key={customer?.email} className="border-b border-border hover:bg-muted/30">
+                      <tr key={customer?.email} className="border-b border-border hover:bg-muted/30">
                         <td className="px-4 py-3">
                           <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary font-bold">
                             {index + 1}
@@ -888,7 +887,7 @@ export default function AdminDashboard() {
                           </span>
                         </td>
                       </tr>
-                  )}
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -901,11 +900,11 @@ export default function AdminDashboard() {
                   <label className="block text-sm font-medium text-foreground mb-2">Search Orders</label>
                   <div className="relative">
                     <input
-                    type="text"
-                    value={orderSearchQuery}
-                    onChange={(e) => setOrderSearchQuery(e?.target?.value)}
-                    placeholder="Order ID, Customer name, Email..."
-                    className="w-full h-10 pl-10 pr-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all" />
+                      type="text"
+                      value={orderSearchQuery}
+                      onChange={(e) => setOrderSearchQuery(e?.target?.value)}
+                      placeholder="Order ID, Customer name, Email..."
+                      className="w-full h-10 pl-10 pr-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all" />
 
                     <Icon name="MagnifyingGlassIcon" size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
                   </div>
@@ -913,9 +912,9 @@ export default function AdminDashboard() {
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Order Status</label>
                   <select
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e?.target?.value)}
-                  className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all">
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e?.target?.value)}
+                    className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all">
                     <option value="All">All Status</option>
                     <option value="Pending">Pending</option>
                     <option value="Processing">Processing</option>
@@ -927,9 +926,9 @@ export default function AdminDashboard() {
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Payment Method</label>
                   <select
-                  value={filterPaymentMethod}
-                  onChange={(e) => setFilterPaymentMethod(e?.target?.value)}
-                  className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all">
+                    value={filterPaymentMethod}
+                    onChange={(e) => setFilterPaymentMethod(e?.target?.value)}
+                    className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all">
                     <option value="All">All Methods</option>
                     <option value="Credit Card">Credit Card</option>
                     <option value="UPI">UPI</option>
@@ -958,30 +957,30 @@ export default function AdminDashboard() {
                   </thead>
                   <tbody>
                     {filteredOrders?.map((order) =>
-                  <OrderRow
-                    key={order?.id}
-                    order={order}
-                    onStatusChange={handleStatusChange}
-                    onToggleExpand={toggleExpand}
-                    isExpanded={expandedOrders?.has(order?.id)} />
+                      <OrderRow
+                        key={order?.id}
+                        order={order}
+                        onStatusChange={handleStatusChange}
+                        onToggleExpand={toggleExpand}
+                        isExpanded={expandedOrders?.has(order?.id)} />
 
-                  )}
+                    )}
                   </tbody>
                 </table>
               </div>
               {filteredOrders?.length === 0 &&
-            <div className="text-center py-12">
+                <div className="text-center py-12">
                   <Icon name="InboxIcon" size={48} className="mx-auto text-text-secondary mb-4" />
                   <p className="text-text-secondary">No orders found matching your filters</p>
                 </div>
-            }
+              }
             </div>
           </>
         }
 
         {/* Products Tab */}
         {activeTab === 'products' &&
-        <>
+          <>
             {/* Product Stats */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-surface border border-border rounded-lg p-6">
@@ -1035,11 +1034,11 @@ export default function AdminDashboard() {
                     <XAxis dataKey="category" stroke="#888" />
                     <YAxis stroke="#888" />
                     <Tooltip
-                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
-                    formatter={(value, name) => {
-                      if (name === 'Revenue') return [`₹${value?.toLocaleString('en-IN')}`, name];
-                      return [value, name];
-                    }} />
+                      contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
+                      formatter={(value, name) => {
+                        if (name === 'Revenue') return [`₹${value?.toLocaleString('en-IN')}`, name];
+                        return [value, name];
+                      }} />
 
                     <Legend />
                     <Bar dataKey="sales" fill="#8b5cf6" name="Sales" />
@@ -1059,8 +1058,8 @@ export default function AdminDashboard() {
                     <XAxis dataKey="category" stroke="#888" />
                     <YAxis stroke="#888" />
                     <Tooltip
-                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
-                    formatter={(value) => [`₹${value?.toLocaleString('en-IN')}`, 'Revenue']} />
+                      contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
+                      formatter={(value) => [`₹${value?.toLocaleString('en-IN')}`, 'Revenue']} />
 
                     <Legend />
                     <Bar dataKey="revenue" fill="#f59e0b" name="Revenue" />
@@ -1089,9 +1088,9 @@ export default function AdminDashboard() {
                   </thead>
                   <tbody>
                     {topProducts?.map((product, index) => {
-                    const revenue = product?.sales * product?.price;
-                    return (
-                      <tr key={product?.id} className="border-b border-border hover:bg-muted/30">
+                      const revenue = product?.sales * product?.price;
+                      return (
+                        <tr key={product?.id} className="border-b border-border hover:bg-muted/30">
                           <td className="px-4 py-3">
                             <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary font-bold">
                               {index + 1}
@@ -1111,7 +1110,7 @@ export default function AdminDashboard() {
                           </td>
                         </tr>);
 
-                  })}
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -1122,8 +1121,8 @@ export default function AdminDashboard() {
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-heading text-lg font-semibold text-foreground">Product Inventory</h3>
                 <button
-                onClick={() => setShowAddProductForm(!showAddProductForm)}
-                className="px-6 py-3 bg-primary text-primary-foreground rounded-md font-semibold hover:bg-primary/90 transition-all flex items-center gap-2">
+                  onClick={() => setShowAddProductForm(!showAddProductForm)}
+                  className="px-6 py-3 bg-primary text-primary-foreground rounded-md font-semibold hover:bg-primary/90 transition-all flex items-center gap-2">
                   <Icon name="PlusIcon" size={20} />
                   Add Product
                 </button>
@@ -1133,11 +1132,11 @@ export default function AdminDashboard() {
                   <label className="block text-sm font-medium text-foreground mb-2">Search Products</label>
                   <div className="relative">
                     <input
-                    type="text"
-                    value={productSearchQuery}
-                    onChange={(e) => setProductSearchQuery(e?.target?.value)}
-                    placeholder="Product name or ID..."
-                    className="w-full h-10 pl-10 pr-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all" />
+                      type="text"
+                      value={productSearchQuery}
+                      onChange={(e) => setProductSearchQuery(e?.target?.value)}
+                      placeholder="Product name or ID..."
+                      className="w-full h-10 pl-10 pr-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all" />
 
                     <Icon name="MagnifyingGlassIcon" size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
                   </div>
@@ -1145,9 +1144,9 @@ export default function AdminDashboard() {
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Category</label>
                   <select
-                  value={filterCategory}
-                  onChange={(e) => setFilterCategory(e?.target?.value)}
-                  className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all">
+                    value={filterCategory}
+                    onChange={(e) => setFilterCategory(e?.target?.value)}
+                    className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all">
                     <option value="All">All Categories</option>
                     <option value="Men">Men</option>
                     <option value="Women">Women</option>
@@ -1157,9 +1156,9 @@ export default function AdminDashboard() {
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Status</label>
                   <select
-                  value={filterProductStatus}
-                  onChange={(e) => setFilterProductStatus(e?.target?.value)}
-                  className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all">
+                    value={filterProductStatus}
+                    onChange={(e) => setFilterProductStatus(e?.target?.value)}
+                    className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all">
                     <option value="All">All Status</option>
                     <option value="Active">Active</option>
                     <option value="Draft">Draft</option>
@@ -1171,26 +1170,26 @@ export default function AdminDashboard() {
 
             {/* Add Product Form */}
             {showAddProductForm &&
-          <div className="bg-surface border border-border rounded-lg p-6 mb-8">
+              <div className="bg-surface border border-border rounded-lg p-6 mb-8">
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-4">Add New Product</h3>
                 <form onSubmit={handleAddProduct} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Product Name</label>
                     <input
-                  type="text"
-                  value={newProduct?.name}
-                  onChange={(e) => setNewProduct({ ...newProduct, name: e?.target?.value })}
-                  required
-                  className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="Enter product name" />
+                      type="text"
+                      value={newProduct?.name}
+                      onChange={(e) => setNewProduct({ ...newProduct, name: e?.target?.value })}
+                      required
+                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      placeholder="Enter product name" />
 
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Category</label>
                     <select
-                  value={newProduct?.category}
-                  onChange={(e) => setNewProduct({ ...newProduct, category: e?.target?.value })}
-                  className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                      value={newProduct?.category}
+                      onChange={(e) => setNewProduct({ ...newProduct, category: e?.target?.value })}
+                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                       <option value="Men">Men</option>
                       <option value="Women">Women</option>
                       <option value="Compression">Compression</option>
@@ -1199,33 +1198,33 @@ export default function AdminDashboard() {
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Price (₹)</label>
                     <input
-                  type="number"
-                  value={newProduct?.price}
-                  onChange={(e) => setNewProduct({ ...newProduct, price: Number(e?.target?.value) })}
-                  required
-                  min="0"
-                  className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="0" />
+                      type="number"
+                      value={newProduct?.price}
+                      onChange={(e) => setNewProduct({ ...newProduct, price: Number(e?.target?.value) })}
+                      required
+                      min="0"
+                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      placeholder="0" />
 
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Stock Quantity</label>
                     <input
-                  type="number"
-                  value={newProduct?.stock}
-                  onChange={(e) => setNewProduct({ ...newProduct, stock: Number(e?.target?.value) })}
-                  required
-                  min="0"
-                  className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="0" />
+                      type="number"
+                      value={newProduct?.stock}
+                      onChange={(e) => setNewProduct({ ...newProduct, stock: Number(e?.target?.value) })}
+                      required
+                      min="0"
+                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      placeholder="0" />
 
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Status</label>
                     <select
-                  value={newProduct?.status}
-                  onChange={(e) => setNewProduct({ ...newProduct, status: e?.target?.value })}
-                  className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                      value={newProduct?.status}
+                      onChange={(e) => setNewProduct({ ...newProduct, status: e?.target?.value })}
+                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                       <option value="Draft">Draft</option>
                       <option value="Active">Active</option>
                     </select>
@@ -1233,87 +1232,87 @@ export default function AdminDashboard() {
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Image URL</label>
                     <input
-                  type="url"
-                  value={newProduct?.image}
-                  onChange={(e) => setNewProduct({ ...newProduct, image: e?.target?.value })}
-                  className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="https://example.com/image.jpg" />
+                      type="url"
+                      value={newProduct?.image}
+                      onChange={(e) => setNewProduct({ ...newProduct, image: e?.target?.value })}
+                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      placeholder="https://example.com/image.jpg" />
 
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-foreground mb-2">Description</label>
                     <textarea
-                  value={newProduct?.description}
-                  onChange={(e) => setNewProduct({ ...newProduct, description: e?.target?.value })}
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  rows={3}
-                  placeholder="Product description" />
+                      value={newProduct?.description}
+                      onChange={(e) => setNewProduct({ ...newProduct, description: e?.target?.value })}
+                      className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      rows={3}
+                      placeholder="Product description" />
 
                   </div>
                   <div className="flex items-end gap-2 md:col-span-2">
                     <button
-                  type="submit"
-                  className="flex-1 h-10 bg-primary text-primary-foreground rounded-md font-semibold hover:bg-primary/90 transition-colors">
+                      type="submit"
+                      className="flex-1 h-10 bg-primary text-primary-foreground rounded-md font-semibold hover:bg-primary/90 transition-colors">
                       Save Product
                     </button>
                     <button
-                  type="button"
-                  onClick={() => setShowAddProductForm(false)}
-                  className="flex-1 h-10 bg-muted text-foreground rounded-md font-semibold hover:bg-muted/80 transition-colors">
+                      type="button"
+                      onClick={() => setShowAddProductForm(false)}
+                      className="flex-1 h-10 bg-muted text-foreground rounded-md font-semibold hover:bg-muted/80 transition-colors">
                       Cancel
                     </button>
                   </div>
                 </form>
               </div>
-          }
+            }
 
             {/* Products Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts?.map((product) =>
-            <ProductCard
-              key={product?.id}
-              product={product}
-              onEdit={handleEditProduct}
-              onDelete={handleDeleteProduct}
-              onImageClick={handleImageClick} />
+                <ProductCard
+                  key={product?.id}
+                  product={product}
+                  onEdit={handleEditProduct}
+                  onDelete={handleDeleteProduct}
+                  onImageClick={handleImageClick} />
 
-            )}
+              )}
             </div>
 
             {filteredProducts?.length === 0 &&
-          <div className="text-center py-12 bg-surface border border-border rounded-lg">
+              <div className="text-center py-12 bg-surface border border-border rounded-lg">
                 <Icon name="InboxIcon" size={48} className="mx-auto text-text-secondary mb-4" />
                 <p className="text-text-secondary">No products found matching your filters</p>
               </div>
-          }
+            }
           </>
         }
 
         {/* Promo Codes Tab */}
         {activeTab === 'promos' &&
-        <>
+          <>
             <div className="flex justify-between items-center mb-8">
               <div>
                 <h2 className="font-heading text-2xl font-bold text-foreground mb-2">Promo Code Management</h2>
                 <p className="text-text-secondary">Create and manage promotional discount codes</p>
               </div>
               <button
-              onClick={() => setShowCreatePromoModal(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold">
+                onClick={() => setShowCreatePromoModal(true)}
+                className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold">
                 <Icon name="PlusIcon" size={20} />
                 Create Promo Code
               </button>
             </div>
 
             {promoError &&
-          <div className="bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded mb-6">
+              <div className="bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded mb-6">
                 {promoError}
               </div>
-          }
+            }
 
             <div className="grid gap-4">
               {promoCodes?.map((code) =>
-            <div key={code?.id} className="bg-surface border border-border rounded-lg p-6">
+                <div key={code?.id} className="bg-surface border border-border rounded-lg p-6">
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
@@ -1343,8 +1342,8 @@ export default function AdminDashboard() {
                           <div className="flex items-center gap-2">
                             <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
                               <div
-                            className="bg-primary h-full transition-all duration-300"
-                            style={{ width: `${getUsagePercentage(code?.current_uses, code?.max_uses)}%` }} />
+                                className="bg-primary h-full transition-all duration-300"
+                                style={{ width: `${getUsagePercentage(code?.current_uses, code?.max_uses)}%` }} />
 
                             </div>
                             <span className="text-foreground font-data whitespace-nowrap">
@@ -1356,66 +1355,66 @@ export default function AdminDashboard() {
                     </div>
                     <div className="flex gap-2 ml-4">
                       {code?.status === 'active' &&
-                  <button
-                    onClick={() => updatePromoCodeStatus(code?.id, 'disabled')}
-                    className="p-2 text-yellow-400 hover:bg-yellow-400/10 rounded transition-colors"
-                    title="Disable">
+                        <button
+                          onClick={() => updatePromoCodeStatus(code?.id, 'disabled')}
+                          className="p-2 text-yellow-400 hover:bg-yellow-400/10 rounded transition-colors"
+                          title="Disable">
                           <Icon name="PauseIcon" size={20} />
                         </button>
-                  }
+                      }
                       {code?.status === 'disabled' &&
-                  <button
-                    onClick={() => updatePromoCodeStatus(code?.id, 'active')}
-                    className="p-2 text-green-400 hover:bg-green-400/10 rounded transition-colors"
-                    title="Enable">
+                        <button
+                          onClick={() => updatePromoCodeStatus(code?.id, 'active')}
+                          className="p-2 text-green-400 hover:bg-green-400/10 rounded transition-colors"
+                          title="Enable">
                           <Icon name="PlayIcon" size={20} />
                         </button>
-                  }
+                      }
                       <button
-                    onClick={() => deletePromoCode(code?.id)}
-                    className="p-2 text-red-400 hover:bg-red-400/10 rounded transition-colors"
-                    title="Delete">
+                        onClick={() => deletePromoCode(code?.id)}
+                        className="p-2 text-red-400 hover:bg-red-400/10 rounded transition-colors"
+                        title="Delete">
                         <Icon name="TrashIcon" size={20} />
                       </button>
                     </div>
                   </div>
                 </div>
-            )}
+              )}
             </div>
 
             {promoCodes?.length === 0 && !promoLoading &&
-          <div className="text-center py-12 bg-surface border border-border rounded-lg">
+              <div className="text-center py-12 bg-surface border border-border rounded-lg">
                 <Icon name="TicketIcon" size={64} className="text-text-secondary mx-auto mb-4" />
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-2">No Promo Codes Yet</h3>
                 <p className="text-text-secondary mb-4">Create your first promo code to get started</p>
                 <button
-              onClick={() => setShowCreatePromoModal(true)}
-              className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold">
+                  onClick={() => setShowCreatePromoModal(true)}
+                  className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold">
                   Create Promo Code
                 </button>
               </div>
-          }
+            }
           </>
         }
       </div>
 
       {/* Image Preview Modal */}
       {showImageModal && selectedProduct &&
-      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={() => setShowImageModal(false)}>
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={() => setShowImageModal(false)}>
           <div className="bg-surface border border-border rounded-lg max-w-4xl w-full p-6" onClick={(e) => e?.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
               <h2 className="font-heading text-2xl font-bold text-foreground">{selectedProduct?.name}</h2>
               <button
-              onClick={() => setShowImageModal(false)}
-              className="p-1 hover:bg-muted rounded transition-colors">
+                onClick={() => setShowImageModal(false)}
+                className="p-1 hover:bg-muted rounded transition-colors">
                 <Icon name="XMarkIcon" size={24} />
               </button>
             </div>
             <div className="aspect-video bg-muted rounded-lg overflow-hidden mb-4">
               <AppImage
-              src={selectedProduct?.image}
-              alt={selectedProduct?.name}
-              className="w-full h-full object-contain" />
+                src={selectedProduct?.image}
+                alt={selectedProduct?.name}
+                className="w-full h-full object-contain" />
 
             </div>
             <div className="grid grid-cols-2 gap-4 text-sm">
@@ -1437,43 +1436,43 @@ export default function AdminDashboard() {
               </div>
             </div>
             {selectedProduct?.description &&
-          <div className="mt-4">
+              <div className="mt-4">
                 <p className="text-text-secondary text-sm mb-1">Description</p>
                 <p className="text-foreground">{selectedProduct?.description}</p>
               </div>
-          }
+            }
           </div>
         </div>
       }
 
       {/* Edit Product Modal */}
       {showEditModal && selectedProduct &&
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-surface border border-border rounded-lg max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
               <h2 className="font-heading text-2xl font-bold text-foreground">Edit Product</h2>
               <button
-              onClick={() => {
-                setShowEditModal(false);
-                setSelectedProduct(null);
-              }}
-              className="p-1 hover:bg-muted rounded transition-colors">
+                onClick={() => {
+                  setShowEditModal(false);
+                  setSelectedProduct(null);
+                }}
+                className="p-1 hover:bg-muted rounded transition-colors">
                 <Icon name="XMarkIcon" size={24} />
               </button>
             </div>
 
             <form onSubmit={(e) => {
-            e?.preventDefault();
-            handleUpdateProduct();
-          }} className="space-y-4">
+              e?.preventDefault();
+              handleUpdateProduct();
+            }} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">Product Name</label>
                 <input
-                type="text"
-                value={selectedProduct?.name}
-                onChange={(e) => setSelectedProduct({ ...selectedProduct, name: e?.target?.value })}
-                className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                required />
+                  type="text"
+                  value={selectedProduct?.name}
+                  onChange={(e) => setSelectedProduct({ ...selectedProduct, name: e?.target?.value })}
+                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required />
 
               </div>
 
@@ -1481,9 +1480,9 @@ export default function AdminDashboard() {
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Category</label>
                   <select
-                  value={selectedProduct?.category}
-                  onChange={(e) => setSelectedProduct({ ...selectedProduct, category: e?.target?.value })}
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                    value={selectedProduct?.category}
+                    onChange={(e) => setSelectedProduct({ ...selectedProduct, category: e?.target?.value })}
+                    className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     <option value="Men">Men</option>
                     <option value="Women">Women</option>
                     <option value="Compression">Compression</option>
@@ -1492,9 +1491,9 @@ export default function AdminDashboard() {
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Status</label>
                   <select
-                  value={selectedProduct?.status}
-                  onChange={(e) => setSelectedProduct({ ...selectedProduct, status: e?.target?.value })}
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                    value={selectedProduct?.status}
+                    onChange={(e) => setSelectedProduct({ ...selectedProduct, status: e?.target?.value })}
+                    className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     <option value="Active">Active</option>
                     <option value="Draft">Draft</option>
                     <option value="Out of Stock">Out of Stock</option>
@@ -1506,23 +1505,23 @@ export default function AdminDashboard() {
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Price (₹)</label>
                   <input
-                  type="number"
-                  value={selectedProduct?.price}
-                  onChange={(e) => setSelectedProduct({ ...selectedProduct, price: Number(e?.target?.value) })}
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  min="0"
-                  required />
+                    type="number"
+                    value={selectedProduct?.price}
+                    onChange={(e) => setSelectedProduct({ ...selectedProduct, price: Number(e?.target?.value) })}
+                    className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    min="0"
+                    required />
 
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Stock</label>
                   <input
-                  type="number"
-                  value={selectedProduct?.stock}
-                  onChange={(e) => setSelectedProduct({ ...selectedProduct, stock: Number(e?.target?.value) })}
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  min="0"
-                  required />
+                    type="number"
+                    value={selectedProduct?.stock}
+                    onChange={(e) => setSelectedProduct({ ...selectedProduct, stock: Number(e?.target?.value) })}
+                    className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    min="0"
+                    required />
 
                 </div>
               </div>
@@ -1530,49 +1529,49 @@ export default function AdminDashboard() {
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">Image URL</label>
                 <input
-                type="url"
-                value={selectedProduct?.image}
-                onChange={(e) => setSelectedProduct({ ...selectedProduct, image: e?.target?.value })}
-                className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary" />
+                  type="url"
+                  value={selectedProduct?.image}
+                  onChange={(e) => setSelectedProduct({ ...selectedProduct, image: e?.target?.value })}
+                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary" />
 
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">Description</label>
                 <textarea
-                value={selectedProduct?.description}
-                onChange={(e) => setSelectedProduct({ ...selectedProduct, description: e?.target?.value })}
-                className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                rows={3} />
+                  value={selectedProduct?.description}
+                  onChange={(e) => setSelectedProduct({ ...selectedProduct, description: e?.target?.value })}
+                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  rows={3} />
 
               </div>
 
               {selectedProduct?.image &&
-            <div>
+                <div>
                   <p className="text-sm font-medium text-foreground mb-2">Preview</p>
                   <div className="aspect-video bg-muted rounded-lg overflow-hidden">
                     <AppImage
-                  src={selectedProduct?.image}
-                  alt={selectedProduct?.name}
-                  className="w-full h-full object-contain" />
+                      src={selectedProduct?.image}
+                      alt={selectedProduct?.name}
+                      className="w-full h-full object-contain" />
 
                   </div>
                 </div>
-            }
+              }
 
               <div className="flex gap-3 pt-4">
                 <button
-                type="button"
-                onClick={() => {
-                  setShowEditModal(false);
-                  setSelectedProduct(null);
-                }}
-                className="flex-1 px-4 py-2 bg-muted text-foreground rounded-md hover:bg-muted/80 transition-colors font-semibold">
+                  type="button"
+                  onClick={() => {
+                    setShowEditModal(false);
+                    setSelectedProduct(null);
+                  }}
+                  className="flex-1 px-4 py-2 bg-muted text-foreground rounded-md hover:bg-muted/80 transition-colors font-semibold">
                   Cancel
                 </button>
                 <button
-                type="submit"
-                className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold">
+                  type="submit"
+                  className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold">
                   Save Changes
                 </button>
               </div>
@@ -1583,13 +1582,13 @@ export default function AdminDashboard() {
 
       {/* Create Promo Code Modal */}
       {showCreatePromoModal &&
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-surface border border-border rounded-lg max-w-md w-full p-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="font-heading text-xl font-bold text-foreground">Create Promo Code</h2>
               <button
-              onClick={() => setShowCreatePromoModal(false)}
-              className="p-1 hover:bg-muted rounded transition-colors">
+                onClick={() => setShowCreatePromoModal(false)}
+                className="p-1 hover:bg-muted rounded transition-colors">
                 <Icon name="XMarkIcon" size={24} />
               </button>
             </div>
@@ -1598,73 +1597,73 @@ export default function AdminDashboard() {
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">Code</label>
                 <input
-                type="text"
-                value={newPromoCode?.code}
-                onChange={(e) => setNewPromoCode({ ...newPromoCode, code: e?.target?.value?.toUpperCase() })}
-                className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="SUMMER2024"
-                required />
+                  type="text"
+                  value={newPromoCode?.code}
+                  onChange={(e) => setNewPromoCode({ ...newPromoCode, code: e?.target?.value?.toUpperCase() })}
+                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder="SUMMER2024"
+                  required />
 
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">Discount Percentage (%)</label>
                 <input
-                type="number"
-                min="1"
-                max="100"
-                value={newPromoCode?.discount_percentage}
-                onChange={(e) => setNewPromoCode({ ...newPromoCode, discount_percentage: parseInt(e?.target?.value) })}
-                className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                required />
+                  type="number"
+                  min="1"
+                  max="100"
+                  value={newPromoCode?.discount_percentage}
+                  onChange={(e) => setNewPromoCode({ ...newPromoCode, discount_percentage: parseInt(e?.target?.value) })}
+                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required />
 
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">Maximum Uses</label>
                 <input
-                type="number"
-                min="1"
-                value={newPromoCode?.max_uses}
-                onChange={(e) => setNewPromoCode({ ...newPromoCode, max_uses: parseInt(e?.target?.value) })}
-                className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                required />
+                  type="number"
+                  min="1"
+                  value={newPromoCode?.max_uses}
+                  onChange={(e) => setNewPromoCode({ ...newPromoCode, max_uses: parseInt(e?.target?.value) })}
+                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required />
 
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">Valid From</label>
                 <input
-                type="datetime-local"
-                value={newPromoCode?.valid_from}
-                onChange={(e) => setNewPromoCode({ ...newPromoCode, valid_from: e?.target?.value })}
-                className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                required />
+                  type="datetime-local"
+                  value={newPromoCode?.valid_from}
+                  onChange={(e) => setNewPromoCode({ ...newPromoCode, valid_from: e?.target?.value })}
+                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required />
 
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">Valid Until</label>
                 <input
-                type="datetime-local"
-                value={newPromoCode?.valid_until}
-                onChange={(e) => setNewPromoCode({ ...newPromoCode, valid_until: e?.target?.value })}
-                className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                required />
+                  type="datetime-local"
+                  value={newPromoCode?.valid_until}
+                  onChange={(e) => setNewPromoCode({ ...newPromoCode, valid_until: e?.target?.value })}
+                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required />
 
               </div>
 
               <div className="flex gap-3 pt-4">
                 <button
-                type="button"
-                onClick={() => setShowCreatePromoModal(false)}
-                className="flex-1 px-4 py-2 bg-muted text-foreground rounded-md hover:bg-muted/80 transition-colors font-semibold">
+                  type="button"
+                  onClick={() => setShowCreatePromoModal(false)}
+                  className="flex-1 px-4 py-2 bg-muted text-foreground rounded-md hover:bg-muted/80 transition-colors font-semibold">
                   Cancel
                 </button>
                 <button
-                type="submit"
-                disabled={promoLoading}
-                className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 font-semibold">
+                  type="submit"
+                  disabled={promoLoading}
+                  className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 font-semibold">
                   {promoLoading ? 'Creating...' : 'Create'}
                 </button>
               </div>

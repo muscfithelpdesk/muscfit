@@ -269,7 +269,7 @@ export default function AdminProductManagement() {
   )?.map(([category, value]) => ({ category, value }));
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-[80px]">
       {/* Header */}
       <div className="bg-surface border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
