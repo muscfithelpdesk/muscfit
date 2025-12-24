@@ -210,6 +210,94 @@ export const productService = {
         attributeValue: attr?.attribute_value
       }))
     };
+  },
+
+  // Create new product
+  async createProduct(productData) {
+    try {
+      if (!supabase) throw new Error('Supabase client not initialized');
+
+      // 1. Insert product details
+      const { data: product, error: productError } = await supabase.from('products').insert({
+        name: productData?.name,
+        description: productData?.description,
+        price: productData?.price,
+        original_price: productData?.originalPrice,
+        gender: productData?.gender,
+        category: productData?.category,
+        brand: productData?.brand,
+        tag: productData?.tag,
+        is_active: productData?.isActive ?? true,
+        stock_quantity: productData?.stockQuantity,
+        rating: 0,
+        review_count: 0
+      }).select().single();
+
+      if (productError) throw productError;
+
+      // 2. Insert product image
+      if (productData?.imageUrl) {
+        const { error: imageError } = await supabase.from('product_images').insert({
+          product_id: product?.id,
+          image_url: productData?.imageUrl,
+          alt_text: productData?.name,
+          is_primary: true,
+          display_order: 1
+        });
+        if (imageError) throw imageError;
+      }
+
+      return this.convertToCamelCase(product);
+    } catch (error) {
+      console.error('Error creating product:', error);
+      throw error;
+    }
+  },
+
+  // Update product
+  async updateProduct(id, updates) {
+    try {
+      if (!supabase) throw new Error('Supabase client not initialized');
+
+      // Map camelCase updates to snake_case
+      const dbUpdates = {};
+      if (updates.name !== undefined) dbUpdates.name = updates.name;
+      if (updates.description !== undefined) dbUpdates.description = updates.description;
+      if (updates.price !== undefined) dbUpdates.price = updates.price;
+      if (updates.stockQuantity !== undefined) dbUpdates.stock_quantity = updates.stockQuantity;
+      if (updates.isActive !== undefined) dbUpdates.is_active = updates.isActive;
+      if (updates.category !== undefined) dbUpdates.category = updates.category;
+      if (updates.gender !== undefined) dbUpdates.gender = updates.gender;
+      if (updates.brand !== undefined) dbUpdates.brand = updates.brand;
+
+      const { data, error } = await supabase.from('products')
+        .update(dbUpdates)
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      return this.convertToCamelCase(data);
+    } catch (error) {
+      console.error('Error updating product:', error);
+      throw error;
+    }
+  },
+
+  // Delete product
+  async deleteProduct(id) {
+    try {
+      if (!supabase) throw new Error('Supabase client not initialized');
+
+      const { error } = await supabase.from('products').delete().eq('id', id);
+
+      if (error) throw error;
+      return true;
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      throw error;
+    }
   }
 };
 
