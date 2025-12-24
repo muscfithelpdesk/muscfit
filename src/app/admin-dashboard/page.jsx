@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { supabase } from '@/lib/supabase';
 import { productService } from '@/lib/services/productService';
+import { uploadService } from '@/lib/services/uploadService';
 
 // Mock data for orders
 const mockOrders = [
@@ -569,6 +570,12 @@ export default function AdminDashboard() {
 
   const handleAddProduct = async (e) => {
     e?.preventDefault();
+
+    // Basic validation
+    if (newProduct?.imageUrl && !newProduct.imageUrl.startsWith('http')) {
+      alert('Please enter a valid public image URL (must start with http:// or https://).\nLocal file paths (file://) are not supported.');
+      return;
+    }
     try {
       await productService.createProduct(newProduct);
       await loadProducts();
@@ -1229,15 +1236,52 @@ export default function AdminDashboard() {
                       <option value="true">Active</option>
                     </select>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Image URL</label>
-                    <input
-                      type="url"
-                      value={newProduct?.imageUrl}
-                      onChange={(e) => setNewProduct({ ...newProduct, imageUrl: e?.target?.value })}
-                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="https://example.com/image.jpg" />
-
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-foreground mb-2">Product Image</label>
+                    <div className="flex gap-4 items-start">
+                      {newProduct?.imageUrl && (
+                        <div className="w-24 h-24 relative rounded-lg overflow-hidden border border-border">
+                          <img
+                            src={newProduct.imageUrl}
+                            alt="Preview"
+                            className="w-full h-full object-cover"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setNewProduct({ ...newProduct, imageUrl: '' })}
+                            className="absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white rounded-full p-1 transition-colors"
+                          >
+                            <Icon name="XMarkIcon" size={12} />
+                          </button>
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-border rounded-lg cursor-pointer bg-muted hover:bg-muted/80 transition-color">
+                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                            <Icon name="CloudArrowUpIcon" size={24} className="text-text-secondary mb-2" />
+                            <p className="text-xs text-text-secondary">Click to upload or drag and drop</p>
+                            <p className="text-[10px] text-text-secondary mt-1">SVG, PNG, JPG or GIF (MAX. 5MB)</p>
+                          </div>
+                          <input
+                            type="file"
+                            className="hidden"
+                            accept="image/*"
+                            onChange={async (e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                try {
+                                  // Show temporary loading state if needed
+                                  const url = await uploadService.uploadFile(file);
+                                  setNewProduct({ ...newProduct, imageUrl: url });
+                                } catch (error) {
+                                  alert(error.message);
+                                }
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
+                    </div>
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-foreground mb-2">Description</label>
