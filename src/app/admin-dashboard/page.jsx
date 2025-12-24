@@ -6,6 +6,7 @@ import AppImage from '@/components/ui/AppImage';
 import PropTypes from 'prop-types';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { supabase } from '@/lib/supabase';
+import { productService } from '@/lib/services/productService';
 
 // Mock data for orders
 const mockOrders = [
@@ -81,79 +82,7 @@ const mockOrders = [
 
 
 // Mock data for products
-const mockProducts = [
-  {
-    id: 'PROD-001',
-    name: 'Performance Compression Tee',
-    category: 'Men',
-    price: 1299,
-    stock: 45,
-    status: 'Active',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1241de563-1766566470696.png",
-    sales: 234,
-    views: 1250,
-    description: 'High-performance compression tee for intense workouts'
-  },
-  {
-    id: 'PROD-002',
-    name: 'Elite Training Shorts',
-    category: 'Men',
-    price: 2001,
-    stock: 12,
-    status: 'Active',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_141043265-1765255836176.png",
-    sales: 189,
-    views: 980,
-    description: 'Lightweight training shorts with moisture-wicking technology'
-  },
-  {
-    id: 'PROD-003',
-    name: 'Premium Yoga Mat',
-    category: 'Women',
-    price: 2499,
-    stock: 0,
-    status: 'Out of Stock',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1708cbc1d-1766130106686.png",
-    sales: 456,
-    views: 2100,
-    description: 'Non-slip premium yoga mat with extra cushioning'
-  },
-  {
-    id: 'PROD-004',
-    name: 'Resistance Bands Set',
-    category: 'Compression',
-    price: 1500,
-    stock: 78,
-    status: 'Active',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1dc2f421c-1765027288584.png",
-    sales: 312,
-    views: 1450,
-    description: 'Complete resistance bands set for home workouts'
-  },
-  {
-    id: 'PROD-005',
-    name: 'Smart Fitness Watch',
-    category: 'Men',
-    price: 12999,
-    stock: 5,
-    status: 'Active',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_13cf61033-1766566469210.png",
-    sales: 67,
-    views: 890,
-    description: 'Advanced fitness tracking with heart rate monitoring'
-  },
-  {
-    id: 'PROD-006',
-    name: 'Running Shoes Pro',
-    category: 'Women',
-    price: 3299,
-    stock: 0,
-    status: 'Draft',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_19d012242-1764677610915.png",
-    sales: 0,
-    views: 120,
-    description: 'Professional running shoes with cushioned support'
-  }];
+// Mock data for products removed - using real data via productService
 
 
 const statusColors = {
@@ -273,11 +202,18 @@ OrderRow.propTypes = {
 
 // Product Card Component with Enhanced Visual Editing
 function ProductCard({ product, onEdit, onDelete, onImageClick }) {
+  const getStatus = (p) => {
+    if (p?.stockQuantity === 0) return 'Out of Stock';
+    return p?.isActive ? 'Active' : 'Draft';
+  };
+
+  const status = getStatus(product);
+
   return (
     <div className="bg-surface border border-border rounded-lg overflow-hidden hover:shadow-sharp-lg transition-all duration-250">
       <div className="aspect-square bg-muted relative group cursor-pointer" onClick={() => onImageClick(product)}>
         <AppImage
-          src={product?.image}
+          src={product?.productImages?.[0]?.imageUrl || product?.imageUrl || '/assets/images/no_image.png'}
           alt={product?.name}
           className="w-full h-full object-cover" />
 
@@ -285,11 +221,11 @@ function ProductCard({ product, onEdit, onDelete, onImageClick }) {
           <Icon name="MagnifyingGlassIcon" size={32} className="text-white" />
         </div>
         <div className="absolute top-2 right-2 z-10">
-          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold border ${statusColors?.[product?.status]}`}>
-            {product?.status}
+          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold border ${statusColors?.[status] || statusColors?.Draft}`}>
+            {status}
           </span>
         </div>
-        {product?.stock <= 10 && product?.stock > 0 &&
+        {product?.stockQuantity <= 10 && product?.stockQuantity > 0 &&
           <div className="absolute top-2 left-2 z-10 bg-yellow-500/90 text-black px-2 py-1 rounded text-xs font-semibold">
             Low Stock
           </div>
@@ -305,18 +241,18 @@ function ProductCard({ product, onEdit, onDelete, onImageClick }) {
         <div className="mb-3">
           <div className="flex items-center justify-between mb-2">
             <span className="font-data text-xl font-bold text-primary">₹{product?.price?.toLocaleString('en-IN')}</span>
-            <span className={`text-sm font-semibold ${product?.stock > 10 ? 'text-green-400' : product?.stock > 0 ? 'text-yellow-400' : 'text-red-400'}`}>
-              Stock: {product?.stock}
+            <span className={`text-sm font-semibold ${product?.stockQuantity > 10 ? 'text-green-400' : product?.stockQuantity > 0 ? 'text-yellow-400' : 'text-red-400'}`}>
+              Stock: {product?.stockQuantity}
             </span>
           </div>
           <div className="flex items-center justify-between text-xs text-text-secondary">
             <span className="flex items-center gap-1">
               <Icon name="ShoppingBagIcon" size={14} />
-              {product?.sales} sales
+              {product?.sales || 0} sales
             </span>
             <span className="flex items-center gap-1">
               <Icon name="EyeIcon" size={14} />
-              {product?.views} views
+              {product?.views || 0} views
             </span>
           </div>
         </div>
@@ -359,7 +295,8 @@ export default function AdminDashboard() {
   const [expandedOrders, setExpandedOrders] = useState(new Set());
 
   // Products state
-  const [products, setProducts] = useState(mockProducts);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [productSearchQuery, setProductSearchQuery] = useState('');
   const [filterCategory, setFilterCategory] = useState('All');
   const [filterProductStatus, setFilterProductStatus] = useState('All');
@@ -371,10 +308,11 @@ export default function AdminDashboard() {
     name: '',
     category: 'Men',
     price: 0,
-    stock: 0,
-    status: 'Draft',
+    stockQuantity: 0,
+    isActive: false,
     description: '',
-    image: ''
+    brand: '',
+    imageUrl: ''
   });
 
   // Promo codes state
@@ -554,44 +492,101 @@ export default function AdminDashboard() {
     });
   };
 
+  useEffect(() => {
+    if (activeTab === 'products') {
+      loadProducts();
+    }
+  }, [activeTab]);
+
+  const loadProducts = async () => {
+    try {
+      setLoading(true);
+      const data = await productService.getAll();
+      setProducts(data);
+    } catch (error) {
+      console.error('Error loading products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Product handlers
   const handleImageClick = (product) => {
-    setSelectedProduct(product);
+    // Map fields for preview if needed, or ensure ProductCard passes comprehensive object
+    setSelectedProduct({
+      ...product,
+      image: product.productImages?.[0]?.imageUrl || product.imageUrl,
+      stock: product.stockQuantity // map for display
+    });
     setShowImageModal(true);
   };
 
   const handleEditProduct = (product) => {
-    setSelectedProduct(product);
+    setSelectedProduct({
+      ...product,
+      stock: product.stockQuantity,
+      image: product.productImages?.[0]?.imageUrl || product.imageUrl,
+      status: product.isActive ? 'Active' : 'Draft'
+    });
     setShowEditModal(true);
   };
 
-  const handleUpdateProduct = () => {
+  const handleUpdateProduct = async () => {
     if (selectedProduct) {
-      setProducts(products?.map((p) =>
-        p?.id === selectedProduct?.id ? selectedProduct : p
-      ));
-      setShowEditModal(false);
-      setSelectedProduct(null);
+      try {
+        // Map UI fields back to DB fields
+        const updates = {
+          name: selectedProduct.name,
+          category: selectedProduct.category,
+          price: selectedProduct.price,
+          stockQuantity: selectedProduct.stock,
+          isActive: selectedProduct.status === 'Active',
+          description: selectedProduct.description,
+          imageUrl: selectedProduct.image
+        };
+        await productService.updateProduct(selectedProduct.id, updates);
+        await loadProducts();
+        setShowEditModal(false);
+        setSelectedProduct(null);
+      } catch (error) {
+        console.error('Error updating product:', error);
+        alert('Failed to update product');
+      }
     }
   };
 
-  const handleDeleteProduct = (productId) => {
+  const handleDeleteProduct = async (productId) => {
     if (confirm('Are you sure you want to delete this product?')) {
-      setProducts(products?.filter((product) => product?.id !== productId));
+      try {
+        await productService.deleteProduct(productId);
+        await loadProducts();
+      } catch (error) {
+        console.error('Error deleting product:', error);
+        alert('Failed to delete product');
+      }
     }
   };
 
-  const handleAddProduct = (e) => {
+  const handleAddProduct = async (e) => {
     e?.preventDefault();
-    const product = {
-      ...newProduct,
-      id: `PROD-${String(products?.length + 1)?.padStart(3, '0')}`,
-      sales: 0,
-      views: 0
-    };
-    setProducts([...products, product]);
-    setNewProduct({ name: '', category: 'Men', price: 0, stock: 0, status: 'Draft', description: '', image: '' });
-    setShowAddProductForm(false);
+    try {
+      await productService.createProduct(newProduct);
+      await loadProducts();
+      setNewProduct({
+        name: '',
+        category: 'Men',
+        price: 0,
+        stockQuantity: 0,
+        isActive: false,
+        description: '',
+        brand: '',
+        imageUrl: ''
+      });
+      setShowAddProductForm(false);
+    } catch (error) {
+      console.error('Error creating product:', error);
+      alert('Failed to create product');
+    }
   };
 
   // Filtering
@@ -606,9 +601,14 @@ export default function AdminDashboard() {
 
   const filteredProducts = products?.filter((product) => {
     const matchesSearch = product?.name?.toLowerCase()?.includes(productSearchQuery?.toLowerCase()) ||
-      product?.id?.toLowerCase()?.includes(productSearchQuery?.toLowerCase());
+      String(product?.id)?.toLowerCase()?.includes(productSearchQuery?.toLowerCase());
     const matchesCategory = filterCategory === 'All' || product?.category === filterCategory;
-    const matchesStatus = filterProductStatus === 'All' || product?.status === filterProductStatus;
+
+    let matchesStatus = true;
+    if (filterProductStatus === 'Active') matchesStatus = product?.isActive;
+    else if (filterProductStatus === 'Draft') matchesStatus = !product?.isActive;
+    else if (filterProductStatus === 'Out of Stock') matchesStatus = product?.stockQuantity === 0;
+
     return matchesSearch && matchesCategory && matchesStatus;
   });
 
@@ -671,24 +671,26 @@ export default function AdminDashboard() {
   )?.sort((a, b) => b?.totalSpent - a?.totalSpent)?.slice(0, 5);
 
   const totalProducts = products?.length;
-  const activeProducts = products?.filter((p) => p?.status === 'Active')?.length;
-  const outOfStock = products?.filter((p) => p?.status === 'Out of Stock')?.length;
-  const lowStock = products?.filter((p) => p?.stock > 0 && p?.stock <= 10)?.length;
+  const activeProducts = products?.filter((p) => p?.isActive)?.length;
+  const outOfStock = products?.filter((p) => p?.stockQuantity === 0)?.length;
+  const lowStock = products?.filter((p) => p?.stockQuantity > 0 && p?.stockQuantity <= 10)?.length;
 
   const categoryPerformance = Object.entries(
     products?.reduce((acc, product) => {
       if (!acc?.[product?.category]) {
         acc[product.category] = { sales: 0, views: 0, revenue: 0 };
       }
-      acc[product?.category].sales += product?.sales;
-      acc[product?.category].views += product?.views;
-      acc[product?.category].revenue += product?.price * product?.sales;
+      const sales = product?.sales || 0;
+      const views = product?.views || 0;
+      acc[product?.category].sales += sales;
+      acc[product?.category].views += views;
+      acc[product?.category].revenue += product?.price * sales;
       return acc;
     }, {})
   )?.map(([category, stats]) => ({ category, ...stats }));
 
   const topProducts = [...products]?.
-    sort((a, b) => b?.sales * b?.price - a?.sales * a?.price)?.
+    sort((a, b) => ((b?.sales || 0) * b?.price) - ((a?.sales || 0) * a?.price))?.
     slice(0, 5);
 
   const tabs = [
@@ -719,7 +721,7 @@ export default function AdminDashboard() {
                 key={tab?.id}
                 onClick={() => setActiveTab(tab?.id)}
                 className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all ${activeTab === tab?.id ?
-                    'text-primary border-b-2 border-primary' : 'text-text-secondary hover:text-foreground'}`
+                  'text-primary border-b-2 border-primary' : 'text-text-secondary hover:text-foreground'}`
                 }>
                 <Icon name={tab?.icon} size={20} />
                 {tab?.label}
@@ -987,7 +989,7 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-text-secondary text-sm">Total Products</p>
-                    <p className="font-data text-2xl font-bold text-foreground mt-1">{totalProducts}</p>
+                    <p className="font-data text-2xl font-bold text-foreground mt-1">{loading ? '...' : totalProducts}</p>
                   </div>
                   <Icon name="CubeIcon" size={32} className="text-primary" />
                 </div>
@@ -996,7 +998,7 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-text-secondary text-sm">Active Products</p>
-                    <p className="font-data text-2xl font-bold text-green-400 mt-1">{activeProducts}</p>
+                    <p className="font-data text-2xl font-bold text-green-400 mt-1">{loading ? '...' : activeProducts}</p>
                   </div>
                   <Icon name="CheckCircleIcon" size={32} className="text-green-400" />
                 </div>
@@ -1005,7 +1007,7 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-text-secondary text-sm">Low Stock</p>
-                    <p className="font-data text-2xl font-bold text-yellow-400 mt-1">{lowStock}</p>
+                    <p className="font-data text-2xl font-bold text-yellow-400 mt-1">{loading ? '...' : lowStock}</p>
                   </div>
                   <Icon name="ExclamationTriangleIcon" size={32} className="text-yellow-400" />
                 </div>
@@ -1014,7 +1016,7 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-text-secondary text-sm">Out of Stock</p>
-                    <p className="font-data text-2xl font-bold text-red-400 mt-1">{outOfStock}</p>
+                    <p className="font-data text-2xl font-bold text-red-400 mt-1">{loading ? '...' : outOfStock}</p>
                   </div>
                   <Icon name="XCircleIcon" size={32} className="text-red-400" />
                 </div>
@@ -1039,7 +1041,6 @@ export default function AdminDashboard() {
                         if (name === 'Revenue') return [`₹${value?.toLocaleString('en-IN')}`, name];
                         return [value, name];
                       }} />
-
                     <Legend />
                     <Bar dataKey="sales" fill="#8b5cf6" name="Sales" />
                     <Bar dataKey="views" fill="#06b6d4" name="Views" />
@@ -1060,7 +1061,6 @@ export default function AdminDashboard() {
                     <Tooltip
                       contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
                       formatter={(value) => [`₹${value?.toLocaleString('en-IN')}`, 'Revenue']} />
-
                     <Legend />
                     <Bar dataKey="revenue" fill="#f59e0b" name="Revenue" />
                   </BarChart>
@@ -1088,7 +1088,7 @@ export default function AdminDashboard() {
                   </thead>
                   <tbody>
                     {topProducts?.map((product, index) => {
-                      const revenue = product?.sales * product?.price;
+                      const revenue = (product?.sales || 0) * product?.price;
                       return (
                         <tr key={product?.id} className="border-b border-border hover:bg-muted/30">
                           <td className="px-4 py-3">
@@ -1101,8 +1101,8 @@ export default function AdminDashboard() {
                             <div className="text-xs text-text-secondary">{product?.id}</div>
                           </td>
                           <td className="px-4 py-3 text-sm text-text-secondary">{product?.category}</td>
-                          <td className="px-4 py-3 text-sm text-foreground">{product?.sales}</td>
-                          <td className="px-4 py-3 text-sm text-text-secondary">{product?.views}</td>
+                          <td className="px-4 py-3 text-sm text-foreground">{product?.sales || 0}</td>
+                          <td className="px-4 py-3 text-sm text-text-secondary">{product?.views || 0}</td>
                           <td className="px-4 py-3">
                             <span className="font-data text-sm font-bold text-primary">
                               ₹{revenue?.toLocaleString('en-IN')}
@@ -1211,8 +1211,8 @@ export default function AdminDashboard() {
                     <label className="block text-sm font-medium text-foreground mb-2">Stock Quantity</label>
                     <input
                       type="number"
-                      value={newProduct?.stock}
-                      onChange={(e) => setNewProduct({ ...newProduct, stock: Number(e?.target?.value) })}
+                      value={newProduct?.stockQuantity}
+                      onChange={(e) => setNewProduct({ ...newProduct, stockQuantity: Number(e?.target?.value) })}
                       required
                       min="0"
                       className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
@@ -1222,19 +1222,19 @@ export default function AdminDashboard() {
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Status</label>
                     <select
-                      value={newProduct?.status}
-                      onChange={(e) => setNewProduct({ ...newProduct, status: e?.target?.value })}
+                      value={newProduct?.isActive}
+                      onChange={(e) => setNewProduct({ ...newProduct, isActive: e?.target?.value === 'true' })}
                       className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                      <option value="Draft">Draft</option>
-                      <option value="Active">Active</option>
+                      <option value="false">Draft</option>
+                      <option value="true">Active</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Image URL</label>
                     <input
                       type="url"
-                      value={newProduct?.image}
-                      onChange={(e) => setNewProduct({ ...newProduct, image: e?.target?.value })}
+                      value={newProduct?.imageUrl}
+                      onChange={(e) => setNewProduct({ ...newProduct, imageUrl: e?.target?.value })}
                       className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="https://example.com/image.jpg" />
 
@@ -1247,7 +1247,15 @@ export default function AdminDashboard() {
                       className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                       rows={3}
                       placeholder="Product description" />
-
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-foreground mb-2">Brand</label>
+                    <input
+                      type="text"
+                      value={newProduct?.brand}
+                      onChange={(e) => setNewProduct({ ...newProduct, brand: e?.target?.value })}
+                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      placeholder="Brand Name" />
                   </div>
                   <div className="flex items-end gap-2 md:col-span-2">
                     <button
@@ -1268,7 +1276,12 @@ export default function AdminDashboard() {
 
             {/* Products Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts?.map((product) =>
+              {loading ? (
+                <div className="col-span-3 text-center py-20">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                  <p className="mt-4 text-text-secondary">Loading products...</p>
+                </div>
+              ) : filteredProducts?.map((product) =>
                 <ProductCard
                   key={product?.id}
                   product={product}
@@ -1279,7 +1292,7 @@ export default function AdminDashboard() {
               )}
             </div>
 
-            {filteredProducts?.length === 0 &&
+            {!loading && filteredProducts?.length === 0 &&
               <div className="text-center py-12 bg-surface border border-border rounded-lg">
                 <Icon name="InboxIcon" size={48} className="mx-auto text-text-secondary mb-4" />
                 <p className="text-text-secondary">No products found matching your filters</p>
