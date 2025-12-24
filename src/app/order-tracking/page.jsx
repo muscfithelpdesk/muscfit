@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { orderService } from '../../lib/services/orderService';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '../../components/common/Header';
 
-export default function OrderTracking() {
+function OrderTrackingContent() {
   const { user } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -173,9 +173,8 @@ export default function OrderTracking() {
                 return (
                   <div key={status} className="flex flex-col items-center">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all ${
-                        isCompleted ? 'bg-black text-white' : 'bg-gray-200 text-gray-400'
-                      } ${isCurrent ? 'ring-4 ring-black ring-opacity-20' : ''}`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all ${isCompleted ? 'bg-black text-white' : 'bg-gray-200 text-gray-400'
+                        } ${isCurrent ? 'ring-4 ring-black ring-opacity-20' : ''}`}
                     >
                       {isCompleted ? (
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -303,7 +302,7 @@ export default function OrderTracking() {
           <div>
             <div className="bg-white rounded-lg p-6 mb-8 sticky top-4">
               <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-              
+
               <div className="space-y-3 mb-4 pb-4 border-b border-gray-200">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Subtotal</span>
@@ -351,10 +350,9 @@ export default function OrderTracking() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Payment Status</span>
-                    <span className={`font-medium capitalize ${
-                      order?.paymentStatus === 'completed' ? 'text-green-600' : 
-                      order?.paymentStatus === 'failed' ? 'text-red-600' : 'text-yellow-600'
-                    }`}>
+                    <span className={`font-medium capitalize ${order?.paymentStatus === 'completed' ? 'text-green-600' :
+                        order?.paymentStatus === 'failed' ? 'text-red-600' : 'text-yellow-600'
+                      }`}>
                       {order?.paymentStatus}
                     </span>
                   </div>
@@ -374,5 +372,16 @@ export default function OrderTracking() {
         </div>
       </main>
     </div>
+  );
+}
+export default function OrderTracking() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }>
+      <OrderTrackingContent />
+    </Suspense>
   );
 }
