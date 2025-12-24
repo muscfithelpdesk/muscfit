@@ -20,14 +20,19 @@ export function AuthProvider({ children }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!supabase) {
+      setLoading(false);
+      return;
+    }
+
     // Get initial session
-    supabase?.auth?.getSession()?.then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
     // Listen for auth changes - CRITICAL: Keep synchronous, no async in callback
-    const { data: { subscription } } = supabase?.auth?.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
@@ -38,8 +43,9 @@ export function AuthProvider({ children }) {
   // Sign up with email and password
   const signUp = async (email, password, fullName) => {
     try {
+      if (!supabase) throw new Error('Supabase client not initialized');
       setError(null);
-      const { data, error: signUpError } = await supabase?.auth?.signUp({
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -62,8 +68,9 @@ export function AuthProvider({ children }) {
   // Sign in with email and password
   const signIn = async (email, password) => {
     try {
+      if (!supabase) throw new Error('Supabase client not initialized');
       setError(null);
-      const { data, error: signInError } = await supabase?.auth?.signInWithPassword({
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password
       });
@@ -80,8 +87,9 @@ export function AuthProvider({ children }) {
   // Sign out
   const signOut = async () => {
     try {
+      if (!supabase) throw new Error('Supabase client not initialized');
       setError(null);
-      const { error: signOutError } = await supabase?.auth?.signOut();
+      const { error: signOutError } = await supabase.auth.signOut();
 
       if (signOutError) throw signOutError;
 
@@ -95,8 +103,9 @@ export function AuthProvider({ children }) {
   // Update user profile
   const updateProfile = async (updates) => {
     try {
+      if (!supabase) throw new Error('Supabase client not initialized');
       setError(null);
-      const { data, error: updateError } = await supabase?.auth?.updateUser({
+      const { data, error: updateError } = await supabase.auth.updateUser({
         data: updates
       });
 

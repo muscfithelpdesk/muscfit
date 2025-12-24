@@ -4,7 +4,9 @@ export const productService = {
   // Get all products with optional filters
   async getAll(filters = {}) {
     try {
-      let query = supabase?.from('products')?.select(`
+      if (!supabase) return [];
+
+      let query = supabase.from('products').select(`
           *,
           product_images!inner(
             id,
@@ -23,31 +25,31 @@ export const productService = {
             attribute_name,
             attribute_value
           )
-        `)?.eq('is_active', true)?.eq('product_images.is_primary', true);
+        `).eq('is_active', true).eq('product_images.is_primary', true);
 
       // Apply filters
       if (filters?.gender) {
-        query = query?.eq('gender', filters?.gender);
+        query = query.eq('gender', filters?.gender);
       }
       if (filters?.category) {
-        query = query?.eq('category', filters?.category);
+        query = query.eq('category', filters?.category);
       }
       if (filters?.brand) {
-        query = query?.eq('brand', filters?.brand);
+        query = query.eq('brand', filters?.brand);
       }
       if (filters?.tag) {
-        query = query?.eq('tag', filters?.tag);
+        query = query.eq('tag', filters?.tag);
       }
       if (filters?.minPrice) {
-        query = query?.gte('price', filters?.minPrice);
+        query = query.gte('price', filters?.minPrice);
       }
       if (filters?.maxPrice) {
-        query = query?.lte('price', filters?.maxPrice);
+        query = query.lte('price', filters?.maxPrice);
       }
 
       // Apply search
       if (filters?.search) {
-        query = query?.or(`name.ilike.%${filters?.search}%,description.ilike.%${filters?.search}%,brand.ilike.%${filters?.search}%`);
+        query = query.or(`name.ilike.%${filters?.search}%,description.ilike.%${filters?.search}%,brand.ilike.%${filters?.search}%`);
       }
 
       // Apply sorting
@@ -62,7 +64,7 @@ export const productService = {
         };
         const sort = sortOptions?.[filters?.sortBy];
         if (sort) {
-          query = query?.order(sort?.column, { ascending: sort?.ascending });
+          query = query.order(sort?.column, { ascending: sort?.ascending });
         }
       }
 
@@ -81,7 +83,9 @@ export const productService = {
   // Get single product by ID
   async getById(productId) {
     try {
-      const { data, error } = await supabase?.from('products')?.select(`
+      if (!supabase) return null;
+
+      const { data, error } = await supabase.from('products').select(`
           *,
           product_images(
             id,
@@ -101,7 +105,7 @@ export const productService = {
             attribute_name,
             attribute_value
           )
-        `)?.eq('id', productId)?.eq('is_active', true)?.single();
+        `).eq('id', productId).eq('is_active', true).single();
 
       if (error) throw error;
 
@@ -115,10 +119,12 @@ export const productService = {
   // Get unique filter options
   async getFilterOptions(gender = null) {
     try {
-      let query = supabase?.from('products')?.select('brand, category, tag')?.eq('is_active', true);
+      if (!supabase) return { brands: [], categories: [], tags: [] };
+
+      let query = supabase.from('products').select('brand, category, tag').eq('is_active', true);
 
       if (gender) {
-        query = query?.eq('gender', gender);
+        query = query.eq('gender', gender);
       }
 
       const { data, error } = await query;
@@ -126,9 +132,9 @@ export const productService = {
       if (error) throw error;
 
       // Extract unique values
-      const brands = [...new Set(data?.map(p => p?.brand))]?.sort();
-      const categories = [...new Set(data?.map(p => p?.category))]?.sort();
-      const tags = [...new Set(data?.map(p => p?.tag).filter(Boolean))]?.sort();
+      const brands = [...new Set(data?.map(p => p?.brand))].sort();
+      const categories = [...new Set(data?.map(p => p?.category))].sort();
+      const tags = [...new Set(data?.map(p => p?.tag).filter(Boolean))].sort();
 
       return {
         brands,
@@ -144,7 +150,9 @@ export const productService = {
   // Search products across all categories
   async search(searchTerm) {
     try {
-      const { data, error } = await supabase?.from('products')?.select(`
+      if (!supabase) return [];
+
+      const { data, error } = await supabase.from('products').select(`
           *,
           product_images!inner(
             id,
@@ -152,7 +160,7 @@ export const productService = {
             alt_text,
             is_primary
           )
-        `)?.eq('is_active', true)?.eq('product_images.is_primary', true)?.or(`name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,brand.ilike.%${searchTerm}%`)?.limit(50);
+        `).eq('is_active', true).eq('product_images.is_primary', true).or(`name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,brand.ilike.%${searchTerm}%`).limit(50);
 
       if (error) throw error;
 

@@ -3,7 +3,9 @@ import { supabase } from '../supabase';
 export const orderService = {
   // Get orders for current user
   async getUserOrders(userId) {
-    const { data, error } = await supabase?.from('orders')?.select(`
+    if (!supabase) return [];
+
+    const { data, error } = await supabase.from('orders').select(`
         *,
         order_items (
           *,
@@ -17,7 +19,7 @@ export const orderService = {
           code,
           discount_percentage
         )
-      `)?.eq('user_id', userId)?.order('created_at', { ascending: false });
+      `).eq('user_id', userId).order('created_at', { ascending: false });
 
     if (error) throw error;
 
@@ -59,7 +61,9 @@ export const orderService = {
 
   // Get single order with tracking
   async getOrderWithTracking(orderId, userId) {
-    const { data: orderData, error: orderError } = await supabase?.from('orders')?.select(`
+    if (!supabase) return null;
+
+    const { data: orderData, error: orderError } = await supabase.from('orders').select(`
         *,
         order_items (
           *,
@@ -78,11 +82,11 @@ export const orderService = {
           code,
           discount_percentage
         )
-      `)?.eq('id', orderId)?.eq('user_id', userId)?.single();
+      `).eq('id', orderId).eq('user_id', userId).single();
 
     if (orderError) throw orderError;
 
-    const { data: trackingData, error: trackingError } = await supabase?.from('order_tracking')?.select('*')?.eq('order_id', orderId)?.order('created_at', { ascending: true });
+    const { data: trackingData, error: trackingError } = await supabase.from('order_tracking').select('*').eq('order_id', orderId).order('created_at', { ascending: true });
 
     if (trackingError) throw trackingError;
 
@@ -115,8 +119,8 @@ export const orderService = {
         color: item?.color,
         product: {
           ...item?.product,
-          primaryImage: item?.product?.product_images?.find(img => img?.is_primary)?.image_url || 
-                       item?.product?.product_images?.[0]?.image_url
+          primaryImage: item?.product?.product_images?.find(img => img?.is_primary)?.image_url ||
+            item?.product?.product_images?.[0]?.image_url
         }
       })) || [],
       promoCode: orderData?.promo_code ? {
@@ -140,21 +144,23 @@ export const orderService = {
 
   // Create new order
   async createOrder(orderData) {
-    const { data, error } = await supabase?.from('orders')?.insert({
-        user_id: orderData?.userId,
-        order_status: 'pending',
-        payment_status: 'pending',
-        payment_method: orderData?.paymentMethod,
-        subtotal: orderData?.subtotal,
-        discount_amount: orderData?.discountAmount || 0,
-        shipping_cost: orderData?.shippingCost || 0,
-        tax_amount: orderData?.taxAmount || 0,
-        total_amount: orderData?.totalAmount,
-        promo_code_id: orderData?.promoCodeId,
-        shipping_address: orderData?.shippingAddress,
-        billing_address: orderData?.billingAddress,
-        notes: orderData?.notes
-      })?.select()?.single();
+    if (!supabase) throw new Error('Supabase client not initialized');
+
+    const { data, error } = await supabase.from('orders').insert({
+      user_id: orderData?.userId,
+      order_status: 'pending',
+      payment_status: 'pending',
+      payment_method: orderData?.paymentMethod,
+      subtotal: orderData?.subtotal,
+      discount_amount: orderData?.discountAmount || 0,
+      shipping_cost: orderData?.shippingCost || 0,
+      tax_amount: orderData?.taxAmount || 0,
+      total_amount: orderData?.totalAmount,
+      promo_code_id: orderData?.promoCodeId,
+      shipping_address: orderData?.shippingAddress,
+      billing_address: orderData?.billingAddress,
+      notes: orderData?.notes
+    }).select().single();
 
     if (error) throw error;
 
@@ -172,19 +178,19 @@ export const orderService = {
       color: item?.color
     })) || [];
 
-    const { error: itemsError } = await supabase?.from('order_items')?.insert(orderItems);
+    const { error: itemsError } = await supabase.from('order_items').insert(orderItems);
 
     if (itemsError) throw itemsError;
 
     // Create initial tracking entry
-    const { error: trackingError } = await supabase?.from('order_tracking')?.insert({
-        order_id: data?.id,
-        status: 'order_confirmed',
-        location: 'Order Processing Center',
-        description: 'Order confirmed and payment received',
-        tracking_number: `TRK${Date.now()}${Math.floor(Math.random() * 10000)}`,
-        courier_name: orderData?.courierName || 'Standard Delivery'
-      });
+    const { error: trackingError } = await supabase.from('order_tracking').insert({
+      order_id: data?.id,
+      status: 'order_confirmed',
+      location: 'Order Processing Center',
+      description: 'Order confirmed and payment received',
+      tracking_number: `TRK${Date.now()}${Math.floor(Math.random() * 10000)}`,
+      courier_name: orderData?.courierName || 'Standard Delivery'
+    });
 
     if (trackingError) throw trackingError;
 
@@ -196,7 +202,9 @@ export const orderService = {
 
   // Update order status (admin only)
   async updateOrderStatus(orderId, status) {
-    const { data, error } = await supabase?.from('orders')?.update({ order_status: status })?.eq('id', orderId)?.select()?.single();
+    if (!supabase) throw new Error('Supabase client not initialized');
+
+    const { data, error } = await supabase.from('orders').update({ order_status: status }).eq('id', orderId).select().single();
 
     if (error) throw error;
 
@@ -208,16 +216,18 @@ export const orderService = {
 
   // Add tracking update
   async addTrackingUpdate(trackingData) {
-    const { data, error } = await supabase?.from('order_tracking')?.insert({
-        order_id: trackingData?.orderId,
-        status: trackingData?.status,
-        location: trackingData?.location,
-        description: trackingData?.description,
-        tracking_number: trackingData?.trackingNumber,
-        courier_name: trackingData?.courierName,
-        estimated_delivery: trackingData?.estimatedDelivery,
-        actual_delivery: trackingData?.actualDelivery
-      })?.select()?.single();
+    if (!supabase) throw new Error('Supabase client not initialized');
+
+    const { data, error } = await supabase.from('order_tracking').insert({
+      order_id: trackingData?.orderId,
+      status: trackingData?.status,
+      location: trackingData?.location,
+      description: trackingData?.description,
+      tracking_number: trackingData?.trackingNumber,
+      courier_name: trackingData?.courierName,
+      estimated_delivery: trackingData?.estimatedDelivery,
+      actual_delivery: trackingData?.actualDelivery
+    }).select().single();
 
     if (error) throw error;
 
