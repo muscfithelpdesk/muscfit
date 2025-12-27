@@ -165,9 +165,11 @@ export default function Header() {
         <div className="flex items-center justify-between h-[60px] px-4 md:px-6 lg:px-8">
           {/* Logo */}
           <Link href="/homepage" className="flex items-center gap-2 group">
-            <span className="font-heading text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors duration-250">
-              MUSCFIT
-            </span>
+            <img 
+              src="/assets/images/logo-clean.jpg" 
+              alt="MUSCFIT Logo" 
+              className="h-[40px] w-auto object-contain"
+            />
           </Link>
 
           {/* Desktop Navigation - Hide on Admin Pages */}
@@ -181,7 +183,7 @@ export default function Header() {
                     setIsWomenDropdownOpen(false);
                     setIsCompressionDropdownOpen(false);
                   }}
-                  className="font-heading text-sm font-medium text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1"
+                  className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1"
                 >
                   {navigationCategories?.men?.label}
                   <Icon name="ChevronDownIcon" size={16} className={`transition-transform duration-250 ${isMenDropdownOpen ? 'rotate-180' : ''}`} />
@@ -237,13 +239,14 @@ export default function Header() {
                     setIsMenDropdownOpen(false);
                     setIsCompressionDropdownOpen(false);
                   }}
-                  className="font-heading text-sm font-medium text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1"
+                  className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1"
                 >
                   {navigationCategories?.women?.label}
                   <Icon name="ChevronDownIcon" size={16} className={`transition-transform duration-250 ${isWomenDropdownOpen ? 'rotate-180' : ''}`} />
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-250"></span>
                 </button>
 
+                {/* Dropdown content omitted for brevity, logic remains same just need to ensure button styling is consistent */}
                 {isWomenDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsWomenDropdownOpen(false)}
@@ -293,7 +296,7 @@ export default function Header() {
                     setIsMenDropdownOpen(false);
                     setIsWomenDropdownOpen(false);
                   }}
-                  className="font-heading text-sm font-medium text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1"
+                  className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1"
                 >
                   {navigationCategories?.compression?.label}
                   <Icon name="ChevronDownIcon" size={16} className={`transition-transform duration-250 ${isCompressionDropdownOpen ? 'rotate-180' : ''}`} />

@@ -1583,14 +1583,51 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Image URL</label>
-                <input
-                  type="url"
-                  value={selectedProduct?.image}
-                  onChange={(e) => setSelectedProduct({ ...selectedProduct, image: e?.target?.value })}
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary" />
-
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-foreground mb-2">Product Image</label>
+                <div className="flex gap-4 items-start">
+                  {selectedProduct?.image && (
+                    <div className="w-24 h-24 relative rounded-lg overflow-hidden border border-border">
+                      <img
+                        src={selectedProduct.image}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setSelectedProduct({ ...selectedProduct, image: '' })}
+                        className="absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white rounded-full p-1 transition-colors"
+                      >
+                        <Icon name="XMarkIcon" size={12} />
+                      </button>
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-border rounded-lg cursor-pointer bg-muted hover:bg-muted/80 transition-color">
+                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                        <Icon name="CloudArrowUpIcon" size={24} className="text-text-secondary mb-2" />
+                        <p className="text-xs text-text-secondary">Click to upload or drag and drop</p>
+                        <p className="text-[10px] text-text-secondary mt-1">SVG, PNG, JPG or GIF (MAX. 5MB)</p>
+                      </div>
+                      <input
+                        type="file"
+                        className="hidden"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            try {
+                              const url = await uploadService.uploadFile(file);
+                              setSelectedProduct({ ...selectedProduct, image: url });
+                            } catch (error) {
+                              alert(error.message);
+                            }
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+                </div>
               </div>
 
               <div>
