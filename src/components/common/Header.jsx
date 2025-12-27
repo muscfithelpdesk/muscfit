@@ -165,10 +165,10 @@ export default function Header() {
         <div className="flex items-center justify-between h-[60px] px-4 md:px-6 lg:px-8">
           {/* Logo */}
           <Link href="/homepage" className="flex items-center gap-2 group">
-            <img 
-              src="/assets/images/logo-clean.jpg" 
-              alt="MUSCFIT Logo" 
-              className="h-[40px] w-auto object-contain"
+            <img
+              src="/assets/images/logo-final.png"
+              alt="MUSCFIT Logo"
+              className="h-[60px] w-auto object-contain"
             />
           </Link>
 
@@ -176,14 +176,14 @@ export default function Header() {
           {!isAdminPage && (
             <nav className="hidden md:flex items-center gap-8">
               {/* Men Navigation Item */}
-              <div className="relative" ref={menDropdownRef}>
+              <div className="static" ref={menDropdownRef}>
                 <button
                   onMouseEnter={() => {
                     setIsMenDropdownOpen(true);
                     setIsWomenDropdownOpen(false);
                     setIsCompressionDropdownOpen(false);
                   }}
-                  className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1"
+                  className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
                 >
                   {navigationCategories?.men?.label}
                   <Icon name="ChevronDownIcon" size={16} className={`transition-transform duration-250 ${isMenDropdownOpen ? 'rotate-180' : ''}`} />
@@ -193,38 +193,60 @@ export default function Header() {
                 {isMenDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsMenDropdownOpen(false)}
-                    className="absolute left-0 top-full mt-2 bg-popover border border-border rounded-md shadow-sharp-lg animate-scale-in z-60"
+                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[400px]"
                   >
-                    <div className="flex">
+                    <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
-                      <div className="w-[180px] py-2 px-2">
-                        <p className="px-3 py-2 text-xs font-caption text-text-secondary uppercase tracking-wider">
-                          Categories
-                        </p>
-                        {navigationCategories?.men?.subcategories?.map((subcat) => (
-                          <Link
-                            key={subcat?.path}
-                            href={subcat?.path}
-                            className="block px-3 py-2 text-sm text-text-primary hover:bg-muted hover:text-primary rounded-sm transition-colors duration-250"
-                            onClick={() => setIsMenDropdownOpen(false)}
-                          >
-                            {subcat?.name}
-                          </Link>
-                        ))}
+                      <div className="w-1/4 h-full bg-surface border-r border-border p-8">
+                        <div className="space-y-6">
+                          {navigationCategories?.men?.subcategories?.map((subcat) => (
+                            <Link
+                              key={subcat?.path}
+                              href={subcat?.path}
+                              className="group/item flex items-center justify-between text-lg font-heading font-medium text-text-secondary hover:text-primary transition-colors duration-250"
+                              onClick={() => setIsMenDropdownOpen(false)}
+                            >
+                              {subcat?.name}
+                              <Icon name="ChevronRightIcon" size={20} className="opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-250" />
+                            </Link>
+                          ))}
+                        </div>
                       </div>
 
-                      {/* Featured Image */}
-                      <div className="w-[200px] p-4 bg-surface border-l border-border">
-                        <div className="w-full h-[180px] bg-muted rounded-md overflow-hidden">
+                      {/* Featured Images */}
+                      <div className="w-3/4 h-full flex p-6 gap-6 bg-background">
+                        <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
                           <img
-                            src={navigationCategories?.men?.featuredImage}
-                            alt={navigationCategories?.men?.featuredAlt}
-                            className="w-full h-full object-cover"
+                            src="/assets/images/category-men-1.jpg"
+                            alt="Men's Collection 1"
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            onError={(e) => {
+                              // Fallback if image doesn't exist
+                              e.target.src = 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000&auto=format&fit=crop';
+                            }}
                           />
+                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
+                          <div className="absolute bottom-6 left-6">
+                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">New Arrivals</h3>
+                            <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
+                          </div>
                         </div>
-                        <p className="mt-3 text-xs text-text-secondary text-center">
-                          {navigationCategories?.men?.label} Collection
-                        </p>
+                        <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
+                          <img
+                            src="/assets/images/category-men-2.jpg"
+                            alt="Men's Collection 2"
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            onError={(e) => {
+                              // Fallback if image doesn't exist
+                              e.target.src = 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1000&auto=format&fit=crop';
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
+                          <div className="absolute bottom-6 left-6">
+                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">Best Sellers</h3>
+                            <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -232,56 +254,77 @@ export default function Header() {
               </div>
 
               {/* Women Navigation Item */}
-              <div className="relative" ref={womenDropdownRef}>
+              <div className="static" ref={womenDropdownRef}>
                 <button
                   onMouseEnter={() => {
                     setIsWomenDropdownOpen(true);
                     setIsMenDropdownOpen(false);
                     setIsCompressionDropdownOpen(false);
                   }}
-                  className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1"
+                  className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
                 >
                   {navigationCategories?.women?.label}
                   <Icon name="ChevronDownIcon" size={16} className={`transition-transform duration-250 ${isWomenDropdownOpen ? 'rotate-180' : ''}`} />
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-250"></span>
                 </button>
 
-                {/* Dropdown content omitted for brevity, logic remains same just need to ensure button styling is consistent */}
                 {isWomenDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsWomenDropdownOpen(false)}
-                    className="absolute left-0 top-full mt-2 bg-popover border border-border rounded-md shadow-sharp-lg animate-scale-in z-60"
+                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[400px]"
                   >
-                    <div className="flex">
+                    <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
-                      <div className="w-[180px] py-2 px-2">
-                        <p className="px-3 py-2 text-xs font-caption text-text-secondary uppercase tracking-wider">
-                          Categories
-                        </p>
-                        {navigationCategories?.women?.subcategories?.map((subcat) => (
-                          <Link
-                            key={subcat?.path}
-                            href={subcat?.path}
-                            className="block px-3 py-2 text-sm text-text-primary hover:bg-muted hover:text-primary rounded-sm transition-colors duration-250"
-                            onClick={() => setIsWomenDropdownOpen(false)}
-                          >
-                            {subcat?.name}
-                          </Link>
-                        ))}
+                      <div className="w-1/4 h-full bg-surface border-r border-border p-8">
+                        <div className="space-y-6">
+                          {navigationCategories?.women?.subcategories?.map((subcat) => (
+                            <Link
+                              key={subcat?.path}
+                              href={subcat?.path}
+                              className="group/item flex items-center justify-between text-lg font-heading font-medium text-text-secondary hover:text-primary transition-colors duration-250"
+                              onClick={() => setIsWomenDropdownOpen(false)}
+                            >
+                              {subcat?.name}
+                              <Icon name="ChevronRightIcon" size={20} className="opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-250" />
+                            </Link>
+                          ))}
+                        </div>
                       </div>
 
-                      {/* Featured Image */}
-                      <div className="w-[200px] p-4 bg-surface border-l border-border">
-                        <div className="w-full h-[180px] bg-muted rounded-md overflow-hidden">
+                      {/* Featured Images */}
+                      <div className="w-3/4 h-full flex p-6 gap-6 bg-background">
+                        <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
                           <img
-                            src={navigationCategories?.women?.featuredImage}
-                            alt={navigationCategories?.women?.featuredAlt}
-                            className="w-full h-full object-cover"
+                            src="/assets/images/category-women-1.jpg"
+                            alt="Women's Collection 1"
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            onError={(e) => {
+                              // Fallback if image doesn't exist
+                              e.target.src = 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=1000&auto=format&fit=crop';
+                            }}
                           />
+                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
+                          <div className="absolute bottom-6 left-6">
+                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">New Arrivals</h3>
+                            <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
+                          </div>
                         </div>
-                        <p className="mt-3 text-xs text-text-secondary text-center">
-                          {navigationCategories?.women?.label} Collection
-                        </p>
+                        <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
+                          <img
+                            src="/assets/images/category-women-2.jpg"
+                            alt="Women's Collection 2"
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            onError={(e) => {
+                              // Fallback if image doesn't exist
+                              e.target.src = 'https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?q=80&w=1000&auto=format&fit=crop';
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
+                          <div className="absolute bottom-6 left-6">
+                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">Best Sellers</h3>
+                            <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -296,7 +339,7 @@ export default function Header() {
                     setIsMenDropdownOpen(false);
                     setIsWomenDropdownOpen(false);
                   }}
-                  className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1"
+                  className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
                 >
                   {navigationCategories?.compression?.label}
                   <Icon name="ChevronDownIcon" size={16} className={`transition-transform duration-250 ${isCompressionDropdownOpen ? 'rotate-180' : ''}`} />
