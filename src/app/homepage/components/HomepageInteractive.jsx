@@ -29,9 +29,7 @@ export default function HomepageInteractive({ pageData }) {
         message={pageData?.promoBar?.message}
         dismissible={pageData?.promoBar?.dismissible}
       />
-      <div className="pt-[40px]">
-        <Header />
-      </div>
+      <Header />
       <main className="pt-[60px]">
         <HeroSection
           title={pageData?.hero?.title}
