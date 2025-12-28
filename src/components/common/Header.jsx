@@ -193,7 +193,7 @@ export default function Header() {
                 {isMenDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsMenDropdownOpen(false)}
-                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[400px]"
+                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -271,7 +271,7 @@ export default function Header() {
                 {isWomenDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsWomenDropdownOpen(false)}
-                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[400px]"
+                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -349,7 +349,7 @@ export default function Header() {
                 {isCompressionDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsCompressionDropdownOpen(false)}
-                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[400px]"
+                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
