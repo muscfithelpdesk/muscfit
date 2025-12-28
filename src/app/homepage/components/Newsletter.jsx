@@ -10,7 +10,7 @@ export default function Newsletter({ title, subtitle }) {
 
   const handleSubmit = (e) => {
     e?.preventDefault();
-    
+
     if (!email || !email?.includes('@')) {
       setStatus('error');
       return;
@@ -18,20 +18,20 @@ export default function Newsletter({ title, subtitle }) {
 
     setStatus('success');
     setEmail('');
-    
+
     setTimeout(() => {
       setStatus('idle');
     }, 3000);
   };
 
   return (
-    <section className="py-8 md:py-12 lg:py-16 bg-black">
+    <section className="py-8 md:py-12 lg:py-16 bg-muted">
       <div className="max-w-full mx-auto px-4 md:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4">
+          <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4">
             {title}
           </h2>
-          <p className="text-sm md:text-base lg:text-lg text-gray-300 mb-6 md:mb-8">
+          <p className="text-sm md:text-base lg:text-lg text-text-secondary mb-6 md:mb-8">
             {subtitle}
           </p>
 
@@ -42,7 +42,7 @@ export default function Newsletter({ title, subtitle }) {
                 value={email}
                 onChange={(e) => setEmail(e?.target?.value)}
                 placeholder="Enter your email address"
-                className="w-full h-12 md:h-14 px-4 md:px-6 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-250 text-sm md:text-base"
+                className="w-full h-12 md:h-14 px-4 md:px-6 bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary border border-border transition-all duration-250 text-sm md:text-base"
                 required
               />
             </div>
