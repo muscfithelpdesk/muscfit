@@ -349,38 +349,52 @@ export default function Header() {
                 {isCompressionDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsCompressionDropdownOpen(false)}
-                    className="absolute left-0 top-full mt-2 bg-popover border border-border rounded-md shadow-sharp-lg animate-scale-in z-60"
+                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[400px]"
                   >
-                    <div className="flex">
+                    <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
-                      <div className="w-[180px] py-2 px-2">
-                        <p className="px-3 py-2 text-xs font-caption text-text-secondary uppercase tracking-wider">
-                          Categories
-                        </p>
-                        {navigationCategories?.compression?.subcategories?.map((subcat) => (
-                          <Link
-                            key={subcat?.path}
-                            href={subcat?.path}
-                            className="block px-3 py-2 text-sm text-text-primary hover:bg-muted hover:text-primary rounded-sm transition-colors duration-250"
-                            onClick={() => setIsCompressionDropdownOpen(false)}
-                          >
-                            {subcat?.name}
-                          </Link>
-                        ))}
+                      <div className="w-1/4 h-full bg-surface border-r border-border p-8">
+                        <div className="space-y-6">
+                          {navigationCategories?.compression?.subcategories?.map((subcat) => (
+                            <Link
+                              key={subcat?.path}
+                              href={subcat?.path}
+                              className="group/item flex items-center justify-between text-lg font-heading font-medium text-text-secondary hover:text-primary transition-colors duration-250"
+                              onClick={() => setIsCompressionDropdownOpen(false)}
+                            >
+                              {subcat?.name}
+                              <Icon name="ChevronRightIcon" size={20} className="opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-250" />
+                            </Link>
+                          ))}
+                        </div>
                       </div>
 
-                      {/* Featured Image */}
-                      <div className="w-[200px] p-4 bg-surface border-l border-border">
-                        <div className="w-full h-[180px] bg-muted rounded-md overflow-hidden">
+                      {/* Featured Images */}
+                      <div className="w-3/4 h-full flex p-6 gap-6 bg-background">
+                        <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
                           <img
-                            src={navigationCategories?.compression?.featuredImage}
-                            alt={navigationCategories?.compression?.featuredAlt}
-                            className="w-full h-full object-cover"
+                            src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000&auto=format&fit=crop"
+                            alt="Compression Collection 1"
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
+                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
+                          <div className="absolute bottom-6 left-6">
+                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">Advanced Recovery</h3>
+                            <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
+                          </div>
                         </div>
-                        <p className="mt-3 text-xs text-text-secondary text-center">
-                          {navigationCategories?.compression?.label} Collection
-                        </p>
+                        <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
+                          <img
+                            src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1000&auto=format&fit=crop"
+                            alt="Compression Collection 2"
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
+                          <div className="absolute bottom-6 left-6">
+                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">Performance Gear</h3>
+                            <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
