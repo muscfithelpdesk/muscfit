@@ -48,7 +48,7 @@ export default function LoginForm() {
         )}
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
             Email Address
           </label>
           <input
@@ -58,13 +58,13 @@ export default function LoginForm() {
             value={formData?.email}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 bg-white border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
             placeholder="Enter your email"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
             Password
           </label>
           <input
@@ -74,7 +74,7 @@ export default function LoginForm() {
             value={formData?.password}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 bg-white border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
             placeholder="Enter your password"
           />
         </div>
@@ -82,23 +82,23 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 disabled:bg-blue-300 transition-colors"
+          className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 disabled:bg-gray-400 transition-colors font-semibold"
         >
           {loading ? 'Signing in...' : 'Sign In'}
         </button>
       </form>
 
       {/* Demo Credentials Section */}
-      <div className="mt-8 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">Demo Credentials:</h3>
+      <div className="mt-8 p-4 bg-muted border border-border rounded-lg">
+        <h3 className="text-sm font-semibold text-foreground mb-3">Demo Credentials:</h3>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
-            <span className="text-gray-600">Admin:</span>
-            <span className="font-mono text-gray-800">admin@muscfit.com / admin123</span>
+            <span className="text-text-secondary">Admin:</span>
+            <span className="font-mono text-foreground font-semibold">admin@muscfit.com / admin123</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600">User:</span>
-            <span className="font-mono text-gray-800">user@muscfit.com / user123</span>
+            <span className="text-text-secondary">User:</span>
+            <span className="font-mono text-foreground font-semibold">user@muscfit.com / user123</span>
           </div>
         </div>
       </div>

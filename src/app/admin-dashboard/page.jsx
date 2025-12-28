@@ -87,20 +87,20 @@ const mockOrders = [
 
 
 const statusColors = {
-  Pending: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30',
-  Processing: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-  Shipped: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-  Delivered: 'bg-green-500/20 text-green-300 border-green-500/30',
-  Cancelled: 'bg-red-500/20 text-red-300 border-red-500/30',
-  Active: 'bg-green-500/20 text-green-300 border-green-500/30',
-  Draft: 'bg-gray-500/20 text-gray-300 border-gray-500/30',
-  'Out of Stock': 'bg-red-500/20 text-red-300 border-red-500/30'
+  Pending: 'bg-yellow-500/10 text-yellow-700 border-yellow-500/50',
+  Processing: 'bg-blue-500/10 text-blue-700 border-blue-500/50',
+  Shipped: 'bg-purple-500/10 text-purple-700 border-purple-500/50',
+  Delivered: 'bg-green-500/10 text-green-700 border-green-500/50',
+  Cancelled: 'bg-red-500/10 text-red-700 border-red-500/50',
+  Active: 'bg-green-500/10 text-green-700 border-green-500/50',
+  Draft: 'bg-gray-500/10 text-gray-700 border-gray-500/50',
+  'Out of Stock': 'bg-red-500/10 text-red-700 border-red-500/50'
 };
 
 const paymentStatusColors = {
-  Paid: 'text-green-400',
-  Pending: 'text-yellow-400',
-  Failed: 'text-red-400'
+  Paid: 'text-green-600',
+  Pending: 'text-yellow-600',
+  Failed: 'text-red-600'
 };
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];

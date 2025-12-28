@@ -71,12 +71,12 @@ export default function WomenCatalogInteractive() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-[80px]">
+    <div className="min-h-screen bg-background pt-[80px]">
       {/* Mobile Filter Button */}
       <div className="lg:hidden fixed bottom-4 right-4 z-40">
         <button
           onClick={() => setShowMobileFilters(true)}
-          className="bg-black text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2 hover:bg-gray-800 transition-colors"
+          className="bg-foreground text-background px-6 py-3 rounded-full shadow-lg flex items-center gap-2 hover:bg-black/80 transition-colors"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />

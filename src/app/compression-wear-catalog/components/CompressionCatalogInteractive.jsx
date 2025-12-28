@@ -71,12 +71,12 @@ export default function CompressionCatalogInteractive() {
   };
 
   return (
-    <div className="min-h-screen bg-black pt-[80px]">
+    <div className="min-h-screen bg-background pt-[80px]">
       {/* Mobile Filter Button */}
       <div className="lg:hidden fixed bottom-4 right-4 z-40">
         <button
           onClick={() => setShowMobileFilters(true)}
-          className="bg-white text-black px-6 py-3 rounded-full shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center gap-2 hover:shadow-[0_0_50px_rgba(255,255,255,0.5)] transition-all duration-300"
+          className="bg-foreground text-background px-6 py-3 rounded-full shadow-lg flex items-center gap-2 hover:bg-black/80 transition-all duration-300"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
@@ -88,8 +88,8 @@ export default function CompressionCatalogInteractive() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Compression Gear</h1>
-          <p className="text-gray-300">High-performance compression gear for enhanced support and recovery</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Compression Gear</h1>
+          <p className="text-text-secondary">High-performance compression gear for enhanced support and recovery</p>
         </div>
 
         {/* Search Bar */}
@@ -100,7 +100,7 @@ export default function CompressionCatalogInteractive() {
               placeholder="Search compression products..."
               value={searchTerm}
               onChange={(e) => handleSearch(e?.target?.value)}
-              className="w-full px-4 py-3 pl-12 bg-gray-900 border border-gray-700 text-white placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300"
+              className="w-full px-4 py-3 pl-12 bg-white border border-gray-300 text-foreground placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300"
             />
             <svg
               className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
@@ -137,13 +137,13 @@ export default function CompressionCatalogInteractive() {
           <div className="flex-1">
             {/* Sort Controls */}
             <div className="flex justify-between items-center mb-6">
-              <p className="text-gray-300">
+              <p className="text-text-secondary">
                 {loading ? 'Loading...' : `${products?.length || 0} products`}
               </p>
               <select
                 value={sortBy}
                 onChange={handleSortChange}
-                className="px-4 py-2 bg-gray-900 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300"
+                className="px-4 py-2 bg-white border border-gray-300 text-foreground rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300"
               >
                 <option value="newest">Newest First</option>
                 <option value="price-asc">Price: Low to High</option>
@@ -187,7 +187,7 @@ export default function CompressionCatalogInteractive() {
                     });
                     setSearchTerm('');
                   }}
-                  className="mt-4 text-white hover:underline"
+                  className="mt-4 text-black hover:underline"
                 >
                   Clear all filters
                 </button>
