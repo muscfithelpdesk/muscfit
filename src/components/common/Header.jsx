@@ -6,7 +6,7 @@ import Icon from '@/components/ui/AppIcon';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, usePathname } from 'next/navigation';
 
-export default function Header({ topOffset = 0 }) {
+export default function Header({ topOffset = 0, isFixed = true }) {
   const router = useRouter();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -160,8 +160,8 @@ export default function Header({ topOffset = 0 }) {
   return (
     <>
       <header
-        className={`fixed left-0 right-0 z-50 transition-all duration-250 bg-background shadow-sharp`}
-        style={{ top: '0' }}
+        className={`${isFixed ? 'fixed left-0 right-0 z-50' : 'relative'} transition-all duration-250 bg-background shadow-sharp`}
+        style={{ top: isFixed ? '0' : 'auto' }}
       >
         <div className="relative flex items-center justify-between h-[80px] px-4 md:px-6 lg:px-8">
           {/* Left Navigation - Desktop */}

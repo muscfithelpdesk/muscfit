@@ -8,7 +8,7 @@ export default function PromoBar({ message, dismissible, isVisible, onDismiss })
   if (!isVisible) return null;
 
   return (
-    <div className="bg-foreground text-background border-b border-border overflow-hidden whitespace-nowrap h-10 flex items-center">
+    <div className="bg-black text-white border-b border-white/10 overflow-hidden whitespace-nowrap h-10 flex items-center">
       <div className="flex animate-marquee">
         {/* Repeat the message many times to ensure a gap-less loop */}
         {[...Array(10)].map((_, i) => (
