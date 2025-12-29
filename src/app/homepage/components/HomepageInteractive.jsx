@@ -19,18 +19,34 @@ import Newsletter from './Newsletter';
 import Footer from './Footer';
 
 export default function HomepageInteractive({ pageData }) {
+  const [isPromoVisible, setIsPromoVisible] = useState(false); // Default to false to avoid flicker, then check in useEffect
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    const dismissed = localStorage.getItem('promoBarDismissed');
+    if (!dismissed) {
+      setIsPromoVisible(true);
+    }
   }, []);
+
+  const handleDismissPromo = () => {
+    setIsPromoVisible(false);
+    localStorage.setItem('promoBarDismissed', 'true');
+  };
+
+  const headerOffset = isPromoVisible ? 40 : 0;
+  const mainPaddingTop = 100 + headerOffset;
 
   return (
     <div className="min-h-screen bg-background">
       <PromoBar
         message={pageData?.promoBar?.message}
         dismissible={pageData?.promoBar?.dismissible}
+        isVisible={isPromoVisible}
+        onDismiss={handleDismissPromo}
       />
-      <Header />
-      <main className="pt-[100px]">
+      <Header topOffset={headerOffset} />
+      <main style={{ paddingTop: `${mainPaddingTop}px` }}>
         <HeroSection
           title={pageData?.hero?.title}
           subtitle={pageData?.hero?.subtitle}

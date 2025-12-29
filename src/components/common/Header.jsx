@@ -6,7 +6,7 @@ import Icon from '@/components/ui/AppIcon';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, usePathname } from 'next/navigation';
 
-export default function Header() {
+export default function Header({ topOffset = 0 }) {
   const router = useRouter();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -160,7 +160,8 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-250 bg-background shadow-sharp`}
+        className={`fixed left-0 right-0 z-50 transition-all duration-250 bg-background shadow-sharp`}
+        style={{ top: `${topOffset}px` }}
       >
         <div className="flex items-center justify-between h-[100px] px-4 md:px-6 lg:px-8">
           {/* Logo */}
