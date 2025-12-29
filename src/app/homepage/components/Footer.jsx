@@ -8,6 +8,15 @@ export default function Footer({ columns, socialLinks, paymentMethods }) {
   return (
     <footer className="bg-surface text-text-secondary">
       <div className="max-w-full mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
+        <div className="mb-12">
+          <Link href="/homepage" className="inline-block">
+            <img
+              src="/assets/images/logo-muscfit-new.png"
+              alt="MUSCFIT Logo"
+              className="h-16 md:h-20 w-auto object-contain"
+            />
+          </Link>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
           {columns?.map((column) => (
             <div key={column?.id}>
