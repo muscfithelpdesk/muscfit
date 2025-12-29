@@ -71,7 +71,7 @@ export default function WomenCatalogInteractive() {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-[80px]">
+    <div className="min-h-screen bg-background pt-[100px]">
       {/* Mobile Filter Button */}
       <div className="lg:hidden fixed bottom-4 right-4 z-40">
         <button
@@ -88,8 +88,8 @@ export default function WomenCatalogInteractive() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Women's Athletic Wear</h1>
-          <p className="text-gray-600">Premium fitness apparel designed for peak performance</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Women's Athletic Wear</h1>
+          <p className="text-text-secondary">Premium fitness apparel designed for peak performance</p>
         </div>
 
         {/* Search Bar */}

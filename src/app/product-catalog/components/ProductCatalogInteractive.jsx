@@ -38,7 +38,7 @@ export default function ProductCatalogInteractive() {
   const compressionProducts = products?.filter(p => p?.gender === 'compression')?.slice(0, 6) || [];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-[100px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
         <div className="mb-8">
