@@ -14,21 +14,24 @@ export default function ProductCarousel({ products }) {
     const timerRef = useRef(null);
     const containerRef = useRef(null);
 
-    // Constants for responsive display
-    const itemsPerView = {
-        mobile: 1,
-        tablet: 2,
-        desktop: 4
-    };
+    const [itemsPerView, setItemsPerView] = useState(4);
+    const timerRef = useRef(null);
+    const containerRef = useRef(null);
 
-    const getItemsPerView = () => {
-        if (typeof window === 'undefined') return itemsPerView.desktop;
-        if (window.innerWidth < 640) return itemsPerView.mobile;
-        if (window.innerWidth < 1024) return itemsPerView.tablet;
-        return itemsPerView.desktop;
-    };
+    // Update items per view based on window size
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 640) setItemsPerView(1);
+            else if (window.innerWidth < 1024) setItemsPerView(2);
+            else setItemsPerView(5); // Increased to 5 to make items smaller
+        };
 
-    const maxIndex = Math.max(0, products.length - getItemsPerView());
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const maxIndex = Math.max(0, products.length - itemsPerView);
 
     const nextSlide = useCallback(() => {
         setCurrentIndex((prevIndex) => (prevIndex >= maxIndex ? 0 : prevIndex + 1));
@@ -40,7 +43,10 @@ export default function ProductCarousel({ products }) {
 
     // Auto-slide logic
     useEffect(() => {
-        if (!isPaused && products.length > getItemsPerView()) {
+        // Clear any existing interval
+        if (timerRef.current) clearInterval(timerRef.current);
+
+        if (!isPaused && products.length > itemsPerView) {
             timerRef.current = setInterval(() => {
                 nextSlide();
             }, 3000);
@@ -49,7 +55,7 @@ export default function ProductCarousel({ products }) {
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, [isPaused, nextSlide, products.length]);
+    }, [isPaused, nextSlide, products.length, itemsPerView]);
 
     // Touch swipe logic
     const minSwipeDistance = 50;
@@ -105,14 +111,14 @@ export default function ProductCarousel({ products }) {
                 ref={containerRef}
                 className="flex transition-transform duration-700 ease-in-out"
                 style={{
-                    transform: `translateX(-${currentIndex * (100 / getItemsPerView())}%)`,
+                    transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
                 }}
             >
                 {products.map((product) => (
                     <div
                         key={product.id}
                         className="flex-none px-2 sm:px-3"
-                        style={{ width: `${100 / getItemsPerView()}%` }}
+                        style={{ width: `${100 / itemsPerView}%` }}
                     >
                         <ProductCard product={product} />
                     </div>
@@ -126,8 +132,8 @@ export default function ProductCarousel({ products }) {
                         key={idx}
                         onClick={() => setCurrentIndex(idx)}
                         className={`h-1.5 transition-all duration-300 rounded-full ${currentIndex === idx
-                                ? 'w-8 bg-black'
-                                : 'w-2 bg-gray-300 hover:bg-gray-400'
+                            ? 'w-8 bg-black'
+                            : 'w-2 bg-gray-300 hover:bg-gray-400'
                             }`}
                         aria-label={`Go to slide ${idx + 1}`}
                     />
