@@ -4,7 +4,7 @@ import AppImage from '@/components/ui/AppImage';
 
 export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary, backgroundImage, backgroundAlt }) {
   return (
-    <section className="relative w-full h-[85vh] min-h-[600px] overflow-hidden">
+    <section className="relative w-full h-[65vh] min-h-[500px] overflow-hidden">
       <div className="absolute inset-0">
         <AppImage
           src={backgroundImage}
