@@ -19,7 +19,7 @@ import Newsletter from './Newsletter';
 import Footer from './Footer';
 
 export default function HomepageInteractive({ pageData }) {
-  const [isPromoVisible, setIsPromoVisible] = useState(false); // Default to false to avoid flicker, then check in useEffect
+  const [isPromoVisible, setIsPromoVisible] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);

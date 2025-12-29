@@ -185,7 +185,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 {isMenDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsMenDropdownOpen(false)}
-                    className="fixed left-0 right-0 top-[80px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
+                    className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
+                    style={{ top: `${80 + topOffset}px` }}
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -263,7 +264,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 {isWomenDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsWomenDropdownOpen(false)}
-                    className="fixed left-0 right-0 top-[80px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
+                    className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
+                    style={{ top: `${80 + topOffset}px` }}
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -341,7 +343,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 {isCompressionDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsCompressionDropdownOpen(false)}
-                    className="fixed left-0 right-0 top-[80px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
+                    className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
+                    style={{ top: `${80 + topOffset}px` }}
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
