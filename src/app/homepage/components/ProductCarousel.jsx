@@ -11,9 +11,6 @@ export default function ProductCarousel({ products }) {
     const [touchStart, setTouchStart] = useState(null);
     const [touchEnd, setTouchEnd] = useState(null);
 
-    const timerRef = useRef(null);
-    const containerRef = useRef(null);
-
     const [itemsPerView, setItemsPerView] = useState(4);
     const timerRef = useRef(null);
     const containerRef = useRef(null);
