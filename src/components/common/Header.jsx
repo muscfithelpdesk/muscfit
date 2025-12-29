@@ -162,13 +162,13 @@ export default function Header() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-250 bg-background shadow-sharp`}
       >
-        <div className="flex items-center justify-between h-[60px] px-4 md:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-[80px] px-4 md:px-6 lg:px-8">
           {/* Logo */}
           <Link href="/homepage" className="flex items-center gap-2 group">
             <img
-              src="/assets/images/logo-final.png"
+              src="/assets/images/logo-muscfit-new.png"
               alt="MUSCFIT Logo"
-              className="h-[60px] w-auto object-contain"
+              className="h-[90px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
 
@@ -193,7 +193,7 @@ export default function Header() {
                 {isMenDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsMenDropdownOpen(false)}
-                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
+                    className="fixed left-0 right-0 top-[80px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -271,7 +271,7 @@ export default function Header() {
                 {isWomenDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsWomenDropdownOpen(false)}
-                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
+                    className="fixed left-0 right-0 top-[80px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -349,7 +349,7 @@ export default function Header() {
                 {isCompressionDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsCompressionDropdownOpen(false)}
-                    className="fixed left-0 right-0 top-[60px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
+                    className="fixed left-0 right-0 top-[80px] bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}

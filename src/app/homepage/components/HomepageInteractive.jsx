@@ -30,7 +30,7 @@ export default function HomepageInteractive({ pageData }) {
         dismissible={pageData?.promoBar?.dismissible}
       />
       <Header />
-      <main className="pt-[60px]">
+      <main className="pt-[80px]">
         <HeroSection
           title={pageData?.hero?.title}
           subtitle={pageData?.hero?.subtitle}
@@ -142,9 +142,9 @@ function SplashModal() {
           <div className="w-full max-w-[300px]">
             {/* Using standard img tag for simplicity within this internal component definition, or ensure AppImage is available */}
             <img
-              src="/assets/images/muscfit-logo.jpg"
+              src="/assets/images/logo-muscfit-new.png"
               alt="Muscfit Logo"
-              className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+              className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] scale-125"
             />
           </div>
           <div>
