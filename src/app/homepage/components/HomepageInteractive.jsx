@@ -39,14 +39,16 @@ export default function HomepageInteractive({ pageData }) {
 
   return (
     <div className="min-h-screen bg-background">
-      <PromoBar
-        message={pageData?.promoBar?.message}
-        dismissible={pageData?.promoBar?.dismissible}
-        isVisible={isPromoVisible}
-        onDismiss={handleDismissPromo}
-      />
-      <Header topOffset={headerOffset} />
-      <main style={{ paddingTop: `${mainPaddingTop}px` }}>
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <Header />
+        <PromoBar
+          message={pageData?.promoBar?.message}
+          dismissible={pageData?.promoBar?.dismissible}
+          isVisible={isPromoVisible}
+          onDismiss={handleDismissPromo}
+        />
+      </div>
+      <main style={{ paddingTop: `${80 + (isPromoVisible ? 40 : 0)}px` }}>
         <HeroSection
           title={pageData?.hero?.title}
           subtitle={pageData?.hero?.subtitle}

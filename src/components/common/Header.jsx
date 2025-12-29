@@ -161,7 +161,7 @@ export default function Header({ topOffset = 0 }) {
     <>
       <header
         className={`fixed left-0 right-0 z-50 transition-all duration-250 bg-background shadow-sharp`}
-        style={{ top: `${topOffset}px` }}
+        style={{ top: '0' }}
       >
         <div className="relative flex items-center justify-between h-[80px] px-4 md:px-6 lg:px-8">
           {/* Left Navigation - Desktop */}
