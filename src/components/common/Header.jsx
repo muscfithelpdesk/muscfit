@@ -163,19 +163,10 @@ export default function Header({ topOffset = 0 }) {
         className={`fixed left-0 right-0 z-50 transition-all duration-250 bg-background shadow-sharp`}
         style={{ top: `${topOffset}px` }}
       >
-        <div className="flex items-center justify-between h-[80px] px-4 md:px-6 lg:px-8">
-          {/* Logo */}
-          <Link href="/homepage" className="flex items-center gap-2 group">
-            <img
-              src="/assets/images/logo-muscfit-v2.png"
-              alt="MUSCFIT Logo"
-              className="h-[90px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
-            />
-          </Link>
-
-          {/* Desktop Navigation - Hide on Admin Pages */}
+        <div className="relative flex items-center justify-between h-[80px] px-4 md:px-6 lg:px-8">
+          {/* Left Navigation - Desktop */}
           {!isAdminPage && (
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden md:flex items-center gap-8 flex-1">
               {/* Men Navigation Item */}
               <div className="static" ref={menDropdownRef}>
                 <button
@@ -404,8 +395,19 @@ export default function Header({ topOffset = 0 }) {
             </nav>
           )}
 
-          {/* Action Icons */}
-          <div className="flex items-center gap-4">
+          {/* Center Logo */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-full py-2 z-10">
+            <Link href="/homepage" className="flex items-center group">
+              <img
+                src="/assets/images/logo-muscfit-v2.png"
+                alt="MUSCFIT Logo"
+                className="h-[80px] md:h-[90px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
+              />
+            </Link>
+          </div>
+
+          {/* Right Action Icons */}
+          <div className="flex items-center justify-end gap-2 md:gap-4 flex-1">
             {/* Search */}
             <div className="relative" ref={searchRef}>
               <button
@@ -509,21 +511,6 @@ export default function Header({ topOffset = 0 }) {
               )}
             </div>
 
-            {/* User Profile and Logout */}
-            {user && (
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-gray-700">
-                  {user?.email}
-                </span>
-                <button
-                  onClick={handleLogout}
-                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                >
-                  Logout
-                </button>
-              </div>
-            )}
-
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -534,6 +521,7 @@ export default function Header({ topOffset = 0 }) {
             </button>
           </div>
         </div>
+
       </header>
       {/* Mobile Menu Sheet */}
       {isMobileMenuOpen && (
