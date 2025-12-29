@@ -71,7 +71,7 @@ export default function WomenCatalogInteractive() {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-[120px]">
+    <div className="min-h-screen bg-background pt-[80px]">
       {/* Mobile Filter Button */}
       <div className="lg:hidden fixed bottom-4 right-4 z-40">
         <button

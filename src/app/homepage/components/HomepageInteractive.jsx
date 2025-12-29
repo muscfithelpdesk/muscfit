@@ -35,7 +35,7 @@ export default function HomepageInteractive({ pageData }) {
   };
 
   const headerOffset = isPromoVisible ? 40 : 0;
-  const mainPaddingTop = 120 + headerOffset;
+  const mainPaddingTop = 80 + headerOffset;
 
   return (
     <div className="min-h-screen bg-background">

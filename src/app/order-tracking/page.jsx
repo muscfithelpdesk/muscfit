@@ -99,7 +99,7 @@ function OrderTrackingContent() {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className="flex items-center justify-center min-h-[80vh] pt-[120px]">
+        <div className="flex items-center justify-center min-h-[80vh] pt-[80px]">
           <div className="flex flex-col items-center gap-4">
             <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
             <p className="text-foreground text-lg">Loading order details...</p>
@@ -113,7 +113,7 @@ function OrderTrackingContent() {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className="flex items-center justify-center min-h-[80vh] pt-[120px]">
+        <div className="flex items-center justify-center min-h-[80vh] pt-[80px]">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-foreground mb-4">Order Not Found</h2>
             <p className="text-text-secondary mb-6">{error || 'Unable to load order details'}</p>
@@ -136,7 +136,7 @@ function OrderTrackingContent() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-[120px]">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-[80px]">
         {/* Order Header */}
         <div className="mb-8">
           <button

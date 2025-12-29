@@ -6,7 +6,7 @@ import Icon from '@/components/ui/AppIcon';
 
 export default function CategoryShowcase({ categories }) {
   return (
-    <section className="py-8 md:py-12 lg:py-16 bg-background">
+    <section className="py-6 md:py-10 lg:py-14 bg-background">
       <div className="max-w-full mx-auto px-4 md:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4">

@@ -77,7 +77,7 @@ export default function ShoppingCartPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-background pt-[120px]">
+      <main className="min-h-screen bg-background pt-[80px]">
         <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
           <ShoppingCartInteractive
             initialCartData={initialCartData}

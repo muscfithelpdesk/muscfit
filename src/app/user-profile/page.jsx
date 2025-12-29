@@ -168,7 +168,7 @@ export default function UserProfilePage() {
   return (
     <>
       <Header />
-      <div className="pt-[120px]">
+      <div className="pt-[80px]">
         <UserProfileInteractive initialData={mockData} />
       </div>
     </>);
