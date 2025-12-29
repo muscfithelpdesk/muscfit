@@ -108,8 +108,6 @@ export default function HomepageInteractive({ pageData }) {
 
         <TrustBadges badges={pageData?.trustBadges} />
 
-        <TrustBadges badges={pageData?.trustBadges} />
-
         <CommunityEngagement stats={pageData?.community} />
 
         <Newsletter
