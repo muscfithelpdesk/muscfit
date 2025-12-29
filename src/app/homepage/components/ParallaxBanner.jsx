@@ -11,20 +11,20 @@ export default function ParallaxBanner({ title, subtitle, ctaText, ctaHref, back
           alt={backgroundAlt}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-white/80"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
       </div>
 
       <div className="relative h-full max-w-full mx-auto px-4 md:px-6 lg:px-8 flex items-center justify-center">
-        <div className="text-center max-w-3xl">
-          <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 md:mb-6">
+        <div className="text-center max-w-4xl">
+          <h2 className="font-heading text-4xl md:text-6xl lg:text-8xl font-black text-white mb-4 md:mb-6 uppercase italic tracking-tighter leading-none shadow-xl">
             {title}
           </h2>
-          <p className="text-base md:text-lg lg:text-xl text-text-secondary mb-6 md:mb-8 line-clamp-3">
+          <p className="text-lg md:text-xl lg:text-2xl text-white/90 mb-8 md:mb-10 font-medium max-w-2xl mx-auto drop-shadow-md">
             {subtitle}
           </p>
           <Link
             href={ctaHref}
-            className="inline-flex h-12 md:h-14 px-6 md:px-8 bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold rounded-md items-center justify-center transition-all duration-250 hover:scale-[0.98] active:scale-95 text-sm md:text-base"
+            className="inline-flex h-14 md:h-16 px-8 md:px-12 bg-transparent border-2 border-white hover:bg-white hover:text-black text-white font-heading font-bold rounded-none items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 text-base md:text-lg uppercase tracking-widest"
           >
             {ctaText}
           </Link>
