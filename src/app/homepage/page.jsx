@@ -268,9 +268,9 @@ export default function Homepage() {
     brandStory: {
       title: "Built for Champions, Worn by Warriors",
       content: [
-        "MUSCFIT was born from a simple belief: athletes deserve gear that matches their dedication. Founded in 2020 by fitness enthusiasts who understood the gap between ordinary activewear and true performance gear, we set out to create something different.",
-        "Every piece in our collection is engineered with precision, tested by professional athletes, and crafted from premium materials that deliver unmatched comfort and durability. We don't just make clothes – we create tools that help you push your limits.",
-        "From compression technology that enhances blood flow to moisture-wicking fabrics that keep you dry during intense sessions, every detail is designed with your performance in mind. Join thousands of athletes who have made MUSCFIT their training partner of choice."],
+        "MUSCFIT was born from a simple belief: athletes deserve gear that matches their dedication. We create premium athletic wear engineered with precision and tested by professionals.",
+        "Every detail is designed with your performance in mind. Join the community of athletes who choose MUSCFIT."
+      ],
 
       image: "https://img.rocket.new/generatedImages/rocket_gen_img_129733409-1764779896324.png",
       imageAlt: "Diverse group of athletes wearing MUSCFIT apparel celebrating together in gym"
