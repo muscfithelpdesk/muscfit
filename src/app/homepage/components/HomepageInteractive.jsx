@@ -35,7 +35,7 @@ export default function HomepageInteractive({ pageData }) {
   };
 
   const headerOffset = isPromoVisible ? 40 : 0;
-  const mainPaddingTop = 100 + headerOffset;
+  const mainPaddingTop = 120 + headerOffset;
 
   return (
     <div className="min-h-screen bg-background">
@@ -158,7 +158,7 @@ function SplashModal() {
           <div className="w-full max-w-[300px]">
             {/* Using standard img tag for simplicity within this internal component definition, or ensure AppImage is available */}
             <img
-              src="/assets/images/logo-muscfit-new.png"
+              src="/assets/images/logo-muscfit-v2.png"
               alt="Muscfit Logo"
               className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] scale-125"
             />
