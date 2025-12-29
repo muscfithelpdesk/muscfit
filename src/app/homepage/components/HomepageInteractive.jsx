@@ -40,7 +40,7 @@ export default function HomepageInteractive({ pageData }) {
           backgroundAlt={pageData?.hero?.backgroundAlt}
         />
 
-        <FeaturesGrid features={pageData?.features} />
+
 
         <CategoryShowcase categories={pageData?.categories} />
 
@@ -60,6 +60,8 @@ export default function HomepageInteractive({ pageData }) {
           backgroundImage={pageData?.parallaxBanner?.backgroundImage}
           backgroundAlt={pageData?.parallaxBanner?.backgroundAlt}
         />
+
+        <FeaturesGrid features={pageData?.features} />
 
         <FeaturedProducts
           title={pageData?.newArrivals?.title}
