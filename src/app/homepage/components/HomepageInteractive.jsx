@@ -56,7 +56,7 @@ export default function HomepageInteractive({ pageData }) {
           onDismiss={handleDismissPromo}
         />
       </div>
-      <main className="pt-[120px]">
+      <main>
         <HeroSection
           title={pageData?.hero?.title}
           subtitle={pageData?.hero?.subtitle}

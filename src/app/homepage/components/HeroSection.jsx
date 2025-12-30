@@ -4,19 +4,19 @@ import AppImage from '@/components/ui/AppImage';
 
 export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary, backgroundImage, backgroundAlt }) {
   return (
-    <section className="relative w-full h-[75vh] min-h-[600px] overflow-hidden group perspective-1000">
+    <section className="relative w-full h-screen overflow-hidden group perspective-1000">
       <div className="absolute inset-0">
         <AppImage
           src={backgroundImage}
           alt={backgroundAlt}
-          className="w-full h-full object-cover object-top transition-transform duration-[3s] group-hover:scale-110 preserve-3d backface-hidden"
+          className="w-full h-full object-cover object-center transition-transform duration-[3s] group-hover:scale-110 preserve-3d backface-hidden"
           priority
         />
         {/* Graded overlay for premium feel */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60"></div>
       </div>
 
-      <div className="relative h-full w-full flex flex-col justify-center items-center text-center px-4 md:px-6 lg:px-8">
+      <div className="relative h-full w-full flex flex-col justify-center items-center text-center px-4 md:px-6 lg:px-8 pt-[120px]">
         <div className="max-w-7xl mx-auto w-full animate-fade-in-up preserve-3d float-3d">
           <h1 className="font-heading text-6xl md:text-8xl lg:text-9xl font-black text-white mb-2 tracking-tighter uppercase italic drop-shadow-2xl">
             {title}
