@@ -4,6 +4,8 @@ import { useState } from 'react';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
 
+import PropTypes from 'prop-types';
+
 export default function QuickViewModal({ product, onClose }) {
     const [selectedSize, setSelectedSize] = useState('M');
     const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
@@ -25,8 +27,8 @@ export default function QuickViewModal({ product, onClose }) {
                 {/* Image Section */}
                 <div className="md:w-1/2 h-[300px] md:h-auto bg-[#F7F7F7]">
                     <AppImage
-                        src={product.image}
-                        alt={product.imageAlt}
+                        src={product?.image}
+                        alt={product?.imageAlt || product?.name}
                         className="w-full h-full object-cover"
                     />
                 </div>
@@ -35,11 +37,11 @@ export default function QuickViewModal({ product, onClose }) {
                 <div className="md:w-1/2 p-6 md:p-10 flex flex-col overflow-y-auto">
                     <div className="mb-6">
                         <p className="text-xs font-bold text-gray-400 tracking-widest uppercase mb-2">MUSCFIT PERFORMANCE</p>
-                        <h2 className="text-2xl md:text-3xl font-extrabold text-[#112D4E] uppercase mb-3">{product.name}</h2>
+                        <h2 className="text-2xl md:text-3xl font-extrabold text-[#112D4E] uppercase mb-3">{product?.name}</h2>
                         <div className="flex items-center gap-4">
-                            <span className="text-2xl font-bold text-gray-900">₹{product.price}</span>
-                            {product.originalPrice && (
-                                <span className="text-lg text-gray-400 line-through">₹{product.originalPrice}</span>
+                            <span className="text-2xl font-bold text-gray-900">₹{product?.price}</span>
+                            {product?.originalPrice && (
+                                <span className="text-lg text-gray-400 line-through">₹{product?.originalPrice}</span>
                             )}
                         </div>
                     </div>
@@ -71,7 +73,7 @@ export default function QuickViewModal({ product, onClose }) {
                             Add to Cart
                         </button>
                         <button
-                            onClick={() => window.location.href = `/product-details?id=${product.id}`}
+                            onClick={() => window.location.href = `/product-details?id=${product?.id}`}
                             className="w-full py-4 bg-transparent border-2 border-gray-200 text-gray-900 font-bold uppercase tracking-widest hover:border-gray-900 transition-colors"
                         >
                             View Full Details
@@ -82,3 +84,15 @@ export default function QuickViewModal({ product, onClose }) {
         </div>
     );
 }
+
+QuickViewModal.propTypes = {
+    product: PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+        name: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        imageAlt: PropTypes.string,
+        price: PropTypes.number.isRequired,
+        originalPrice: PropTypes.number,
+    }).isRequired,
+    onClose: PropTypes.func.isRequired,
+};

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@/components/ui/AppIcon';
 
-export default function PromoBar({ message, dismissible, isVisible, onDismiss }) {
+export default function PromoBar({ message, dismissible, isVisible = true, onDismiss }) {
   if (!isVisible) return null;
 
   return (
@@ -33,6 +33,6 @@ export default function PromoBar({ message, dismissible, isVisible, onDismiss })
 PromoBar.propTypes = {
   message: PropTypes.string.isRequired,
   dismissible: PropTypes.bool,
-  isVisible: PropTypes.bool.isRequired,
-  onDismiss: PropTypes.func.isRequired
+  isVisible: PropTypes.bool,
+  onDismiss: PropTypes.func
 };

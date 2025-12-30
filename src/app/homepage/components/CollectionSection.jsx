@@ -4,6 +4,8 @@ import { useState, useRef } from 'react';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
 
+import PropTypes from 'prop-types';
+
 export default function CollectionSection({ title, subtitle, tabs, products, onQuickView }) {
     const [activeTab, setActiveTab] = useState(tabs[0]?.name);
     const scrollRef = useRef(null);
@@ -31,7 +33,7 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
                     </div>
 
                     <nav className="flex flex-wrap gap-4 md:gap-8 mt-6 md:mt-0 font-bold text-xs md:text-sm tracking-widest text-gray-400">
-                        {tabs.map((tab) => (
+                        {tabs?.map((tab) => (
                             <button
                                 key={tab.name}
                                 onClick={() => setActiveTab(tab.name)}
@@ -92,8 +94,8 @@ function ModernProductCard({ product, onQuickView }) {
         >
             <div className="relative aspect-[3/4] overflow-hidden bg-[#F2F2F2] mb-4">
                 <AppImage
-                    src={product.image}
-                    alt={product.imageAlt}
+                    src={product?.image}
+                    alt={product?.imageAlt || product?.name}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
@@ -111,13 +113,34 @@ function ModernProductCard({ product, onQuickView }) {
                 </button>
             </div>
 
-            <div className="space-y-1" onClick={() => window.location.href = `/product-details?id=${product.id}`}>
+            <div className="space-y-1" onClick={() => window.location.href = `/product-details?id=${product?.id}`}>
                 <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide group-hover:text-blue-900 transition-colors">
-                    {product.name}
+                    {product?.name}
                 </h3>
                 <p className="text-[10px] md:text-xs text-gray-400 font-medium">PREMIUM FIT</p>
-                <p className="text-sm font-bold text-gray-900 mt-2">₹{product.price}</p>
+                <p className="text-sm font-bold text-gray-900 mt-2">₹{product?.price}</p>
             </div>
         </div>
     );
 }
+
+CollectionSection.propTypes = {
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired,
+    tabs: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired
+    })).isRequired,
+    products: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onQuickView: PropTypes.func.isRequired
+};
+
+ModernProductCard.propTypes = {
+    product: PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+        name: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        imageAlt: PropTypes.string,
+        price: PropTypes.number.isRequired
+    }).isRequired,
+    onQuickView: PropTypes.func.isRequired
+};
