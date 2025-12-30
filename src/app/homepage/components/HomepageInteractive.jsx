@@ -6,7 +6,6 @@ import Header from '@/components/common/Header';
 import PromoBar from './PromoBar';
 import HeroSection from './HeroSection';
 import FeaturesGrid from './FeaturesGrid';
-import CategoryShowcase from './CategoryShowcase';
 import FeaturedProducts from './FeaturedProducts';
 import StatsCounter from './StatsCounter';
 import ParallaxBanner from './ParallaxBanner';
@@ -17,9 +16,14 @@ import TrustBadges from './TrustBadges';
 import CommunityEngagement from './CommunityEngagement';
 import Newsletter from './Newsletter';
 import Footer from './Footer';
+import CollectionSection from './CollectionSection';
+import QuickViewModal from './QuickViewModal';
+
 
 export default function HomepageInteractive({ pageData }) {
   const [isPromoVisible, setIsPromoVisible] = useState(true);
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,7 +41,11 @@ export default function HomepageInteractive({ pageData }) {
   const headerOffset = isPromoVisible ? 40 : 0;
   const mainPaddingTop = 80 + headerOffset;
 
+  // Filter categories to remove "Shop Men" as requested
+  const filteredCategories = pageData?.categories?.filter(cat => cat.name !== "Shop Men");
+
   return (
+
     <div className="min-h-screen bg-background">
       <div className="fixed top-0 left-0 right-0 z-50">
         <Header isFixed={false} />
@@ -60,7 +68,47 @@ export default function HomepageInteractive({ pageData }) {
 
 
 
-        <CategoryShowcase categories={pageData?.categories} />
+
+        <CollectionSection
+          title="MEN'S"
+          subtitle="SHOP"
+          tabs={[
+            { name: 'WINTER-ARC' },
+            { name: "MEN'S TSHIRTS" },
+            { name: 'JOGGERS' },
+            { name: 'STRINGERS' },
+            { name: 'SHORTS' },
+          ]}
+          products={pageData?.featuredProducts?.products?.filter((_, i) => i % 2 === 0)}
+          onQuickView={(p) => setQuickViewProduct(p)}
+        />
+
+        <CollectionSection
+          title="WOMEN'S"
+          subtitle="SHOP"
+          tabs={[
+            { name: 'LEGGINGS' },
+            { name: 'SPORTS BRAS' },
+            { name: 'TOPS' },
+            { name: 'SHORTS' },
+          ]}
+          products={pageData?.featuredProducts?.products?.filter((_, i) => i % 2 !== 0)}
+          onQuickView={(p) => setQuickViewProduct(p)}
+        />
+
+        <CollectionSection
+          title="COMPRESSION"
+          subtitle="EXPLORE"
+          tabs={[
+            { name: 'TOPS' },
+            { name: 'BOTTOMS' },
+            { name: 'FULL BODY' },
+            { name: 'ACCESSORIES' },
+          ]}
+          products={pageData?.featuredProducts?.products}
+          onQuickView={(p) => setQuickViewProduct(p)}
+        />
+
 
         <FeaturedProducts
           title={pageData?.featuredProducts?.title}
@@ -123,7 +171,15 @@ export default function HomepageInteractive({ pageData }) {
           paymentMethods={pageData?.footer?.paymentMethods}
         />
 
+        {quickViewProduct && (
+          <QuickViewModal
+            product={quickViewProduct}
+            onClose={() => setQuickViewProduct(null)}
+          />
+        )}
+
         <SplashModal />
+
       </main>
     </div>
   );
