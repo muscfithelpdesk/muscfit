@@ -33,16 +33,19 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
   return (
     <div className="w-full">
       {/* Product Title & Badge */}
-      <div className="mb-4">
+      <div className="mb-6">
         {product?.badge && (
-          <span className="inline-block px-3 py-1 bg-primary text-primary-foreground text-xs font-caption font-bold uppercase tracking-wider rounded-sm mb-3">
+          <span className="inline-block px-4 py-1.5 glass-effect text-[#112D4E] text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-4 premium-shadow">
             {product?.badge}
           </span>
         )}
-        <h1 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2">
+        <h1 className="font-heading text-4xl lg:text-5xl font-black text-premium mb-3 tracking-tighter">
           {product?.name}
         </h1>
-        <p className="text-sm md:text-base text-text-secondary">{product?.category}</p>
+        <div className="flex items-center gap-2">
+          <span className="h-0.5 w-8 bg-black"></span>
+          <p className="text-xs font-bold tracking-[0.15em] text-gray-400 uppercase">{product?.category}</p>
+        </div>
       </div>
       {/* Rating & Reviews */}
       <div className="flex items-center gap-3 mb-6 pb-6 border-b border-border">
@@ -91,10 +94,9 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
             <button
               key={color?.name}
               onClick={() => setSelectedColor(color)}
-              className={`w-10 h-10 rounded-full transition-all duration-250 ${
-                selectedColor?.name === color?.name
-                  ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-110' :'hover:scale-110'
-              }`}
+              className={`w-10 h-10 rounded-full transition-all duration-250 ${selectedColor?.name === color?.name
+                  ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-110' : 'hover:scale-110'
+                }`}
               style={{ backgroundColor: color?.hex }}
               aria-label={`Select ${color?.name} color`}
             />
@@ -120,13 +122,12 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
               key={size}
               onClick={() => setSelectedSize(size)}
               disabled={!product?.availableSizes?.includes(size)}
-              className={`h-12 font-heading font-semibold text-sm rounded-sm transition-all duration-250 ${
-                selectedSize === size
+              className={`h-12 font-heading font-semibold text-sm rounded-sm transition-all duration-250 ${selectedSize === size
                   ? 'bg-primary text-primary-foreground'
                   : product?.availableSizes?.includes(size)
-                  ? 'bg-surface text-foreground hover:bg-muted'
-                  : 'bg-muted text-text-secondary cursor-not-allowed opacity-50'
-              }`}
+                    ? 'bg-surface text-foreground hover:bg-muted'
+                    : 'bg-muted text-text-secondary cursor-not-allowed opacity-50'
+                }`}
             >
               {size}
             </button>
@@ -207,11 +208,10 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
         </button>
         <button
           onClick={onToggleWishlist}
-          className={`h-14 w-14 sm:w-auto sm:px-6 rounded-md transition-all duration-250 hover:scale-[0.98] active:scale-95 flex items-center justify-center ${
-            isInWishlist
+          className={`h-14 w-14 sm:w-auto sm:px-6 rounded-md transition-all duration-250 hover:scale-[0.98] active:scale-95 flex items-center justify-center ${isInWishlist
               ? 'bg-primary text-primary-foreground'
               : 'bg-surface hover:bg-muted text-foreground'
-          }`}
+            }`}
           aria-label="Add to wishlist"
         >
           <Icon name="HeartIcon" size={24} variant={isInWishlist ? 'solid' : 'outline'} />

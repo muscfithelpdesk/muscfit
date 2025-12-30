@@ -20,17 +20,16 @@ export default function ImageGallery({ images }) {
   return (
     <div className="w-full">
       {/* Main Image Display */}
-      <div className="relative w-full aspect-[3/4] bg-surface rounded-md overflow-hidden mb-4">
+      <div className="relative w-full aspect-[3/4] bg-surface rounded-md overflow-hidden mb-4 perspective-1000">
         <div
-          className={`relative w-full h-full cursor-zoom-in ${isZoomed ? 'cursor-zoom-out' : ''}`}
+          className={`relative w-full h-full cursor-zoom-in preserve-3d transition-transform duration-700 tilt-3d ${isZoomed ? 'cursor-zoom-out' : ''}`}
           onClick={() => setIsZoomed(!isZoomed)}
         >
           <AppImage
             src={images?.[selectedImage]?.url || ''}
             alt={images?.[selectedImage]?.alt || 'Product image'}
-            className={`w-full h-full object-cover transition-transform duration-500 ${
-              isZoomed ? 'scale-150' : 'scale-100'
-            }`}
+            className={`w-full h-full object-cover transition-transform duration-500 backface-hidden ${isZoomed ? 'scale-150' : 'scale-100'
+              }`}
           />
         </div>
 
@@ -73,10 +72,9 @@ export default function ImageGallery({ images }) {
           <button
             key={index}
             onClick={() => setSelectedImage(index)}
-            className={`relative w-full aspect-square bg-surface rounded-sm overflow-hidden transition-all duration-250 ${
-              selectedImage === index
-                ? 'ring-2 ring-primary scale-105' :'hover:ring-2 hover:ring-border hover:scale-105'
-            }`}
+            className={`relative w-full aspect-square bg-surface rounded-sm overflow-hidden transition-all duration-250 ${selectedImage === index
+                ? 'ring-2 ring-primary scale-105' : 'hover:ring-2 hover:ring-border hover:scale-105'
+              }`}
           >
             <AppImage
               src={image?.url}

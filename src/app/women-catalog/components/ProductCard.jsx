@@ -41,24 +41,34 @@ export default function ProductCard({ product }) {
     : 0;
 
   return (
-    <Link href={`/product-details?id=${product?.id}`} className="group">
-      <div className="bg-card rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden border border-border">
+    <Link href={`/product-details?id=${product?.id}`} className="group perspective-1000">
+      <div className="bg-card rounded-xl shadow-sharp hover:premium-shadow transition-all duration-500 overflow-hidden border border-border/50 preserve-3d tilt-3d">
         {/* Product Image */}
-        <div className="relative aspect-square overflow-hidden bg-muted">
+        <div className="relative aspect-[3/4] overflow-hidden bg-muted">
           <img
             src={primaryImage?.imageUrl || '/assets/images/no_image.png'}
             alt={primaryImage?.altText || product?.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 backface-hidden"
           />
+
+          {/* Glass Overlay for interactive feel */}
+          <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+          {/* Quick Add Overlay */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-10">
+            <button className="w-full py-2.5 glass-effect text-[#112D4E] font-bold text-xs uppercase tracking-[0.1em] rounded-lg shadow-lg hover:bg-white transition-colors">
+              Add to Bag
+            </button>
+          </div>
 
           {/* Wishlist Button */}
           <button
             onClick={handleWishlistToggle}
             disabled={isLoading}
-            className="absolute top-3 right-3 w-10 h-10 bg-card/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-muted transition-colors z-10"
+            className="absolute top-3 right-3 w-10 h-10 glass-effect rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all z-20"
           >
             <svg
-              className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'fill-none text-text-secondary'}`}
+              className={`w-5 h-5 transition-colors ${isWishlisted ? 'fill-red-500 text-red-500' : 'fill-none text-gray-800'}`}
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
@@ -69,11 +79,11 @@ export default function ProductCard({ product }) {
           {/* Tag Badge */}
           {product?.tag && (
             <div className="absolute top-3 left-3 z-10">
-              <span className={`px-3 py-1 text-xs font-semibold rounded-full ${product?.tag === 'BESTSELLER' ? 'bg-yellow-500 text-white' :
-                  product?.tag === 'NEW' ? 'bg-blue-500 text-white' :
-                    product?.tag === 'SALE' ? 'bg-red-500 text-white' :
-                      product?.tag === 'HOT' ? 'bg-orange-500 text-white' :
-                        product?.tag === 'TRENDING' ? 'bg-purple-500 text-white' : 'bg-gray-500 text-white'
+              <span className={`px-4 py-1.5 text-[10px] font-bold rounded-full premium-shadow glass-effect ${product?.tag === 'BESTSELLER' ? 'text-blue-900' :
+                  product?.tag === 'NEW' ? 'text-green-900' :
+                    product?.tag === 'SALE' ? 'text-red-900' :
+                      product?.tag === 'HOT' ? 'text-orange-900' :
+                        'text-gray-900'
                 }`}>
                 {product?.tag}
               </span>
@@ -83,7 +93,7 @@ export default function ProductCard({ product }) {
           {/* Discount Badge */}
           {hasDiscount && (
             <div className="absolute bottom-3 left-3 z-10">
-              <span className="px-3 py-1 bg-green-500 text-white text-xs font-semibold rounded-full">
+              <span className="px-3 py-1 bg-black text-white text-[10px] font-bold rounded-full premium-shadow">
                 {discountPercentage}% OFF
               </span>
             </div>
@@ -91,32 +101,31 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Product Info */}
-        <div className="p-4">
-          <h3 className="text-lg font-semibold text-foreground mb-1 line-clamp-2">
+        <div className="p-5">
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{product?.brand || 'MUSCFIT PREMIUM'}</p>
+          <h3 className="text-base font-bold text-[#112D4E] mb-2 leading-tight group-hover:text-blue-700 transition-colors line-clamp-2">
             {product?.name}
           </h3>
 
-          <p className="text-sm text-text-secondary mb-2">{product?.brand}</p>
-
           {/* Rating */}
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-1.5 mb-3">
             <div className="flex items-center">
-              <svg className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 text-orange-400 fill-current" viewBox="0 0 20 20">
                 <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
               </svg>
-              <span className="ml-1 text-sm font-medium text-foreground">{product?.rating}</span>
+              <span className="ml-1 text-xs font-bold text-gray-700">{product?.rating}</span>
             </div>
-            <span className="text-sm text-text-secondary">({product?.reviewCount})</span>
+            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">({product?.reviewCount} reviews)</span>
           </div>
 
           {/* Price */}
-          <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold text-foreground">
-              ₹{product?.price?.toFixed(0)}
+          <div className="flex items-baseline gap-2 mt-auto">
+            <span className="text-lg font-black text-[#112D4E]">
+              ₹{product?.price?.toLocaleString()}
             </span>
             {hasDiscount && (
-              <span className="text-sm text-text-secondary line-through">
-                ₹{product?.originalPrice?.toFixed(0)}
+              <span className="text-sm text-gray-400 font-medium line-through">
+                ₹{product?.originalPrice?.toLocaleString()}
               </span>
             )}
           </div>

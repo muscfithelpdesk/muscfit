@@ -85,30 +85,42 @@ export default function MenCatalogInteractive() {
         </button>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Men's Athletic Wear</h1>
-          <p className="text-text-secondary">Premium fitness apparel designed for peak performance</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        {/* Page Header with 3D Float Effect */}
+        <div className="relative mb-12 text-center lg:text-left overflow-hidden">
+          <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-100 rounded-full blur-[100px] opacity-50 float-3d"></div>
+          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-gray-100 rounded-full blur-[100px] opacity-50 float-3d animation-delay-2000"></div>
+
+          <div className="relative z-10">
+            <h1 className="text-5xl md:text-7xl font-black text-premium mb-4 tracking-tighter uppercase italic">
+              Men's Collection
+            </h1>
+            <div className="flex flex-col md:flex-row items-center gap-4">
+              <span className="h-1 w-20 bg-black hidden md:block"></span>
+              <p className="text-sm md:text-base font-bold text-gray-400 tracking-[0.3em] uppercase">
+                Premium fitness apparel designed for peak performance
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative">
+        {/* Search Bar with Glass Effect */}
+        <div className="mb-12">
+          <div className="relative max-w-2xl mx-auto lg:mx-0">
             <input
               type="text"
-              placeholder="Search men's products..."
+              placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => handleSearch(e?.target?.value)}
-              className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-6 py-4 pl-14 bg-white border-0 rounded-2xl premium-shadow focus:outline-none focus:ring-2 focus:ring-[#112D4E] transition-all text-sm font-bold tracking-wide"
             />
             <svg
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+              className="absolute left-6 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#112D4E]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
         </div>
