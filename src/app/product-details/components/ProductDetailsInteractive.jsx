@@ -51,67 +51,67 @@ export default function ProductDetailsInteractive({ productData, reviewsData, re
 }
 
 ProductDetailsInteractive.propTypes = {
-  productData: PropTypes?.shape({
-    id: PropTypes?.number?.isRequired,
-    name: PropTypes?.string?.isRequired,
-    category: PropTypes?.string?.isRequired,
-    price: PropTypes?.number?.isRequired,
-    originalPrice: PropTypes?.number,
-    discount: PropTypes?.number,
-    rating: PropTypes?.number?.isRequired,
-    reviewCount: PropTypes?.number?.isRequired,
-    badge: PropTypes?.string,
-    images: PropTypes?.arrayOf(
-      PropTypes?.shape({
-        url: PropTypes?.string?.isRequired,
-        alt: PropTypes?.string?.isRequired,
+  productData: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    originalPrice: PropTypes.number,
+    discount: PropTypes.number,
+    rating: PropTypes.number.isRequired,
+    reviewCount: PropTypes.number.isRequired,
+    badge: PropTypes.string,
+    images: PropTypes.arrayOf(
+      PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        alt: PropTypes.string.isRequired,
       })
-    )?.isRequired,
-    colors: PropTypes?.arrayOf(
-      PropTypes?.shape({
-        name: PropTypes?.string?.isRequired,
-        hex: PropTypes?.string?.isRequired,
+    ).isRequired,
+    colors: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        hex: PropTypes.string.isRequired,
       })
-    )?.isRequired,
-    sizes: PropTypes?.arrayOf(PropTypes?.string)?.isRequired,
-    availableSizes: PropTypes?.arrayOf(PropTypes?.string)?.isRequired,
-    features: PropTypes?.arrayOf(PropTypes?.string)?.isRequired,
-    description: PropTypes?.string?.isRequired,
-  })?.isRequired,
-  reviewsData: PropTypes?.shape({
-    reviews: PropTypes?.arrayOf(
-      PropTypes?.shape({
-        id: PropTypes?.number?.isRequired,
-        userName: PropTypes?.string?.isRequired,
-        userImage: PropTypes?.string?.isRequired,
-        rating: PropTypes?.number?.isRequired,
-        title: PropTypes?.string?.isRequired,
-        comment: PropTypes?.string?.isRequired,
-        date: PropTypes?.string?.isRequired,
-        verified: PropTypes?.bool?.isRequired,
-        helpfulCount: PropTypes?.number?.isRequired,
-        images: PropTypes?.arrayOf(
-          PropTypes?.shape({
-            url: PropTypes?.string?.isRequired,
-            alt: PropTypes?.string?.isRequired,
+    ).isRequired,
+    sizes: PropTypes.arrayOf(PropTypes.string).isRequired,
+    availableSizes: PropTypes.arrayOf(PropTypes.string).isRequired,
+    features: PropTypes.arrayOf(PropTypes.string).isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
+  reviewsData: PropTypes.shape({
+    reviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        userName: PropTypes.string.isRequired,
+        userImage: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        comment: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        verified: PropTypes.bool.isRequired,
+        helpfulCount: PropTypes.number.isRequired,
+        images: PropTypes.arrayOf(
+          PropTypes.shape({
+            url: PropTypes.string.isRequired,
+            alt: PropTypes.string.isRequired,
           })
         ),
       })
-    )?.isRequired,
-    averageRating: PropTypes?.number?.isRequired,
-    totalReviews: PropTypes?.number?.isRequired,
-  })?.isRequired,
-  relatedProductsData: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      name: PropTypes?.string?.isRequired,
-      image: PropTypes?.string?.isRequired,
-      alt: PropTypes?.string?.isRequired,
-      price: PropTypes?.number?.isRequired,
-      originalPrice: PropTypes?.number,
-      rating: PropTypes?.number?.isRequired,
-      reviewCount: PropTypes?.number?.isRequired,
-      badge: PropTypes?.string,
+    ).isRequired,
+    averageRating: PropTypes.number.isRequired,
+    totalReviews: PropTypes.number.isRequired,
+  }).isRequired,
+  relatedProductsData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      originalPrice: PropTypes.number,
+      rating: PropTypes.number.isRequired,
+      reviewCount: PropTypes.number.isRequired,
+      badge: PropTypes.string,
     })
-  )?.isRequired,
+  ).isRequired,
 };

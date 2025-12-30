@@ -208,12 +208,12 @@ export default function PersonalInfoSection({ userData, onSave }) {
 }
 
 PersonalInfoSection.propTypes = {
-  userData: PropTypes?.shape({
-    name: PropTypes?.string?.isRequired,
-    email: PropTypes?.string?.isRequired,
-    phone: PropTypes?.string?.isRequired,
-    dateOfBirth: PropTypes?.string,
-    gender: PropTypes?.string,
-  })?.isRequired,
-  onSave: PropTypes?.func?.isRequired,
+  userData: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    dateOfBirth: PropTypes.string,
+    gender: PropTypes.string,
+  }).isRequired,
+  onSave: PropTypes.func.isRequired,
 };

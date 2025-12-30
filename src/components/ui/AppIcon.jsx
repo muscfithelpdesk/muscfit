@@ -43,12 +43,12 @@ function Icon({
 }
 
 Icon.propTypes = {
-    name: PropTypes?.string?.isRequired,
-    variant: PropTypes?.oneOf(['outline', 'solid']),
-    size: PropTypes?.number,
-    className: PropTypes?.string,
-    onClick: PropTypes?.func,
-    disabled: PropTypes?.bool,
+    name: PropTypes.string.isRequired,
+    variant: PropTypes.oneOf(['outline', 'solid']),
+    size: PropTypes.number,
+    className: PropTypes.string,
+    onClick: PropTypes.func,
+    disabled: PropTypes.bool,
 };
 
 export default Icon;

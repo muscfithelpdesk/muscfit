@@ -168,17 +168,17 @@ export default function UserProfileInteractive({ initialData }) {
 }
 
 UserProfileInteractive.propTypes = {
-  initialData: PropTypes?.shape({
-    userData: PropTypes?.shape({
-      name: PropTypes?.string?.isRequired,
-      email: PropTypes?.string?.isRequired,
-      phone: PropTypes?.string?.isRequired,
-      dateOfBirth: PropTypes?.string,
-      gender: PropTypes?.string,
-    })?.isRequired,
-    orders: PropTypes?.array?.isRequired,
-    wishlistItems: PropTypes?.array?.isRequired,
-    addresses: PropTypes?.array?.isRequired,
-    settings: PropTypes?.object?.isRequired,
-  })?.isRequired,
+  initialData: PropTypes.shape({
+    userData: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      phone: PropTypes.string.isRequired,
+      dateOfBirth: PropTypes.string,
+      gender: PropTypes.string,
+    }).isRequired,
+    orders: PropTypes.array.isRequired,
+    wishlistItems: PropTypes.array.isRequired,
+    addresses: PropTypes.array.isRequired,
+    settings: PropTypes.object.isRequired,
+  }).isRequired,
 };

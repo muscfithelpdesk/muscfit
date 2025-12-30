@@ -42,5 +42,5 @@ export default function SocialAuth({ isLoading }) {
 }
 
 SocialAuth.propTypes = {
-  isLoading: PropTypes?.bool?.isRequired
+  isLoading: PropTypes.bool.isRequired
 };

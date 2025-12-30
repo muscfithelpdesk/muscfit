@@ -32,8 +32,8 @@ export default function BrandStory({ title, content, image, imageAlt }) {
 }
 
 BrandStory.propTypes = {
-  title: PropTypes?.string?.isRequired,
-  content: PropTypes?.arrayOf(PropTypes?.string)?.isRequired,
-  image: PropTypes?.string?.isRequired,
-  imageAlt: PropTypes?.string?.isRequired
+  title: PropTypes.string.isRequired,
+  content: PropTypes.arrayOf(PropTypes.string).isRequired,
+  image: PropTypes.string.isRequired,
+  imageAlt: PropTypes.string.isRequired
 };

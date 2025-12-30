@@ -138,19 +138,19 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
 }
 
 ProductCard.propTypes = {
-  product: PropTypes?.shape({
-    id: PropTypes?.string?.isRequired,
-    name: PropTypes?.string?.isRequired,
-    category: PropTypes?.string?.isRequired,
-    price: PropTypes?.number?.isRequired,
-    originalPrice: PropTypes?.number,
-    image: PropTypes?.string?.isRequired,
-    alt: PropTypes?.string?.isRequired,
-    rating: PropTypes?.number?.isRequired,
-    reviewCount: PropTypes?.number?.isRequired,
-    tag: PropTypes?.oneOf(['BESTSELLER', 'NEW', 'SALE', 'TRENDING', 'HOT']),
-    isWishlisted: PropTypes?.bool?.isRequired
-  })?.isRequired,
-  onWishlistToggle: PropTypes?.func?.isRequired,
-  onQuickAdd: PropTypes?.func?.isRequired
+  product: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    originalPrice: PropTypes.number,
+    image: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    reviewCount: PropTypes.number.isRequired,
+    tag: PropTypes.oneOf(['BESTSELLER', 'NEW', 'SALE', 'TRENDING', 'HOT']),
+    isWishlisted: PropTypes.bool.isRequired
+  }).isRequired,
+  onWishlistToggle: PropTypes.func.isRequired,
+  onQuickAdd: PropTypes.func.isRequired
 };

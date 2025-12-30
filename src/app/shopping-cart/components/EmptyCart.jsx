@@ -97,14 +97,14 @@ export default function EmptyCart({ recommendedProducts }) {
 }
 
 EmptyCart.propTypes = {
-  recommendedProducts: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      name: PropTypes?.string?.isRequired,
-      price: PropTypes?.number?.isRequired,
-      originalPrice: PropTypes?.number,
-      image: PropTypes?.string?.isRequired,
-      alt: PropTypes?.string?.isRequired,
+  recommendedProducts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      originalPrice: PropTypes.number,
+      image: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
     })
   ),
 };

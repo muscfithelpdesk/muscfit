@@ -29,12 +29,12 @@ export default function FeaturesGrid({ features }) {
 }
 
 FeaturesGrid.propTypes = {
-  features: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      icon: PropTypes?.string?.isRequired,
-      title: PropTypes?.string?.isRequired,
-      description: PropTypes?.string?.isRequired
+  features: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      icon: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired
     })
-  )?.isRequired
+  ).isRequired
 };

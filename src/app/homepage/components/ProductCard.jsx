@@ -97,15 +97,15 @@ export default function ProductCard({ product }) {
 }
 
 ProductCard.propTypes = {
-  product: PropTypes?.shape({
-    id: PropTypes?.number?.isRequired,
-    name: PropTypes?.string?.isRequired,
-    price: PropTypes?.number?.isRequired,
-    originalPrice: PropTypes?.number,
-    image: PropTypes?.string?.isRequired,
-    imageAlt: PropTypes?.string?.isRequired,
-    tag: PropTypes?.string,
-    rating: PropTypes?.number?.isRequired,
-    reviews: PropTypes?.number?.isRequired
-  })?.isRequired
+  product: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    originalPrice: PropTypes.number,
+    image: PropTypes.string.isRequired,
+    imageAlt: PropTypes.string.isRequired,
+    tag: PropTypes.string,
+    rating: PropTypes.number.isRequired,
+    reviews: PropTypes.number.isRequired
+  }).isRequired
 };

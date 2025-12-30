@@ -150,5 +150,5 @@ export default function AuthInteractive({ initialMode }) {
 }
 
 AuthInteractive.propTypes = {
-  initialMode: PropTypes?.oneOf(['login', 'register'])?.isRequired
+  initialMode: PropTypes.oneOf(['login', 'register']).isRequired
 };

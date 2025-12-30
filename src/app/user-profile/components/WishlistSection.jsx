@@ -144,18 +144,18 @@ export default function WishlistSection({ wishlistItems, onRemove, onAddToCart }
 }
 
 WishlistSection.propTypes = {
-  wishlistItems: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.string?.isRequired,
-      name: PropTypes?.string?.isRequired,
-      image: PropTypes?.string?.isRequired,
-      alt: PropTypes?.string?.isRequired,
-      price: PropTypes?.number?.isRequired,
-      originalPrice: PropTypes?.number,
-      discount: PropTypes?.number,
-      inStock: PropTypes?.bool?.isRequired,
+  wishlistItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      originalPrice: PropTypes.number,
+      discount: PropTypes.number,
+      inStock: PropTypes.bool.isRequired,
     })
-  )?.isRequired,
-  onRemove: PropTypes?.func?.isRequired,
-  onAddToCart: PropTypes?.func?.isRequired,
+  ).isRequired,
+  onRemove: PropTypes.func.isRequired,
+  onAddToCart: PropTypes.func.isRequired,
 };

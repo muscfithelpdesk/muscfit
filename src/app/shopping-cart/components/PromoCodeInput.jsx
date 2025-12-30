@@ -117,5 +117,5 @@ export default function PromoCodeInput({ onPromoApplied }) {
 }
 
 PromoCodeInput.propTypes = {
-  onPromoApplied: PropTypes?.func
+  onPromoApplied: PropTypes.func
 };

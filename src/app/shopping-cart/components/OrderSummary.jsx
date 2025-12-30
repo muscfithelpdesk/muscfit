@@ -129,11 +129,11 @@ export default function OrderSummary({ items }) {
 }
 
 OrderSummary.propTypes = {
-  subtotal: PropTypes?.number?.isRequired,
-  shipping: PropTypes?.number?.isRequired,
-  discount: PropTypes?.number?.isRequired,
-  tax: PropTypes?.number?.isRequired,
-  total: PropTypes?.number?.isRequired,
-  isExpressShipping: PropTypes?.bool?.isRequired,
-  onToggleExpressShipping: PropTypes?.func?.isRequired,
+  subtotal: PropTypes.number.isRequired,
+  shipping: PropTypes.number.isRequired,
+  discount: PropTypes.number.isRequired,
+  tax: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  isExpressShipping: PropTypes.bool.isRequired,
+  onToggleExpressShipping: PropTypes.func.isRequired,
 };

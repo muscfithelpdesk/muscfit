@@ -196,25 +196,25 @@ export default function CustomerReviews({ reviews, averageRating, totalReviews }
 }
 
 CustomerReviews.propTypes = {
-  reviews: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      userName: PropTypes?.string?.isRequired,
-      userImage: PropTypes?.string?.isRequired,
-      rating: PropTypes?.number?.isRequired,
-      title: PropTypes?.string?.isRequired,
-      comment: PropTypes?.string?.isRequired,
-      date: PropTypes?.string?.isRequired,
-      verified: PropTypes?.bool?.isRequired,
-      helpfulCount: PropTypes?.number?.isRequired,
-      images: PropTypes?.arrayOf(
-        PropTypes?.shape({
-          url: PropTypes?.string?.isRequired,
-          alt: PropTypes?.string?.isRequired,
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      userName: PropTypes.string.isRequired,
+      userImage: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      comment: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      verified: PropTypes.bool.isRequired,
+      helpfulCount: PropTypes.number.isRequired,
+      images: PropTypes.arrayOf(
+        PropTypes.shape({
+          url: PropTypes.string.isRequired,
+          alt: PropTypes.string.isRequired,
         })
       ),
     })
-  )?.isRequired,
-  averageRating: PropTypes?.number?.isRequired,
-  totalReviews: PropTypes?.number?.isRequired,
+  ).isRequired,
+  averageRating: PropTypes.number.isRequired,
+  totalReviews: PropTypes.number.isRequired,
 };

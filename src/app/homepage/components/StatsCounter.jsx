@@ -26,12 +26,12 @@ export default function StatsCounter({ stats }) {
 }
 
 StatsCounter.propTypes = {
-  stats: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      icon: PropTypes?.string?.isRequired,
-      value: PropTypes?.string?.isRequired,
-      label: PropTypes?.string?.isRequired
+  stats: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      icon: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired
     })
-  )?.isRequired
+  ).isRequired
 };

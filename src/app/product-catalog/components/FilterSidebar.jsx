@@ -156,26 +156,26 @@ export default function FilterSidebar({
 }
 
 FilterSidebar.propTypes = {
-  categories: PropTypes?.arrayOf(PropTypes?.shape({
-    id: PropTypes?.string?.isRequired,
-    label: PropTypes?.string?.isRequired,
-    count: PropTypes?.number?.isRequired
-  }))?.isRequired,
-  productTypes: PropTypes?.arrayOf(PropTypes?.shape({
-    id: PropTypes?.string?.isRequired,
-    label: PropTypes?.string?.isRequired,
-    count: PropTypes?.number?.isRequired
-  }))?.isRequired,
-  priceRanges: PropTypes?.arrayOf(PropTypes?.shape({
-    id: PropTypes?.string?.isRequired,
-    label: PropTypes?.string?.isRequired,
-    count: PropTypes?.number?.isRequired
-  }))?.isRequired,
-  selectedCategory: PropTypes?.string?.isRequired,
-  selectedTypes: PropTypes?.arrayOf(PropTypes?.string)?.isRequired,
-  selectedPriceRange: PropTypes?.string?.isRequired,
-  onCategoryChange: PropTypes?.func?.isRequired,
-  onTypeToggle: PropTypes?.func?.isRequired,
-  onPriceRangeChange: PropTypes?.func?.isRequired,
-  onClearFilters: PropTypes?.func?.isRequired
+  categories: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    count: PropTypes.number.isRequired
+  })).isRequired,
+  productTypes: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    count: PropTypes.number.isRequired
+  })).isRequired,
+  priceRanges: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    count: PropTypes.number.isRequired
+  })).isRequired,
+  selectedCategory: PropTypes.string.isRequired,
+  selectedTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedPriceRange: PropTypes.string.isRequired,
+  onCategoryChange: PropTypes.func.isRequired,
+  onTypeToggle: PropTypes.func.isRequired,
+  onPriceRangeChange: PropTypes.func.isRequired,
+  onClearFilters: PropTypes.func.isRequired
 };

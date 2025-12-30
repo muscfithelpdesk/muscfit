@@ -44,13 +44,13 @@ export default function TestimonialCard({ testimonial }) {
 }
 
 TestimonialCard.propTypes = {
-  testimonial: PropTypes?.shape({
-    id: PropTypes?.number?.isRequired,
-    name: PropTypes?.string?.isRequired,
-    role: PropTypes?.string?.isRequired,
-    content: PropTypes?.string?.isRequired,
-    rating: PropTypes?.number?.isRequired,
-    avatar: PropTypes?.string?.isRequired,
-    avatarAlt: PropTypes?.string?.isRequired
-  })?.isRequired
+  testimonial: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    avatar: PropTypes.string.isRequired,
+    avatarAlt: PropTypes.string.isRequired
+  }).isRequired
 };

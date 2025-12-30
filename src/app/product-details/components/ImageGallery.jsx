@@ -89,10 +89,10 @@ export default function ImageGallery({ images }) {
 }
 
 ImageGallery.propTypes = {
-  images: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      url: PropTypes?.string?.isRequired,
-      alt: PropTypes?.string?.isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      url: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
     })
-  )?.isRequired,
+  ).isRequired,
 };

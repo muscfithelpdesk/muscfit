@@ -122,26 +122,26 @@ export default function ShoppingCartInteractive({ initialCartData, recommendedPr
 }
 
 ShoppingCartInteractive.propTypes = {
-  initialCartData: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      name: PropTypes?.string?.isRequired,
-      price: PropTypes?.number?.isRequired,
-      quantity: PropTypes?.number?.isRequired,
-      image: PropTypes?.string?.isRequired,
-      alt: PropTypes?.string?.isRequired,
-      size: PropTypes?.string,
-      color: PropTypes?.string,
+  initialCartData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      quantity: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
+      size: PropTypes.string,
+      color: PropTypes.string,
     })
-  )?.isRequired,
-  recommendedProducts: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      name: PropTypes?.string?.isRequired,
-      price: PropTypes?.number?.isRequired,
-      originalPrice: PropTypes?.number,
-      image: PropTypes?.string?.isRequired,
-      alt: PropTypes?.string?.isRequired,
+  ).isRequired,
+  recommendedProducts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      originalPrice: PropTypes.number,
+      image: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
     })
   ),
 };

@@ -298,13 +298,13 @@ export default function AccountSettingsSection({ settings, onUpdateSettings }) {
 }
 
 AccountSettingsSection.propTypes = {
-  settings: PropTypes?.shape({
-    notifications: PropTypes?.shape({
-      orderUpdates: PropTypes?.bool?.isRequired,
-      promotions: PropTypes?.bool?.isRequired,
-      newArrivals: PropTypes?.bool?.isRequired,
-      newsletter: PropTypes?.bool?.isRequired,
-    })?.isRequired,
-  })?.isRequired,
-  onUpdateSettings: PropTypes?.func?.isRequired,
+  settings: PropTypes.shape({
+    notifications: PropTypes.shape({
+      orderUpdates: PropTypes.bool.isRequired,
+      promotions: PropTypes.bool.isRequired,
+      newArrivals: PropTypes.bool.isRequired,
+      newsletter: PropTypes.bool.isRequired,
+    }).isRequired,
+  }).isRequired,
+  onUpdateSettings: PropTypes.func.isRequired,
 };

@@ -66,9 +66,9 @@ export default function ProfileHeader({ userData, completionPercentage }) {
 }
 
 ProfileHeader.propTypes = {
-  userData: PropTypes?.shape({
-    name: PropTypes?.string?.isRequired,
-    email: PropTypes?.string?.isRequired,
-  })?.isRequired,
-  completionPercentage: PropTypes?.number?.isRequired,
+  userData: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+  completionPercentage: PropTypes.number.isRequired,
 };

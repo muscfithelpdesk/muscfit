@@ -195,10 +195,10 @@ function OrderRow({ order, onStatusChange, onToggleExpand, isExpanded }) {
 }
 
 OrderRow.propTypes = {
-  order: PropTypes?.object?.isRequired,
-  onStatusChange: PropTypes?.func?.isRequired,
-  onToggleExpand: PropTypes?.func?.isRequired,
-  isExpanded: PropTypes?.bool?.isRequired
+  order: PropTypes.object.isRequired,
+  onStatusChange: PropTypes.func.isRequired,
+  onToggleExpand: PropTypes.func.isRequired,
+  isExpanded: PropTypes.bool.isRequired
 };
 
 // Product Card Component with Enhanced Visual Editing
@@ -279,10 +279,10 @@ function ProductCard({ product, onEdit, onDelete, onImageClick }) {
 }
 
 ProductCard.propTypes = {
-  product: PropTypes?.object?.isRequired,
-  onEdit: PropTypes?.func?.isRequired,
-  onDelete: PropTypes?.func?.isRequired,
-  onImageClick: PropTypes?.func?.isRequired
+  product: PropTypes.object.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onImageClick: PropTypes.func.isRequired
 };
 
 export default function AdminDashboard() {

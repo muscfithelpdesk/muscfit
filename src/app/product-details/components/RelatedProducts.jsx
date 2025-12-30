@@ -108,17 +108,17 @@ export default function RelatedProducts({ products }) {
 }
 
 RelatedProducts.propTypes = {
-  products: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      name: PropTypes?.string?.isRequired,
-      image: PropTypes?.string?.isRequired,
-      alt: PropTypes?.string?.isRequired,
-      price: PropTypes?.number?.isRequired,
-      originalPrice: PropTypes?.number,
-      rating: PropTypes?.number?.isRequired,
-      reviewCount: PropTypes?.number?.isRequired,
-      badge: PropTypes?.string,
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      originalPrice: PropTypes.number,
+      rating: PropTypes.number.isRequired,
+      reviewCount: PropTypes.number.isRequired,
+      badge: PropTypes.string,
     })
-  )?.isRequired,
+  ).isRequired,
 };

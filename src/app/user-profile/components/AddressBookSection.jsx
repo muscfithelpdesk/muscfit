@@ -300,21 +300,21 @@ export default function AddressBookSection({ addresses, onAddAddress, onEditAddr
 }
 
 AddressBookSection.propTypes = {
-  addresses: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.string?.isRequired,
-      name: PropTypes?.string?.isRequired,
-      phone: PropTypes?.string?.isRequired,
-      addressLine1: PropTypes?.string?.isRequired,
-      addressLine2: PropTypes?.string,
-      city: PropTypes?.string?.isRequired,
-      state: PropTypes?.string?.isRequired,
-      pincode: PropTypes?.string?.isRequired,
-      isDefault: PropTypes?.bool?.isRequired,
+  addresses: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      phone: PropTypes.string.isRequired,
+      addressLine1: PropTypes.string.isRequired,
+      addressLine2: PropTypes.string,
+      city: PropTypes.string.isRequired,
+      state: PropTypes.string.isRequired,
+      pincode: PropTypes.string.isRequired,
+      isDefault: PropTypes.bool.isRequired,
     })
-  )?.isRequired,
-  onAddAddress: PropTypes?.func?.isRequired,
-  onEditAddress: PropTypes?.func?.isRequired,
-  onDeleteAddress: PropTypes?.func?.isRequired,
-  onSetDefault: PropTypes?.func?.isRequired,
+  ).isRequired,
+  onAddAddress: PropTypes.func.isRequired,
+  onEditAddress: PropTypes.func.isRequired,
+  onDeleteAddress: PropTypes.func.isRequired,
+  onSetDefault: PropTypes.func.isRequired,
 };

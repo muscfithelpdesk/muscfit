@@ -31,6 +31,6 @@ export default function AuthTabs({ activeTab, onTabChange }) {
 }
 
 AuthTabs.propTypes = {
-  activeTab: PropTypes?.oneOf(['login', 'register'])?.isRequired,
-  onTabChange: PropTypes?.func?.isRequired
+  activeTab: PropTypes.oneOf(['login', 'register']).isRequired,
+  onTabChange: PropTypes.func.isRequired
 };

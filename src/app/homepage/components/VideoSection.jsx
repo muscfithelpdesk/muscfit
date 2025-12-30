@@ -58,9 +58,9 @@ export default function VideoSection({ title, subtitle, thumbnailImage, thumbnai
 }
 
 VideoSection.propTypes = {
-  title: PropTypes?.string?.isRequired,
-  subtitle: PropTypes?.string?.isRequired,
-  thumbnailImage: PropTypes?.string?.isRequired,
-  thumbnailAlt: PropTypes?.string?.isRequired,
-  videoUrl: PropTypes?.string?.isRequired
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  thumbnailImage: PropTypes.string.isRequired,
+  thumbnailAlt: PropTypes.string.isRequired,
+  videoUrl: PropTypes.string.isRequired
 };

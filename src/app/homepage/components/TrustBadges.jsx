@@ -26,12 +26,12 @@ export default function TrustBadges({ badges }) {
 }
 
 TrustBadges.propTypes = {
-  badges: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      icon: PropTypes?.string?.isRequired,
-      title: PropTypes?.string?.isRequired,
-      description: PropTypes?.string?.isRequired
+  badges: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      icon: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired
     })
-  )?.isRequired
+  ).isRequired
 };

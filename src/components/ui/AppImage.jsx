@@ -121,19 +121,19 @@ function AppImage({
 }
 
 AppImage.propTypes = {
-    src: PropTypes?.string?.isRequired,
-    alt: PropTypes?.string?.isRequired,
-    width: PropTypes?.number,
-    height: PropTypes?.number,
-    className: PropTypes?.string,
-    priority: PropTypes?.bool,
-    quality: PropTypes?.number,
-    placeholder: PropTypes?.oneOf(['blur', 'empty']),
-    blurDataURL: PropTypes?.string,
-    fill: PropTypes?.bool,
-    sizes: PropTypes?.string,
-    onClick: PropTypes?.func,
-    fallbackSrc: PropTypes?.string,
+    src: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    className: PropTypes.string,
+    priority: PropTypes.bool,
+    quality: PropTypes.number,
+    placeholder: PropTypes.oneOf(['blur', 'empty']),
+    blurDataURL: PropTypes.string,
+    fill: PropTypes.bool,
+    sizes: PropTypes.string,
+    onClick: PropTypes.func,
+    fallbackSrc: PropTypes.string,
 };
 
 export default AppImage;

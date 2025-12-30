@@ -35,10 +35,10 @@ export default function ParallaxBanner({ title, subtitle, ctaText, ctaHref, back
 }
 
 ParallaxBanner.propTypes = {
-  title: PropTypes?.string?.isRequired,
-  subtitle: PropTypes?.string?.isRequired,
-  ctaText: PropTypes?.string?.isRequired,
-  ctaHref: PropTypes?.string?.isRequired,
-  backgroundImage: PropTypes?.string?.isRequired,
-  backgroundAlt: PropTypes?.string?.isRequired
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  ctaText: PropTypes.string.isRequired,
+  ctaHref: PropTypes.string.isRequired,
+  backgroundImage: PropTypes.string.isRequired,
+  backgroundAlt: PropTypes.string.isRequired
 };

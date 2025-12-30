@@ -25,17 +25,17 @@ export default function Testimonials({ title, subtitle, testimonials }) {
 }
 
 Testimonials.propTypes = {
-  title: PropTypes?.string?.isRequired,
-  subtitle: PropTypes?.string?.isRequired,
-  testimonials: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      name: PropTypes?.string?.isRequired,
-      role: PropTypes?.string?.isRequired,
-      content: PropTypes?.string?.isRequired,
-      rating: PropTypes?.number?.isRequired,
-      avatar: PropTypes?.string?.isRequired,
-      avatarAlt: PropTypes?.string?.isRequired
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  testimonials: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      role: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      avatar: PropTypes.string.isRequired,
+      avatarAlt: PropTypes.string.isRequired
     })
-  )?.isRequired
+  ).isRequired
 };

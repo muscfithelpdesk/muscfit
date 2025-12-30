@@ -140,5 +140,5 @@ export function FirebaseAuthProvider({ children }) {
 }
 
 FirebaseAuthProvider.propTypes = {
-  children: PropTypes?.node?.isRequired
+  children: PropTypes.node.isRequired
 };

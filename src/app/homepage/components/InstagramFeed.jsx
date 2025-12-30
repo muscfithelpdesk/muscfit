@@ -51,14 +51,14 @@ export default function InstagramFeed({ title, handle, images }) {
 }
 
 InstagramFeed.propTypes = {
-  title: PropTypes?.string?.isRequired,
-  handle: PropTypes?.string?.isRequired,
-  images: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      src: PropTypes?.string?.isRequired,
-      alt: PropTypes?.string?.isRequired,
-      link: PropTypes?.string?.isRequired
+  title: PropTypes.string.isRequired,
+  handle: PropTypes.string.isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      src: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired
     })
-  )?.isRequired
+  ).isRequired
 };

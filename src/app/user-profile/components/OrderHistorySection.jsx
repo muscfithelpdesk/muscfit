@@ -154,24 +154,24 @@ export default function OrderHistorySection({ orders }) {
 }
 
 OrderHistorySection.propTypes = {
-  orders: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.string?.isRequired,
-      orderNumber: PropTypes?.string?.isRequired,
-      date: PropTypes?.string?.isRequired,
-      status: PropTypes?.oneOf(['Processing', 'Shipped', 'Delivered', 'Cancelled'])?.isRequired,
-      total: PropTypes?.number?.isRequired,
-      items: PropTypes?.arrayOf(
-        PropTypes?.shape({
-          id: PropTypes?.string?.isRequired,
-          name: PropTypes?.string?.isRequired,
-          image: PropTypes?.string?.isRequired,
-          alt: PropTypes?.string?.isRequired,
-          size: PropTypes?.string?.isRequired,
-          quantity: PropTypes?.number?.isRequired,
-          price: PropTypes?.number?.isRequired,
+  orders: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      orderNumber: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      status: PropTypes.oneOf(['Processing', 'Shipped', 'Delivered', 'Cancelled']).isRequired,
+      total: PropTypes.number.isRequired,
+      items: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          name: PropTypes.string.isRequired,
+          image: PropTypes.string.isRequired,
+          alt: PropTypes.string.isRequired,
+          size: PropTypes.string.isRequired,
+          quantity: PropTypes.number.isRequired,
+          price: PropTypes.number.isRequired,
         })
-      )?.isRequired,
+      ).isRequired,
     })
-  )?.isRequired,
+  ).isRequired,
 };

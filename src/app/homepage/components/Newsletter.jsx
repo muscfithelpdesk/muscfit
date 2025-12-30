@@ -75,6 +75,6 @@ export default function Newsletter({ title, subtitle }) {
 }
 
 Newsletter.propTypes = {
-  title: PropTypes?.string?.isRequired,
-  subtitle: PropTypes?.string?.isRequired
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired
 };

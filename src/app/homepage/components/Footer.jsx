@@ -81,31 +81,31 @@ export default function Footer({ columns, socialLinks, paymentMethods }) {
 }
 
 Footer.propTypes = {
-  columns: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      title: PropTypes?.string?.isRequired,
-      links: PropTypes?.arrayOf(
-        PropTypes?.shape({
-          id: PropTypes?.number?.isRequired,
-          label: PropTypes?.string?.isRequired,
-          href: PropTypes?.string?.isRequired
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      links: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          label: PropTypes.string.isRequired,
+          href: PropTypes.string.isRequired
         })
-      )?.isRequired
+      ).isRequired
     })
-  )?.isRequired,
-  socialLinks: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      icon: PropTypes?.string?.isRequired,
-      href: PropTypes?.string?.isRequired,
-      label: PropTypes?.string?.isRequired
+  ).isRequired,
+  socialLinks: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      icon: PropTypes.string.isRequired,
+      href: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired
     })
-  )?.isRequired,
-  paymentMethods: PropTypes?.arrayOf(
-    PropTypes?.shape({
-      id: PropTypes?.number?.isRequired,
-      icon: PropTypes?.string?.isRequired
+  ).isRequired,
+  paymentMethods: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      icon: PropTypes.string.isRequired
     })
-  )?.isRequired
+  ).isRequired
 };

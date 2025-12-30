@@ -127,16 +127,16 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }) {
 }
 
 CartItem.propTypes = {
-  item: PropTypes?.shape({
-    id: PropTypes?.number?.isRequired,
-    name: PropTypes?.string?.isRequired,
-    price: PropTypes?.number?.isRequired,
-    quantity: PropTypes?.number?.isRequired,
-    image: PropTypes?.string?.isRequired,
-    alt: PropTypes?.string?.isRequired,
-    size: PropTypes?.string,
-    color: PropTypes?.string,
-  })?.isRequired,
-  onUpdateQuantity: PropTypes?.func?.isRequired,
-  onRemove: PropTypes?.func?.isRequired,
+  item: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
+    size: PropTypes.string,
+    color: PropTypes.string,
+  }).isRequired,
+  onUpdateQuantity: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
 };

@@ -31,8 +31,8 @@ export default function PromoBar({ message, dismissible, isVisible, onDismiss })
 }
 
 PromoBar.propTypes = {
-  message: PropTypes?.string?.isRequired,
-  dismissible: PropTypes?.bool,
-  isVisible: PropTypes?.bool.isRequired,
-  onDismiss: PropTypes?.func.isRequired
+  message: PropTypes.string.isRequired,
+  dismissible: PropTypes.bool,
+  isVisible: PropTypes.bool.isRequired,
+  onDismiss: PropTypes.func.isRequired
 };
