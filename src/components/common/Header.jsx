@@ -422,7 +422,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               </button>
 
               {isSearchOpen && (
-                <div className="absolute right-0 top-full mt-2 w-[320px] md:w-[400px] bg-popover border border-border rounded-md shadow-sharp-lg animate-scale-in z-60">
+                <div className="absolute right-0 top-full mt-2 w-[320px] md:w-[400px] bg-popover border border-border rounded-md shadow-sharp-lg animate-scale-in z-[100]">
                   <form onSubmit={handleSearchSubmit} className="p-4">
                     <div className="relative">
                       <input
@@ -478,7 +478,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               </button>
 
               {isCartOpen && (
-                <div className="absolute right-0 top-full mt-2 w-[360px] bg-popover border border-border rounded-md shadow-sharp-lg animate-scale-in z-60">
+                <div className="absolute right-0 top-full mt-2 w-[360px] bg-popover border border-border rounded-md shadow-sharp-lg animate-scale-in z-[100]">
                   <div className="p-4 border-b border-border">
                     <h3 className="font-heading text-lg font-semibold text-foreground">Shopping Cart</h3>
                   </div>
@@ -492,7 +492,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                         <div className="flex-1 min-w-0">
                           <h4 className="text-sm font-medium text-foreground truncate">{item?.name}</h4>
                           <p className="text-xs text-text-secondary mt-1">Qty: {item?.quantity}</p>
-                          <p className="text-sm font-data font-bold text-primary mt-1">${item?.price}</p>
+                          <p className="text-sm font-data font-bold text-primary mt-1">₹{item?.price}</p>
                         </div>
                       </div>
                     ))}
@@ -501,10 +501,11 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   <div className="p-4 border-t border-border bg-surface">
                     <div className="flex justify-between items-center mb-4">
                       <span className="font-heading text-sm font-semibold text-foreground">Total</span>
-                      <span className="font-data text-lg font-bold text-primary">${calculateCartTotal()}</span>
+                      <span className="font-data text-lg font-bold text-primary">₹{calculateCartTotal()}</span>
                     </div>
                     <Link
                       href="/shopping-cart"
+                      onClick={() => setIsCartOpen(false)}
                       className="block w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold rounded-md flex items-center justify-center transition-all duration-250 hover:scale-[0.98] active:scale-95"
                     >
                       View Cart & Checkout
