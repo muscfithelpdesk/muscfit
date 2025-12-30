@@ -48,11 +48,11 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
                 <div className="relative group">
                     <div
                         ref={scrollRef}
-                        className="flex gap-4 md:gap-6 overflow-x-auto no-scrollbar pb-8 scroll-smooth"
+                        className="flex gap-4 md:gap-5 overflow-x-auto no-scrollbar pb-8 scroll-smooth"
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                     >
                         {products?.map((product) => (
-                            <div key={product.id} className="min-w-[280px] md:min-w-[320px] flex-shrink-0">
+                            <div key={product.id} className="min-w-[200px] md:min-w-[240px] lg:min-w-[18%] flex-shrink-0">
                                 <ModernProductCard product={product} onQuickView={onQuickView} />
                             </div>
                         ))}
