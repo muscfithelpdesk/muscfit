@@ -49,6 +49,14 @@
     .float-3d {
         animation: float3d 6s ease-in-out infinite;
     }
+
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+
+    .animation-delay-4000 {
+        animation-delay: 4s;
+    }
 }
 
 @keyframes float3d {

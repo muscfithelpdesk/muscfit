@@ -236,31 +236,30 @@ function SplashModal() {
 }
 
 HomepageInteractive.propTypes = {
-  pageData: PropTypes?.shape({
-    promoBar: PropTypes?.shape({
-      message: PropTypes?.string?.isRequired,
-      dismissible: PropTypes?.bool?.isRequired
-    })?.isRequired,
-    hero: PropTypes?.shape({
-      title: PropTypes?.string?.isRequired,
-      subtitle: PropTypes?.string?.isRequired,
-      ctaPrimary: PropTypes?.object?.isRequired,
-      ctaSecondary: PropTypes?.object?.isRequired,
-      backgroundImage: PropTypes?.string?.isRequired,
-      backgroundAlt: PropTypes?.string?.isRequired
-    })?.isRequired,
-    features: PropTypes?.array?.isRequired,
-    categories: PropTypes?.array?.isRequired,
-    featuredProducts: PropTypes?.object?.isRequired,
-    stats: PropTypes?.array?.isRequired,
-    parallaxBanner: PropTypes?.object?.isRequired,
-    newArrivals: PropTypes?.object?.isRequired,
-    video: PropTypes?.object?.isRequired,
-    brandStory: PropTypes?.object?.isRequired,
-    testimonials: PropTypes?.object?.isRequired,
-    trustBadges: PropTypes?.array?.isRequired,
-    community: PropTypes?.array?.isRequired,
-    newsletter: PropTypes?.object?.isRequired,
-    footer: PropTypes?.object?.isRequired
-  })?.isRequired
+  pageData: PropTypes.shape({
+    promoBar: PropTypes.shape({
+      message: PropTypes.string.isRequired,
+      dismissible: PropTypes.bool.isRequired
+    }).isRequired,
+    hero: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      subtitle: PropTypes.string.isRequired,
+      ctaPrimary: PropTypes.object.isRequired,
+      ctaSecondary: PropTypes.object.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundAlt: PropTypes.string.isRequired
+    }).isRequired,
+    features: PropTypes.array.isRequired,
+    categories: PropTypes.array.isRequired,
+    featuredProducts: PropTypes.object.isRequired,
+    stats: PropTypes.array.isRequired,
+    parallaxBanner: PropTypes.object.isRequired,
+    newArrivals: PropTypes.object.isRequired,
+    video: PropTypes.object.isRequired,
+    brandStory: PropTypes.object.isRequired,
+    testimonials: PropTypes.object.isRequired,
+    trustBadges: PropTypes.array.isRequired,
+    newsletter: PropTypes.object.isRequired,
+    footer: PropTypes.object.isRequired
+  }).isRequired
 };

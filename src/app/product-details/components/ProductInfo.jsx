@@ -95,7 +95,7 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
               key={color?.name}
               onClick={() => setSelectedColor(color)}
               className={`w-10 h-10 rounded-full transition-all duration-250 ${selectedColor?.name === color?.name
-                  ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-110' : 'hover:scale-110'
+                ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-110' : 'hover:scale-110'
                 }`}
               style={{ backgroundColor: color?.hex }}
               aria-label={`Select ${color?.name} color`}
@@ -123,10 +123,10 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
               onClick={() => setSelectedSize(size)}
               disabled={!product?.availableSizes?.includes(size)}
               className={`h-12 font-heading font-semibold text-sm rounded-sm transition-all duration-250 ${selectedSize === size
-                  ? 'bg-primary text-primary-foreground'
-                  : product?.availableSizes?.includes(size)
-                    ? 'bg-surface text-foreground hover:bg-muted'
-                    : 'bg-muted text-text-secondary cursor-not-allowed opacity-50'
+                ? 'bg-primary text-primary-foreground'
+                : product?.availableSizes?.includes(size)
+                  ? 'bg-surface text-foreground hover:bg-muted'
+                  : 'bg-muted text-text-secondary cursor-not-allowed opacity-50'
                 }`}
             >
               {size}
@@ -209,8 +209,8 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
         <button
           onClick={onToggleWishlist}
           className={`h-14 w-14 sm:w-auto sm:px-6 rounded-md transition-all duration-250 hover:scale-[0.98] active:scale-95 flex items-center justify-center ${isInWishlist
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-surface hover:bg-muted text-foreground'
+            ? 'bg-primary text-primary-foreground'
+            : 'bg-surface hover:bg-muted text-foreground'
             }`}
           aria-label="Add to wishlist"
         >
@@ -259,27 +259,27 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
 }
 
 ProductInfo.propTypes = {
-  product: PropTypes?.shape({
-    name: PropTypes?.string?.isRequired,
-    category: PropTypes?.string?.isRequired,
-    price: PropTypes?.number?.isRequired,
-    originalPrice: PropTypes?.number,
-    discount: PropTypes?.number,
-    rating: PropTypes?.number?.isRequired,
-    reviewCount: PropTypes?.number?.isRequired,
-    badge: PropTypes?.string,
-    colors: PropTypes?.arrayOf(
-      PropTypes?.shape({
-        name: PropTypes?.string?.isRequired,
-        hex: PropTypes?.string?.isRequired,
+  product: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    originalPrice: PropTypes.number,
+    discount: PropTypes.number,
+    rating: PropTypes.number.isRequired,
+    reviewCount: PropTypes.number.isRequired,
+    badge: PropTypes.string,
+    colors: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        hex: PropTypes.string.isRequired,
       })
-    )?.isRequired,
-    sizes: PropTypes?.arrayOf(PropTypes?.string)?.isRequired,
-    availableSizes: PropTypes?.arrayOf(PropTypes?.string)?.isRequired,
-    features: PropTypes?.arrayOf(PropTypes?.string)?.isRequired,
-    description: PropTypes?.string?.isRequired,
-  })?.isRequired,
-  onAddToCart: PropTypes?.func?.isRequired,
-  onToggleWishlist: PropTypes?.func?.isRequired,
-  isInWishlist: PropTypes?.bool?.isRequired,
+    ).isRequired,
+    sizes: PropTypes.arrayOf(PropTypes.string).isRequired,
+    availableSizes: PropTypes.arrayOf(PropTypes.string).isRequired,
+    features: PropTypes.arrayOf(PropTypes.string).isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
+  onAddToCart: PropTypes.func.isRequired,
+  onToggleWishlist: PropTypes.func.isRequired,
+  isInWishlist: PropTypes.bool.isRequired,
 };

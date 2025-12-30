@@ -51,16 +51,16 @@ export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary,
 }
 
 HeroSection.propTypes = {
-  title: PropTypes?.string?.isRequired,
-  subtitle: PropTypes?.string?.isRequired,
-  ctaPrimary: PropTypes?.shape({
-    text: PropTypes?.string?.isRequired,
-    href: PropTypes?.string?.isRequired
-  })?.isRequired,
-  ctaSecondary: PropTypes?.shape({
-    text: PropTypes?.string?.isRequired,
-    href: PropTypes?.string?.isRequired
-  })?.isRequired,
-  backgroundImage: PropTypes?.string?.isRequired,
-  backgroundAlt: PropTypes?.string?.isRequired
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  ctaPrimary: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    href: PropTypes.string.isRequired
+  }).isRequired,
+  ctaSecondary: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    href: PropTypes.string.isRequired
+  }).isRequired,
+  backgroundImage: PropTypes.string.isRequired,
+  backgroundAlt: PropTypes.string.isRequired
 };
