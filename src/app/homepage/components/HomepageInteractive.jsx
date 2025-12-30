@@ -56,7 +56,7 @@ export default function HomepageInteractive({ pageData }) {
           onDismiss={handleDismissPromo}
         />
       </div>
-      <main style={{ paddingTop: `${80 + (isPromoVisible ? 40 : 0)}px` }}>
+      <main className="pt-[120px]">
         <HeroSection
           title={pageData?.hero?.title}
           subtitle={pageData?.hero?.subtitle}
