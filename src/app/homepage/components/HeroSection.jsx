@@ -17,29 +17,29 @@ export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary,
       </div>
 
       <div className="relative h-full w-full flex flex-col justify-center items-center text-center px-4 md:px-6 lg:px-8">
-        <div className="max-w-5xl animate-fade-in-up preserve-3d float-3d">
-          <h1 className="font-heading text-7xl md:text-9xl lg:text-[10rem] font-black text-white mb-2 tracking-tighter uppercase italic drop-shadow-2xl">
+        <div className="max-w-7xl mx-auto w-full animate-fade-in-up preserve-3d float-3d">
+          <h1 className="font-heading text-6xl md:text-8xl lg:text-9xl font-black text-white mb-2 tracking-tighter uppercase italic drop-shadow-2xl">
             {title}
           </h1>
 
           <div className="flex items-center justify-center gap-4 mb-10 md:mb-12">
-            <div className="h-1 w-12 md:w-32 bg-white shadow-lg"></div>
-            <p className="text-sm md:text-2xl text-white font-bold tracking-[0.4em] uppercase drop-shadow-md">
+            <div className="h-1 w-12 md:w-24 bg-white shadow-lg"></div>
+            <p className="text-sm md:text-xl text-white font-bold tracking-[0.3em] uppercase drop-shadow-md">
               {subtitle}
             </p>
-            <div className="h-1 w-12 md:w-32 bg-white shadow-lg"></div>
+            <div className="h-1 w-12 md:w-24 bg-white shadow-lg"></div>
           </div>
 
           <div className="flex justify-center flex-wrap gap-6">
             <Link
               href={ctaPrimary?.href}
-              className="px-12 py-5 bg-white text-black font-black tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-black hover:text-white hover:scale-110 premium-shadow"
+              className="px-10 py-4 bg-white text-black font-black tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-black hover:text-white hover:scale-110 premium-shadow"
             >
               {ctaPrimary?.text}
             </Link>
             <Link
               href={ctaSecondary?.href || '#'}
-              className="px-12 py-5 glass-effect text-white font-black tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-white hover:text-black hover:scale-110 premium-shadow"
+              className="px-10 py-4 glass-effect text-white font-black tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-white hover:text-black hover:scale-110 premium-shadow"
             >
               {ctaSecondary?.text || 'EXPLORE'}
             </Link>
