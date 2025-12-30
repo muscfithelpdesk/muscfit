@@ -42,7 +42,7 @@ export default function ProductCard({ product }) {
 
   return (
     <Link href={`/product-details?id=${product?.id}`} className="group perspective-1000">
-      <div className="bg-card rounded-xl shadow-sharp hover:premium-shadow transition-all duration-500 overflow-hidden border border-border/50 preserve-3d tilt-3d">
+      <div className="bg-white rounded-xl shadow-sharp hover:premium-shadow transition-all duration-500 overflow-hidden border border-gray-100 preserve-3d tilt-3d">
         {/* Product Image */}
         <div className="relative aspect-[3/4] overflow-hidden bg-muted">
           <img
@@ -80,10 +80,10 @@ export default function ProductCard({ product }) {
           {product?.tag && (
             <div className="absolute top-3 left-3 z-10">
               <span className={`px-4 py-1.5 text-[10px] font-bold rounded-full premium-shadow glass-effect ${product?.tag === 'BESTSELLER' ? 'text-blue-900' :
-                  product?.tag === 'NEW' ? 'text-green-900' :
-                    product?.tag === 'SALE' ? 'text-red-900' :
-                      product?.tag === 'HOT' ? 'text-orange-900' :
-                        'text-gray-900'
+                product?.tag === 'NEW' ? 'text-green-900' :
+                  product?.tag === 'SALE' ? 'text-red-900' :
+                    product?.tag === 'HOT' ? 'text-orange-900' :
+                      'text-gray-900'
                 }`}>
                 {product?.tag}
               </span>
