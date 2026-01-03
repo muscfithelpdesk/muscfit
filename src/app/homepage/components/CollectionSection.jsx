@@ -114,7 +114,7 @@ function ModernProductCard({ product, onQuickView }) {
             </div>
 
             <div className="space-y-0.5 md:space-y-1" onClick={() => window.location.href = `/product-details?id=${product?.id}`}>
-                <h3 className="text-xs md:text-sm font-bold text-gray-800 uppercase tracking-tight group-hover:text-blue-900 transition-colors line-clamp-1">
+                <h3 className="text-xs md:text-sm font-bold text-gray-800 uppercase tracking-tight group-hover:text-primary transition-colors line-clamp-1">
                     {product?.name}
                 </h3>
                 <p className="text-[9px] md:text-[10px] text-gray-400 font-medium">PREMIUM FIT</p>

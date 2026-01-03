@@ -37,7 +37,7 @@ export default function QuickViewModal({ product, onClose }) {
                 <div className="md:w-1/2 p-6 md:p-10 flex flex-col overflow-y-auto">
                     <div className="mb-6">
                         <p className="text-xs font-bold text-gray-400 tracking-widest uppercase mb-2">MUSCFIT PERFORMANCE</p>
-                        <h2 className="text-2xl md:text-3xl font-extrabold text-[#112D4E] uppercase mb-3">{product?.name}</h2>
+                        <h2 className="text-2xl md:text-3xl font-extrabold text-foreground uppercase mb-3">{product?.name}</h2>
                         <div className="flex items-center gap-4">
                             <span className="text-2xl font-bold text-gray-900">₹{product?.price}</span>
                             {product?.originalPrice && (

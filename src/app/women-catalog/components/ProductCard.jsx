@@ -86,10 +86,7 @@ export default function ProductCard({ product }) {
           {product?.tag && (
             <div className="absolute top-3 left-3 z-10">
               <span className={`px-4 py-1.5 text-[10px] font-bold rounded-full premium-shadow ${product?.tag === 'SALE' ? 'bg-[#9B1C1C] text-white' :
-                  product?.tag === 'BESTSELLER' ? 'bg-[#112D4E] text-white' :
-                    product?.tag === 'NEW' ? 'bg-[#065F46] text-white' :
-                      product?.tag === 'HOT' ? 'bg-[#9A3412] text-white' :
-                        'glass-effect text-gray-900'
+                  'glass-effect text-gray-900 shadow-sm'
                 }`}>
                 {product?.tag}
               </span>
