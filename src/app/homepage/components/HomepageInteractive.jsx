@@ -27,10 +27,8 @@ export default function HomepageInteractive({ pageData }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const dismissed = localStorage.getItem('promoBarDismissed');
-    if (!dismissed) {
-      setIsPromoVisible(true);
-    }
+    // Explicitly set to true to ensure it's visible after "empty" reports
+    setIsPromoVisible(true);
   }, []);
 
   const handleDismissPromo = () => {
@@ -41,11 +39,7 @@ export default function HomepageInteractive({ pageData }) {
   const headerOffset = isPromoVisible ? 40 : 0;
   const mainPaddingTop = 80 + headerOffset;
 
-  // Filter categories to remove "Shop Men" as requested
-  const filteredCategories = pageData?.categories?.filter(cat => cat.name !== "Shop Men");
-
   return (
-
     <div className="min-h-screen bg-background">
       <div className="fixed top-0 left-0 right-0 z-50">
         <PromoBar
@@ -61,7 +55,7 @@ export default function HomepageInteractive({ pageData }) {
         />
         <Header isFixed={false} />
       </div>
-      <main className="pt-[140px] md:pt-[170px]">
+      <main className="pt-[130px] md:pt-[160px]">
         <HeroSection
           title={pageData?.hero?.title}
           subtitle={pageData?.hero?.subtitle}

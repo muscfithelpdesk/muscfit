@@ -24,22 +24,27 @@ export default function ProductCarousel({ products }) {
         }
     };
 
-    // Auto-scroll effect
+    // Auto-scroll effect (Jump scroll every 5s)
     useEffect(() => {
         if (isPaused || isDragging) return;
 
         const interval = setInterval(() => {
             if (scrollRef.current) {
-                const { scrollLeft, scrollWidth } = scrollRef.current;
+                const { clientWidth, scrollLeft, scrollWidth } = scrollRef.current;
                 const third = scrollWidth / 3;
+                const nextScroll = scrollLeft + clientWidth;
 
-                if (scrollLeft >= 2 * third) {
-                    scrollRef.current.scrollLeft = scrollLeft - third;
+                if (nextScroll >= 2 * third) {
+                    // Snap back to first third before jumping
+                    scrollRef.current.scrollTo({ left: scrollLeft - third, behavior: 'auto' });
+                    setTimeout(() => {
+                        scrollRef.current.scrollTo({ left: scrollLeft - third + clientWidth, behavior: 'smooth' });
+                    }, 50);
                 } else {
-                    scrollRef.current.scrollLeft += 1;
+                    scrollRef.current.scrollTo({ left: nextScroll, behavior: 'smooth' });
                 }
             }
-        }, 30);
+        }, 5000);
 
         return () => clearInterval(interval);
     }, [isPaused, isDragging]);

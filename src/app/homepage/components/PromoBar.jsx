@@ -4,17 +4,22 @@ import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@/components/ui/AppIcon';
 
-export default function PromoBar({ messages, isVisible = true }) {
+export default function PromoBar({ messages, isVisible = true, onDismiss }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [show, setShow] = useState(isVisible);
 
-  const promoMessages = Array.isArray(messages) ? messages : [messages];
+  const promoMessages = Array.isArray(messages)
+    ? messages.filter(msg => msg && msg.trim() !== '')
+    : (messages ? [messages] : []);
 
   const handleNext = useCallback(() => {
+    if (promoMessages.length <= 1) return;
     setCurrentIndex((prev) => (prev + 1) % promoMessages.length);
   }, [promoMessages.length]);
 
   const handlePrev = useCallback(() => {
+    if (promoMessages.length <= 1) return;
     setCurrentIndex((prev) => (prev - 1 + promoMessages.length) % promoMessages.length);
   }, [promoMessages.length]);
 
@@ -28,46 +33,79 @@ export default function PromoBar({ messages, isVisible = true }) {
     return () => clearInterval(timer);
   }, [handleNext, isPaused, promoMessages.length]);
 
-  if (!isVisible || !promoMessages.length) return null;
+  useEffect(() => {
+    setShow(isVisible);
+  }, [isVisible]);
+
+  if (!show || promoMessages.length === 0) return null;
 
   return (
     <div
-      className="relative z-[70] bg-[#F5F5F7] text-black border-b border-gray-200 h-9 flex items-center justify-center group"
+      className="relative z-[100] bg-gradient-to-r from-neutral-900 via-black to-neutral-900 text-white h-11 flex items-center justify-center overflow-hidden border-b border-white/5 active:cursor-grabbing"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="max-w-[1400px] w-full px-4 flex items-center justify-between">
-        <button
-          onClick={handlePrev}
-          className="p-1.5 hover:bg-gray-200 rounded-full transition-colors duration-200 md:opacity-0 group-hover:opacity-100"
-          aria-label="Previous message"
-        >
-          <Icon name="ChevronLeftIcon" size={14} />
-        </button>
+      <div className="max-w-[1400px] w-full px-4 md:px-8 flex items-center justify-between h-full">
+        {/* Left Side: Navigation / Icon */}
+        <div className="flex-shrink-0 w-8 md:w-16 flex items-center justify-start">
+          {promoMessages.length > 1 && (
+            <button
+              onClick={handlePrev}
+              className="p-1.5 hover:bg-white/10 rounded-full transition-all duration-300 opacity-50 hover:opacity-100"
+              aria-label="Previous promo"
+            >
+              <Icon name="ChevronLeftIcon" size={14} />
+            </button>
+          )}
+        </div>
 
-        <div className="flex-1 overflow-hidden relative h-full flex items-center justify-center">
+        {/* Center: Messages Carousel */}
+        <div className="flex-1 relative h-full flex items-center justify-center overflow-hidden px-2">
           {promoMessages.map((msg, idx) => (
             <div
               key={idx}
-              className={`absolute transition-all duration-700 ease-in-out font-heading text-[10px] md:text-sm font-semibold tracking-wide text-center w-full px-4 ${idx === currentIndex
-                  ? 'opacity-100 translate-x-0'
+              className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1) ${idx === currentIndex
+                  ? 'opacity-100 transform translate-y-0 scale-100'
                   : idx < currentIndex
-                    ? 'opacity-0 -translate-x-full pointer-events-none'
-                    : 'opacity-0 translate-x-full pointer-events-none'
+                    ? 'opacity-0 transform -translate-y-full scale-95'
+                    : 'opacity-0 transform translate-y-full scale-95'
                 }`}
             >
-              {msg}
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="hidden sm:inline-block px-2 py-0.5 bg-white text-black text-[9px] font-black tracking-tighter rounded-sm">SALE</span>
+                <p className="text-[10px] md:text-xs lg:text-sm font-heading font-black tracking-[0.15em] uppercase whitespace-nowrap">
+                  {msg}
+                </p>
+              </div>
             </div>
           ))}
         </div>
 
-        <button
-          onClick={handleNext}
-          className="p-1.5 hover:bg-gray-200 rounded-full transition-colors duration-200 md:opacity-0 group-hover:opacity-100"
-          aria-label="Next message"
-        >
-          <Icon name="ChevronRightIcon" size={14} />
-        </button>
+        {/* Right Side: Navigation & Close */}
+        <div className="flex-shrink-0 w-8 md:w-16 flex items-center justify-end gap-2">
+          {promoMessages.length > 1 && (
+            <button
+              onClick={handleNext}
+              className="p-1.5 hover:bg-white/10 rounded-full transition-all duration-300 opacity-50 hover:opacity-100"
+              aria-label="Next promo"
+            >
+              <Icon name="ChevronRightIcon" size={14} />
+            </button>
+          )}
+
+          {onDismiss && (
+            <button
+              onClick={() => {
+                setShow(false);
+                onDismiss();
+              }}
+              className="hidden sm:flex p-1.5 hover:bg-white/10 rounded-full transition-all duration-300 opacity-40 hover:opacity-100"
+              aria-label="Dismiss Promo"
+            >
+              <Icon name="XMarkIcon" size={14} />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -77,6 +115,7 @@ PromoBar.propTypes = {
   messages: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
-  ]).isRequired,
-  isVisible: PropTypes.bool
+  ]),
+  isVisible: PropTypes.bool,
+  onDismiss: PropTypes.func
 };

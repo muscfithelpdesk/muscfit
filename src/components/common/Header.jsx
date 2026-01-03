@@ -181,9 +181,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           '--header-height': scrolled ? '80px' : '120px'
         }}
       >
-        <div className={`flex items-center justify-between transition-all duration-300 px-4 md:px-6 lg:px-8 ${scrolled ? 'h-[72px] md:h-[80px]' : 'h-[100px] md:h-[130px]'}`}>
+        <div className={`flex items-center justify-between transition-all duration-300 px-4 md:px-8 lg:px-12 ${scrolled ? 'h-16' : 'h-24'}`}>
           {/* Left Side: Logo & Mobile Toggle */}
-          <div className="flex items-center gap-4 flex-1 h-full">
+          <div className="flex items-center gap-4 w-1/4">
             {!isAdminPage && (
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -194,18 +194,18 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               </button>
             )}
 
-            <Link href="/" className="group flex items-center relative z-20 h-full">
+            <Link href="/" className="group flex items-center relative z-20 transition-transform duration-300 hover:scale-105">
               <img
                 src="/assets/images/logo-v4.png"
                 alt="MUSCFIT Logo"
-                className="h-[100px] md:h-[130px] max-w-[150px] md:max-w-[200px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                className={`transition-all duration-300 w-auto object-contain ${scrolled ? 'h-10' : 'h-14 md:h-16'}`}
               />
             </Link>
           </div>
 
           {/* Center Navigation - Desktop */}
           {!isAdminPage && (
-            <nav className="hidden md:flex items-center justify-center gap-6 lg:gap-10 flex-[2]">
+            <nav className="hidden md:flex items-center justify-center gap-8 lg:gap-12 flex-1">
               {/* Men Navigation Item */}
               <div className="static" ref={menDropdownRef}>
                 <button
@@ -493,7 +493,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           )}
 
           {/* Right Action Icons */}
-          <div className="flex items-center justify-end gap-2 md:gap-4 flex-1">
+          <div className="flex items-center justify-end gap-3 md:gap-6 w-1/4">
             {/* Search */}
             <div className="relative" ref={searchRef}>
               <button
