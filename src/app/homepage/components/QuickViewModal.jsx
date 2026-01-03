@@ -69,7 +69,7 @@ export default function QuickViewModal({ product, onClose }) {
                     </p>
 
                     <div className="mt-auto flex flex-col gap-3">
-                        <button className="w-full py-4 bg-[#112D4E] text-white font-bold uppercase tracking-widest hover:bg-blue-900 transition-colors">
+                        <button className="w-full py-4 bg-primary text-white font-bold uppercase tracking-widest hover:bg-black/90 transition-colors">
                             Add to Cart
                         </button>
                         <button

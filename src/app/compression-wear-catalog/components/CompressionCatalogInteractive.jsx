@@ -88,11 +88,11 @@ export default function CompressionCatalogInteractive() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         {/* Page Header with 3D Float Effect */}
         <div className="relative mb-12 text-center lg:text-left overflow-hidden">
-          <div className="absolute -top-24 -left-24 w-64 h-64 bg-slate-200 rounded-full blur-[100px] opacity-70 float-3d"></div>
-          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-gray-100 rounded-full blur-[100px] opacity-50 float-3d animation-delay-2000"></div>
+          <div className="absolute -top-24 -left-24 w-64 h-64 bg-gray-100 rounded-full blur-[100px] opacity-70 float-3d"></div>
+          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-gray-200 rounded-full blur-[100px] opacity-50 float-3d animation-delay-2000"></div>
 
           <div className="relative z-10">
-            <h1 className="text-5xl md:text-7xl font-black text-premium mb-4 tracking-tighter uppercase italic">
+            <h1 className="text-5xl md:text-7xl font-black text-foreground mb-4 tracking-tighter uppercase italic">
               Compression Series
             </h1>
             <div className="flex flex-col md:flex-row items-center gap-4">
@@ -112,10 +112,10 @@ export default function CompressionCatalogInteractive() {
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => handleSearch(e?.target?.value)}
-              className="w-full px-6 py-4 pl-14 bg-white border-0 rounded-2xl premium-shadow focus:outline-none focus:ring-2 focus:ring-[#112D4E] transition-all text-sm font-bold tracking-wide"
+              className="w-full px-6 py-4 pl-14 bg-white border-0 rounded-2xl premium-shadow focus:outline-none focus:ring-2 focus:ring-black transition-all text-sm font-bold tracking-wide"
             />
             <svg
-              className="absolute left-6 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#112D4E]"
+              className="absolute left-6 top-1/2 transform -translate-y-1/2 w-5 h-5 text-black"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

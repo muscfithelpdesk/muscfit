@@ -53,7 +53,7 @@ export default function ProductCard({ product }) {
           />
         </button>
 
-        <div className={`absolute bottom-0 left-0 right-0 p-2 md:p-3 bg-gradient-to-t from-black/80 to-transparent transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 md:translate-y-full opacity-100 md:opacity-0'}`}>
+        <div className={`absolute bottom-0 left-0 right-0 p-2 md:p-3 bg-gradient-to-t from-black/80 to-transparent transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-0 md:translate-y-full opacity-100 md:opacity-0'}`}>
           <button
             onClick={handleQuickAdd}
             className="w-full h-8 md:h-10 bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold rounded-sm flex items-center justify-center gap-1 md:gap-2 transition-all duration-250 text-[10px] md:text-sm uppercase tracking-wider"

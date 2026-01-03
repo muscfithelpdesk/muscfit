@@ -88,11 +88,11 @@ export default function MenCatalogInteractive() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         {/* Page Header with 3D Float Effect */}
         <div className="relative mb-12 text-center lg:text-left overflow-hidden">
-          <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-100 rounded-full blur-[100px] opacity-50 float-3d"></div>
-          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-gray-100 rounded-full blur-[100px] opacity-50 float-3d animation-delay-2000"></div>
+          <div className="absolute -top-24 -left-24 w-64 h-64 bg-gray-100 rounded-full blur-[100px] opacity-50 float-3d"></div>
+          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-gray-200 rounded-full blur-[100px] opacity-50 float-3d animation-delay-2000"></div>
 
           <div className="relative z-10">
-            <h1 className="text-4xl md:text-7xl font-black text-premium mb-4 tracking-tighter uppercase italic">
+            <h1 className="text-4xl md:text-7xl font-black text-foreground mb-4 tracking-tighter uppercase italic">
               Men's Collection
             </h1>
             <div className="flex flex-col md:flex-row items-center gap-4">

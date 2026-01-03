@@ -35,11 +35,11 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
       {/* Product Title & Badge */}
       <div className="mb-6">
         {product?.badge && (
-          <span className="inline-block px-4 py-1.5 glass-effect text-[#112D4E] text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-4 premium-shadow">
+          <span className="inline-block px-4 py-1.5 glass-effect text-foreground text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-4 premium-shadow">
             {product?.badge}
           </span>
         )}
-        <h1 className="font-heading text-4xl lg:text-5xl font-black text-premium mb-3 tracking-tighter">
+        <h1 className="font-heading text-4xl lg:text-5xl font-black text-foreground mb-3 tracking-tighter">
           {product?.name}
         </h1>
         <div className="flex items-center gap-2">

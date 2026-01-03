@@ -28,8 +28,8 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-gray-100">
                     <div>
-                        <p className="text-[10px] md:text-sm font-bold tracking-widest text-[#112D4E]/60 mb-1 uppercase">{subtitle}</p>
-                        <h2 className="text-3xl md:text-5xl font-extrabold text-[#112D4E] tracking-tight">{title}</h2>
+                        <p className="text-[10px] md:text-sm font-bold tracking-widest text-text-secondary mb-1 uppercase">{subtitle}</p>
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">{title}</h2>
                     </div>
 
                     <nav className="flex flex-wrap gap-4 md:gap-8 mt-6 md:mt-0 font-bold text-xs md:text-sm tracking-widest text-gray-400">
@@ -56,7 +56,7 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
                         {products?.map((product) => (
                             <div
                                 key={product.id}
-                                className="flex-none px-2 sm:px-3 w-[240px] sm:w-1/2 md:w-1/3 lg:w-1/4"
+                                className="flex-none px-2 sm:px-3 w-[200px] sm:w-1/2 md:w-1/3 lg:w-1/4"
                             >
                                 <ModernProductCard product={product} onQuickView={onQuickView} />
                             </div>

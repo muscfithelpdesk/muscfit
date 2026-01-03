@@ -167,6 +167,17 @@ export default function Header({ topOffset = 0, isFixed = true }) {
         style={{ top: isFixed ? '0' : 'auto' }}
       >
         <div className="relative flex items-center justify-between h-[64px] md:h-[80px] px-4 md:px-6 lg:px-8">
+          {/* Mobile Menu Toggle - Left */}
+          {!isAdminPage && (
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-text-secondary hover:text-primary transition-colors duration-250 z-20"
+              aria-label="Menu"
+            >
+              <Icon name={isMobileMenuOpen ? 'XMarkIcon' : 'Bars3Icon'} size={24} />
+            </button>
+          )}
+
           {/* Left Navigation - Desktop */}
           {!isAdminPage && (
             <nav className="hidden md:flex items-center gap-8 flex-1">
@@ -518,139 +529,132 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               )}
             </div>
 
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-text-secondary hover:text-primary transition-colors duration-250"
-              aria-label="Menu"
-            >
-              <Icon name={isMobileMenuOpen ? 'XMarkIcon' : 'Bars3Icon'} size={24} />
-            </button>
           </div>
         </div>
-
       </header>
       {/* Mobile Menu Sheet */}
-      {isMobileMenuOpen && (
-        <>
-          <div
-            className="fixed inset-0 bg-black/85 z-70 animate-fade-in md:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-          ></div>
-          <div
-            ref={mobileMenuRef}
-            className="fixed top-0 right-0 bottom-0 w-[280px] bg-background border-l border-border z-70 animate-slide-in-right md:hidden overflow-y-auto"
-          >
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-8">
-                <span className="font-heading text-xl font-bold text-foreground">Menu</span>
-                <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 text-text-secondary hover:text-primary transition-colors duration-250"
-                >
-                  <Icon name="XMarkIcon" size={24} />
-                </button>
-              </div>
+      {
+        isMobileMenuOpen && (
+          <>
+            <div
+              className="fixed inset-0 bg-black/85 z-70 animate-fade-in md:hidden"
+              onClick={() => setIsMobileMenuOpen(false)}
+            ></div>
+            <div
+              ref={mobileMenuRef}
+              className="fixed top-0 right-0 bottom-0 w-[280px] bg-background border-l border-border z-70 animate-slide-in-right md:hidden overflow-y-auto"
+            >
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-8">
+                  <span className="font-heading text-xl font-bold text-foreground">Menu</span>
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 text-text-secondary hover:text-primary transition-colors duration-250"
+                  >
+                    <Icon name="XMarkIcon" size={24} />
+                  </button>
+                </div>
 
-              {/* Navigation Categories in Mobile Menu - Hide on Admin Pages */}
-              {!isAdminPage && (
-                <div className="mb-4">
-                  <p className="text-xs font-caption text-text-secondary uppercase tracking-wider mb-2 px-4">Categories</p>
-                  <nav className="space-y-3">
-                    {Object.entries(navigationCategories)?.map(([key, category]) => (
-                      <div key={category?.path} className="border-b border-border/50 last:border-0">
-                        <button
-                          onClick={() => setActiveMobileCategory(activeMobileCategory === key ? null : key)}
-                          className="w-full flex items-center justify-between px-4 py-4 text-foreground hover:bg-muted rounded-sm transition-colors duration-250 font-heading font-extrabold text-lg uppercase tracking-tight"
-                        >
-                          {category?.label}
-                          <Icon
-                            name="ChevronDownIcon"
-                            size={20}
-                            className={`transition-transform duration-300 ${activeMobileCategory === key ? 'rotate-180' : ''}`}
-                          />
-                        </button>
+                {/* Navigation Categories in Mobile Menu - Hide on Admin Pages */}
+                {!isAdminPage && (
+                  <div className="mb-4">
+                    <p className="text-xs font-caption text-text-secondary uppercase tracking-wider mb-2 px-4">Categories</p>
+                    <nav className="space-y-3">
+                      {Object.entries(navigationCategories)?.map(([key, category]) => (
+                        <div key={category?.path} className="border-b border-border/50 last:border-0">
+                          <button
+                            onClick={() => setActiveMobileCategory(activeMobileCategory === key ? null : key)}
+                            className="w-full flex items-center justify-between px-4 py-4 text-foreground hover:bg-muted rounded-sm transition-colors duration-250 font-heading font-extrabold text-lg uppercase tracking-tight"
+                          >
+                            {category?.label}
+                            <Icon
+                              name="ChevronDownIcon"
+                              size={20}
+                              className={`transition-transform duration-300 ${activeMobileCategory === key ? 'rotate-180' : ''}`}
+                            />
+                          </button>
 
-                        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${activeMobileCategory === key ? 'max-h-[500px] pb-4 opacity-100' : 'max-h-0 opacity-0'}`}>
-                          <div className="pl-6 space-y-1">
-                            <Link
-                              href={category?.path}
-                              className="block px-4 py-2 text-sm font-bold text-primary hover:bg-muted rounded-sm transition-colors duration-250"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              Shop All {category?.label}
-                            </Link>
-                            {category?.subcategories?.map((subcat) => (
+                          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${activeMobileCategory === key ? 'max-h-[500px] pb-4 opacity-100' : 'max-h-0 opacity-0'}`}>
+                            <div className="pl-6 space-y-1">
                               <Link
-                                key={subcat?.path}
-                                href={subcat?.path}
-                                className="block px-4 py-2 text-sm text-text-secondary hover:text-primary hover:bg-muted rounded-sm transition-colors duration-250"
+                                href={category?.path}
+                                className="block px-4 py-2 text-sm font-bold text-primary hover:bg-muted rounded-sm transition-colors duration-250"
                                 onClick={() => setIsMobileMenuOpen(false)}
                               >
-                                {subcat?.name}
+                                Shop All {category?.label}
                               </Link>
-                            ))}
+                              {category?.subcategories?.map((subcat) => (
+                                <Link
+                                  key={subcat?.path}
+                                  href={subcat?.path}
+                                  className="block px-4 py-2 text-sm text-text-secondary hover:text-primary hover:bg-muted rounded-sm transition-colors duration-250"
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                  {subcat?.name}
+                                </Link>
+                              ))}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </nav>
-                </div>
-              )}
-
-              <div className="mt-8 pt-8 border-t border-border">
-                {user ? (
-                  <div className="space-y-1">
-                    <Link
-                      href="/user-profile"
-                      className="flex items-center gap-3 px-4 py-3 text-foreground hover:bg-muted rounded-sm transition-colors duration-250"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <Icon name="UserIcon" size={20} />
-                      My Profile
-                    </Link>
-                    <Link
-                      href="/user-profile?tab=orders"
-                      className="flex items-center gap-3 px-4 py-3 text-foreground hover:bg-muted rounded-sm transition-colors duration-250"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <Icon name="ShoppingBagIcon" size={20} />
-                      My Orders
-                    </Link>
-                    <button
-                      onClick={() => {
-                        handleLogout();
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="w-full flex items-center gap-3 px-4 py-3 text-error hover:bg-muted rounded-sm transition-colors duration-250"
-                    >
-                      <Icon name="ArrowRightOnRectangleIcon" size={20} />
-                      Sign Out
-                    </button>
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    <Link
-                      href="/user-authentication"
-                      className="block w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold rounded-md flex items-center justify-center transition-all duration-250"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Sign In
-                    </Link>
-                    <Link
-                      href="/user-authentication?mode=register"
-                      className="block w-full h-12 bg-surface hover:bg-muted text-foreground font-heading font-medium rounded-md flex items-center justify-center transition-all duration-250"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Create Account
-                    </Link>
+                      ))}
+                    </nav>
                   </div>
                 )}
+
+                <div className="mt-8 pt-8 border-t border-border">
+                  {user ? (
+                    <div className="space-y-1">
+                      <Link
+                        href="/user-profile"
+                        className="flex items-center gap-3 px-4 py-3 text-foreground hover:bg-muted rounded-sm transition-colors duration-250"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <Icon name="UserIcon" size={20} />
+                        My Profile
+                      </Link>
+                      <Link
+                        href="/user-profile?tab=orders"
+                        className="flex items-center gap-3 px-4 py-3 text-foreground hover:bg-muted rounded-sm transition-colors duration-250"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <Icon name="ShoppingBagIcon" size={20} />
+                        My Orders
+                      </Link>
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-error hover:bg-muted rounded-sm transition-colors duration-250"
+                      >
+                        <Icon name="ArrowRightOnRectangleIcon" size={20} />
+                        Sign Out
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <Link
+                        href="/user-authentication"
+                        className="block w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold rounded-md flex items-center justify-center transition-all duration-250"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Sign In
+                      </Link>
+                      <Link
+                        href="/user-authentication?mode=register"
+                        className="block w-full h-12 bg-surface hover:bg-muted text-foreground font-heading font-medium rounded-md flex items-center justify-center transition-all duration-250"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Create Account
+                      </Link>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )
+      }
       {/* Recaptcha Container (invisible) */}
       <div id="recaptcha-container"></div>
     </>
