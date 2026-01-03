@@ -181,21 +181,31 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           '--header-height': '96px'
         }}
       >
-        <div className="relative flex items-center justify-between h-[80px] md:h-[96px] px-4 md:px-6 lg:px-8">
-          {/* Mobile Menu Toggle - Left */}
-          {!isAdminPage && (
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-text-secondary hover:text-primary transition-colors duration-250 z-20"
-              aria-label="Menu"
-            >
-              <Icon name={isMobileMenuOpen ? 'XMarkIcon' : 'Bars3Icon'} size={24} />
-            </button>
-          )}
+        <div className="flex items-center justify-between h-[80px] md:h-[96px] px-4 md:px-6 lg:px-8">
+          {/* Left Side: Logo & Mobile Toggle */}
+          <div className="flex items-center gap-4 flex-1">
+            {!isAdminPage && (
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden p-2 text-text-secondary hover:text-primary transition-colors duration-250 z-20"
+                aria-label="Menu"
+              >
+                <Icon name={isMobileMenuOpen ? 'XMarkIcon' : 'Bars3Icon'} size={24} />
+              </button>
+            )}
 
-          {/* Left Navigation - Desktop */}
+            <Link href="/" className="group flex items-center">
+              <img
+                src="/assets/images/logo-v4.png"
+                alt="MUSCFIT Logo"
+                className="h-[72px] md:h-[84px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
+              />
+            </Link>
+          </div>
+
+          {/* Center Navigation - Desktop */}
           {!isAdminPage && (
-            <nav className="hidden md:flex items-center gap-8 flex-1">
+            <nav className="hidden md:flex items-center justify-center gap-10 flex-[2]">
               {/* Men Navigation Item */}
               <div className="static" ref={menDropdownRef}>
                 <button
@@ -208,7 +218,6 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
                 >
                   {navigationCategories?.men?.label}
-                  <Icon name="ChevronDownIcon" size={16} className={`transition-transform duration-250 ${isMenDropdownOpen ? 'rotate-180' : ''}`} />
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-250"></span>
                 </button>
 
@@ -288,7 +297,6 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
                 >
                   {navigationCategories?.women?.label}
-                  <Icon name="ChevronDownIcon" size={16} className={`transition-transform duration-250 ${isWomenDropdownOpen ? 'rotate-180' : ''}`} />
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-250"></span>
                 </button>
 
@@ -368,7 +376,6 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
                 >
                   {navigationCategories?.compression?.label}
-                  <Icon name="ChevronDownIcon" size={16} className={`transition-transform duration-250 ${isCompressionDropdownOpen ? 'rotate-180' : ''}`} />
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-250"></span>
                 </button>
 
@@ -440,7 +447,6 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
                 >
                   {navigationCategories?.accessories?.label}
-                  <Icon name="ChevronDownIcon" size={16} className={`transition-transform duration-250 ${isAccessoriesDropdownOpen ? 'rotate-180' : ''}`} />
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-250"></span>
                 </button>
 
@@ -501,17 +507,6 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               </div>
             </nav>
           )}
-
-          {/* Center Logo */}
-          <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-full py-1 z-10">
-            <Link href="/" className="group flex items-center h-full">
-              <img
-                src="/assets/images/logo-v4.png"
-                alt="MUSCFIT Logo"
-                className="h-[72px] md:h-[84px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
-              />
-            </Link>
-          </div>
 
           {/* Right Action Icons */}
           <div className="flex items-center justify-end gap-2 md:gap-4 flex-1">
