@@ -28,7 +28,7 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
     const tagStyles = {
       BESTSELLER: 'bg-primary text-primary-foreground',
       NEW: 'bg-success text-success-foreground',
-      SALE: 'bg-error text-error-foreground',
+      SALE: 'bg-[#9B1C1C] text-white',
       TRENDING: 'bg-accent text-accent-foreground',
       HOT: 'bg-warning text-warning-foreground'
     };
@@ -41,7 +41,7 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
   };
 
   return (
-    <div 
+    <div
       className="group w-full min-w-0 bg-card border border-border rounded-md overflow-hidden hover:shadow-sharp-lg transition-all duration-250"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -50,13 +50,12 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
       <Link href={`/product-details?id=${product?.id}`} className="block relative">
         <div className="relative aspect-[3/4] overflow-hidden bg-muted">
           {renderTag()}
-          
+
           <AppImage
             src={product?.image}
             alt={product?.alt}
-            className={`w-full h-full object-cover transition-all duration-500 ${
-              imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-            } ${isHovered ? 'scale-110' : 'scale-100'}`}
+            className={`w-full h-full object-cover transition-all duration-500 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+              } ${isHovered ? 'scale-110' : 'scale-100'}`}
             onLoad={() => setImageLoaded(true)}
           />
 
@@ -78,9 +77,8 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
           </button>
 
           {/* Quick Add Button - Desktop Only */}
-          <div className={`hidden md:flex absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent transition-all duration-250 ${
-            isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}>
+          <div className={`hidden md:flex absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent transition-all duration-250 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}>
             <button
               onClick={(e) => {
                 e?.preventDefault();

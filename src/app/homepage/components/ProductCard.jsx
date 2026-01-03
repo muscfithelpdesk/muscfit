@@ -35,7 +35,7 @@ export default function ProductCard({ product }) {
         />
 
         {product?.tag && (
-          <span className="absolute top-3 left-3 px-3 py-1 bg-primary text-primary-foreground text-xs font-caption font-bold rounded-sm">
+          <span className={`absolute top-3 left-3 px-3 py-1 ${product?.tag === 'SALE' ? 'bg-[#9B1C1C]' : 'bg-primary'} text-primary-foreground text-[10px] md:text-xs font-caption font-black rounded-sm tracking-wider uppercase`}>
             {product?.tag}
           </span>
         )}
