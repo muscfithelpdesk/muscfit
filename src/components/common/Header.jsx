@@ -164,7 +164,10 @@ export default function Header({ topOffset = 0, isFixed = true }) {
     <>
       <header
         className={`${isFixed ? 'fixed left-0 right-0 z-50' : 'relative'} transition-all duration-300 bg-background shadow-sharp border-b border-gray-100`}
-        style={{ top: isFixed ? (scrolled ? '0' : 'clamp(32px, 5vw, 40px)') : 'auto' }}
+        style={{
+          top: isFixed ? (scrolled ? '0' : 'clamp(32px, 5vw, 40px)') : 'auto',
+          '--header-height': '96px'
+        }}
       >
         <div className="relative flex items-center justify-between h-[80px] md:h-[96px] px-4 md:px-6 lg:px-8">
           {/* Mobile Menu Toggle - Left */}
@@ -199,8 +202,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 {isMenDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsMenDropdownOpen(false)}
-                    className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
-                    style={{ top: `${80 + topOffset}px` }}
+                    className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-40 h-[320px]"
+                    style={{ top: scrolled ? 'var(--header-height, 96px)' : 'calc(var(--header-height, 96px) + clamp(32px, 5vw, 40px))' }}
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -278,8 +281,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 {isWomenDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsWomenDropdownOpen(false)}
-                    className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
-                    style={{ top: `${80 + topOffset}px` }}
+                    className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-40 h-[320px]"
+                    style={{ top: scrolled ? 'var(--header-height, 96px)' : 'calc(var(--header-height, 96px) + clamp(32px, 5vw, 40px))' }}
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -357,8 +360,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 {isCompressionDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsCompressionDropdownOpen(false)}
-                    className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-50 h-[320px]"
-                    style={{ top: `${80 + topOffset}px` }}
+                    className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-40 h-[320px]"
+                    style={{ top: scrolled ? 'var(--header-height, 96px)' : 'calc(var(--header-height, 96px) + clamp(32px, 5vw, 40px))' }}
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -418,7 +421,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               <img
                 src="/assets/images/logo-v4.png"
                 alt="MUSCFIT Logo"
-                className="h-[72px] md:h-[100px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
+                className="h-[72px] md:h-[84px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </Link>
           </div>
