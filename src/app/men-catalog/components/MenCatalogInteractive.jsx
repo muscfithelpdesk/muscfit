@@ -92,7 +92,7 @@ export default function MenCatalogInteractive() {
           <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-gray-100 rounded-full blur-[100px] opacity-50 float-3d animation-delay-2000"></div>
 
           <div className="relative z-10">
-            <h1 className="text-5xl md:text-7xl font-black text-premium mb-4 tracking-tighter uppercase italic">
+            <h1 className="text-4xl md:text-7xl font-black text-premium mb-4 tracking-tighter uppercase italic">
               Men's Collection
             </h1>
             <div className="flex flex-col md:flex-row items-center gap-4">

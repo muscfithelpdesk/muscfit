@@ -61,7 +61,7 @@ export default function ProductCarousel({ products }) {
                 {duplicatedProducts.map((product, index) => (
                     <div
                         key={`${product.id}-${index}`}
-                        className="flex-none w-[280px] sm:w-[320px] md:w-[280px] lg:w-[260px] px-2 sm:px-3"
+                        className="flex-none w-[220px] sm:w-[320px] md:w-[280px] lg:w-[260px] px-2 sm:px-3"
                     >
                         <ProductCard product={product} />
                     </div>

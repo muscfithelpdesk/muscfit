@@ -402,7 +402,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-full py-2 z-10">
             <Link href="/homepage" className="flex items-center group">
               <img
-                src="/assets/images/logo-muscfit-v2.png"
+                src="/assets/images/logo-muscfit-v3.png"
                 alt="MUSCFIT Logo"
                 className="h-[80px] md:h-[90px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
               />

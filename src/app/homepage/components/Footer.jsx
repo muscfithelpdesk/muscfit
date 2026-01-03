@@ -11,7 +11,7 @@ export default function Footer({ columns, socialLinks, paymentMethods }) {
         <div className="mb-12">
           <Link href="/homepage" className="inline-block">
             <img
-              src="/assets/images/logo-muscfit-v2.png"
+              src="/assets/images/logo-muscfit-v3.png"
               alt="MUSCFIT Logo"
               className="h-20 md:h-24 w-auto object-contain"
             />
