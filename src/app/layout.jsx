@@ -32,10 +32,6 @@ export default function RootLayout({ children }) {
           <GoogleAnalytics />
         </Suspense>
         <AuthProvider>
-          {!isAdminPage && (
-            <PromoBar message="Join the MUSCFIT family - Sign up for exclusive offers!" dismissible />
-          )}
-          <Header />
           {children}
         </AuthProvider>
 
