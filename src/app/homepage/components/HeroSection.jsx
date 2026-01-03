@@ -28,8 +28,8 @@ export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary,
           />
         </div>
 
-        {/* Graded overlay for premium feel */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60"></div>
+        {/* Premium navy gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#112D4E]/70 via-[#112D4E]/30 to-[#112D4E]/70"></div>
       </div>
 
       <div className="relative h-full w-full flex flex-col justify-center items-center text-center px-4 md:px-6 lg:px-8 pt-[80px] md:pt-[120px]">
@@ -49,13 +49,13 @@ export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary,
           <div className="flex justify-center flex-wrap gap-6">
             <Link
               href={ctaPrimary?.href}
-              className="px-6 md:px-10 py-3 md:py-4 bg-white text-black font-black text-xs md:text-base tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-black hover:text-white hover:scale-110 premium-shadow"
+              className="px-6 md:px-10 py-3 md:py-4 bg-white text-primary font-black text-xs md:text-base tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-primary hover:text-white hover:scale-110 premium-shadow"
             >
               {ctaPrimary?.text}
             </Link>
             <Link
               href={ctaSecondary?.href || '#'}
-              className="px-6 md:px-10 py-3 md:py-4 glass-effect text-white font-black text-xs md:text-base tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-white hover:text-black hover:scale-110 premium-shadow"
+              className="px-6 md:px-10 py-3 md:py-4 glass-effect text-white font-black text-xs md:text-base tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-white hover:text-primary hover:scale-110 premium-shadow"
             >
               {ctaSecondary?.text || 'EXPLORE'}
             </Link>

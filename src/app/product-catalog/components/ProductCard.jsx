@@ -26,11 +26,11 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
     if (!product?.tag) return null;
 
     const tagStyles = {
-      BESTSELLER: 'bg-primary text-primary-foreground',
-      NEW: 'bg-success text-success-foreground',
+      BESTSELLER: 'bg-[#112D4E] text-white',
+      NEW: 'bg-[#065F46] text-white',
       SALE: 'bg-[#9B1C1C] text-white',
-      TRENDING: 'bg-accent text-accent-foreground',
-      HOT: 'bg-warning text-warning-foreground'
+      TRENDING: 'bg-[#3F72AF] text-white',
+      HOT: 'bg-[#9A3412] text-white'
     };
 
     return (

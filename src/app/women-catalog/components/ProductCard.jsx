@@ -85,11 +85,11 @@ export default function ProductCard({ product }) {
           {/* Tag Badge */}
           {product?.tag && (
             <div className="absolute top-3 left-3 z-10">
-              <span className={`px-4 py-1.5 text-[10px] font-bold rounded-full premium-shadow ${product?.tag === 'SALE' ? 'bg-[#9B1C1C] text-white' : 'glass-effect'} ${product?.tag === 'BESTSELLER' ? 'text-blue-900' :
-                product?.tag === 'NEW' ? 'text-green-900' :
-                  product?.tag === 'SALE' ? '' :
-                    product?.tag === 'HOT' ? 'text-orange-900' :
-                      'text-gray-900'
+              <span className={`px-4 py-1.5 text-[10px] font-bold rounded-full premium-shadow ${product?.tag === 'SALE' ? 'bg-[#9B1C1C] text-white' :
+                  product?.tag === 'BESTSELLER' ? 'bg-[#112D4E] text-white' :
+                    product?.tag === 'NEW' ? 'bg-[#065F46] text-white' :
+                      product?.tag === 'HOT' ? 'bg-[#9A3412] text-white' :
+                        'glass-effect text-gray-900'
                 }`}>
                 {product?.tag}
               </span>

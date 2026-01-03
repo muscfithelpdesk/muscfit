@@ -5,8 +5,8 @@
 @layer base {
   :root {
     /* Primary Colors */
-    --color-primary: #000000;
-    /* black */
+    --color-primary: #112D4E;
+    /* premium navy */
     --color-primary-foreground: #FFFFFF;
     /* white */
 
@@ -17,16 +17,16 @@
     /* gray-900 */
 
     /* Accent Colors */
-    --color-accent: #000000;
-    /* black */
+    --color-accent: #3F72AF;
+    /* premium blue */
     --color-accent-foreground: #FFFFFF;
     /* white */
 
     /* Background Colors */
     --color-background: #FFFFFF;
     /* white */
-    --color-foreground: #09090B;
-    /* gray-950 */
+    --color-foreground: #1E293B;
+    /* slate-800 / deep charcoal */
 
     /* Surface Colors */
     --color-surface: #FAFAFA;
@@ -37,8 +37,8 @@
     /* Card Colors */
     --color-card: #FFFFFF;
     /* white */
-    --color-card-foreground: #09090B;
-    /* gray-950 */
+    --color-card-foreground: #1E293B;
+    /* deep charcoal */
 
     /* Popover Colors */
     --color-popover: #FFFFFF;
@@ -83,8 +83,8 @@
     /* white */
 
     /* Text Colors */
-    --color-text-primary: #09090B;
-    /* gray-950 */
+    --color-text-primary: #1E293B;
+    /* deep charcoal */
     --color-text-secondary: #71717A;
     /* gray-500 */
 
