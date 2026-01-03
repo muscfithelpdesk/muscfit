@@ -56,7 +56,7 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
                         {products?.map((product) => (
                             <div
                                 key={product.id}
-                                className="flex-none px-2 sm:px-3 w-[240px] sm:w-1/2 md:w-1/3 lg:w-1/5"
+                                className="flex-none px-2 sm:px-3 w-[240px] sm:w-1/2 md:w-1/3 lg:w-1/4"
                             >
                                 <ModernProductCard product={product} onQuickView={onQuickView} />
                             </div>

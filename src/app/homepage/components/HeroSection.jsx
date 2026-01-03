@@ -7,20 +7,22 @@ export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary,
     <section className="relative w-full h-[85vh] md:h-screen overflow-hidden group perspective-1000">
       <div className="absolute inset-0">
         {/* Desktop Image */}
-        <div className="hidden md:block w-full h-full">
+        <div className="hidden md:block absolute inset-0">
           <AppImage
             src={backgroundImage}
             alt={backgroundAlt}
+            fill
             className="w-full h-full object-cover object-center transition-transform duration-[3s] group-hover:scale-110"
             priority
           />
         </div>
 
         {/* Mobile Image */}
-        <div className="block md:hidden w-full h-full">
+        <div className="block md:hidden absolute inset-0">
           <AppImage
             src={mobileHeroImage || backgroundImage}
             alt={backgroundAlt}
+            fill
             className="w-full h-full object-cover object-center transition-transform duration-[3s] group-hover:scale-110"
             priority
           />
