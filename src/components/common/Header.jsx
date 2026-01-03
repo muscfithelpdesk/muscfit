@@ -249,33 +249,25 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       <div className="w-3/4 h-full flex p-6 gap-6 bg-background">
                         <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
                           <img
-                            src="/assets/images/category-men-1.jpg"
+                            src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1000&auto=format&fit=crop"
                             alt="Men's Collection 1"
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            onError={(e) => {
-                              // Fallback if image doesn't exist
-                              e.target.src = 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000&auto=format&fit=crop';
-                            }}
                           />
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                           <div className="absolute bottom-6 left-6">
-                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">New Arrivals</h3>
+                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">Performance Gear</h3>
                             <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
                           </div>
                         </div>
                         <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
                           <img
-                            src="/assets/images/category-men-2.jpg"
+                            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop"
                             alt="Men's Collection 2"
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            onError={(e) => {
-                              // Fallback if image doesn't exist
-                              e.target.src = 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1000&auto=format&fit=crop';
-                            }}
                           />
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                           <div className="absolute bottom-6 left-6">
-                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">Best Sellers</h3>
+                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">Lifting Essentials</h3>
                             <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
                           </div>
                         </div>
@@ -328,13 +320,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       <div className="w-3/4 h-full flex p-6 gap-6 bg-background">
                         <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
                           <img
-                            src="/assets/images/category-women-1.jpg"
+                            src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=1000&auto=format&fit=crop"
                             alt="Women's Collection 1"
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            onError={(e) => {
-                              // Fallback if image doesn't exist
-                              e.target.src = 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=1000&auto=format&fit=crop';
-                            }}
                           />
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                           <div className="absolute bottom-6 left-6">
@@ -344,13 +332,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                         </div>
                         <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
                           <img
-                            src="/assets/images/category-women-2.jpg"
+                            src="https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?q=80&w=1000&auto=format&fit=crop"
                             alt="Women's Collection 2"
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            onError={(e) => {
-                              // Fallback if image doesn't exist
-                              e.target.src = 'https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?q=80&w=1000&auto=format&fit=crop';
-                            }}
                           />
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                           <div className="absolute bottom-6 left-6">
@@ -407,7 +391,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       <div className="w-3/4 h-full flex p-6 gap-6 bg-background">
                         <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
                           <img
-                            src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000&auto=format&fit=crop"
+                            src="https://images.unsplash.com/photo-1517438476312-10d79c67750d?q=80&w=1000&auto=format&fit=crop"
                             alt="Compression Collection 1"
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
@@ -419,13 +403,13 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                         </div>
                         <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
                           <img
-                            src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1000&auto=format&fit=crop"
+                            src="https://images.unsplash.com/photo-1517438322351-e0739345b5e1?q=80&w=1000&auto=format&fit=crop"
                             alt="Compression Collection 2"
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                           <div className="absolute bottom-6 left-6">
-                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">Performance Gear</h3>
+                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">Elite Series</h3>
                             <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
                           </div>
                         </div>
