@@ -49,14 +49,17 @@ export default function HomepageInteractive({ pageData }) {
     <div className="min-h-screen bg-background">
       <div className="fixed top-0 left-0 right-0 z-50">
         <PromoBar
-          message={pageData?.promoBar?.message}
-          dismissible={pageData?.promoBar?.dismissible}
+          messages={[
+            "New Year Sale: Get 30% Off On All Compression Wear",
+            "Free Shipping On All Orders Above ₹2,999",
+            "Born To Conquer: Shop Our Latest Performance Gear"
+          ]}
           isVisible={isPromoVisible}
           onDismiss={handleDismissPromo}
         />
         <Header isFixed={false} />
       </div>
-      <main className="pt-[132px] md:pt-[152px]">
+      <main className="pt-[142px] md:pt-[160px]">
         <HeroSection
           title={pageData?.hero?.title}
           subtitle={pageData?.hero?.subtitle}
