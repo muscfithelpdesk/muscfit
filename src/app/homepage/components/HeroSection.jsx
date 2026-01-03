@@ -16,9 +16,9 @@ export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary,
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60"></div>
       </div>
 
-      <div className="relative h-full w-full flex flex-col justify-center items-center text-center px-4 md:px-6 lg:px-8 pt-[120px]">
+      <div className="relative h-full w-full flex flex-col justify-center items-center text-center px-4 md:px-6 lg:px-8 pt-[80px] md:pt-[120px]">
         <div className="max-w-7xl mx-auto w-full animate-fade-in-up preserve-3d float-3d">
-          <h1 className="font-heading text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-white mb-2 tracking-tighter uppercase italic drop-shadow-2xl">
+          <h1 className="font-heading text-3xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-white mb-2 tracking-tighter uppercase italic drop-shadow-2xl">
             {title}
           </h1>
 

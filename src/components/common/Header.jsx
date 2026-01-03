@@ -33,6 +33,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
   const [isWomenDropdownOpen, setIsWomenDropdownOpen] = useState(false);
   const [isCompressionDropdownOpen, setIsCompressionDropdownOpen] = useState(false);
 
+  // Mobile accordion states
+  const [activeMobileCategory, setActiveMobileCategory] = useState(null);
+
   // Check if current page is an admin page
   const isAdminPage = pathname?.startsWith('/admin-');
 
@@ -163,7 +166,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
         className={`${isFixed ? 'fixed left-0 right-0 z-50' : 'relative'} transition-all duration-250 bg-background shadow-sharp`}
         style={{ top: isFixed ? '0' : 'auto' }}
       >
-        <div className="relative flex items-center justify-between h-[80px] px-4 md:px-6 lg:px-8">
+        <div className="relative flex items-center justify-between h-[64px] md:h-[80px] px-4 md:px-6 lg:px-8">
           {/* Left Navigation - Desktop */}
           {!isAdminPage && (
             <nav className="hidden md:flex items-center gap-8 flex-1">
@@ -404,7 +407,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               <img
                 src="/assets/images/logo-muscfit-v3.png"
                 alt="MUSCFIT Logo"
-                className="h-[80px] md:h-[90px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
+                className="h-[56px] md:h-[90px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </Link>
           </div>
@@ -422,7 +425,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               </button>
 
               {isSearchOpen && (
-                <div className="absolute right-0 top-full mt-2 w-[320px] md:w-[400px] bg-popover border border-border rounded-md shadow-sharp-lg animate-scale-in z-[100]">
+                <div className="fixed md:absolute left-4 right-4 md:left-auto md:right-0 top-[70px] md:top-full mt-2 w-auto md:w-[400px] bg-popover border border-border rounded-md shadow-sharp-lg animate-scale-in z-[100]">
                   <form onSubmit={handleSearchSubmit} className="p-4">
                     <div className="relative">
                       <input
@@ -554,27 +557,40 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 <div className="mb-4">
                   <p className="text-xs font-caption text-text-secondary uppercase tracking-wider mb-2 px-4">Categories</p>
                   <nav className="space-y-3">
-                    {Object.values(navigationCategories)?.map((category) => (
-                      <div key={category?.path} className="space-y-1">
-                        <Link
-                          href={category?.path}
-                          className="flex items-center justify-between px-4 py-3 text-foreground hover:bg-muted rounded-sm transition-colors duration-250 font-heading font-semibold"
-                          onClick={() => setIsMobileMenuOpen(false)}
+                    {Object.entries(navigationCategories)?.map(([key, category]) => (
+                      <div key={category?.path} className="border-b border-border/50 last:border-0">
+                        <button
+                          onClick={() => setActiveMobileCategory(activeMobileCategory === key ? null : key)}
+                          className="w-full flex items-center justify-between px-4 py-4 text-foreground hover:bg-muted rounded-sm transition-colors duration-250 font-heading font-extrabold text-lg uppercase tracking-tight"
                         >
                           {category?.label}
-                          <Icon name="ChevronRightIcon" size={16} />
-                        </Link>
-                        <div className="pl-6 space-y-1">
-                          {category?.subcategories?.map((subcat) => (
+                          <Icon
+                            name="ChevronDownIcon"
+                            size={20}
+                            className={`transition-transform duration-300 ${activeMobileCategory === key ? 'rotate-180' : ''}`}
+                          />
+                        </button>
+
+                        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${activeMobileCategory === key ? 'max-h-[500px] pb-4 opacity-100' : 'max-h-0 opacity-0'}`}>
+                          <div className="pl-6 space-y-1">
                             <Link
-                              key={subcat?.path}
-                              href={subcat?.path}
-                              className="block px-4 py-2 text-sm text-text-secondary hover:text-primary hover:bg-muted rounded-sm transition-colors duration-250"
+                              href={category?.path}
+                              className="block px-4 py-2 text-sm font-bold text-primary hover:bg-muted rounded-sm transition-colors duration-250"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
-                              {subcat?.name}
+                              Shop All {category?.label}
                             </Link>
-                          ))}
+                            {category?.subcategories?.map((subcat) => (
+                              <Link
+                                key={subcat?.path}
+                                href={subcat?.path}
+                                className="block px-4 py-2 text-sm text-text-secondary hover:text-primary hover:bg-muted rounded-sm transition-colors duration-250"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                {subcat?.name}
+                              </Link>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     ))}

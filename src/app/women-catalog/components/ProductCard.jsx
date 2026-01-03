@@ -8,6 +8,7 @@ export default function ProductCard({ product }) {
   const { user } = useAuth();
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleWishlistToggle = async (e) => {
     e?.preventDefault();
@@ -41,7 +42,12 @@ export default function ProductCard({ product }) {
     : 0;
 
   return (
-    <Link href={`/product-details?id=${product?.id}`} className="group perspective-1000">
+    <Link
+      href={`/product-details?id=${product?.id}`}
+      className="group perspective-1000"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="bg-white rounded-xl shadow-sharp hover:premium-shadow transition-all duration-500 overflow-hidden border border-gray-100 preserve-3d tilt-3d">
         {/* Product Image */}
         <div className="relative aspect-[3/4] overflow-hidden bg-muted">
@@ -55,8 +61,8 @@ export default function ProductCard({ product }) {
           <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
           {/* Quick Add Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-10">
-            <button className="w-full py-2.5 glass-effect text-[#112D4E] font-bold text-xs uppercase tracking-[0.1em] rounded-lg shadow-lg hover:bg-white transition-colors">
+          <div className={`absolute bottom-0 left-0 right-0 p-2 md:p-4 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 md:translate-y-full opacity-100 md:opacity-0'} z-10`}>
+            <button className="w-full py-2 md:py-2.5 glass-effect text-[#112D4E] font-bold text-[10px] md:text-xs uppercase tracking-[0.1em] rounded-lg shadow-lg hover:bg-white transition-colors">
               Add to Bag
             </button>
           </div>
