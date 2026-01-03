@@ -36,8 +36,7 @@ export default function HomepageInteractive({ pageData }) {
     localStorage.setItem('promoBarDismissed', 'true');
   };
 
-  const headerOffset = isPromoVisible ? 40 : 0;
-  const mainPaddingTop = 80 + headerOffset;
+  const headerOffset = isPromoVisible ? 44 : 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -55,7 +54,7 @@ export default function HomepageInteractive({ pageData }) {
         />
         <Header isFixed={false} />
       </div>
-      <main className="pt-[130px] md:pt-[160px]">
+      <main className="pt-[190px]">
         <HeroSection
           title={pageData?.hero?.title}
           subtitle={pageData?.hero?.subtitle}

@@ -177,11 +177,11 @@ export default function Header({ topOffset = 0, isFixed = true }) {
       <header
         className={`${isFixed ? 'fixed left-0 right-0 z-50' : 'relative'} transition-all duration-300 bg-background shadow-sharp border-b border-gray-100`}
         style={{
-          top: isFixed ? (scrolled ? '0' : '36px') : 'auto',
-          '--header-height': scrolled ? '80px' : '120px'
+          top: isFixed ? (scrolled ? '0' : '44px') : 'auto',
+          '--header-height': scrolled ? '90px' : '140px'
         }}
       >
-        <div className={`flex items-center justify-between transition-all duration-300 px-4 md:px-8 lg:px-12 ${scrolled ? 'h-16' : 'h-24'}`}>
+        <div className={`flex items-center justify-between transition-all duration-300 px-4 md:px-8 lg:px-12 ${scrolled ? 'h-[90px]' : 'h-[140px]'}`}>
           {/* Left Side: Logo & Mobile Toggle */}
           <div className="flex items-center gap-4 w-1/4">
             {!isAdminPage && (
@@ -198,7 +198,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               <img
                 src="/assets/images/logo-v4.png"
                 alt="MUSCFIT Logo"
-                className={`transition-all duration-300 w-auto object-contain ${scrolled ? 'h-10' : 'h-14 md:h-16'}`}
+                className={`transition-all duration-300 w-auto object-contain ${scrolled ? 'h-[50px] md:h-[60px]' : 'h-[70px] md:h-[100px]'}`}
               />
             </Link>
           </div>
