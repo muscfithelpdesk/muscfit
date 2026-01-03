@@ -19,12 +19,10 @@ export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary,
 
         {/* Mobile Image */}
         <div className="block md:hidden absolute inset-0">
-          <AppImage
-            src={mobileHeroImage || backgroundImage}
+          <img
+            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop"
             alt={backgroundAlt}
-            fill
-            className="w-full h-full object-cover object-center transition-transform duration-[3s] group-hover:scale-110"
-            priority
+            className="w-full h-full object-cover object-center"
           />
         </div>
 
