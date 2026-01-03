@@ -13,7 +13,7 @@ export default function PromoBar({ message, dismissible, isVisible = true, onDis
       <div className="flex animate-marquee">
         {/* Repeat the message many times to ensure a gap-less loop */}
         {[...Array(10)].map((_, i) => (
-          <span key={i} className="mx-4 md:mx-8 font-heading text-[10px] md:text-sm font-bold uppercase tracking-widest">
+          <span key={i} className="mx-4 md:mx-8 font-heading text-[9px] md:text-xs font-bold uppercase tracking-widest">
             {message}
           </span>
         ))}
@@ -21,7 +21,7 @@ export default function PromoBar({ message, dismissible, isVisible = true, onDis
       {/* Second set for seamless loop */}
       <div className="flex animate-marquee">
         {[...Array(10)].map((_, i) => (
-          <span key={i} className="mx-4 md:mx-8 font-heading text-[10px] md:text-sm font-bold uppercase tracking-widest">
+          <span key={i} className="mx-4 md:mx-8 font-heading text-[9px] md:text-xs font-bold uppercase tracking-widest">
             {message}
           </span>
         ))}
