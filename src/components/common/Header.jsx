@@ -177,11 +177,11 @@ export default function Header({ topOffset = 0, isFixed = true }) {
       <header
         className={`${isFixed ? 'fixed left-0 right-0 z-50' : 'relative'} transition-all duration-300 bg-background shadow-sharp border-b border-gray-100`}
         style={{
-          top: isFixed ? (scrolled ? '0' : 'clamp(32px, 5vw, 40px)') : 'auto',
-          '--header-height': '80px'
+          top: isFixed ? (scrolled ? '0' : '36px') : 'auto',
+          '--header-height': scrolled ? '80px' : '120px'
         }}
       >
-        <div className="flex items-center justify-between h-[72px] md:h-[80px] px-4 md:px-6 lg:px-8">
+        <div className={`flex items-center justify-between transition-all duration-300 px-4 md:px-6 lg:px-8 ${scrolled ? 'h-[72px] md:h-[80px]' : 'h-[100px] md:h-[130px]'}`}>
           {/* Left Side: Logo & Mobile Toggle */}
           <div className="flex items-center gap-4 flex-1 h-full">
             {!isAdminPage && (
@@ -198,14 +198,14 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               <img
                 src="/assets/images/logo-v4.png"
                 alt="MUSCFIT Logo"
-                className="h-[120px] md:h-[150px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                className="h-[100px] md:h-[130px] max-w-[150px] md:max-w-[200px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
             </Link>
           </div>
 
           {/* Center Navigation - Desktop */}
           {!isAdminPage && (
-            <nav className="hidden md:flex items-center justify-center gap-10 flex-[2]">
+            <nav className="hidden md:flex items-center justify-center gap-6 lg:gap-10 flex-[2]">
               {/* Men Navigation Item */}
               <div className="static" ref={menDropdownRef}>
                 <button
@@ -225,7 +225,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   <div
                     onMouseLeave={() => setIsMenDropdownOpen(false)}
                     className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-40 h-[320px]"
-                    style={{ top: scrolled ? 'var(--header-height, 96px)' : 'calc(var(--header-height, 96px) + clamp(32px, 5vw, 40px))' }}
+                    style={{ top: scrolled ? '80px' : 'calc(120px + 36px)' }}
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -296,7 +296,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   <div
                     onMouseLeave={() => setIsWomenDropdownOpen(false)}
                     className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-40 h-[320px]"
-                    style={{ top: scrolled ? 'var(--header-height, 96px)' : 'calc(var(--header-height, 96px) + clamp(32px, 5vw, 40px))' }}
+                    style={{ top: scrolled ? '80px' : 'calc(120px + 36px)' }}
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -367,7 +367,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   <div
                     onMouseLeave={() => setIsCompressionDropdownOpen(false)}
                     className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-40 h-[320px]"
-                    style={{ top: scrolled ? 'var(--header-height, 96px)' : 'calc(var(--header-height, 96px) + clamp(32px, 5vw, 40px))' }}
+                    style={{ top: scrolled ? '80px' : 'calc(120px + 36px)' }}
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
@@ -438,7 +438,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   <div
                     onMouseLeave={() => setIsAccessoriesDropdownOpen(false)}
                     className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-40 h-[320px]"
-                    style={{ top: scrolled ? 'var(--header-height, 96px)' : 'calc(var(--header-height, 96px) + clamp(32px, 5vw, 40px))' }}
+                    style={{ top: scrolled ? '80px' : 'calc(120px + 36px)' }}
                   >
                     <div className="max-w-[1400px] mx-auto h-full flex">
                       {/* Subcategories */}
