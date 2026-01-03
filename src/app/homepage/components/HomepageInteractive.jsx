@@ -63,6 +63,7 @@ export default function HomepageInteractive({ pageData }) {
           ctaPrimary={pageData?.hero?.ctaPrimary}
           ctaSecondary={pageData?.hero?.ctaSecondary}
           backgroundImage={pageData?.hero?.backgroundImage}
+          mobileHeroImage={pageData?.hero?.mobileHeroImage}
           backgroundAlt={pageData?.hero?.backgroundAlt}
         />
 
@@ -195,6 +196,7 @@ HomepageInteractive.propTypes = {
       ctaPrimary: PropTypes.object.isRequired,
       ctaSecondary: PropTypes.object.isRequired,
       backgroundImage: PropTypes.string.isRequired,
+      mobileHeroImage: PropTypes.string,
       backgroundAlt: PropTypes.string.isRequired
     }).isRequired,
     features: PropTypes.array.isRequired,

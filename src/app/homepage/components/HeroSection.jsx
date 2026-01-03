@@ -2,16 +2,30 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import AppImage from '@/components/ui/AppImage';
 
-export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary, backgroundImage, backgroundAlt }) {
+export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary, backgroundImage, backgroundAlt, mobileHeroImage }) {
   return (
     <section className="relative w-full h-[85vh] md:h-screen overflow-hidden group perspective-1000">
       <div className="absolute inset-0">
-        <AppImage
-          src={backgroundImage}
-          alt={backgroundAlt}
-          className="w-full h-full object-cover object-center transition-transform duration-[3s] group-hover:scale-110"
-          priority
-        />
+        {/* Desktop Image */}
+        <div className="hidden md:block w-full h-full">
+          <AppImage
+            src={backgroundImage}
+            alt={backgroundAlt}
+            className="w-full h-full object-cover object-center transition-transform duration-[3s] group-hover:scale-110"
+            priority
+          />
+        </div>
+
+        {/* Mobile Image */}
+        <div className="block md:hidden w-full h-full">
+          <AppImage
+            src={mobileHeroImage || backgroundImage}
+            alt={backgroundAlt}
+            className="w-full h-full object-cover object-center transition-transform duration-[3s] group-hover:scale-110"
+            priority
+          />
+        </div>
+
         {/* Graded overlay for premium feel */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60"></div>
       </div>
@@ -62,5 +76,6 @@ HeroSection.propTypes = {
     href: PropTypes.string.isRequired
   }).isRequired,
   backgroundImage: PropTypes.string.isRequired,
+  mobileHeroImage: PropTypes.string,
   backgroundAlt: PropTypes.string.isRequired
 };

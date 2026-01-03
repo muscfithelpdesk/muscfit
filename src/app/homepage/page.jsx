@@ -25,6 +25,7 @@ export default function Homepage() {
       },
       // High-quality gym/hoodie aesthetic image
       backgroundImage: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2600&auto=format&fit=crop",
+      mobileHeroImage: "https://images.unsplash.com/photo-1541534741688-6078c65b5a28?q=80&w=1000&auto=format&fit=crop",
       backgroundAlt: "Athlete in hoodie focused in gym environment"
     },
 
