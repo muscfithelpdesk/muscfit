@@ -8,7 +8,7 @@ export default function PromoBar({ message, dismissible, isVisible = true, onDis
   if (!isVisible) return null;
 
   return (
-    <div className="relative z-[60] bg-gray-200 text-black border-b border-gray-300 overflow-hidden whitespace-nowrap h-8 md:h-10 flex items-center">
+    <div className="relative z-[70] bg-[#F5F5F7] text-black border-b border-gray-200 overflow-hidden whitespace-nowrap h-8 md:h-10 flex items-center">
       {/* z-40 to be below header (z-50) but above content */}
       <div className="flex animate-marquee">
         {/* Repeat the message many times to ensure a gap-less loop */}
