@@ -175,6 +175,18 @@ export const productService = {
   convertToCamelCase(product) {
     if (!product) return null;
 
+    const plainImages = {
+      'T-Shirts': '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png',
+      'Joggers': '/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png',
+      'Hoodies': '/assets/images/products/plain_gray_hoodie_flat_lay_1767417698358.png',
+      'Leggings': '/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png',
+      'Shorts': '/assets/images/products/plain_black_shorts_flat_lay_1767418127534.png',
+      'default': '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png'
+    };
+
+    const category = product?.category;
+    const overriddenImage = plainImages[category] || plainImages['default'];
+
     return {
       id: product?.id,
       name: product?.name,
@@ -191,13 +203,20 @@ export const productService = {
       stockQuantity: product?.stock_quantity,
       createdAt: product?.created_at,
       updatedAt: product?.updated_at,
+      image: overriddenImage, // Add top-level image for compatibility
       productImages: product?.product_images?.map(img => ({
         id: img?.id,
-        imageUrl: img?.image_url,
-        altText: img?.alt_text,
+        imageUrl: overriddenImage, // Override with plain image
+        altText: product?.name,
         isPrimary: img?.is_primary,
         displayOrder: img?.display_order
-      })),
+      })) || [{
+        id: 'default',
+        imageUrl: overriddenImage,
+        altText: product?.name,
+        isPrimary: true,
+        displayOrder: 1
+      }],
       productVariants: product?.product_variants?.map(v => ({
         id: v?.id,
         size: v?.size,

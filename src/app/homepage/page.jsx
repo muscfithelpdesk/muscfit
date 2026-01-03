@@ -60,24 +60,24 @@ export default function Homepage() {
         id: 1,
         name: "Shop Men",
         description: "Performance gear built for strength and endurance",
-        image: "https://img.rocket.new/generatedImages/rocket_gen_img_10b163d59-1765598781878.png",
-        imageAlt: "Muscular man in black compression shirt performing bicep curl with dumbbell",
+        image: "/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png",
+        imageAlt: "Men's plain black compression shirt",
         href: "/men-catalog"
       },
       {
         id: 2,
         name: "Shop Women",
         description: "Empowering activewear for unstoppable athletes",
-        image: "https://img.rocket.new/generatedImages/rocket_gen_img_1994e8396-1764671660275.png",
-        imageAlt: "Athletic woman in pink sports bra doing plank exercise on yoga mat",
+        image: "/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png",
+        imageAlt: "Women's plain black leggings",
         href: "/women-catalog"
       },
       {
         id: 3,
         name: "Compression Wear",
         description: "Advanced compression technology for peak performance",
-        image: "https://img.rocket.new/generatedImages/rocket_gen_img_1253f3d4f-1765215462666.png",
-        imageAlt: "Close-up of athlete wearing black compression sleeve on arm during workout",
+        image: "/assets/images/products/plain_gray_hoodie_flat_lay_1767417698358.png",
+        imageAlt: "Plain compression gear",
         href: "/compression-wear-catalog"
       }],
 
@@ -91,8 +91,8 @@ export default function Homepage() {
           name: "Elite Performance Compression Tee",
           price: 1899,
           originalPrice: 2499,
-          image: "https://img.rocket.new/generatedImages/rocket_gen_img_1c8897b48-1764674830485.png",
-          imageAlt: "Black compression t-shirt with red accents on athletic male model",
+          image: "/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png",
+          imageAlt: "Plain black compression t-shirt",
           tag: "BESTSELLER",
           rating: 5,
           reviews: 342
@@ -102,19 +102,19 @@ export default function Homepage() {
           name: "Pro Training Joggers",
           price: 2299,
           originalPrice: 2999,
-          image: "https://img.rocket.new/generatedImages/rocket_gen_img_19ab70b1e-1764674676456.png",
-          imageAlt: "Gray athletic joggers with tapered fit on male model in gym setting",
+          image: "/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png",
+          imageAlt: "Plain gray athletic joggers",
           tag: "HOT",
           rating: 5,
           reviews: 289
         },
         {
           id: 3,
-          name: "Women\'s Power Flex Leggings",
+          name: "Women's Power Flex Leggings",
           price: 1699,
           originalPrice: 2199,
-          image: "https://img.rocket.new/generatedImages/rocket_gen_img_1015581cc-1764657200544.png",
-          imageAlt: "Black high-waisted leggings on female athlete doing stretching pose",
+          image: "/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png",
+          imageAlt: "Plain black leggings",
           tag: "TRENDING",
           rating: 5,
           reviews: 456
@@ -123,19 +123,19 @@ export default function Homepage() {
           id: 4,
           name: "Muscle Fit Tank Top",
           price: 1299,
-          image: "https://images.unsplash.com/photo-1606889464198-fcb18894cf50",
-          imageAlt: "White sleeveless tank top on muscular male model showing arm definition",
+          image: "/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png",
+          imageAlt: "Plain white tank top",
           tag: "NEW",
           rating: 4,
           reviews: 178
         },
         {
           id: 5,
-          name: "Women\'s Sports Bra Elite",
+          name: "Women's Sports Bra Elite",
           price: 1499,
           originalPrice: 1899,
-          image: "https://img.rocket.new/generatedImages/rocket_gen_img_10021dce6-1764779494722.png",
-          imageAlt: "Red high-support sports bra on female athlete in workout position",
+          image: "/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png",
+          imageAlt: "Plain sports bra",
           tag: "SALE",
           rating: 5,
           reviews: 523
@@ -144,8 +144,8 @@ export default function Homepage() {
           id: 6,
           name: "Performance Training Shorts",
           price: 1599,
-          image: "https://img.rocket.new/generatedImages/rocket_gen_img_141043265-1765255836176.png",
-          imageAlt: "Black athletic shorts with side pockets on male model in running stance",
+          image: "/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png",
+          imageAlt: "Plain athletic shorts",
           tag: "BESTSELLER",
           rating: 5,
           reviews: 401
@@ -155,8 +155,8 @@ export default function Homepage() {
           name: "Compression Arm Sleeves",
           price: 899,
           originalPrice: 1199,
-          image: "https://img.rocket.new/generatedImages/rocket_gen_img_1253f3d4f-1765215462666.png",
-          imageAlt: "Black compression sleeve on athletic arm during weight training",
+          image: "/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png",
+          imageAlt: "Plain compression sleeve",
           tag: "HOT",
           rating: 4,
           reviews: 267
@@ -165,8 +165,8 @@ export default function Homepage() {
           id: 8,
           name: "Premium Gym Hoodie",
           price: 2799,
-          image: "https://img.rocket.new/generatedImages/rocket_gen_img_19712f0ac-1765215691230.png",
-          imageAlt: "Gray athletic hoodie with zipper on male model in casual gym pose",
+          image: "/assets/images/products/plain_gray_hoodie_flat_lay_1767417698358.png",
+          imageAlt: "Plain gray athletic hoodie",
           tag: "NEW",
           rating: 5,
           reviews: 198
@@ -218,18 +218,18 @@ export default function Homepage() {
           id: 9,
           name: "Velocity Running Tights",
           price: 1999,
-          image: "https://img.rocket.new/generatedImages/rocket_gen_img_1dd5fc460-1764692437812.png",
-          imageAlt: "Black compression running tights on male athlete in running position",
+          image: "/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png",
+          imageAlt: "Plain black running tights",
           tag: "NEW",
           rating: 5,
           reviews: 89
         },
         {
           id: 10,
-          name: "Women\'s Crop Training Top",
+          name: "Women's Crop Training Top",
           price: 1399,
-          image: "https://images.unsplash.com/photo-1684298126489-47bf948c3fb8",
-          imageAlt: "White cropped athletic top on female model showing midriff during workout",
+          image: "/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png",
+          imageAlt: "Plain white crop top",
           tag: "NEW",
           rating: 4,
           reviews: 67
@@ -238,8 +238,8 @@ export default function Homepage() {
           id: 11,
           name: "Flex Fit Training Gloves",
           price: 799,
-          image: "https://images.unsplash.com/photo-1683147778349-e09dd723f886",
-          imageAlt: "Black fingerless workout gloves on hands gripping barbell",
+          image: "/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png",
+          imageAlt: "Plain training gloves (placeholder image)",
           tag: "NEW",
           rating: 5,
           reviews: 134
@@ -248,8 +248,8 @@ export default function Homepage() {
           id: 12,
           name: "Performance Crew Socks",
           price: 499,
-          image: "https://img.rocket.new/generatedImages/rocket_gen_img_1fcc5f462-1764674831278.png",
-          imageAlt: "White athletic crew socks with red stripes on feet during exercise",
+          image: "/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png",
+          imageAlt: "Plain white socks (placeholder image)",
           tag: "NEW",
           rating: 4,
           reviews: 201
@@ -343,50 +343,50 @@ export default function Homepage() {
       images: [
         {
           id: 1,
-          src: "https://images.unsplash.com/photo-1674748596342-8fd299450a71",
-          alt: "Athlete performing deadlift with heavy barbell in gym",
+          src: "/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png",
+          alt: "Plain black t-shirt",
           link: "https://instagram.com/p/example1"
         },
         {
           id: 2,
-          src: "https://img.rocket.new/generatedImages/rocket_gen_img_1994e8396-1764671660275.png",
-          alt: "Female athlete doing plank exercise on yoga mat outdoors",
+          src: "/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png",
+          alt: "Plain black leggings",
           link: "https://instagram.com/p/example2"
         },
         {
           id: 3,
-          src: "https://img.rocket.new/generatedImages/rocket_gen_img_10b163d59-1765598781878.png",
-          alt: "Muscular man doing bicep curls with dumbbells in gym",
+          src: "/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png",
+          alt: "Plain gray joggers",
           link: "https://instagram.com/p/example3"
         },
         {
           id: 4,
-          src: "https://img.rocket.new/generatedImages/rocket_gen_img_165add0ba-1764814294696.png",
-          alt: "Woman in black leggings doing stretching pose on exercise mat",
+          src: "/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png",
+          alt: "Plain white t-shirt",
           link: "https://instagram.com/p/example4"
         },
         {
           id: 5,
-          src: "https://images.unsplash.com/photo-1645458358583-a4ca50ea3aa8",
-          alt: "Athletic man in white tank top showing muscular arms",
+          src: "/assets/images/products/plain_gray_hoodie_flat_lay_1767417698358.png",
+          alt: "Plain gray hoodie",
           link: "https://instagram.com/p/example5"
         },
         {
           id: 6,
-          src: "https://images.unsplash.com/photo-1574680088814-c9e8a10d8a4d",
-          alt: "Determined athlete lifting barbell in dramatic gym lighting",
+          src: "/assets/images/products/plain_black_shorts_flat_lay_1767418127534.png",
+          alt: "Plain athletic shorts",
           link: "https://instagram.com/p/example6"
         },
         {
           id: 7,
-          src: "https://img.rocket.new/generatedImages/rocket_gen_img_1253f3d4f-1765215462666.png",
-          alt: "Close-up of compression sleeve on athletic arm during workout",
+          src: "/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png",
+          alt: "Plain compression wear",
           link: "https://instagram.com/p/example7"
         },
         {
           id: 8,
-          src: "https://img.rocket.new/generatedImages/rocket_gen_img_1fcbed1e8-1765542852158.png",
-          alt: "Male model wearing black compression shirt in gym setting",
+          src: "/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png",
+          alt: "Plain joggers",
           link: "https://instagram.com/p/example8"
         }]
 
