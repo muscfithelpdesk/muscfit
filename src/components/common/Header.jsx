@@ -418,7 +418,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               <img
                 src="/assets/images/logo-muscfit-v3.png"
                 alt="MUSCFIT Logo"
-                className="h-[56px] md:h-[90px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
+                className="h-[40px] md:h-[90px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </Link>
           </div>
