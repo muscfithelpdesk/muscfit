@@ -47,16 +47,18 @@ export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary,
           <div className="flex justify-center flex-wrap gap-6">
             <Link
               href={ctaPrimary?.href}
-              className="px-6 md:px-10 py-3 md:py-4 bg-white text-black font-black text-xs md:text-base tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-black hover:text-white hover:scale-110 premium-shadow"
+              className="px-10 py-3 md:py-4 bg-white text-black font-black text-xs md:text-base tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-black hover:text-white hover:scale-110 premium-shadow min-w-[200px]"
             >
               {ctaPrimary?.text}
             </Link>
-            <Link
-              href={ctaSecondary?.href || '#'}
-              className="px-6 md:px-10 py-3 md:py-4 glass-effect text-white font-black text-xs md:text-base tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-white hover:text-black hover:scale-110 premium-shadow"
-            >
-              {ctaSecondary?.text || 'EXPLORE'}
-            </Link>
+            {ctaSecondary?.text && (
+              <Link
+                href={ctaSecondary?.href || '#'}
+                className="px-6 md:px-10 py-3 md:py-4 glass-effect text-white font-black text-xs md:text-base tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-white hover:text-black hover:scale-110 premium-shadow"
+              >
+                {ctaSecondary?.text}
+              </Link>
+            )}
           </div>
         </div>
       </div>

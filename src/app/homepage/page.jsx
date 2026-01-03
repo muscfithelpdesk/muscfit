@@ -13,15 +13,15 @@ export default function Homepage() {
     },
 
     hero: {
-      title: "OWN THE WINTER",
-      subtitle: "WITH ELITE GEAR",
+      title: "PEAK PERFORMANCE",
+      subtitle: "BORN TO CONQUER",
       ctaPrimary: {
-        text: "SHOP NOW",
+        text: "SHOP",
         href: "/men-catalog"
       },
       ctaSecondary: {
-        text: "Explore",
-        href: "/women-catalog"
+        text: "",
+        href: ""
       },
       // High-quality gym/hoodie aesthetic image
       backgroundImage: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2600&auto=format&fit=crop",

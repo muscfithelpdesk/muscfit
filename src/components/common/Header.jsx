@@ -163,8 +163,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
   return (
     <>
       <header
-        className={`${isFixed ? 'fixed left-0 right-0 z-50' : 'relative'} transition-all duration-250 bg-background shadow-sharp`}
-        style={{ top: isFixed ? '0' : 'auto' }}
+        className={`${isFixed ? 'fixed left-0 right-0 z-50' : 'relative'} transition-all duration-300 ${scrolled ? 'bg-background shadow-sharp' : 'bg-transparent'}`}
+        style={{ top: isFixed ? (scrolled ? '0' : 'clamp(32px, 5vw, 40px)') : 'auto' }}
       >
         <div className="relative flex items-center justify-between h-[64px] md:h-[80px] px-4 md:px-6 lg:px-8">
           {/* Mobile Menu Toggle - Left */}
