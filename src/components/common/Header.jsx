@@ -32,6 +32,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
   const [isMenDropdownOpen, setIsMenDropdownOpen] = useState(false);
   const [isWomenDropdownOpen, setIsWomenDropdownOpen] = useState(false);
   const [isCompressionDropdownOpen, setIsCompressionDropdownOpen] = useState(false);
+  const [isAccessoriesDropdownOpen, setIsAccessoriesDropdownOpen] = useState(false);
 
   // Mobile accordion states
   const [activeMobileCategory, setActiveMobileCategory] = useState(null);
@@ -72,6 +73,17 @@ export default function Header({ topOffset = 0, isFixed = true }) {
       ],
       featuredImage: '/assets/images/no_image.png',
       featuredAlt: 'Compression wear collection'
+    },
+    accessories: {
+      label: 'Accessories',
+      path: '/accessories-catalog',
+      subcategories: [
+        { name: 'Gym Bags', path: '/accessories-catalog?type=bags' },
+        { name: 'Equipment', path: '/accessories-catalog?type=equipment' },
+        { name: 'Supplements', path: '/accessories-catalog?type=supplements' }
+      ],
+      featuredImage: '/assets/images/no_image.png',
+      featuredAlt: 'Fitness accessories collection'
     }
   };
 
@@ -191,6 +203,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                     setIsMenDropdownOpen(true);
                     setIsWomenDropdownOpen(false);
                     setIsCompressionDropdownOpen(false);
+                    setIsAccessoriesDropdownOpen(false);
                   }}
                   className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
                 >
@@ -270,6 +283,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                     setIsWomenDropdownOpen(true);
                     setIsMenDropdownOpen(false);
                     setIsCompressionDropdownOpen(false);
+                    setIsAccessoriesDropdownOpen(false);
                   }}
                   className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
                 >
@@ -349,6 +363,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                     setIsCompressionDropdownOpen(true);
                     setIsMenDropdownOpen(false);
                     setIsWomenDropdownOpen(false);
+                    setIsAccessoriesDropdownOpen(false);
                   }}
                   className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
                 >
@@ -404,6 +419,78 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                           <div className="absolute bottom-6 left-6">
                             <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">Performance Gear</h3>
+                            <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Accessories Navigation Item */}
+              <div className="relative">
+                <button
+                  onMouseEnter={() => {
+                    setIsAccessoriesDropdownOpen(true);
+                    setIsMenDropdownOpen(false);
+                    setIsWomenDropdownOpen(false);
+                    setIsCompressionDropdownOpen(false);
+                  }}
+                  className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
+                >
+                  {navigationCategories?.accessories?.label}
+                  <Icon name="ChevronDownIcon" size={16} className={`transition-transform duration-250 ${isAccessoriesDropdownOpen ? 'rotate-180' : ''}`} />
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-250"></span>
+                </button>
+
+                {isAccessoriesDropdownOpen && (
+                  <div
+                    onMouseLeave={() => setIsAccessoriesDropdownOpen(false)}
+                    className="fixed left-0 right-0 bg-background border-b border-border shadow-sharp-lg animate-scale-in-origin-top z-40 h-[320px]"
+                    style={{ top: scrolled ? 'var(--header-height, 96px)' : 'calc(var(--header-height, 96px) + clamp(32px, 5vw, 40px))' }}
+                  >
+                    <div className="max-w-[1400px] mx-auto h-full flex">
+                      {/* Subcategories */}
+                      <div className="w-1/4 h-full bg-surface border-r border-border p-8">
+                        <div className="space-y-6">
+                          {navigationCategories?.accessories?.subcategories?.map((subcat) => (
+                            <Link
+                              key={subcat?.path}
+                              href={subcat?.path}
+                              className="group/item flex items-center justify-between text-lg font-heading font-medium text-text-secondary hover:text-primary transition-colors duration-250"
+                              onClick={() => setIsAccessoriesDropdownOpen(false)}
+                            >
+                              {subcat?.name}
+                              <Icon name="ChevronRightIcon" size={20} className="opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-250" />
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Featured Images */}
+                      <div className="w-3/4 h-full flex p-6 gap-6 bg-background">
+                        <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
+                          <img
+                            src="https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?q=80&w=1000&auto=format&fit=crop"
+                            alt="Accessories Collection 1"
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
+                          <div className="absolute bottom-6 left-6">
+                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">New Essentials</h3>
+                            <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
+                          </div>
+                        </div>
+                        <div className="flex-1 relative group cursor-pointer overflow-hidden rounded-md">
+                          <img
+                            src="https://images.unsplash.com/photo-1517531757411-b1a036c17242?q=80&w=1000&auto=format&fit=crop"
+                            alt="Accessories Collection 2"
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
+                          <div className="absolute bottom-6 left-6">
+                            <h3 className="text-white font-heading text-2xl font-bold uppercase tracking-wider">Lifting Gear</h3>
                             <span className="text-white/90 text-sm font-medium mt-2 inline-block border-b border-white pb-0.5">Shop Now</span>
                           </div>
                         </div>
