@@ -79,10 +79,10 @@ module.exports = {
         sm: "var(--radius-sm)",
       },
       fontFamily: {
-        heading: ['Oswald', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
-        caption: ['JetBrains Mono', 'monospace'],
-        data: ['Space Mono', 'monospace'],
+        heading: ['var(--font-outfit)', 'sans-serif'],
+        body: ['var(--font-inter)', 'sans-serif'],
+        caption: ['var(--font-inter)', 'sans-serif'],
+        data: ['var(--font-outfit)', 'sans-serif'],
       },
       fontSize: {
         'h1': ['3rem', { lineHeight: '1.1' }],

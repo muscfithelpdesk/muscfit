@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense } from 'react';
-import { Inter } from 'next/font/google';
+import { Inter, Outfit } from 'next/font/google';
 import '@/styles/index.css';
 import Header from '@/components/common/Header';
 import PromoBar from '@/app/homepage/components/PromoBar';
@@ -9,17 +9,25 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { usePathname } from 'next/navigation';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  variable: '--font-outfit',
+});
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
-  
+
   // Check if current page is an admin page
   const isAdminPage = pathname?.startsWith('/admin-');
 
   return (
-    <html lang="en">
-      <body className={inter?.className}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+      <body className="font-body">
         <Suspense fallback={null}>
           <GoogleAnalytics />
         </Suspense>
