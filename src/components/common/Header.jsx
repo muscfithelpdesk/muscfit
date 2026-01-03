@@ -166,7 +166,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
         className={`${isFixed ? 'fixed left-0 right-0 z-50' : 'relative'} transition-all duration-300 bg-background shadow-sharp border-b border-gray-100`}
         style={{ top: isFixed ? (scrolled ? '0' : 'clamp(32px, 5vw, 40px)') : 'auto' }}
       >
-        <div className="relative flex items-center justify-between h-[64px] md:h-[80px] px-4 md:px-6 lg:px-8">
+        <div className="relative flex items-center justify-between h-[80px] md:h-[96px] px-4 md:px-6 lg:px-8">
           {/* Mobile Menu Toggle - Left */}
           {!isAdminPage && (
             <button
@@ -413,12 +413,12 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           )}
 
           {/* Center Logo */}
-          <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-full py-2 z-10">
-            <Link href="/homepage" className="flex items-center group">
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-full py-1 z-10">
+            <Link href="/" className="group flex items-center h-full">
               <img
-                src="/assets/images/logo-muscfit-v3.png"
+                src="/assets/images/logo-v4.png"
                 alt="MUSCFIT Logo"
-                className="h-[40px] md:h-[90px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
+                className="h-[72px] md:h-[100px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </Link>
           </div>
