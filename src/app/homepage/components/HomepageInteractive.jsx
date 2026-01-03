@@ -50,9 +50,11 @@ export default function HomepageInteractive({ pageData }) {
       <div className="fixed top-0 left-0 right-0 z-50">
         <PromoBar
           messages={[
-            "New Year Sale: Get 30% Off On All Compression Wear",
-            "Free Shipping On All Orders Above ₹2,999",
-            "Born To Conquer: Shop Our Latest Performance Gear"
+            "🔥 NEW YEAR SALE: Get 30% Off On All Compression Wear",
+            "🚚 Free Shipping On All Orders Above ₹2,999",
+            "⚡ Buy 2 Get 1 Free On All Training Essentials",
+            "🎁 Extra 10% Off On Your First Order | Use Code: MUSCFIT10",
+            "❄️ Winter Collection Now Live: Up to 40% Off"
           ]}
           isVisible={isPromoVisible}
           onDismiss={handleDismissPromo}

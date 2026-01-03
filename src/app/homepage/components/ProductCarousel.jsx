@@ -7,51 +7,112 @@ import Icon from '@/components/ui/AppIcon';
 
 export default function ProductCarousel({ products }) {
     const scrollRef = useRef(null);
-    const [canScrollLeft, setCanScrollLeft] = useState(false);
-    const [canScrollRight, setCanScrollRight] = useState(true);
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [scrollLeft, setScrollLeft] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
 
-    const checkScroll = useCallback(() => {
-        if (scrollRef.current) {
-            const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-            setCanScrollLeft(scrollLeft > 0);
-            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
-        }
-    }, []);
+    // Duplicate products for infinite scroll effect
+    const extendedProducts = [...products, ...products, ...products];
 
-    useEffect(() => {
-        const currentRef = scrollRef.current;
-        if (currentRef) {
-            currentRef.addEventListener('scroll', checkScroll);
-            // Initial check
-            checkScroll();
-            // Check again after a short delay for image loading/rendering
-            const timeoutId = setTimeout(checkScroll, 500);
-            return () => {
-                currentRef.removeEventListener('scroll', checkScroll);
-                clearTimeout(timeoutId);
-            };
-        }
-    }, [checkScroll, products]);
-
+    // Scroll buttons
     const scroll = (direction) => {
         if (scrollRef.current) {
             const { clientWidth } = scrollRef.current;
-            const scrollAmount = direction === 'left' ? -clientWidth * 0.8 : clientWidth * 0.8;
+            const scrollAmount = direction === 'left' ? -clientWidth * 0.5 : clientWidth * 0.5;
             scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
     };
 
+    // Auto-scroll effect
+    useEffect(() => {
+        if (isPaused || isDragging) return;
+
+        const interval = setInterval(() => {
+            if (scrollRef.current) {
+                const { scrollLeft, scrollWidth } = scrollRef.current;
+                const third = scrollWidth / 3;
+
+                if (scrollLeft >= 2 * third) {
+                    scrollRef.current.scrollLeft = scrollLeft - third;
+                } else {
+                    scrollRef.current.scrollLeft += 1;
+                }
+            }
+        }, 30);
+
+        return () => clearInterval(interval);
+    }, [isPaused, isDragging]);
+
+    // Initialize position to the middle set of products
+    useEffect(() => {
+        const initScroll = () => {
+            if (scrollRef.current) {
+                const { scrollWidth } = scrollRef.current;
+                scrollRef.current.scrollLeft = scrollWidth / 3;
+            }
+        };
+
+        // Wait a bit for images and layout
+        const timeout = setTimeout(initScroll, 100);
+        return () => clearTimeout(timeout);
+    }, [products]);
+
+    // Drag handlers
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        setStartX(e.pageX - scrollRef.current.offsetLeft);
+        setScrollLeft(scrollRef.current.scrollLeft);
+        setIsPaused(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsDragging(false);
+        setIsPaused(false);
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+        setIsPaused(false);
+
+        // Snap logic for infinite loop after drag
+        if (scrollRef.current) {
+            const { scrollLeft, scrollWidth } = scrollRef.current;
+            const third = scrollWidth / 3;
+            if (scrollLeft >= 2 * third) {
+                scrollRef.current.scrollLeft = scrollLeft - third;
+            } else if (scrollLeft <= 0) {
+                scrollRef.current.scrollLeft = scrollLeft + third;
+            }
+        }
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - scrollRef.current.offsetLeft;
+        const walk = (x - startX) * 2;
+        scrollRef.current.scrollLeft = scrollLeft - walk;
+    };
+
     return (
-        <div className="relative group w-full">
+        <div
+            className="relative group w-full"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={handleMouseLeave}
+        >
             {/* Scroll Container */}
             <div
                 ref={scrollRef}
-                className="flex overflow-x-auto scroll-smooth no-scrollbar gap-4 pb-4 md:gap-6 px-4 md:px-0"
+                className={`flex overflow-x-auto scroll-smooth no-scrollbar gap-4 pb-4 md:gap-6 px-4 md:px-0 transition-all ${isDragging ? 'cursor-grabbing select-none scroll-auto' : 'cursor-grab'}`}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onMouseMove={handleMouseMove}
             >
-                {products.map((product) => (
+                {extendedProducts.map((product, index) => (
                     <div
-                        key={product.id}
+                        key={`${product.id}-${index}`}
                         className="flex-none w-[280px] sm:w-[320px] md:w-[300px] lg:w-[320px]"
                     >
                         <ProductCard product={product} />
@@ -59,26 +120,22 @@ export default function ProductCarousel({ products }) {
                 ))}
             </div>
 
-            {/* Navigation Buttons - Hidden on mobile, visible on hover on desktop */}
-            {canScrollLeft && (
-                <button
-                    onClick={() => scroll('left')}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 bg-white shadow-xl rounded-full p-3 hidden md:flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
-                    aria-label="Scroll left"
-                >
-                    <Icon name="ChevronLeftIcon" size={24} />
-                </button>
-            )}
+            {/* Navigation Buttons - More visible and consistent */}
+            <button
+                onClick={() => scroll('left')}
+                className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-xl rounded-full p-3 flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 md:opacity-0 md:group-hover:opacity-100"
+                aria-label="Scroll left"
+            >
+                <Icon name="ChevronLeftIcon" size={24} />
+            </button>
 
-            {canScrollRight && (
-                <button
-                    onClick={() => scroll('right')}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 bg-white shadow-xl rounded-full p-3 hidden md:flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
-                    aria-label="Scroll right"
-                >
-                    <Icon name="ChevronRightIcon" size={24} />
-                </button>
-            )}
+            <button
+                onClick={() => scroll('right')}
+                className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-xl rounded-full p-3 flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 md:opacity-0 md:group-hover:opacity-100"
+                aria-label="Scroll right"
+            >
+                <Icon name="ChevronRightIcon" size={24} />
+            </button>
 
             {/* Gradient hints for scrollability on mobile */}
             <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent pointer-events-none md:hidden z-10" />

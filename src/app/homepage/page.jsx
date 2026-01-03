@@ -123,10 +123,11 @@ export default function Homepage() {
         {
           id: 4,
           name: "Muscle Fit Tank Top",
-          price: 1299,
+          price: 999,
+          originalPrice: 1499,
           image: "/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png",
           imageAlt: "Plain white tank top",
-          tag: "NEW",
+          tag: "SALE",
           rating: 4,
           reviews: 178
         },
@@ -144,10 +145,11 @@ export default function Homepage() {
         {
           id: 6,
           name: "Performance Training Shorts",
-          price: 1599,
+          price: 1199,
+          originalPrice: 1799,
           image: "/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png",
           imageAlt: "Plain athletic shorts",
-          tag: "BESTSELLER",
+          tag: "SALE",
           rating: 5,
           reviews: 401
         },
@@ -228,10 +230,11 @@ export default function Homepage() {
         {
           id: 10,
           name: "Women's Crop Training Top",
-          price: 1399,
+          price: 999,
+          originalPrice: 1399,
           image: "/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png",
           imageAlt: "Plain white crop top",
-          tag: "NEW",
+          tag: "SALE",
           rating: 4,
           reviews: 67
         },
