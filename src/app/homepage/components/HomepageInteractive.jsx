@@ -54,7 +54,7 @@ export default function HomepageInteractive({ pageData }) {
         />
         <Header isFixed={false} />
       </div>
-      <main className="pt-[114px] md:pt-[134px]">
+      <main className="pt-[114px] md:pt-[164px]">
         <HeroSection
           title={pageData?.hero?.title}
           subtitle={pageData?.hero?.subtitle}
