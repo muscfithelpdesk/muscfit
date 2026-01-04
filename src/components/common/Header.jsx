@@ -183,7 +183,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
       >
         <div className={`flex items-center justify-between transition-all duration-300 px-4 md:px-8 lg:px-12 ${scrolled ? 'h-[60px] md:h-[70px]' : 'h-[70px] md:h-[100px]'}`}>
           {/* Left Side: Logo & Mobile Toggle */}
-          <div className="flex items-center gap-4 w-1/4">
+          <div className="flex items-center gap-4 flex-shrink-0">
             {!isAdminPage && (
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -198,7 +198,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               <img
                 src="/assets/images/logo-v4.png"
                 alt="MUSCFIT Logo"
-                className={`transition-all duration-300 w-auto object-contain ${scrolled ? 'h-[40px] md:h-[50px]' : 'h-[50px] md:h-[85px]'}`}
+                className={`transition-all duration-300 w-auto object-contain ${scrolled ? 'h-[50px] md:h-[60px]' : 'h-[60px] md:h-[90px]'}`}
               />
             </Link>
           </div>
