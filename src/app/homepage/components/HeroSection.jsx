@@ -4,7 +4,7 @@ import AppImage from '@/components/ui/AppImage';
 
 export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary, backgroundImage, backgroundAlt, mobileHeroImage }) {
   return (
-    <section className="relative w-full h-[85vh] md:h-screen overflow-hidden group perspective-1000">
+    <section className="relative w-full h-[85vh] md:h-screen overflow-hidden group perspective-1000 z-0">
       <div className="absolute inset-0">
         {/* Desktop Image */}
         <div className="hidden md:block absolute inset-0">

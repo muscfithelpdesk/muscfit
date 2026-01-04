@@ -16,7 +16,7 @@ export default function UserAuthenticationPage() {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <main className="pt-[80px]">
+      <main className="pt-[100px] md:pt-[150px]">
         <div className="max-w-full mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
           <Suspense fallback={
             <div className="flex items-center justify-center min-h-[400px]">
