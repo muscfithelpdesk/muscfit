@@ -194,7 +194,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               </button>
             )}
 
-            <Link href="/" className="group z-20 block h-full aspect-[2/1] md:aspect-[3/1] flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:relative">
+            <Link href="/" className="group z-50 block h-full aspect-[2/1] md:aspect-[3/1] flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:relative pr-4 md:pr-8">
               <div className="absolute inset-0 flex items-center justify-center md:justify-start">
                 <img
                   src="/assets/images/logo-v4.png"
