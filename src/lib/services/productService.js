@@ -284,6 +284,10 @@ export const productService = {
     try {
       if (!supabase) throw new Error('Supabase client not initialized');
 
+      console.log('🔧 productService.updateProduct called');
+      console.log('📌 Product ID:', id);
+      console.log('📦 Updates received:', updates);
+
       // Map camelCase updates to snake_case
       const dbUpdates = {};
       if (updates.name !== undefined) dbUpdates.name = updates.name;
@@ -297,16 +301,22 @@ export const productService = {
       if (updates.brand !== undefined) dbUpdates.brand = updates.brand;
       if (updates.tag !== undefined) dbUpdates.tag = updates.tag;
 
+      console.log('💾 Database updates (snake_case):', dbUpdates);
+
       const { data, error } = await supabase.from('products')
         .update(dbUpdates)
         .eq('id', id)
         .select();
+
+      console.log('📡 Supabase response - error:', error);
+      console.log('📡 Supabase response - data:', data);
 
       if (error) throw error;
       const updatedProduct = data?.[0];
 
       // Update Image if provided
       if (updates.imageUrl) {
+        console.log('🖼️ Updating image URL:', updates.imageUrl);
         // Check if primary image exists
         const { data: images } = await supabase.from('product_images')
           .select('id')
@@ -318,6 +328,7 @@ export const productService = {
           await supabase.from('product_images')
             .update({ image_url: updates.imageUrl })
             .eq('id', images[0].id);
+          console.log('✅ Image updated');
         } else {
           // Insert new
           await supabase.from('product_images').insert({
@@ -327,12 +338,14 @@ export const productService = {
             is_primary: true,
             display_order: 1
           });
+          console.log('✅ Image inserted');
         }
       }
 
+      console.log('✅ Final updated product:', updatedProduct);
       return this.convertToCamelCase(updatedProduct);
     } catch (error) {
-      console.error('Error updating product:', error);
+      console.error('❌ Error updating product:', error);
       throw error;
     }
   },
