@@ -18,12 +18,14 @@ function ProductDetailsContent() {
     if (productId) {
       loadProduct();
     }
-  }, [productId]);
+  }, [productId]); // Re-fetch when productId changes
 
   const loadProduct = async () => {
     try {
       setLoading(true);
+      setError(null); // Clear any previous errors
       const data = await productService.getById(productId);
+      console.log('📦 Loaded product data:', data); // Debug log
       setProduct(data);
     } catch (err) {
       console.error('Error loading product:', err);

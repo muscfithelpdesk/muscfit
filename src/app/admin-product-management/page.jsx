@@ -110,7 +110,13 @@ export default function AdminProductManagementPage() {
                 const result = await productService.updateProduct(currentProduct.id, updateData);
                 console.log('✅ Update result:', result);
 
-                alert('Product updated successfully!');
+                // Clear editing state FIRST
+                resetForm();
+
+                // Force a complete refresh of the product list
+                await fetchProducts();
+
+                alert('Product updated successfully! Price changes are now visible.');
             } else {
                 await productService.createProduct({
                     ...formData,
@@ -118,10 +124,15 @@ export default function AdminProductManagementPage() {
                     originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : null,
                     stockQuantity: parseInt(formData.stockQuantity)
                 });
+
+                // Clear form
+                resetForm();
+
+                // Refresh list
+                await fetchProducts();
+
                 alert('Product created successfully!');
             }
-            resetForm();
-            await fetchProducts(); // Wait for refresh
         } catch (err) {
             console.error('❌ Error saving product:', err);
             alert('Error saving product: ' + err.message);
@@ -314,7 +325,10 @@ export default function AdminProductManagementPage() {
                                         <th className="p-4 font-bold text-xs uppercase text-gray-500">Image</th>
                                         <th className="p-4 font-bold text-xs uppercase text-gray-500">Name</th>
                                         <th className="p-4 font-bold text-xs uppercase text-gray-500">Price</th>
+                                        <th className="p-4 font-bold text-xs uppercase text-gray-500">Original Price</th>
                                         <th className="p-4 font-bold text-xs uppercase text-gray-500">Category</th>
+                                        <th className="p-4 font-bold text-xs uppercase text-gray-500">Gender</th>
+                                        <th className="p-4 font-bold text-xs uppercase text-gray-500">Stock</th>
                                         <th className="p-4 font-bold text-xs uppercase text-gray-500">Actions</th>
                                     </tr>
                                 </thead>
@@ -331,11 +345,22 @@ export default function AdminProductManagementPage() {
                                                 </div>
                                             </td>
                                             <td className="p-4 font-bold">{product.name}</td>
-                                            <td className="p-4">₹{product.price}</td>
+                                            <td className="p-4 font-semibold">₹{product.price}</td>
+                                            <td className="p-4 text-gray-500">
+                                                {product.originalPrice ? `₹${product.originalPrice}` : '-'}
+                                            </td>
                                             <td className="p-4">
                                                 <span className="px-2 py-1 bg-gray-100 text-xs rounded-full font-medium">
                                                     {product.category}
                                                 </span>
+                                            </td>
+                                            <td className="p-4">
+                                                <span className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full font-medium capitalize">
+                                                    {product.gender || 'unisex'}
+                                                </span>
+                                            </td>
+                                            <td className="p-4 text-sm">
+                                                {product.stockQuantity || 0}
                                             </td>
                                             <td className="p-4">
                                                 <div className="flex gap-2">
