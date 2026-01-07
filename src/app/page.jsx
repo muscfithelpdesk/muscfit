@@ -94,9 +94,7 @@ export default function LandingPage() {
                         <div className={`absolute bottom-0 left-0 h-[1px] bg-white transition-all duration-500 ease-out ${password.length > 0 ? 'w-full opacity-100' : 'w-0 opacity-0'}`} />
                     </div>
 
-                    <div className="mt-8 text-center">
-                        <p className="text-xs text-zinc-600 font-medium tracking-wider">ENTER 9911 TO UNLOCK</p>
-                    </div>
+
                 </div>
             </div>
 
