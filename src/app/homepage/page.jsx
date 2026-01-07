@@ -434,8 +434,8 @@ export default function Homepage() {
           id: 1,
           title: "Shop",
           links: [
-            { id: 1, label: "Men\'s Collection", href: "/men-catalog" },
-            { id: 2, label: "Women\'s Collection", href: "/women-catalog" },
+            { id: 1, label: "Men's Collection", href: "/men-catalog" },
+            { id: 2, label: "Women's Collection", href: "/women-catalog" },
             { id: 3, label: "Compression Wear", href: "/compression-wear-catalog" },
             { id: 4, label: "New Arrivals", href: "/men-catalog?filter=new" },
             { id: 5, label: "Best Sellers", href: "/men-catalog?filter=bestseller" }]
@@ -445,32 +445,32 @@ export default function Homepage() {
           id: 2,
           title: "Support",
           links: [
-            { id: 1, label: "Contact Us", href: "/homepage" },
-            { id: 2, label: "Size Guide", href: "/homepage" },
-            { id: 3, label: "Shipping Info", href: "/homepage" },
-            { id: 4, label: "Returns & Exchanges", href: "/homepage" },
-            { id: 5, label: "FAQs", href: "/homepage" }]
+            { id: 1, label: "Contact Us", href: "/info/contact-us" },
+            { id: 2, label: "Size Guide", href: "/info/size-guide" },
+            { id: 3, label: "Shipping Info", href: "/info/shipping-info" },
+            { id: 4, label: "Returns & Exchanges", href: "/info/returns-exchanges" },
+            { id: 5, label: "FAQs", href: "/info/faqs" }]
 
         },
         {
           id: 3,
           title: "Company",
           links: [
-            { id: 1, label: "About Us", href: "/homepage" },
-            { id: 2, label: "Careers", href: "/homepage" },
-            { id: 3, label: "Sustainability", href: "/homepage" },
-            { id: 4, label: "Press", href: "/homepage" },
-            { id: 5, label: "Blog", href: "/homepage" }]
+            { id: 1, label: "About Us", href: "/info/about-us" },
+            { id: 2, label: "Careers", href: "/info/careers" },
+            { id: 3, label: "Sustainability", href: "/info/sustainability" },
+            { id: 4, label: "Press", href: "/info/press" },
+            { id: 5, label: "Blog", href: "/info/blog" }]
 
         },
         {
           id: 4,
           title: "Legal",
           links: [
-            { id: 1, label: "Privacy Policy", href: "/homepage" },
-            { id: 2, label: "Terms of Service", href: "/homepage" },
-            { id: 3, label: "Cookie Policy", href: "/homepage" },
-            { id: 4, label: "Accessibility", href: "/homepage" }]
+            { id: 1, label: "Privacy Policy", href: "/info/privacy-policy" },
+            { id: 2, label: "Terms of Service", href: "/info/terms-of-service" },
+            { id: 3, label: "Cookie Policy", href: "/info/cookie-policy" },
+            { id: 4, label: "Accessibility", href: "/info/accessibility" }]
 
         }],
 
