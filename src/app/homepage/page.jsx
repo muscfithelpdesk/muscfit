@@ -80,6 +80,14 @@ export default function Homepage() {
         image: "/assets/images/products/plain_gray_hoodie_flat_lay_1767417698358.png",
         imageAlt: "Plain compression gear",
         href: "/compression-wear-catalog"
+      },
+      {
+        id: 4,
+        name: "Accessories",
+        description: "Essential gear to complete your workout",
+        image: "/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png",
+        imageAlt: "Fitness accessories",
+        href: "/product-catalog"
       }],
 
 
