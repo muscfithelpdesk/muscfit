@@ -20,7 +20,7 @@ export default function ImageGallery({ images }) {
   return (
     <div className="w-full">
       {/* Main Image Display */}
-      <div className="relative w-full aspect-[3/4] bg-surface rounded-md overflow-hidden mb-4 perspective-1000">
+      <div className="relative w-full aspect-[4/5] max-h-[500px] bg-surface rounded-md overflow-hidden mb-4 perspective-1000">
         <div
           className={`relative w-full h-full cursor-zoom-in preserve-3d transition-transform duration-700 tilt-3d ${isZoomed ? 'cursor-zoom-out' : ''}`}
           onClick={() => setIsZoomed(!isZoomed)}
@@ -73,7 +73,7 @@ export default function ImageGallery({ images }) {
             key={index}
             onClick={() => setSelectedImage(index)}
             className={`relative w-full aspect-square bg-surface rounded-sm overflow-hidden transition-all duration-250 ${selectedImage === index
-                ? 'ring-2 ring-primary scale-105' : 'hover:ring-2 hover:ring-border hover:scale-105'
+              ? 'ring-2 ring-primary scale-105' : 'hover:ring-2 hover:ring-border hover:scale-105'
               }`}
           >
             <AppImage
