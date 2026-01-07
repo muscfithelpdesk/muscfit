@@ -98,12 +98,18 @@ export default function AdminProductManagementPage() {
         e.preventDefault();
         try {
             if (isEditing && currentProduct) {
-                await productService.updateProduct(currentProduct.id, {
+                const updateData = {
                     ...formData,
                     price: parseFloat(formData.price),
                     originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : null,
                     stockQuantity: parseInt(formData.stockQuantity)
-                });
+                };
+                console.log('🔄 Updating product:', currentProduct.id);
+                console.log('📝 Update data:', updateData);
+
+                const result = await productService.updateProduct(currentProduct.id, updateData);
+                console.log('✅ Update result:', result);
+
                 alert('Product updated successfully!');
             } else {
                 await productService.createProduct({
@@ -115,9 +121,9 @@ export default function AdminProductManagementPage() {
                 alert('Product created successfully!');
             }
             resetForm();
-            fetchProducts();
+            await fetchProducts(); // Wait for refresh
         } catch (err) {
-            console.error(err);
+            console.error('❌ Error saving product:', err);
             alert('Error saving product: ' + err.message);
         }
     };
