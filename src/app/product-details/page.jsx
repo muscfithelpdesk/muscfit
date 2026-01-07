@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Header from '@/components/common/Header';
 import ProductDetailsInteractive from './components/ProductDetailsInteractive';
 import { productService } from '@/lib/services/productService';
 
-export default function ProductDetailsPage() {
+function ProductDetailsContent() {
   const searchParams = useSearchParams();
   const productId = searchParams.get('id');
 
@@ -109,48 +109,47 @@ Perfect for training, competition, or everyday athletic wear.`
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <main className="pt-[80px]">
-          <div className="max-w-full mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
-            <div className="flex justify-center items-center h-96">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
-            </div>
-          </div>
-        </main>
+      <div className="flex justify-center items-center h-96">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
       </div>
     );
   }
 
   if (error || !productData) {
     return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <main className="pt-[80px]">
-          <div className="max-w-full mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
-              <p className="text-gray-600">{error || 'The product you are looking for does not exist.'}</p>
-            </div>
-          </div>
-        </main>
+      <div className="text-center">
+        <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
+        <p className="text-gray-600">{error || 'The product you are looking for does not exist.'}</p>
       </div>
     );
   }
 
   return (
+    <ProductDetailsInteractive
+      productData={productData}
+      reviewsData={reviewsData}
+      relatedProductsData={relatedProductsData}
+    />
+  );
+}
+
+export default function ProductDetailsPage() {
+  return (
     <div className="min-h-screen bg-background">
       <Header />
       <main className="pt-[80px]">
         <div className="max-w-full mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
-          <ProductDetailsInteractive
-            productData={productData}
-            reviewsData={reviewsData}
-            relatedProductsData={relatedProductsData}
-          />
+          <Suspense fallback={
+            <div className="flex justify-center items-center h-96">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
+            </div>
+          }>
+            <ProductDetailsContent />
+          </Suspense>
         </div>
       </main>
     </div>
   );
 }
+
 
