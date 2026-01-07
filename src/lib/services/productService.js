@@ -242,7 +242,7 @@ export const productService = {
       if (!supabase) throw new Error('Supabase client not initialized');
 
       // 1. Insert product details
-      const { data: product, error: productError } = await supabase.from('products').insert({
+      const { data, error: productError } = await supabase.from('products').insert({
         name: productData?.name,
         description: productData?.description,
         price: productData?.price,
@@ -255,16 +255,17 @@ export const productService = {
         stock_quantity: productData?.stockQuantity,
         rating: 0,
         review_count: 0
-      }).select().single();
+      }).select();
 
       if (productError) throw productError;
+      const product = data?.[0];
 
       // 2. Insert product image
-      if (productData?.imageUrl) {
+      if (productData?.imageUrl && product) {
         const { error: imageError } = await supabase.from('product_images').insert({
-          product_id: product?.id,
-          image_url: productData?.imageUrl,
-          alt_text: productData?.name,
+          product_id: product.id,
+          image_url: productData.imageUrl,
+          alt_text: productData.name,
           is_primary: true,
           display_order: 1
         });
@@ -288,21 +289,48 @@ export const productService = {
       if (updates.name !== undefined) dbUpdates.name = updates.name;
       if (updates.description !== undefined) dbUpdates.description = updates.description;
       if (updates.price !== undefined) dbUpdates.price = updates.price;
+      if (updates.originalPrice !== undefined) dbUpdates.original_price = updates.originalPrice;
       if (updates.stockQuantity !== undefined) dbUpdates.stock_quantity = updates.stockQuantity;
       if (updates.isActive !== undefined) dbUpdates.is_active = updates.isActive;
       if (updates.category !== undefined) dbUpdates.category = updates.category;
       if (updates.gender !== undefined) dbUpdates.gender = updates.gender;
       if (updates.brand !== undefined) dbUpdates.brand = updates.brand;
+      if (updates.tag !== undefined) dbUpdates.tag = updates.tag;
 
       const { data, error } = await supabase.from('products')
         .update(dbUpdates)
         .eq('id', id)
-        .select()
-        .single();
+        .select();
 
       if (error) throw error;
+      const updatedProduct = data?.[0];
 
-      return this.convertToCamelCase(data);
+      // Update Image if provided
+      if (updates.imageUrl) {
+        // Check if primary image exists
+        const { data: images } = await supabase.from('product_images')
+          .select('id')
+          .eq('product_id', id)
+          .eq('is_primary', true);
+
+        if (images && images.length > 0) {
+          // Update existing
+          await supabase.from('product_images')
+            .update({ image_url: updates.imageUrl })
+            .eq('id', images[0].id);
+        } else {
+          // Insert new
+          await supabase.from('product_images').insert({
+            product_id: id,
+            image_url: updates.imageUrl,
+            alt_text: updates.name || 'Product Image',
+            is_primary: true,
+            display_order: 1
+          });
+        }
+      }
+
+      return this.convertToCamelCase(updatedProduct);
     } catch (error) {
       console.error('Error updating product:', error);
       throw error;
