@@ -195,13 +195,13 @@ export default function Header({ topOffset = 0, isFixed = true }) {
             )}
 
             <Link href="/" className="group relative z-20 block h-full aspect-[2/1] md:aspect-[3/1] flex-shrink-0">
-              <div className="absolute inset-0 flex items-center justify-start md:justify-center">
+              <div className="absolute inset-0 flex items-center justify-start">
                 <img
                   src="/assets/images/logo-v4.png"
                   alt="MUSCFIT Logo"
                   className={`transition-all duration-300 w-auto max-w-none object-contain ${scrolled
-                      ? 'h-[80px] md:h-[90px] mt-2'
-                      : 'h-[100px] md:h-[200px] mt-4'
+                    ? 'h-[80px] md:h-[90px]'
+                    : 'h-[100px] md:h-[200px]'
                     }`}
                 />
               </div>
