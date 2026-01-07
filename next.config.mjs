@@ -21,15 +21,7 @@ const nextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/homepage',
-        permanent: false,
-      },
-    ];
-  },
+
   webpack(config) {
     config.module.rules.push({
       test: /\.(jsx|tsx)$/,
