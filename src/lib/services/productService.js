@@ -185,7 +185,12 @@ export const productService = {
     };
 
     const category = product?.category;
-    const overriddenImage = plainImages[category] || plainImages['default'];
+    // Find primary image from DB
+    const primaryImgObj = product?.product_images?.find(img => img.is_primary) || product?.product_images?.[0];
+    const dbImage = primaryImgObj?.image_url;
+
+    // Use DB image if valid, otherwise fallback to static map
+    const finalImage = (dbImage && dbImage.length > 5) ? dbImage : (plainImages[category] || plainImages['default']);
 
     return {
       id: product?.id,
@@ -203,16 +208,16 @@ export const productService = {
       stockQuantity: product?.stock_quantity,
       createdAt: product?.created_at,
       updatedAt: product?.updated_at,
-      image: overriddenImage, // Add top-level image for compatibility
+      image: finalImage,
       productImages: product?.product_images?.map(img => ({
         id: img?.id,
-        imageUrl: overriddenImage, // Override with plain image
-        altText: product?.name,
+        imageUrl: img?.image_url,
+        altText: img?.alt_text || product?.name,
         isPrimary: img?.is_primary,
         displayOrder: img?.display_order
       })) || [{
         id: 'default',
-        imageUrl: overriddenImage,
+        imageUrl: finalImage,
         altText: product?.name,
         isPrimary: true,
         displayOrder: 1
