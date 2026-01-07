@@ -611,12 +611,12 @@ export default function Header({ topOffset = 0, isFixed = true }) {
         isMobileMenuOpen && (
           <>
             <div
-              className="fixed inset-0 bg-black/85 z-70 animate-fade-in md:hidden"
+              className="fixed inset-0 bg-black/85 z-[9999] animate-fade-in md:hidden"
               onClick={() => setIsMobileMenuOpen(false)}
             ></div>
             <div
               ref={mobileMenuRef}
-              className="fixed top-0 right-0 bottom-0 w-[280px] bg-background border-l border-border z-70 animate-slide-in-right md:hidden overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-[280px] bg-background border-l border-border z-[9999] animate-slide-in-right md:hidden overflow-y-auto"
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-8">
