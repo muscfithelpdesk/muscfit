@@ -391,7 +391,6 @@ export const productService = {
       console.log('📡 Supabase response - data:', data);
 
       if (error) throw error;
-      const updatedProduct = data?.[0];
 
       // Update Image if provided
       if (updates.imageUrl) {
@@ -421,8 +420,33 @@ export const productService = {
         }
       }
 
-      console.log('✅ Final updated product:', updatedProduct);
-      return this.convertToCamelCase(updatedProduct);
+      // Fetch the complete updated product with all relations
+      const { data: completeProduct, error: fetchError } = await supabase.from('products').select(`
+          *,
+          product_images(
+            id,
+            image_url,
+            alt_text,
+            is_primary,
+            display_order
+          ),
+          product_variants(
+            id,
+            size,
+            color,
+            stock_quantity
+          ),
+          product_attributes(
+            id,
+            attribute_name,
+            attribute_value
+          )
+        `).eq('id', id).single();
+
+      if (fetchError) throw fetchError;
+
+      console.log('✅ Final updated product with relations:', completeProduct);
+      return this.convertToCamelCase(completeProduct);
     } catch (error) {
       console.error('❌ Error updating product:', error);
       throw error;
