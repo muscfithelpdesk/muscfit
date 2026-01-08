@@ -255,11 +255,11 @@ export const productService = {
     if (!product) return null;
 
     const plainImages = {
-      'T-Shirts': '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png',
-      'Joggers': '/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png',
-      'Hoodies': '/assets/images/products/plain_gray_hoodie_flat_lay_1767417698358.png',
-      'Leggings': '/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png',
-      'Shorts': '/assets/images/products/plain_black_shorts_flat_lay_1767418127534.png',
+      'tshirts': '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png',
+      'joggers': '/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png',
+      'hoodies': '/assets/images/products/plain_gray_hoodie_flat_lay_1767417698358.png',
+      'leggings': '/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png',
+      'shorts': '/assets/images/products/plain_black_shorts_flat_lay_1767418127534.png',
       'default': '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png'
     };
 

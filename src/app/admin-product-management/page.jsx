@@ -24,7 +24,7 @@ export default function AdminProductManagementPage() {
         price: '',
         originalPrice: '',
         imageUrl: '', // Simple URL input for now
-        category: 'T-Shirts',
+        category: 'tshirts',
         gender: 'men',
         tag: '',
         stockQuantity: 100,
@@ -63,7 +63,7 @@ export default function AdminProductManagementPage() {
             price: '',
             originalPrice: '',
             imageUrl: '',
-            category: 'T-Shirts',
+            category: 'tshirts',
             gender: 'men',
             tag: '',
             stockQuantity: 100,
@@ -82,7 +82,7 @@ export default function AdminProductManagementPage() {
             price: product.price,
             originalPrice: product.originalPrice || '',
             imageUrl: product.image || '',
-            category: product.category || 'T-Shirts',
+            category: product.category || 'tshirts',
             gender: product.gender || 'men',
             tag: product.tag || '',
             stockQuantity: product.stockQuantity || 0,
@@ -239,12 +239,12 @@ export default function AdminProductManagementPage() {
                                         value={formData.category}
                                         onChange={e => setFormData({ ...formData, category: e.target.value })}
                                     >
-                                        <option value="T-Shirts">T-Shirts</option>
-                                        <option value="Joggers">Joggers</option>
-                                        <option value="Hoodies">Hoodies</option>
-                                        <option value="Leggings">Leggings</option>
-                                        <option value="Shorts">Shorts</option>
-                                        <option value="Accessories">Accessories</option>
+                                        <option value="tshirts">T-Shirts</option>
+                                        <option value="joggers">Joggers</option>
+                                        <option value="hoodies">Hoodies</option>
+                                        <option value="leggings">Leggings</option>
+                                        <option value="shorts">Shorts</option>
+                                        <option value="accessories">Accessories</option>
                                     </select>
                                 </div>
                                 <div>
@@ -373,8 +373,8 @@ export default function AdminProductManagementPage() {
                                             </td>
                                             <td className="p-4">
                                                 <span className={`px-2 py-1 text-xs rounded-full font-medium ${product.isActive
-                                                        ? 'bg-green-50 text-green-700'
-                                                        : 'bg-red-50 text-red-700'
+                                                    ? 'bg-green-50 text-green-700'
+                                                    : 'bg-red-50 text-red-700'
                                                     }`}>
                                                     {product.isActive ? 'Active' : 'Inactive'}
                                                 </span>

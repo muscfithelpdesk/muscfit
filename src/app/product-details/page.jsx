@@ -40,7 +40,7 @@ function ProductDetailsContent() {
   const loadAccessories = async () => {
     try {
       // Fetch accessories category products
-      const data = await productService.getAll({ category: 'Accessories' });
+      const data = await productService.getAll({ category: 'accessories' });
       console.log('🎒 Loaded accessories:', data);
       setAccessories(data);
     } catch (err) {
