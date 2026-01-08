@@ -94,95 +94,7 @@ export default function Homepage() {
     featuredProducts: {
       title: "Bestselling Essentials",
       subtitle: "Discover our most-loved pieces trusted by athletes worldwide",
-      products: [
-        {
-          id: 1,
-          name: "Elite Performance Compression Tee",
-          price: 1899,
-          originalPrice: 2499,
-          image: "/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png",
-          imageAlt: "Plain black compression t-shirt",
-          tag: "BESTSELLER",
-          rating: 5,
-          reviews: 342
-        },
-        {
-          id: 2,
-          name: "Pro Training Joggers",
-          price: 2299,
-          originalPrice: 2999,
-          image: "/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png",
-          imageAlt: "Plain gray athletic joggers",
-          tag: "HOT",
-          rating: 5,
-          reviews: 289
-        },
-        {
-          id: 3,
-          name: "Women's Power Flex Leggings",
-          price: 1699,
-          originalPrice: 2199,
-          image: "/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png",
-          imageAlt: "Plain black leggings",
-          tag: "TRENDING",
-          rating: 5,
-          reviews: 456
-        },
-        {
-          id: 4,
-          name: "Muscle Fit Tank Top",
-          price: 999,
-          originalPrice: 1499,
-          image: "/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png",
-          imageAlt: "Plain white tank top",
-          tag: "SALE",
-          rating: 4,
-          reviews: 178
-        },
-        {
-          id: 5,
-          name: "Women's Sports Bra Elite",
-          price: 1499,
-          originalPrice: 1899,
-          image: "/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png",
-          imageAlt: "Plain sports bra",
-          tag: "SALE",
-          rating: 5,
-          reviews: 523
-        },
-        {
-          id: 6,
-          name: "Performance Training Shorts",
-          price: 1199,
-          originalPrice: 1799,
-          image: "/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png",
-          imageAlt: "Plain athletic shorts",
-          tag: "SALE",
-          rating: 5,
-          reviews: 401
-        },
-        {
-          id: 7,
-          name: "Compression Arm Sleeves",
-          price: 899,
-          originalPrice: 1199,
-          image: "/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png",
-          imageAlt: "Plain compression sleeve",
-          tag: "HOT",
-          rating: 4,
-          reviews: 267
-        },
-        {
-          id: 8,
-          name: "Premium Gym Hoodie",
-          price: 2799,
-          image: "/assets/images/products/plain_gray_hoodie_flat_lay_1767417698358.png",
-          imageAlt: "Plain gray athletic hoodie",
-          tag: "NEW",
-          rating: 5,
-          reviews: 198
-        }]
-
+      products: []
     },
 
     stats: [
@@ -224,49 +136,7 @@ export default function Homepage() {
     newArrivals: {
       title: "New Arrivals",
       subtitle: "Fresh drops designed to elevate your performance",
-      products: [
-        {
-          id: 9,
-          name: "Velocity Running Tights",
-          price: 1999,
-          image: "/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png",
-          imageAlt: "Plain black running tights",
-          tag: "NEW",
-          rating: 5,
-          reviews: 89
-        },
-        {
-          id: 10,
-          name: "Women's Crop Training Top",
-          price: 999,
-          originalPrice: 1399,
-          image: "/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png",
-          imageAlt: "Plain white crop top",
-          tag: "SALE",
-          rating: 4,
-          reviews: 67
-        },
-        {
-          id: 11,
-          name: "Flex Fit Training Gloves",
-          price: 799,
-          image: "/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png",
-          imageAlt: "Plain training gloves (placeholder image)",
-          tag: "NEW",
-          rating: 5,
-          reviews: 134
-        },
-        {
-          id: 12,
-          name: "Performance Crew Socks",
-          price: 499,
-          image: "/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png",
-          imageAlt: "Plain white socks (placeholder image)",
-          tag: "NEW",
-          rating: 4,
-          reviews: 201
-        }]
-
+      products: []
     },
 
     video: {

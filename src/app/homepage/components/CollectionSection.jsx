@@ -53,7 +53,12 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
                         className="flex overflow-x-auto no-scrollbar pb-8 scroll-smooth"
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                     >
-                        {products?.map((product) => (
+                        {products?.filter(product => {
+                            const currentTab = tabs.find(t => t.name === activeTab);
+                            if (!currentTab?.filter) return true;
+                            // Strict match with category
+                            return (product.category || '').toLowerCase() === currentTab.filter.toLowerCase();
+                        }).map((product) => (
                             <div
                                 key={product.id}
                                 className="flex-none px-2 sm:px-3 w-[200px] sm:w-1/2 md:w-1/3 lg:w-1/4"

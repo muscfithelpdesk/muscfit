@@ -18,18 +18,32 @@ import Newsletter from './Newsletter';
 import Footer from './Footer';
 import CollectionSection from './CollectionSection';
 import QuickViewModal from './QuickViewModal';
+import { productService } from '@/lib/services/productService';
 
 
 export default function HomepageInteractive({ pageData }) {
   const [isPromoVisible, setIsPromoVisible] = useState(true);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const [dbProducts, setDbProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Explicitly set to true to ensure it's visible after "empty" reports
     setIsPromoVisible(true);
+    fetchProducts();
   }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const data = await productService.getAll();
+      setDbProducts(data || []);
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDismissPromo = () => {
     setIsPromoVisible(false);
@@ -72,13 +86,14 @@ export default function HomepageInteractive({ pageData }) {
           title="MEN'S"
           subtitle="SHOP"
           tabs={[
-            { name: 'WINTER-ARC' },
-            { name: "MEN'S TSHIRTS" },
-            { name: 'JOGGERS' },
-            { name: 'STRINGERS' },
-            { name: 'SHORTS' },
+            { name: 'WINTER-ARC', filter: 'hoodies' },
+            { name: "MEN'S TSHIRTS", filter: 'tshirts' },
+            { name: 'JOGGERS', filter: 'joggers' },
+            { name: 'STRINGERS', filter: 'tshirts' },
+            { name: 'SHORTS', filter: 'shorts' },
+            { name: 'ACCESSORIES', filter: 'accessories' },
           ]}
-          products={pageData?.featuredProducts?.products?.filter((_, i) => i % 2 === 0)}
+          products={dbProducts.filter(p => !p.gender || p.gender === 'men' || p.gender === 'unisex')}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
@@ -86,12 +101,12 @@ export default function HomepageInteractive({ pageData }) {
           title="WOMEN'S"
           subtitle="SHOP"
           tabs={[
-            { name: 'LEGGINGS' },
-            { name: 'SPORTS BRAS' },
-            { name: 'TOPS' },
-            { name: 'SHORTS' },
+            { name: 'LEGGINGS', filter: 'leggings' },
+            { name: 'SPORTS BRAS', filter: 'tshirts' },
+            { name: 'TOPS', filter: 'tshirts' },
+            { name: 'SHORTS', filter: 'shorts' },
           ]}
-          products={pageData?.featuredProducts?.products?.filter((_, i) => i % 2 !== 0)}
+          products={dbProducts.filter(p => p.gender === 'women' || p.gender === 'unisex')}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
@@ -99,20 +114,20 @@ export default function HomepageInteractive({ pageData }) {
           title="COMPRESSION"
           subtitle="EXPLORE"
           tabs={[
-            { name: 'TOPS' },
-            { name: 'BOTTOMS' },
-            { name: 'FULL BODY' },
-            { name: 'ACCESSORIES' },
+            { name: 'TOPS', filter: 'tshirts' },
+            { name: 'BOTTOMS', filter: 'leggings' },
+            { name: 'FULL BODY', filter: 'leggings' },
+            { name: 'ACCESSORIES', filter: 'accessories' },
           ]}
-          products={pageData?.featuredProducts?.products}
+          products={dbProducts.filter(p => p.gender === 'compression' || p.gender === 'unisex')}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
 
         <FeaturedProducts
-          title={pageData?.featuredProducts?.title}
-          subtitle={pageData?.featuredProducts?.subtitle}
-          products={pageData?.featuredProducts?.products}
+          title="Bestselling Essentials"
+          subtitle="Discover our most-loved pieces trusted by athletes worldwide"
+          products={dbProducts.filter(p => p.tag === 'BESTSELLER' || p.tag === 'HOT')}
         />
 
         <StatsCounter stats={pageData?.stats} />
@@ -129,9 +144,9 @@ export default function HomepageInteractive({ pageData }) {
         <FeaturesGrid features={pageData?.features} />
 
         <FeaturedProducts
-          title={pageData?.newArrivals?.title}
-          subtitle={pageData?.newArrivals?.subtitle}
-          products={pageData?.newArrivals?.products}
+          title="New Arrivals"
+          subtitle="Fresh drops designed to elevate your performance"
+          products={dbProducts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 8)}
         />
 
         <VideoSection
