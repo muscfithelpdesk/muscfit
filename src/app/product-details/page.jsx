@@ -11,12 +11,14 @@ function ProductDetailsContent() {
   const productId = searchParams.get('id');
 
   const [product, setProduct] = useState(null);
+  const [accessories, setAccessories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (productId) {
       loadProduct();
+      loadAccessories();
     }
   }, [productId]); // Re-fetch when productId changes
 
@@ -32,6 +34,17 @@ function ProductDetailsContent() {
       setError('Failed to load product details');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadAccessories = async () => {
+    try {
+      // Fetch accessories category products
+      const data = await productService.getAll({ category: 'Accessories' });
+      console.log('🎒 Loaded accessories:', data);
+      setAccessories(data);
+    } catch (err) {
+      console.error('Error loading accessories:', err);
     }
   };
 
@@ -107,7 +120,18 @@ Perfect for training, competition, or everyday athletic wear.`
     ]
   };
 
-  const relatedProductsData = [];
+  // Convert accessories to related products format
+  const relatedProductsData = accessories.map(acc => ({
+    id: acc.id,
+    name: acc.name,
+    image: acc.image,
+    alt: acc.name,
+    price: acc.price,
+    originalPrice: acc.originalPrice,
+    rating: acc.rating || 4.5,
+    reviewCount: acc.reviewCount || 0,
+    badge: acc.tag
+  }));
 
   if (loading) {
     return (

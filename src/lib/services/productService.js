@@ -80,6 +80,85 @@ export const productService = {
     }
   },
 
+  // Get all products for admin (including inactive and without image filters)
+  async getAllForAdmin(filters = {}) {
+    try {
+      if (!supabase) return [];
+
+      let query = supabase.from('products').select(`
+          *,
+          product_images(
+            id,
+            image_url,
+            alt_text,
+            is_primary
+          ),
+          product_variants(
+            id,
+            size,
+            color,
+            stock_quantity
+          ),
+          product_attributes(
+            id,
+            attribute_name,
+            attribute_value
+          )
+        `);
+
+      // Apply filters
+      if (filters?.gender) {
+        query = query.eq('gender', filters?.gender);
+      }
+      if (filters?.category) {
+        query = query.eq('category', filters?.category);
+      }
+      if (filters?.brand) {
+        query = query.eq('brand', filters?.brand);
+      }
+      if (filters?.tag) {
+        query = query.eq('tag', filters?.tag);
+      }
+      if (filters?.minPrice) {
+        query = query.gte('price', filters?.minPrice);
+      }
+      if (filters?.maxPrice) {
+        query = query.lte('price', filters?.maxPrice);
+      }
+
+      // Apply search
+      if (filters?.search) {
+        query = query.or(`name.ilike.%${filters?.search}%,description.ilike.%${filters?.search}%,brand.ilike.%${filters?.search}%`);
+      }
+
+      // Apply sorting
+      if (filters?.sortBy) {
+        const sortOptions = {
+          'price-asc': { column: 'price', ascending: true },
+          'price-desc': { column: 'price', ascending: false },
+          'name-asc': { column: 'name', ascending: true },
+          'name-desc': { column: 'name', ascending: false },
+          'rating': { column: 'rating', ascending: false },
+          'newest': { column: 'created_at', ascending: false }
+        };
+        const sort = sortOptions?.[filters?.sortBy];
+        if (sort) {
+          query = query.order(sort?.column, { ascending: sort?.ascending });
+        }
+      }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+
+      // Convert to camelCase
+      return data?.map(product => this.convertToCamelCase(product)) || [];
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      throw error;
+    }
+  },
+
   // Get single product by ID
   async getById(productId) {
     try {

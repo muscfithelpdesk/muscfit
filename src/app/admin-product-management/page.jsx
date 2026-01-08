@@ -38,11 +38,19 @@ export default function AdminProductManagementPage() {
     const fetchProducts = async () => {
         try {
             setLoading(true);
-            const data = await productService.getAll({ sortBy: 'newest' });
+            setError(''); // Clear previous errors
+            console.log('🔄 Fetching all products for admin...');
+
+            // Use getAllForAdmin to show ALL products (including inactive and without images)
+            const data = await productService.getAllForAdmin({ sortBy: 'newest' });
+
+            console.log('✅ Fetched products:', data.length);
+            console.log('📋 Products:', data);
+
             setProducts(data);
         } catch (err) {
-            console.error(err);
-            setError('Failed to fetch products. Is the database set up?');
+            console.error('❌ Error fetching products:', err);
+            setError('Failed to fetch products: ' + err.message);
         } finally {
             setLoading(false);
         }
@@ -329,12 +337,13 @@ export default function AdminProductManagementPage() {
                                         <th className="p-4 font-bold text-xs uppercase text-gray-500">Category</th>
                                         <th className="p-4 font-bold text-xs uppercase text-gray-500">Gender</th>
                                         <th className="p-4 font-bold text-xs uppercase text-gray-500">Stock</th>
+                                        <th className="p-4 font-bold text-xs uppercase text-gray-500">Status</th>
                                         <th className="p-4 font-bold text-xs uppercase text-gray-500">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-100">
                                     {products.map(product => (
-                                        <tr key={product.id} className="hover:bg-gray-50">
+                                        <tr key={product.id} className={`hover:bg-gray-50 ${!product.isActive ? 'opacity-60' : ''}`}>
                                             <td className="p-4">
                                                 <div className="w-12 h-12 bg-gray-100 rounded overflow-hidden">
                                                     {product.image ? (
@@ -361,6 +370,14 @@ export default function AdminProductManagementPage() {
                                             </td>
                                             <td className="p-4 text-sm">
                                                 {product.stockQuantity || 0}
+                                            </td>
+                                            <td className="p-4">
+                                                <span className={`px-2 py-1 text-xs rounded-full font-medium ${product.isActive
+                                                        ? 'bg-green-50 text-green-700'
+                                                        : 'bg-red-50 text-red-700'
+                                                    }`}>
+                                                    {product.isActive ? 'Active' : 'Inactive'}
+                                                </span>
                                             </td>
                                             <td className="p-4">
                                                 <div className="flex gap-2">
