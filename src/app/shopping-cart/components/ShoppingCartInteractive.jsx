@@ -15,13 +15,18 @@ export default function ShoppingCartInteractive({ initialCartData, recommendedPr
       const savedCart = localStorage.getItem('muscfit_cart');
       if (savedCart) {
         const parsedCart = JSON.parse(savedCart);
-        setCartItems(parsedCart);
+        if (Array.isArray(parsedCart)) {
+          setCartItems(parsedCart);
+        } else {
+          // Invalid data format
+          setCartItems(initialCartData || []);
+        }
       } else {
-        setCartItems(initialCartData);
+        setCartItems(initialCartData || []);
       }
     } catch (error) {
       console.error('Error loading cart:', error);
-      setCartItems(initialCartData);
+      setCartItems(initialCartData || []);
     }
   }, [initialCartData]);
 
