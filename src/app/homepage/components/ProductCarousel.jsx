@@ -30,21 +30,24 @@ export default function ProductCarousel({ products }) {
 
         const interval = setInterval(() => {
             if (scrollRef.current) {
-                const { clientWidth, scrollLeft, scrollWidth } = scrollRef.current;
+                const { scrollLeft, scrollWidth } = scrollRef.current;
+                const cardWidth = 320; // Approximate card width
                 const third = scrollWidth / 3;
-                const nextScroll = scrollLeft + clientWidth;
 
-                if (nextScroll >= 2 * third) {
-                    // Snap back to first third before jumping
-                    scrollRef.current.scrollTo({ left: scrollLeft - third, behavior: 'auto' });
+                // If we've scrolled past the second set, snap back to first set
+                if (scrollLeft >= 2 * third) {
+                    scrollRef.current.scrollTo({ left: scrollLeft - third + cardWidth, behavior: 'smooth' });
+                    // Provide instant snap-back if smooth wasn't enough, in next tick (optional, simplified here)
+                    // actually to loop perfectly, we should snap silently then scroll. 
+                    // But for simple auto-scroll:
                     setTimeout(() => {
-                        scrollRef.current.scrollTo({ left: scrollLeft - third + clientWidth, behavior: 'smooth' });
-                    }, 50);
+                        if (scrollRef.current) scrollRef.current.scrollTo({ left: scrollLeft - third, behavior: 'auto' });
+                    }, 500); // After animation
                 } else {
-                    scrollRef.current.scrollTo({ left: nextScroll, behavior: 'smooth' });
+                    scrollRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
                 }
             }
-        }, 5000);
+        }, 3000);
 
         return () => clearInterval(interval);
     }, [isPaused, isDragging]);
