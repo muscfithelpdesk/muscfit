@@ -40,7 +40,8 @@
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,css,md,json}\"",
     "serve": "next start",
-    "clear-products": "node scripts/clear-all-products.js"
+    "clear-products": "node scripts/clear-all-products.js",
+    "seed-products": "node scripts/seed-products.js"
   },
   "dependencies": {
     "@dhiwise/component-tagger": "^1.0.14",
