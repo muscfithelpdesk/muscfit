@@ -115,16 +115,31 @@ export default function AdminProductManagementPage() {
                 console.log('🔄 Updating product:', currentProduct.id);
                 console.log('📝 Update data:', updateData);
 
+                // OPTIMISTIC UPDATE: Update UI immediately
+                setProducts(prevProducts => prevProducts.map(p =>
+                    p.id === currentProduct.id
+                        ? {
+                            ...p,
+                            ...updateData,
+                            image: updateData.imageUrl, // Map imageUrl back to image for display
+                            // Ensure display values are correct
+                            price: updateData.price,
+                            originalPrice: updateData.originalPrice,
+                            category: updateData.category
+                        }
+                        : p
+                ));
+
                 const result = await productService.updateProduct(currentProduct.id, updateData);
                 console.log('✅ Update result:', result);
 
-                // Clear editing state FIRST
+                // Clear editing state
                 resetForm();
 
-                // Force a complete refresh of the product list
-                await fetchProducts();
+                // Fetch fresh data in background to confirm
+                fetchProducts();
 
-                alert('Product updated successfully! Price changes are now visible.');
+                alert('Product updated successfully!');
             } else {
                 await productService.createProduct({
                     ...formData,
