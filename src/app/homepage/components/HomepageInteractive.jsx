@@ -86,7 +86,7 @@ export default function HomepageInteractive({ pageData }) {
           title="MEN'S"
           subtitle="SHOP"
           tabs={[
-            { name: 'WINTER-ARC', filter: 'hoodies' },
+            { name: 'WINTER-ARC' },
             { name: "MEN'S TSHIRTS", filter: 'tshirts' },
             { name: 'JOGGERS', filter: 'joggers' },
             { name: 'STRINGERS', filter: 'tshirts' },
