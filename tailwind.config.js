@@ -136,9 +136,17 @@ module.exports = {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        "fade-in-up": {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
         "scale-in": {
           '0%': { transform: 'scale(0.95)', opacity: '0' },
           '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        "scale-in-origin-top": {
+          '0%': { transform: 'scale(0.95)', opacity: '0', transformOrigin: 'top' },
+          '100%': { transform: 'scale(1)', opacity: '1', transformOrigin: 'top' },
         },
       },
       animation: {
@@ -148,7 +156,9 @@ module.exports = {
         "slide-in-right": "slide-in-right 250ms ease-out",
         "slide-out-right": "slide-out-right 250ms ease-out",
         "fade-in": "fade-in 250ms ease-out",
+        "fade-in-up": "fade-in-up 250ms ease-out",
         "scale-in": "scale-in 250ms ease-out",
+        "scale-in-origin-top": "scale-in-origin-top 250ms ease-out",
       },
       zIndex: {
         '60': '60',

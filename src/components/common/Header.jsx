@@ -218,9 +218,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 <img
                   src="/assets/images/logo-v4.png"
                   alt="MUSCFIT Logo"
-                  className={`transition-all duration-300 w-auto max-w-none object-contain ${
-                    scrolled ? 'h-[82px] md:h-[92px]' : 'h-[102px] md:h-[202px]'
-                  }`}
+                  className={`transition-all duration-300 w-auto max-w-none object-contain ${scrolled ? 'h-[82px] md:h-[92px]' : 'h-[102px] md:h-[202px]'
+                    }`}
                 />
               </div>
             </Link>
@@ -492,49 +491,170 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           )}
 
           {/* Right Action Icons */}
-          <div className="flex items-center justify-end gap-3 md:gap-6 w-1/4">
-            {/* Search */}
-            <div className="relative" ref={searchRef}>
+          {/* Right Action Icons - Myntra Style */}
+          <div className="flex items-center justify-end gap-1 md:gap-4 w-auto lg:w-1/3 pr-2 md:pr-0">
+            {/* Profile Button */}
+            <div
+              className="relative group h-full flex items-center"
+              ref={profileRef}
+              onMouseEnter={() => setIsProfileOpen(true)}
+              onMouseLeave={() => setIsProfileOpen(false)}
+            >
+              <Link
+                href={user ? '/user-profile' : '/user-authentication'}
+                className="flex flex-col items-center gap-1 group/btn px-3 transition-all duration-300 relative py-1"
+              >
+                <div className="relative">
+                  <Icon
+                    name="UserIcon"
+                    size={20}
+                    className="text-text-secondary group-hover/btn:text-primary transition-colors"
+                  />
+                  {user && (
+                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-green-500 rounded-full border border-background"></span>
+                  )}
+                </div>
+                <span className="text-[10px] md:text-[11px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
+                  Profile
+                </span>
+                <div className="absolute -bottom-1 left-3 right-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></div>
+              </Link>
+
+              {/* Profile Dropdown */}
+              {isProfileOpen && (
+                <div className="absolute top-full right-[-60px] pt-2 z-[100] animate-fade-in-up">
+                  <div className="w-[280px] bg-background border border-border shadow-sharp-lg rounded-sm overflow-hidden">
+                    <div className="p-5 border-b border-border bg-surface/10">
+                      <h4 className="font-heading text-sm font-black text-foreground mb-1">
+                        Welcome
+                      </h4>
+                      <p className="text-[11px] text-text-secondary mb-4 leading-tight">
+                        To access account and manage orders
+                      </p>
+                      {!user ? (
+                        <Link
+                          href="/user-authentication"
+                          className="inline-block px-5 py-2.5 border border-border text-primary font-bold text-[11px] hover:border-primary hover:bg-primary/5 transition-all uppercase tracking-widest"
+                        >
+                          Login / Signup
+                        </Link>
+                      ) : (
+                        <div className="flex items-center gap-3 p-2 bg-muted/20 rounded-md">
+                          <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white font-black text-sm shadow-sm ring-2 ring-primary/20">
+                            {user.email?.[0]?.toUpperCase()}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs font-bold text-foreground truncate">
+                              {user.email?.split('@')[0]}
+                            </p>
+                            <p className="text-[9px] text-text-secondary truncate">{user.email}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="py-2">
+                      <Link
+                        href="/user-profile?tab=orders"
+                        className="block px-6 py-2.5 text-sm text-text-secondary hover:text-foreground hover:bg-muted font-bold transition-all"
+                      >
+                        Orders
+                      </Link>
+                      <Link
+                        href="/user-profile?tab=wishlist"
+                        className="block px-6 py-2.5 text-sm text-text-secondary hover:text-foreground hover:bg-muted font-bold transition-all"
+                      >
+                        Wishlist
+                      </Link>
+                      <Link
+                        href="/gift-cards"
+                        className="block px-6 py-2.5 text-sm text-text-secondary hover:text-foreground hover:bg-muted font-bold transition-all"
+                      >
+                        Gift Cards
+                      </Link>
+                      <Link
+                        href="/contact-us"
+                        className="block px-6 py-2.5 text-sm text-text-secondary hover:text-foreground hover:bg-muted font-bold transition-all"
+                      >
+                        Contact Us
+                      </Link>
+                    </div>
+
+                    <div className="py-2 border-t border-border bg-muted/5">
+                      <Link
+                        href="/user-profile?tab=coupons"
+                        className="block px-6 py-2.5 text-sm text-text-secondary hover:text-foreground hover:bg-muted font-bold transition-all"
+                      >
+                        Coupons
+                      </Link>
+                      <Link
+                        href="/user-profile?tab=addresses"
+                        className="block px-6 py-2.5 text-sm text-text-secondary hover:text-foreground hover:bg-muted font-bold transition-all"
+                      >
+                        Saved Addresses
+                      </Link>
+                      {user && (
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-6 py-3 text-xs text-error hover:bg-error/5 font-black uppercase tracking-widest transition-all mt-1"
+                        >
+                          Logout
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Magnifying Glass (Search) - Placed after Profile as requested */}
+            <div className="relative group flex items-center" ref={searchRef}>
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="p-2 text-text-secondary hover:text-primary transition-colors duration-250 hover:scale-110 active:scale-95"
+                className="flex flex-col items-center gap-1 group/btn px-3 transition-all duration-300 relative py-1"
                 aria-label="Search"
               >
-                <Icon name="MagnifyingGlassIcon" size={24} />
+                <Icon
+                  name="MagnifyingGlassIcon"
+                  size={20}
+                  className="text-text-secondary group-hover/btn:text-primary transition-colors"
+                />
+                <span className="text-[10px] md:text-[11px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
+                  Search
+                </span>
+                <div className="absolute -bottom-1 left-3 right-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></div>
               </button>
 
               {isSearchOpen && (
-                <div className="fixed md:absolute left-4 right-4 md:left-auto md:right-0 top-[70px] md:top-full mt-2 w-auto md:w-[400px] bg-popover border border-border rounded-md shadow-sharp-lg animate-scale-in z-[100]">
-                  <form onSubmit={handleSearchSubmit} className="p-4">
-                    <div className="relative">
-                      <input
-                        type="text"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e?.target?.value)}
-                        placeholder="Search products..."
-                        className="w-full h-12 px-4 pr-10 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-250"
-                        autoFocus
-                      />
-                      <button
-                        type="submit"
-                        className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-text-secondary hover:text-primary transition-colors duration-250"
-                      >
-                        <Icon name="MagnifyingGlassIcon" size={20} />
-                      </button>
-                    </div>
+                <div className="fixed md:absolute left-4 right-4 md:left-auto md:right-0 top-[85px] md:top-full mt-2 w-auto md:w-[320px] bg-background border border-border shadow-sharp-lg border-t-2 border-t-primary animate-scale-in-origin-top z-[100] p-4">
+                  <form onSubmit={handleSearchSubmit} className="relative">
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e?.target.value)}
+                      placeholder="Try 'Compression shirts'..."
+                      className="w-full h-10 px-4 pr-10 bg-surface text-xs font-bold border-none focus:ring-1 focus:ring-primary/20 transition-all placeholder:font-medium uppercase tracking-tight"
+                      autoFocus
+                    />
+                    <button
+                      type="submit"
+                      className="absolute right-0 top-0 bottom-0 px-3 text-text-secondary hover:text-primary"
+                    >
+                      <Icon name="MagnifyingGlassIcon" size={16} />
+                    </button>
                   </form>
-
                   {recentSearches?.length > 0 && (
-                    <div className="px-4 pb-4 border-t border-border">
-                      <p className="text-xs font-caption text-text-secondary uppercase tracking-wider mt-3 mb-2">
-                        Recent Searches
+                    <div className="mt-4 px-1">
+                      <p className="text-[9px] font-black text-text-secondary uppercase tracking-[0.2em] mb-2 leading-none">
+                        Trending
                       </p>
-                      <div className="space-y-1">
+                      <div className="flex flex-wrap gap-1.5">
                         {recentSearches?.map((search, index) => (
                           <Link
                             key={index}
-                            href={`/product-catalog?search=${encodeURIComponent(search)}`}
-                            className="block px-3 py-2 text-sm text-text-primary hover:bg-muted rounded-sm transition-colors duration-250"
+                            href={`/men-catalog?search=${encodeURIComponent(search)}`}
+                            className="px-2.5 py-1 text-[10px] bg-surface hover:bg-primary/10 hover:text-primary text-text-secondary rounded-full transition-all font-bold border border-border/50"
+                            onClick={() => setIsSearchOpen(false)}
                           >
                             {search}
                           </Link>
@@ -546,67 +666,108 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               )}
             </div>
 
-            {/* Cart */}
-            <div className="relative" ref={cartRef}>
-              <button
-                onClick={() => setIsCartOpen(!isCartOpen)}
-                className="relative p-2 text-text-secondary hover:text-primary transition-colors duration-250 hover:scale-110 active:scale-95"
-                aria-label="Shopping Cart"
+            {/* Wishlist Button */}
+            <Link
+              href="/user-profile?tab=wishlist"
+              className="flex flex-col items-center gap-1 group px-3 transition-all duration-300 relative py-1"
+            >
+              <Icon
+                name="HeartIcon"
+                size={20}
+                className="text-text-secondary group-hover:text-primary transition-colors"
+              />
+              <span className="text-[10px] md:text-[11px] font-bold text-text-secondary group-hover:text-primary uppercase tracking-tighter">
+                Wishlist
+              </span>
+              <div className="absolute -bottom-1 left-3 right-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></div>
+            </Link>
+
+            {/* Bag Button */}
+            <div
+              className="relative group h-full flex items-center"
+              ref={cartRef}
+              onMouseEnter={() => setIsCartOpen(true)}
+              onMouseLeave={() => setIsCartOpen(false)}
+            >
+              <Link
+                href="/shopping-cart"
+                className="flex flex-col items-center gap-1 group/btn px-3 transition-all duration-300 relative py-1"
               >
-                <Icon name="ShoppingCartIcon" size={24} />
-                {cartItemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground text-xs font-bold rounded-full flex items-center justify-center font-data">
-                    {cartItemCount}
-                  </span>
-                )}
-              </button>
+                <div className="relative">
+                  <Icon
+                    name="ShoppingBagIcon"
+                    size={20}
+                    className="text-text-secondary group-hover/btn:text-primary transition-colors"
+                  />
+                  {cartItemCount > 0 && (
+                    <span className="absolute -top-1.5 -right-2 w-4 h-4 bg-primary text-[9px] text-white font-black rounded-full flex items-center justify-center border border-background shadow-sm">
+                      {cartItemCount}
+                    </span>
+                  )}
+                </div>
+                <span className="text-[10px] md:text-[11px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
+                  Bag
+                </span>
+                <div className="absolute -bottom-1 left-3 right-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></div>
+              </Link>
 
+              {/* Mini Cart Dropdown on Hover */}
               {isCartOpen && (
-                <div className="absolute right-0 top-full mt-2 w-[360px] bg-popover border border-border rounded-md shadow-sharp-lg animate-scale-in z-[100]">
-                  <div className="p-4 border-b border-border">
-                    <h3 className="font-heading text-lg font-semibold text-foreground">
-                      Shopping Cart
-                    </h3>
-                  </div>
-
-                  <div className="max-h-[400px] overflow-y-auto">
-                    {cartItems?.map((item) => (
-                      <div
-                        key={item?.id}
-                        className="flex gap-3 p-4 border-b border-border hover:bg-muted/50 transition-colors duration-250"
-                      >
-                        <div className="w-16 h-16 bg-surface rounded-sm overflow-hidden flex-shrink-0">
-                          <div className="w-full h-full bg-muted"></div>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium text-foreground truncate">
-                            {item?.name}
-                          </h4>
-                          <p className="text-xs text-text-secondary mt-1">Qty: {item?.quantity}</p>
-                          <p className="text-sm font-data font-bold text-primary mt-1">
-                            ₹{item?.price}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="p-4 border-t border-border bg-surface">
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="font-heading text-sm font-semibold text-foreground">
-                        Total
-                      </span>
-                      <span className="font-data text-lg font-bold text-primary">
-                        ₹{calculateCartTotal()}
-                      </span>
+                <div className="absolute top-full right-[-20px] pt-2 z-[100] animate-fade-in-up md:block hidden">
+                  <div className="w-[300px] bg-background border border-border shadow-sharp-lg rounded-sm overflow-hidden">
+                    <div className="p-4 border-b border-border bg-surface/30">
+                      <h3 className="font-heading text-xs font-black text-foreground uppercase tracking-widest">
+                        Your Selection ({cartItemCount})
+                      </h3>
                     </div>
-                    <Link
-                      href="/shopping-cart"
-                      onClick={() => setIsCartOpen(false)}
-                      className="block w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold rounded-md flex items-center justify-center transition-all duration-250 hover:scale-[0.98] active:scale-95"
-                    >
-                      View Cart & Checkout
-                    </Link>
+
+                    <div className="max-h-[320px] overflow-y-auto custom-scrollbar">
+                      {cartItems?.map((item) => (
+                        <div
+                          key={item?.id}
+                          className="flex gap-4 p-4 border-b border-white hover:bg-muted/30 transition-all group/item"
+                        >
+                          <div className="w-14 h-18 bg-muted/10 flex-shrink-0 overflow-hidden rounded-sm ring-1 ring-border/50">
+                            <img
+                              src={item?.image}
+                              alt={item?.name}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover/item:scale-110"
+                              onError={(e) => (e.target.src = '/assets/images/no-image.png')}
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0 py-0.5">
+                            <h4 className="text-[11px] font-bold text-foreground line-clamp-2 leading-tight uppercase tracking-tight">
+                              {item?.name}
+                            </h4>
+                            <div className="flex items-center justify-between mt-2">
+                              <span className="text-[10px] text-text-secondary font-medium">
+                                Qty: {item?.quantity}
+                              </span>
+                              <span className="text-[11px] font-black text-primary">
+                                ₹{item?.price}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="p-4 bg-muted/10">
+                      <div className="flex justify-between items-center mb-4 px-1">
+                        <span className="text-[10px] font-bold text-text-secondary uppercase tracking-[0.1em]">
+                          Subtotal
+                        </span>
+                        <span className="text-sm font-black text-foreground">
+                          ₹{calculateCartTotal()}
+                        </span>
+                      </div>
+                      <Link
+                        href="/shopping-cart"
+                        className="block w-full py-3 bg-black text-white text-[10px] font-black uppercase tracking-[0.2em] text-center hover:bg-primary transition-all rounded-sm shadow-sm active:scale-[0.98]"
+                      >
+                        Inspect Bag
+                      </Link>
+                    </div>
                   </div>
                 </div>
               )}
