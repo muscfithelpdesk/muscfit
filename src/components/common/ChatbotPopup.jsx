@@ -37,19 +37,31 @@ export default function ChatbotPopup() {
       lowerQuery.startsWith('hi') ||
       lowerQuery.includes('hey')
     ) {
-      return "Hello! I'm your MUSC-AI assistant. Ask me about our gym wear, orders, shipping, or returns!";
+      return "Hello! I'm your MUSC-AI assistant. Ask me about our New Year Sale, product collections, or tracking your order!";
     }
     if (
       lowerQuery.includes('muscfit') ||
       lowerQuery.includes('brand') ||
       lowerQuery.includes('about us')
     ) {
-      return 'MUSCFIT is a premium fitness apparel brand designed for peak performance. We offer high-quality compression gear, training essentials, and accessories.';
+      return 'MUSCFIT is a premium fitness apparel brand born in India. We engineer peak-performance gear including Elite Compression, training essentials, and accessories trusted by over 50k athletes.';
+    }
+
+    // 2. Offers & Sales
+    if (
+      lowerQuery.includes('offer') ||
+      lowerQuery.includes('sale') ||
+      lowerQuery.includes('discount') ||
+      lowerQuery.includes('promo') ||
+      lowerQuery.includes('code') ||
+      lowerQuery.includes('coupon')
+    ) {
+      return "Current Offers:\n• 🔥 NEW YEAR SALE: 30% OFF on all Compression Wear.\n• 🛍️ Buy 2 Get 1 FREE on Training Essentials.\n• 🎁 First Order: Extra 10% OFF with code MUSCFIT10.\n• ❄️ Winter Drop: Up to 40% OFF.";
     }
 
     // 2. Products & Categories
     if (lowerQuery.includes('men') || lowerQuery.includes('man') || lowerQuery.includes('guy')) {
-      return "For men, we have a great collection of compression tops, training shorts, and joggers. Check out the 'Men' category in the menu.";
+      return "Our Men's Collection features T-Shirts, Tops, Joggers, Training Shorts, and our 'Unleash Power' New Drop. You can browse them all in the 'Men' category menu.";
     }
     if (
       lowerQuery.includes('women') ||
@@ -57,18 +69,22 @@ export default function ChatbotPopup() {
       lowerQuery.includes('girl') ||
       lowerQuery.includes('ladies')
     ) {
-      return "Our women's collection features high-performance leggings, sports bras, and crop tops. You can browse them under the 'Women' tab.";
+      return "For Women, we offer high-performance Leggings, Sports Bras, Crop Tops, and Winter Jackets. Explore the full range under the 'Women' tab.";
     }
     if (lowerQuery.includes('compression') || lowerQuery.includes('base layer')) {
-      return 'Our Compression Series is our specialty! It helps improve blood flow and recovery. We have compression shirts, pants, and full suits.';
+      return "Our specialty! The Elite Compression & Tech-Fit™ Series improves recovery and focus. We have compression tops, bottoms, and full body suits available at 30% OFF right now.";
     }
     if (
       lowerQuery.includes('accessory') ||
       lowerQuery.includes('accessories') ||
       lowerQuery.includes('bag') ||
+      lowerQuery.includes('belt') ||
       lowerQuery.includes('equipment')
     ) {
-      return "Don't forget the essentials! We stock gym bags, lifting belts, and other training equipment in our Accessories section.";
+      return "Complete your kit with our Accessories! We stock Training Bags, Lifting Belts, and performance Gear.";
+    }
+    if (lowerQuery.includes('winter') || lowerQuery.includes('jacket') || lowerQuery.includes('hoodie')) {
+      return "Our Winter Collection is now LIVE! Get up to 40% OFF on premium Jackets, Hoodies, and ARC series gear.";
     }
 
     // 3. Operations (Order, Shipping, Returns, Payment)
@@ -77,24 +93,24 @@ export default function ChatbotPopup() {
       lowerQuery.includes('buy') ||
       lowerQuery.includes('purchase')
     ) {
-      return "Ordering is easy! Just add your favorite gear to the cart and proceed to checkout. You'll receive an email confirmation once your order is placed.";
+      return "Just add your favorites to the cart and use code MUSCFIT10 for your first order! We'll send an email confirmation as soon as you checkout.";
     }
     if (lowerQuery.includes('track') || lowerQuery.includes('status')) {
-      return "You can track your order status in your Profile under 'My Orders'. You'll also get a tracking link via email once your order ships.";
+      return "Easy! Track your order status in 'My Orders' within your Profile. You'll also receive a tracking link via email (it takes 2-4 business days to deliver).";
     }
     if (
       lowerQuery.includes('shipping') ||
       lowerQuery.includes('delivery') ||
       lowerQuery.includes('ship')
     ) {
-      return 'We offer FREE express shipping on orders above ₹2,999! Standard delivery typically takes 2-4 business days depending on your location.';
+      return 'Free Express Shipping is available on all orders above ₹2,999! Standard delivery takes 2-4 business days across India.';
     }
     if (
       lowerQuery.includes('return') ||
       lowerQuery.includes('exchange') ||
       lowerQuery.includes('refund')
     ) {
-      return "We have a hassle-free 30-day return policy. If the size doesn't fit or you're not satisfied, you can initiate a return or exchange from your User Profile.";
+      return "Enjoy 30-Day Easy Returns. If it doesn't fit or you're not satisfied, you can initiate an exchange or return directly from your User Profile.";
     }
     if (
       lowerQuery.includes('payment') ||
@@ -102,10 +118,10 @@ export default function ChatbotPopup() {
       lowerQuery.includes('cod') ||
       lowerQuery.includes('upi')
     ) {
-      return 'We accept all major secure payment methods including UPI, Credit/Debit Cards, and Net Banking. Cash on Delivery (COD) is available for select pin codes.';
+      return 'We accept 100% secure payments via UPI, Credit/Debit Cards, Net Banking, and COD (Cash on Delivery) for select locations.';
     }
     if (lowerQuery.includes('size') || lowerQuery.includes('fit') || lowerQuery.includes('chart')) {
-      return 'Not sure about the fit? Each product page has a detailed Size Guide. Our gear is designed for an athletic fit, so check the measurements!';
+      return "Check our Size Guide on any product page for the perfect fit. Our gear is built for an athletic fit, so we recommend true-to-size for most!";
     }
 
     // 4. Support / Contact
@@ -116,11 +132,11 @@ export default function ChatbotPopup() {
       lowerQuery.includes('support') ||
       lowerQuery.includes('human')
     ) {
-      return 'Need human help? You can reach our support team at support@muscfit.com. We usually respond within 24 hours.';
+      return "Our team is here 24/7! Email us at support@muscfit.com if you need any expert assistance.";
     }
 
     // 5. Fallback for unrelated queries (Strict Mode)
-    return "I'm designed to help only with Muscfit-related inquiries. Please ask me about our products, your order, shipping, or returns.";
+    return "I'm sorry, I'm only trained to help with MUSCFIT-related questions like our products, current offers, or order tracking. How can I help you with your fitness gear today?";
   };
 
   const handleSendMessage = (e) => {
@@ -200,11 +216,10 @@ export default function ChatbotPopup() {
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'}`}>
               <div
-                className={`max-w-[80%] p-3 text-sm rounded-2xl ${
-                  msg.isBot
+                className={`max-w-[80%] p-3 text-sm rounded-2xl ${msg.isBot
                     ? 'bg-zinc-800 text-zinc-100 rounded-tl-none border border-white/5'
                     : 'bg-white text-black rounded-tr-none shadow-lg'
-                }`}
+                  }`}
               >
                 {msg.text}
               </div>
