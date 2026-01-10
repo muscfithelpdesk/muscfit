@@ -7,24 +7,37 @@ export default function HeroSection({ slides, ctaPrimary }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  const totalSlides = slides?.length || 0;
+
   useEffect(() => {
+    if (totalSlides <= 1) return;
+
     const timer = setInterval(() => {
       handleNextSlide();
-    }, 5000); // Change image every 5 seconds
+    }, 5000);
 
     return () => clearInterval(timer);
-  }, [currentSlide]);
+  }, [currentSlide, totalSlides]);
 
   const handleNextSlide = () => {
     setIsTransitioning(true);
     setTimeout(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides?.length);
+      setCurrentSlide((prev) => (prev + 1) % totalSlides);
       setIsTransitioning(false);
-    }, 800); // Matches transition duration
+    }, 600);
+  };
+
+  const handleManualSlide = (index) => {
+    if (index === currentSlide || isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentSlide(index);
+      setIsTransitioning(false);
+    }, 400);
   };
 
   return (
-    <section className="relative w-full h-[85vh] md:h-screen overflow-hidden group z-0 bg-black">
+    <section className="relative w-full h-[60vh] md:h-[75vh] lg:h-[80vh] max-h-[750px] overflow-hidden group z-0 bg-white">
       {/* Background Images Layer */}
       {slides?.map((slide, index) => (
         <div
@@ -32,45 +45,45 @@ export default function HeroSection({ slides, ctaPrimary }) {
           className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
             }`}
         >
-          {/* Desktop & Tablet Image */}
           <div className="absolute inset-0 block">
             <AppImage
               src={slide?.backgroundImage}
               alt={slide?.backgroundAlt}
               fill
-              className={`w-full h-full object-cover object-center transition-transform duration-[8s] ease-out ${index === currentSlide ? 'scale-110' : 'scale-100'
+              className={`w-full h-full object-cover object-center transition-transform duration-[10s] ease-out ${index === currentSlide ? 'scale-105' : 'scale-100'
                 }`}
               priority={index === 0}
             />
           </div>
 
-          {/* Graded overlay for premium feel - Specific to each slide for consistency */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70 z-20"></div>
+          {/* Lightened overlay for a 'brighter' feel but keeping text readable */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/10 z-20"></div>
+          <div className="absolute inset-0 bg-black/10 z-10"></div>
         </div>
       ))}
 
       {/* Content Layer */}
       <div className="relative z-30 h-full w-full flex flex-col justify-center items-center text-center px-4 md:px-6 lg:px-8">
         <div
-          className={`max-w-7xl mx-auto w-full transition-all duration-700 transform ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+          className={`max-w-7xl mx-auto w-full transition-all duration-500 transform ${isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
             }`}
         >
-          <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white mb-2 tracking-tighter uppercase italic drop-shadow-2xl">
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-2 tracking-tighter uppercase italic drop-shadow-xl">
             {slides[currentSlide]?.title}
           </h1>
 
-          <div className="flex items-center justify-center gap-4 mb-8 md:mb-12">
-            <div className="h-[2px] w-8 md:w-24 bg-white/60 shadow-lg transition-all duration-1000"></div>
-            <p className="text-[10px] md:text-xl text-white font-bold tracking-[0.3em] uppercase drop-shadow-md">
+          <div className="flex items-center justify-center gap-4 mb-6 md:mb-10">
+            <div className="h-[2px] w-6 md:w-16 bg-white/80 shadow-lg"></div>
+            <p className="text-[10px] md:text-lg text-white font-bold tracking-[0.4em] uppercase drop-shadow-md">
               {slides[currentSlide]?.subtitle}
             </p>
-            <div className="h-[2px] w-8 md:w-24 bg-white/60 shadow-lg transition-all duration-1000"></div>
+            <div className="h-[2px] w-6 md:w-16 bg-white/80 shadow-lg"></div>
           </div>
 
-          <div className="flex justify-center flex-wrap gap-6 pt-4">
+          <div className="flex justify-center pt-2">
             <Link
               href={ctaPrimary?.href}
-              className="px-12 py-4 bg-white text-black font-black text-sm md:text-base tracking-[0.2em] uppercase rounded-none transition-all duration-500 hover:bg-black hover:text-white hover:scale-105 premium-shadow min-w-[200px]"
+              className="px-10 py-3.5 bg-primary text-white font-black text-xs md:text-sm tracking-[0.25em] uppercase rounded-none transition-all duration-300 hover:bg-black hover:scale-105 shadow-xl min-w-[180px]"
             >
               {ctaPrimary?.text}
             </Link>
@@ -78,19 +91,13 @@ export default function HeroSection({ slides, ctaPrimary }) {
         </div>
       </div>
 
-      {/* Slide Indicators */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-40 flex gap-3">
+      {/* Slide Indicators - Smaller and neater */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex gap-2.5">
         {slides?.map((_, index) => (
           <button
             key={index}
-            onClick={() => {
-              setIsTransitioning(true);
-              setTimeout(() => {
-                setCurrentSlide(index);
-                setIsTransitioning(false);
-              }, 400);
-            }}
-            className={`h-1.5 transition-all duration-500 rounded-full ${index === currentSlide ? 'w-12 bg-white' : 'w-3 bg-white/30 hover:bg-white/50'
+            onClick={() => handleManualSlide(index)}
+            className={`h-1 transition-all duration-500 rounded-full ${index === currentSlide ? 'w-8 bg-primary' : 'w-2 bg-white/50 hover:bg-white'
               }`}
             aria-label={`Go to slide ${index + 1}`}
           />

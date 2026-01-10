@@ -70,32 +70,32 @@ export default function HomepageInteractive({ pageData }) {
         <HeroSection
           slides={[
             {
-              title: 'PEAK PERFORMANCE',
-              subtitle: 'BORN TO CONQUER',
+              title: 'BRIGHTER FUTURE',
+              subtitle: 'ELEVATE YOUR WORKOUT',
               backgroundImage:
-                'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'Athlete in hoodie focused in gym environment',
+                'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Clean, bright gym with runner on treadmill',
             },
             {
-              title: 'UNLEASH POWER',
-              subtitle: 'MASTER YOUR LIMITS',
+              title: 'MORNING ENERGY',
+              subtitle: 'START YOUR DAY STRONG',
               backgroundImage:
-                'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'Athlete performing deadlift in moody lighting',
+                'https://images.unsplash.com/photo-1541534741688-6078c65b5a33?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Athlete training in a bright, sun-lit studio',
             },
             {
-              title: 'ELITE COMFORT',
-              subtitle: 'ENGINEERED FOR MOTION',
+              title: 'LIGHTWEIGHT GEAR',
+              subtitle: 'MOTION WITHOUT LIMITS',
               backgroundImage:
-                'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'Premium athletic fabric close-up with dramatic shadows',
+                'https://images.unsplash.com/photo-1441924905943-05bc358b5b5b?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Minimalist bright fitness equipment and gear',
             },
             {
-              title: 'PURE STRENGTH',
-              subtitle: 'FORGED IN DEDICATION',
+              title: 'URBAN AESTHETIC',
+              subtitle: 'STYLE MEETS PERFORMANCE',
               backgroundImage:
-                'https://images.unsplash.com/photo-1583454110551-21f2fa209195?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'High-performance gear in minimalist gym setting',
+                'https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Modern bright gym with clean white walls and equipment',
             },
           ]}
           ctaPrimary={pageData?.hero?.ctaPrimary}
