@@ -228,7 +228,7 @@ export default function ProductCatalogInteractive() {
                     View All Women's →
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {womenProducts?.map((product) => (
                     <ProductCard key={product?.id} product={product} />
                   ))}
@@ -244,7 +244,7 @@ export default function ProductCatalogInteractive() {
                     View All Men's →
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {menProducts?.map((product) => (
                     <ProductCard key={product?.id} product={product} />
                   ))}
@@ -263,7 +263,7 @@ export default function ProductCatalogInteractive() {
                     View All Compression →
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {compressionProducts?.map((product) => (
                     <ProductCard key={product?.id} product={product} />
                   ))}
@@ -282,7 +282,7 @@ export default function ProductCatalogInteractive() {
                     View All Accessories →
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {accessoryProducts?.map((product) => (
                     <ProductCard key={product?.id} product={product} />
                   ))}
