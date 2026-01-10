@@ -68,13 +68,38 @@ export default function HomepageInteractive({ pageData }) {
       </div>
       <main className="pt-[114px] md:pt-[164px]">
         <HeroSection
-          title={pageData?.hero?.title}
-          subtitle={pageData?.hero?.subtitle}
+          slides={[
+            {
+              title: 'PEAK PERFORMANCE',
+              subtitle: 'BORN TO CONQUER',
+              backgroundImage:
+                'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Athlete in hoodie focused in gym environment',
+            },
+            {
+              title: 'UNLEASH POWER',
+              subtitle: 'MASTER YOUR LIMITS',
+              backgroundImage:
+                'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Athlete performing deadlift in moody lighting',
+            },
+            {
+              title: 'ELITE COMFORT',
+              subtitle: 'ENGINEERED FOR MOTION',
+              backgroundImage:
+                'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Premium athletic fabric close-up with dramatic shadows',
+            },
+            {
+              title: 'PURE STRENGTH',
+              subtitle: 'FORGED IN DEDICATION',
+              backgroundImage:
+                'https://images.unsplash.com/photo-1583454110551-21f2fa209195?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'High-performance gear in minimalist gym setting',
+            },
+          ]}
           ctaPrimary={pageData?.hero?.ctaPrimary}
           ctaSecondary={pageData?.hero?.ctaSecondary}
-          backgroundImage={pageData?.hero?.backgroundImage}
-          mobileHeroImage={pageData?.hero?.mobileHeroImage}
-          backgroundAlt={pageData?.hero?.backgroundAlt}
         />
 
         <CollectionSection
@@ -193,13 +218,8 @@ HomepageInteractive.propTypes = {
       dismissible: PropTypes.bool.isRequired,
     }).isRequired,
     hero: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      subtitle: PropTypes.string.isRequired,
       ctaPrimary: PropTypes.object.isRequired,
       ctaSecondary: PropTypes.object.isRequired,
-      backgroundImage: PropTypes.string.isRequired,
-      mobileHeroImage: PropTypes.string,
-      backgroundAlt: PropTypes.string.isRequired,
     }).isRequired,
     features: PropTypes.array.isRequired,
     categories: PropTypes.array.isRequired,
