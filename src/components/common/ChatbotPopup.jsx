@@ -107,19 +107,17 @@ export default function ChatbotPopup() {
                 className={`group flex items-center justify-center w-14 h-14 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.3)] transition-all duration-500 ease-out hover:scale-110 active:scale-95 ${isOpen ? 'bg-black rotate-90' : 'bg-gradient-to-tr from-rose-500 to-indigo-600'}`}
                 aria-label="Toggle Chat"
             >
-                <Icon
-                    {isOpen ? (
-                        <Icon name="XMarkIcon" size={26} className="text-white transition-transform duration-500" />
-                    ) : (
-                        <div className="w-full h-full p-1 rounded-full overflow-hidden flex items-center justify-center">
-                            <img
-                                src="/assets/images/chatbot-icon.png"
-                                alt="Chat"
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-                    )}
-                />
+                {isOpen ? (
+                    <Icon name="XMarkIcon" size={26} className="text-white transition-transform duration-500" />
+                ) : (
+                    <div className="w-full h-full p-1 rounded-full overflow-hidden flex items-center justify-center">
+                        <img
+                            src="/assets/images/chatbot-icon.png"
+                            alt="Chat"
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                )}
 
                 {!isOpen && (
                     <span className="absolute -top-1 -right-1 flex h-4 w-4">
