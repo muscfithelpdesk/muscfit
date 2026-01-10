@@ -1,6 +1,7 @@
 import { Inter, Outfit } from 'next/font/google';
 import '@/styles/index.css';
 import ClientProviders from '@/components/ClientProviders';
+import ChatbotPopup from '@/components/common/ChatbotPopup';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       <body className="font-body">
         <ClientProviders>
           {children}
+          <ChatbotPopup />
         </ClientProviders>
       </body>
     </html>
