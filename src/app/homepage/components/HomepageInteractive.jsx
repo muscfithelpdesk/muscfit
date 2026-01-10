@@ -70,32 +70,46 @@ export default function HomepageInteractive({ pageData }) {
         <HeroSection
           slides={[
             {
-              title: 'BRIGHTER FUTURE',
-              subtitle: 'ELEVATE YOUR WORKOUT',
-              backgroundImage:
-                'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'Clean, bright gym with runner on treadmill',
-            },
-            {
-              title: 'MORNING ENERGY',
-              subtitle: 'START YOUR DAY STRONG',
+              title: 'MAXIMUM POWER',
+              subtitle: 'PREMIUM MENS TRAINING GEAR',
               backgroundImage:
                 'https://images.unsplash.com/photo-1541534741688-6078c65b5a33?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'Athlete training in a bright, sun-lit studio',
+              backgroundAlt: 'Vibrant shot of male athlete training in sun-lit gym',
             },
             {
-              title: 'LIGHTWEIGHT GEAR',
-              subtitle: 'MOTION WITHOUT LIMITS',
+              title: 'TOTAL BALANCE',
+              subtitle: 'ELITE WOMENS ACTIVEWEAR',
+              backgroundImage:
+                'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Bright and energetic female training session',
+            },
+            {
+              title: 'PRO PERFORMANCE',
+              subtitle: 'ADVANCED COMPRESSION SERIES',
+              backgroundImage:
+                'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Vibrant compression gear in sharp focus',
+            },
+            {
+              title: 'ESSENTIAL GEAR',
+              subtitle: 'PREMIUM FITNESS ACCESSORIES',
               backgroundImage:
                 'https://images.unsplash.com/photo-1441924905943-05bc358b5b5b?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'Minimalist bright fitness equipment and gear',
+              backgroundAlt: 'Clean and bright fitness equipment',
             },
             {
-              title: 'URBAN AESTHETIC',
-              subtitle: 'STYLE MEETS PERFORMANCE',
+              title: 'FRESH DROPS',
+              subtitle: 'EXPLORE NEW ARRIVALS',
               backgroundImage:
                 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'Modern bright gym with clean white walls and equipment',
+              backgroundAlt: 'Modern vibrant gym atmosphere',
+            },
+            {
+              title: 'BEST SELLERS',
+              subtitle: 'TRUSTED BY ATHLETES',
+              backgroundImage:
+                'https://images.unsplash.com/photo-1583454110551-21f2fa209195?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Dynamic athlete in high-performance apparel',
             },
           ]}
           ctaPrimary={pageData?.hero?.ctaPrimary}

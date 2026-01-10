@@ -14,7 +14,7 @@ export default function HeroSection({ slides, ctaPrimary }) {
 
     const timer = setInterval(() => {
       handleNextSlide();
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(timer);
   }, [currentSlide, totalSlides]);
