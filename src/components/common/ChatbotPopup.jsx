@@ -30,26 +30,55 @@ export default function ChatbotPopup() {
     const generateResponse = (query) => {
         const lowerQuery = query.toLowerCase();
 
-        if (lowerQuery.includes('order') || lowerQuery.includes('buy')) {
-            return "To place an order, browse our collection, add items to your cart, and proceed to checkout. We accept all major credit cards and UPI.";
+        // 1. Branding / Greeting
+        if (lowerQuery.includes('hello') || lowerQuery.includes('hi ') || lowerQuery.startsWith('hi') || lowerQuery.includes('hey')) {
+            return "Hello! I'm your MUSC-AI assistant. Ask me about our gym wear, orders, shipping, or returns!";
         }
-        if (lowerQuery.includes('sale') || lowerQuery.includes('offer') || lowerQuery.includes('discount')) {
-            return "Our Winter Sale is currently live! You can get up to 40% off on selected items. Also, use code MUSCFIT10 for 10% extra on your first order.";
-        }
-        if (lowerQuery.includes('shipping') || lowerQuery.includes('delivery')) {
-            return "We offer free express shipping on orders above ₹2,999. Standard delivery takes 2-4 business days.";
-        }
-        if (lowerQuery.includes('return') || lowerQuery.includes('exchange')) {
-            return "We have a hassle-free 30-day return policy. If the fit isn't right, you can exchange it easily from your profile section.";
-        }
-        if (lowerQuery.includes('size') || lowerQuery.includes('fit')) {
-            return "Check out our Size Guide available on every product page for detailed measurements. Our gear is designed for an athletic fit.";
-        }
-        if (lowerQuery.includes('hello') || lowerQuery.includes('hi') || lowerQuery.includes('hey')) {
-            return "Hello there! Ready to crush your workout goals?";
+        if (lowerQuery.includes('muscfit') || lowerQuery.includes('brand') || lowerQuery.includes('about us')) {
+            return "MUSCFIT is a premium fitness apparel brand designed for peak performance. We offer high-quality compression gear, training essentials, and accessories.";
         }
 
-        return "I'm still learning! For specific inquiries, you can check our FAQ page or contact our support team at support@muscfit.com.";
+        // 2. Products & Categories
+        if (lowerQuery.includes('men') || lowerQuery.includes('man') || lowerQuery.includes('guy')) {
+            return "For men, we have a great collection of compression tops, training shorts, and joggers. Check out the 'Men' category in the menu.";
+        }
+        if (lowerQuery.includes('women') || lowerQuery.includes('woman') || lowerQuery.includes('girl') || lowerQuery.includes('ladies')) {
+            return "Our women's collection features high-performance leggings, sports bras, and crop tops. You can browse them under the 'Women' tab.";
+        }
+        if (lowerQuery.includes('compression') || lowerQuery.includes('base layer')) {
+            return "Our Compression Series is our specialty! It helps improve blood flow and recovery. We have compression shirts, pants, and full suits.";
+        }
+        if (lowerQuery.includes('accessory') || lowerQuery.includes('accessories') || lowerQuery.includes('bag') || lowerQuery.includes('equipment')) {
+            return "Don't forget the essentials! We stock gym bags, lifting belts, and other training equipment in our Accessories section.";
+        }
+
+        // 3. Operations (Order, Shipping, Returns, Payment)
+        if (lowerQuery.includes('order') || lowerQuery.includes('buy') || lowerQuery.includes('purchase')) {
+            return "Ordering is easy! Just add your favorite gear to the cart and proceed to checkout. You'll receive an email confirmation once your order is placed.";
+        }
+        if (lowerQuery.includes('track') || lowerQuery.includes('status')) {
+            return "You can track your order status in your Profile under 'My Orders'. You'll also get a tracking link via email once your order ships.";
+        }
+        if (lowerQuery.includes('shipping') || lowerQuery.includes('delivery') || lowerQuery.includes('ship')) {
+            return "We offer FREE express shipping on orders above ₹2,999! Standard delivery typically takes 2-4 business days depending on your location.";
+        }
+        if (lowerQuery.includes('return') || lowerQuery.includes('exchange') || lowerQuery.includes('refund')) {
+            return "We have a hassle-free 30-day return policy. If the size doesn't fit or you're not satisfied, you can initiate a return or exchange from your User Profile.";
+        }
+        if (lowerQuery.includes('payment') || lowerQuery.includes('pay') || lowerQuery.includes('cod') || lowerQuery.includes('upi')) {
+            return "We accept all major secure payment methods including UPI, Credit/Debit Cards, and Net Banking. Cash on Delivery (COD) is available for select pin codes.";
+        }
+        if (lowerQuery.includes('size') || lowerQuery.includes('fit') || lowerQuery.includes('chart')) {
+            return "Not sure about the fit? Each product page has a detailed Size Guide. Our gear is designed for an athletic fit, so check the measurements!";
+        }
+
+        // 4. Support / Contact
+        if (lowerQuery.includes('contact') || lowerQuery.includes('email') || lowerQuery.includes('phone') || lowerQuery.includes('support') || lowerQuery.includes('human')) {
+            return "Need human help? You can reach our support team at support@muscfit.com. We usually respond within 24 hours.";
+        }
+
+        // 5. Fallback for unrelated queries (Strict Mode)
+        return "I'm designed to help only with Muscfit-related inquiries. Please ask me about our products, your order, shipping, or returns.";
     };
 
     const handleSendMessage = (e) => {
@@ -119,8 +148,8 @@ export default function ChatbotPopup() {
                         >
                             <div
                                 className={`max-w-[80%] p-3 text-sm rounded-2xl ${msg.isBot
-                                        ? 'bg-zinc-800 text-zinc-100 rounded-tl-none border border-white/5'
-                                        : 'bg-white text-black rounded-tr-none shadow-lg'
+                                    ? 'bg-zinc-800 text-zinc-100 rounded-tl-none border border-white/5'
+                                    : 'bg-white text-black rounded-tr-none shadow-lg'
                                     }`}
                             >
                                 {msg.text}
