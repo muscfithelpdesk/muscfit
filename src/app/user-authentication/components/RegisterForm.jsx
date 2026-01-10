@@ -42,7 +42,7 @@ export default function RegisterForm() {
     );
 
     if (result?.success) {
-      router?.push('/homepage');
+      router?.push('/');
     } else {
       setError(result?.error || 'Registration failed');
     }

@@ -30,7 +30,7 @@ export default function LoginForm() {
     const result = await signIn(formData?.email, formData?.password);
 
     if (result?.success) {
-      router?.push('/homepage');
+      router?.push('/');
     } else {
       setError(result?.error || 'Login failed');
     }
