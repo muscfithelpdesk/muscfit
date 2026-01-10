@@ -60,15 +60,15 @@ export default function PromoBar({ messages, isVisible = true, onDismiss }) {
         </div>
 
         {/* Center: Messages Carousel */}
-        <div className="flex-1 relative h-full flex items-center justify-center overflow-hidden px-2 perspective-[1000px]">
+        <div className="flex-1 relative h-full flex items-center justify-center overflow-hidden px-2">
           {promoMessages.map((msg, idx) => (
             <div
               key={idx}
-              className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1) [transform-style:preserve-3d] ${idx === currentIndex
-                ? 'opacity-100 [transform:rotateY(0deg)]'
+              className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1) ${idx === currentIndex
+                ? 'opacity-100 translate-x-0'
                 : idx < currentIndex
-                  ? 'opacity-0 [transform:rotateY(90deg)]'
-                  : 'opacity-0 [transform:rotateY(-90deg)]'
+                  ? 'opacity-0 -translate-x-full'
+                  : 'opacity-0 translate-x-full'
                 }`}
             >
               <div className="flex items-center gap-2 md:gap-3">
