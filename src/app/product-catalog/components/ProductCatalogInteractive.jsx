@@ -37,6 +37,8 @@ export default function ProductCatalogInteractive() {
   const menProducts = products?.filter((p) => p?.gender === 'men')?.slice(0, 6) || [];
   const compressionProducts =
     products?.filter((p) => p?.gender === 'compression')?.slice(0, 6) || [];
+  const accessoryProducts =
+    products?.filter((p) => p?.category === 'accessories')?.slice(0, 6) || [];
 
   return (
     <div className="min-h-screen bg-background pt-[80px]">
@@ -263,6 +265,25 @@ export default function ProductCatalogInteractive() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {compressionProducts?.map((product) => (
+                    <ProductCard key={product?.id} product={product} />
+                  ))}
+                </div>
+              </div>
+            )}
+            {/* Accessories Products */}
+            {accessoryProducts?.length > 0 && (
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold text-foreground">Accessories Favorites</h2>
+                  <Link
+                    href="/product-catalog"
+                    className="text-indigo-600 hover:underline font-semibold"
+                  >
+                    View All Accessories →
+                  </Link>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {accessoryProducts?.map((product) => (
                     <ProductCard key={product?.id} product={product} />
                   ))}
                 </div>

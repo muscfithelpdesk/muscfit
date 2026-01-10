@@ -1,87 +1,334 @@
 import { supabase } from '../supabase';
 
+const BASIC_CATALOG = [
+  // Men's Collection
+  {
+    id: 'm-bb-t-1',
+    name: "Men's Elite T-Shirt (Black)",
+    description: 'High-performance, minimalist black t-shirt. Breathable fabric, no branding.',
+    price: 999,
+    original_price: 1499,
+    gender: 'men',
+    category: 'tshirts',
+    brand: 'MUSCFIT',
+    tag: 'BASIC',
+    is_active: true,
+    rating: 4.8,
+    review_count: 124,
+    image_url: '/assets/images/products/mens_black_tshirt_basic.png',
+  },
+  {
+    id: 'm-gb-t-2',
+    name: "Men's Elite T-Shirt (Grey)",
+    description: 'Premium heather grey training shirt. Superior comfort and fit.',
+    price: 999,
+    original_price: 1499,
+    gender: 'men',
+    category: 'tshirts',
+    brand: 'MUSCFIT',
+    tag: 'NEW',
+    is_active: true,
+    rating: 4.7,
+    review_count: 89,
+    image_url: '/assets/images/products/mens_grey_tshirt_basic.png',
+  },
+  {
+    id: 'm-bb-j-3',
+    name: "Men's Training Joggers (Black)",
+    description: 'Tapered fit joggers in solid black. Perfect for gym and lifestyle.',
+    price: 1899,
+    original_price: 2499,
+    gender: 'men',
+    category: 'joggers',
+    brand: 'MUSCFIT',
+    tag: 'BESTSELLER',
+    is_active: true,
+    rating: 4.9,
+    review_count: 256,
+    image_url: '/assets/images/products/mens_black_joggers_basic.png',
+  },
+  {
+    id: 'm-gb-j-4',
+    name: "Men's Training Joggers (Grey)",
+    description: 'Classic heather grey joggers. Durable, flexible, and unbranded.',
+    price: 1899,
+    original_price: 2499,
+    gender: 'men',
+    category: 'joggers',
+    brand: 'MUSCFIT',
+    tag: 'BASIC',
+    is_active: true,
+    rating: 4.8,
+    review_count: 112,
+    image_url: '/assets/images/products/mens_grey_joggers_basic.png',
+  },
+  {
+    id: 'm-bb-s-5',
+    name: "Men's Essential Shorts (Black)",
+    description: 'Lightweight training shorts. Elastic waistband, no logos.',
+    price: 1299,
+    original_price: 1799,
+    gender: 'men',
+    category: 'shorts',
+    brand: 'MUSCFIT',
+    tag: 'HOT',
+    is_active: true,
+    rating: 4.6,
+    review_count: 78,
+    image_url: '/assets/images/products/plain_black_shorts_flat_lay_1767418127534.png',
+  },
+
+  // Women's Collection
+  {
+    id: 'w-bb-l-1',
+    name: "Women's Performance Leggings (Black)",
+    description: 'Squat-proof, high-waist black leggings. Maximum compression and comfort.',
+    price: 1599,
+    original_price: 2199,
+    gender: 'women',
+    category: 'leggings',
+    brand: 'MUSCFIT',
+    tag: 'BESTSELLER',
+    is_active: true,
+    rating: 4.9,
+    review_count: 342,
+    image_url: '/assets/images/products/womens_black_leggings_basic.png',
+  },
+  {
+    id: 'w-gb-l-2',
+    name: "Women's Performance Leggings (Grey)",
+    description: 'Heather grey performance leggings. Sleek design, zero branding.',
+    price: 1599,
+    original_price: 2199,
+    gender: 'women',
+    category: 'leggings',
+    brand: 'MUSCFIT',
+    tag: 'BASIC',
+    is_active: true,
+    rating: 4.8,
+    review_count: 156,
+    image_url: '/assets/images/products/womens_grey_leggings_basic.png',
+  },
+  {
+    id: 'w-bb-t-3',
+    name: "Women's Training Top (Black)",
+    description: 'Sleek black training top for women. Minimalist and functional.',
+    price: 899,
+    original_price: 1299,
+    gender: 'women',
+    category: 'tshirts',
+    brand: 'MUSCFIT',
+    tag: 'NEW',
+    is_active: true,
+    rating: 4.7,
+    review_count: 64,
+    image_url: '/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png',
+  },
+
+  // Compression Series
+  {
+    id: 'c-bb-s-1',
+    name: 'Elite Compression Shirt (Black)',
+    description: 'Base layer tech shirt in solid black. Enhances blood flow and recovery.',
+    price: 1299,
+    original_price: 1999,
+    gender: 'compression',
+    category: 'tshirts',
+    brand: 'MUSCFIT',
+    tag: 'PRO',
+    is_active: true,
+    rating: 4.9,
+    review_count: 212,
+    image_url: '/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png',
+  },
+  {
+    id: 'c-bb-p-2',
+    name: 'Tech-Fit Compression Pants (Black)',
+    description: 'Full-length compression leggings in black. No logos, maximum performance.',
+    price: 1499,
+    original_price: 2299,
+    gender: 'compression',
+    category: 'leggings',
+    brand: 'MUSCFIT',
+    tag: 'BESTSELLER',
+    is_active: true,
+    rating: 4.8,
+    review_count: 178,
+    image_url: '/assets/images/products/womens_black_leggings_basic.png',
+  },
+
+  // Accessories
+  {
+    id: 'a-bb-b-1',
+    name: 'Essential Training Bag (Black)',
+    description: 'Durable black gym bag with multiple compartments. Clean, logo-free design.',
+    price: 2499,
+    original_price: 3499,
+    gender: 'unisex',
+    category: 'accessories',
+    brand: 'MUSCFIT',
+    tag: 'HOT',
+    is_active: true,
+    rating: 4.7,
+    review_count: 92,
+    image_url: '/assets/images/products/plain_gray_hoodie_flat_lay_1767417698358.png', // Fallback image
+  },
+];
+
 export const productService = {
   // Get all products with optional filters
   async getAll(filters = {}) {
     try {
-      if (!supabase) return [];
-
-      let query = supabase
-        .from('products')
-        .select(
+      let dbProducts = [];
+      if (supabase) {
+        let query = supabase
+          .from('products')
+          .select(
+            `
+            *,
+            product_images!inner(
+              id,
+              image_url,
+              alt_text,
+              is_primary
+            ),
+            product_variants(
+              id,
+              size,
+              color,
+              stock_quantity
+            ),
+            product_attributes(
+              id,
+              attribute_name,
+              attribute_value
+            )
           `
-          *,
-          product_images!inner(
-            id,
-            image_url,
-            alt_text,
-            is_primary
-          ),
-          product_variants(
-            id,
-            size,
-            color,
-            stock_quantity
-          ),
-          product_attributes(
-            id,
-            attribute_name,
-            attribute_value
           )
-        `
-        )
-        .eq('is_active', true)
-        .eq('product_images.is_primary', true);
+          .eq('is_active', true)
+          .eq('product_images.is_primary', true);
 
-      // Apply filters
-      if (filters?.gender) {
-        query = query.eq('gender', filters?.gender);
-      }
-      if (filters?.category) {
-        query = query.eq('category', filters?.category);
-      }
-      if (filters?.brand) {
-        query = query.eq('brand', filters?.brand);
-      }
-      if (filters?.tag) {
-        query = query.eq('tag', filters?.tag);
-      }
-      if (filters?.minPrice) {
-        query = query.gte('price', filters?.minPrice);
-      }
-      if (filters?.maxPrice) {
-        query = query.lte('price', filters?.maxPrice);
-      }
+        // Apply filters
+        if (filters?.gender) {
+          query = query.eq('gender', filters?.gender);
+        }
+        if (filters?.category) {
+          query = query.eq('category', filters?.category);
+        }
+        if (filters?.brand) {
+          query = query.eq('brand', filters?.brand);
+        }
+        if (filters?.tag) {
+          query = query.eq('tag', filters?.tag);
+        }
+        if (filters?.minPrice) {
+          query = query.gte('price', filters?.minPrice);
+        }
+        if (filters?.maxPrice) {
+          query = query.lte('price', filters?.maxPrice);
+        }
 
-      // Apply search
-      if (filters?.search) {
-        query = query.or(
-          `name.ilike.%${filters?.search}%,description.ilike.%${filters?.search}%,brand.ilike.%${filters?.search}%`
-        );
-      }
+        // Apply search
+        if (filters?.search) {
+          query = query.or(
+            `name.ilike.%${filters?.search}%,description.ilike.%${filters?.search}%,brand.ilike.%${filters?.search}%`
+          );
+        }
 
-      // Apply sorting
-      if (filters?.sortBy) {
-        const sortOptions = {
-          'price-asc': { column: 'price', ascending: true },
-          'price-desc': { column: 'price', ascending: false },
-          'name-asc': { column: 'name', ascending: true },
-          'name-desc': { column: 'name', ascending: false },
-          rating: { column: 'rating', ascending: false },
-          newest: { column: 'created_at', ascending: false },
-        };
-        const sort = sortOptions?.[filters?.sortBy];
-        if (sort) {
-          query = query.order(sort?.column, { ascending: sort?.ascending });
+        // Apply sorting
+        if (filters?.sortBy) {
+          const sortOptions = {
+            'price-asc': { column: 'price', ascending: true },
+            'price-desc': { column: 'price', ascending: false },
+            'name-asc': { column: 'name', ascending: true },
+            'name-desc': { column: 'name', ascending: false },
+            rating: { column: 'rating', ascending: false },
+            newest: { column: 'created_at', ascending: false },
+          };
+          const sort = sortOptions?.[filters?.sortBy];
+          if (sort) {
+            query = query.order(sort?.column, { ascending: sort?.ascending });
+          }
+        }
+
+        const { data, error } = await query;
+        if (!error && data) {
+          dbProducts = data.map((product) => this.convertToCamelCase(product));
         }
       }
 
-      const { data, error } = await query;
+      // Merge with hardcoded basic catalog
+      let mergedProducts = [...dbProducts];
 
-      if (error) throw error;
+      // Format basic catalog to match the expected structure
+      const formattedBasics = BASIC_CATALOG.map((item) => ({
+        ...item,
+        isActive: true,
+        image: item.image_url,
+        createdAt: new Date().toISOString(),
+        productImages: [
+          {
+            id: 'basic-img-' + item.id,
+            imageUrl: item.image_url,
+            altText: item.name,
+            isPrimary: true,
+            displayOrder: 1,
+          },
+        ],
+        productVariants: [
+          { id: 'v-s', size: 'S', color: 'Solid', stockQuantity: 50 },
+          { id: 'v-m', size: 'M', color: 'Solid', stockQuantity: 50 },
+          { id: 'v-l', size: 'L', color: 'Solid', stockQuantity: 50 },
+          { id: 'v-xl', size: 'XL', color: 'Solid', stockQuantity: 50 },
+        ],
+        productAttributes: [],
+      }));
 
-      // Convert to camelCase
-      return data?.map((product) => this.convertToCamelCase(product)) || [];
+      // Apply filtering to basic catalog as well
+      let filteredBasics = formattedBasics;
+      if (filters?.gender) {
+        filteredBasics = filteredBasics.filter(
+          (p) => p.gender === filters.gender || p.gender === 'unisex'
+        );
+      }
+      if (filters?.category) {
+        filteredBasics = filteredBasics.filter((p) => p.category === filters.category);
+      }
+      if (filters?.tag) {
+        filteredBasics = filteredBasics.filter((p) => p.tag === filters.tag);
+      }
+      if (filters?.search) {
+        const search = filters.search.toLowerCase();
+        filteredBasics = filteredBasics.filter(
+          (p) =>
+            p.name.toLowerCase().includes(search) || p.description.toLowerCase().includes(search)
+        );
+      }
+      if (filters?.minPrice) {
+        filteredBasics = filteredBasics.filter((p) => p.price >= filters.minPrice);
+      }
+      if (filters?.maxPrice) {
+        filteredBasics = filteredBasics.filter((p) => p.price <= filters.maxPrice);
+      }
+
+      // Add unique basics to merged list (avoiding ID collisions if any)
+      filteredBasics.forEach((basic) => {
+        if (!mergedProducts.some((p) => p.id === basic.id)) {
+          mergedProducts.push(basic);
+        }
+      });
+
+      // Apply final sorting to merged list
+      if (filters?.sortBy) {
+        if (filters.sortBy === 'price-asc') mergedProducts.sort((a, b) => a.price - b.price);
+        if (filters.sortBy === 'price-desc') mergedProducts.sort((a, b) => b.price - a.price);
+        if (filters.sortBy === 'name-asc') mergedProducts.sort((a, b) => a.name.localeCompare(b.name));
+        if (filters.sortBy === 'rating') mergedProducts.sort((a, b) => b.rating - a.rating);
+        if (filters.sortBy === 'newest')
+          mergedProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      }
+
+      return mergedProducts;
     } catch (error) {
       console.error('Error fetching products:', error);
       throw error;
@@ -324,14 +571,14 @@ export const productService = {
         isPrimary: img?.is_primary,
         displayOrder: img?.display_order,
       })) || [
-        {
-          id: 'default',
-          imageUrl: finalImage,
-          altText: product?.name,
-          isPrimary: true,
-          displayOrder: 1,
-        },
-      ],
+          {
+            id: 'default',
+            imageUrl: finalImage,
+            altText: product?.name,
+            isPrimary: true,
+            displayOrder: 1,
+          },
+        ],
       productVariants: product?.product_variants?.map((v) => ({
         id: v?.id,
         size: v?.size,
