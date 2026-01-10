@@ -64,7 +64,7 @@ export default function HomepageInteractive({ pageData }) {
             "❄️ Winter Collection Now Live: Up to 40% Off"
           ]}
           isVisible={isPromoVisible}
-          onDismiss={handleDismissPromo}
+          onDismiss={pageData?.promoBar?.dismissible ? handleDismissPromo : undefined}
         />
         <Header isFixed={false} />
       </div>

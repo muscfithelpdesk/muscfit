@@ -9,7 +9,7 @@ export default function Homepage() {
   const pageData = {
     promoBar: {
       message: "🔥 NEW YEAR SALE: Get 30% OFF on all compression wear | Free shipping on orders above ₹2,999",
-      dismissible: true
+      dismissible: false
     },
 
     hero: {
