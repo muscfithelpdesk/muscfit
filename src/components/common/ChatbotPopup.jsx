@@ -108,9 +108,17 @@ export default function ChatbotPopup() {
                 aria-label="Toggle Chat"
             >
                 <Icon
-                    name={isOpen ? 'XMarkIcon' : 'ChatBubbleLeftRightIcon'}
-                    size={26}
-                    className="text-white transition-transform duration-500"
+                    {isOpen ? (
+                        <Icon name="XMarkIcon" size={26} className="text-white transition-transform duration-500" />
+                    ) : (
+                        <div className="w-full h-full p-1 rounded-full overflow-hidden flex items-center justify-center">
+                            <img
+                                src="/assets/images/chatbot-icon.png"
+                                alt="Chat"
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                    )}
                 />
 
                 {!isOpen && (
