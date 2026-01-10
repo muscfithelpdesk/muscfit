@@ -73,8 +73,8 @@ export default function HomepageInteractive({ pageData }) {
               title: 'MAXIMUM POWER',
               subtitle: 'PREMIUM MENS TRAINING GEAR',
               backgroundImage:
-                'https://images.unsplash.com/photo-1541534741688-6078c65b5a33?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'Vibrant shot of male athlete training in sun-lit gym',
+                'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Vibrant action shot of male weightlifter in bright studio',
             },
             {
               title: 'TOTAL BALANCE',
@@ -91,11 +91,11 @@ export default function HomepageInteractive({ pageData }) {
               backgroundAlt: 'Vibrant compression gear in sharp focus',
             },
             {
-              title: 'ESSENTIAL GEAR',
-              subtitle: 'PREMIUM FITNESS ACCESSORIES',
+              title: 'ELITE ACCESSORIES',
+              subtitle: 'FOR THE DRIVEN ATHLETE',
               backgroundImage:
-                'https://images.unsplash.com/photo-1441924905943-05bc358b5b5b?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'Clean and bright fitness equipment',
+                'https://images.unsplash.com/photo-1558017487-06bf9f82613a?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Vibrant, high-contrast gym accessories and equipment',
             },
             {
               title: 'FRESH DROPS',
@@ -105,11 +105,11 @@ export default function HomepageInteractive({ pageData }) {
               backgroundAlt: 'Modern vibrant gym atmosphere',
             },
             {
-              title: 'BEST SELLERS',
-              subtitle: 'TRUSTED BY ATHLETES',
+              title: 'BEYOND LIMITS',
+              subtitle: 'TRUSTED BY PROFESSIONALS',
               backgroundImage:
-                'https://images.unsplash.com/photo-1583454110551-21f2fa209195?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'Dynamic athlete in high-performance apparel',
+                'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=2600&auto=format&fit=crop',
+              backgroundAlt: 'Extremely dynamic and vibrant professional athlete portrait',
             },
           ]}
           ctaPrimary={pageData?.hero?.ctaPrimary}
