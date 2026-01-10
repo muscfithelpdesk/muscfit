@@ -110,11 +110,11 @@ export default function ChatbotPopup() {
                 {isOpen ? (
                     <Icon name="XMarkIcon" size={26} className="text-white transition-transform duration-500" />
                 ) : (
-                    <div className="w-full h-full p-1 rounded-full overflow-hidden flex items-center justify-center">
+                    <div className="w-full h-full p-2.5 rounded-full overflow-hidden flex items-center justify-center bg-white">
                         <img
                             src="/assets/images/chatbot-icon.png"
                             alt="Chat"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain"
                         />
                     </div>
                 )}
