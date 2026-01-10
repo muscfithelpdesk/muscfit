@@ -127,8 +127,12 @@ export default function ChatbotPopup() {
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-rose-600 to-indigo-600 p-4 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
-                        <Icon name="SparklesIcon" size={16} className="text-white" />
+                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md overflow-hidden p-1">
+                        <img
+                            src="/assets/images/chatbot-logo.jpg"
+                            alt="MUSCFIT AI"
+                            className="w-full h-full object-contain"
+                        />
                     </div>
                     <div>
                         <h3 className="text-white font-bold text-sm tracking-wide">MUSC-AI Assistant</h3>
