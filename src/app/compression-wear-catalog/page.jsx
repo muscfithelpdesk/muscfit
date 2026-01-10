@@ -3,7 +3,8 @@ import CompressionCatalogInteractive from './components/CompressionCatalogIntera
 
 export const metadata = {
   title: 'Compression Wear Catalog - MUSCFIT',
-  description: 'Browse our specialized collection of high-performance compression wear designed for serious athletes seeking enhanced workout support, muscle recovery, and improved circulation.'
+  description:
+    'Browse our specialized collection of high-performance compression wear designed for serious athletes seeking enhanced workout support, muscle recovery, and improved circulation.',
 };
 
 export default function CompressionWearCatalogPage() {

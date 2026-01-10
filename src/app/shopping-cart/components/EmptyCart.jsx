@@ -14,7 +14,8 @@ export default function EmptyCart({ recommendedProducts }) {
         Your Cart is Empty
       </h2>
       <p className="text-sm md:text-base lg:text-lg text-text-secondary mb-8 max-w-md mx-auto">
-        Looks like you haven't added any items to your cart yet. Start shopping to find your perfect fitness gear!
+        Looks like you haven't added any items to your cart yet. Start shopping to find your perfect
+        fitness gear!
       </p>
       <Link
         href="/product-catalog"
@@ -74,21 +75,27 @@ export default function EmptyCart({ recommendedProducts }) {
             className="p-6 bg-card border border-border rounded-md hover:bg-muted transition-all duration-250 hover:scale-[0.98] active:scale-95"
           >
             <Icon name="UserIcon" size={32} className="text-primary mx-auto mb-3" />
-            <span className="font-heading text-base md:text-lg font-semibold text-foreground">Shop Men</span>
+            <span className="font-heading text-base md:text-lg font-semibold text-foreground">
+              Shop Men
+            </span>
           </Link>
           <Link
             href="/product-catalog?category=women"
             className="p-6 bg-card border border-border rounded-md hover:bg-muted transition-all duration-250 hover:scale-[0.98] active:scale-95"
           >
             <Icon name="UserIcon" size={32} className="text-primary mx-auto mb-3" />
-            <span className="font-heading text-base md:text-lg font-semibold text-foreground">Shop Women</span>
+            <span className="font-heading text-base md:text-lg font-semibold text-foreground">
+              Shop Women
+            </span>
           </Link>
           <Link
             href="/product-catalog?category=compression"
             className="p-6 bg-card border border-border rounded-md hover:bg-muted transition-all duration-250 hover:scale-[0.98] active:scale-95"
           >
             <Icon name="BoltIcon" size={32} className="text-primary mx-auto mb-3" />
-            <span className="font-heading text-base md:text-lg font-semibold text-foreground">Compression Gear</span>
+            <span className="font-heading text-base md:text-lg font-semibold text-foreground">
+              Compression Gear
+            </span>
           </Link>
         </div>
       </div>

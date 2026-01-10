@@ -11,9 +11,7 @@ export default function RelatedProducts({ products }) {
 
   const toggleWishlist = (productId) => {
     setWishlist((prev) =>
-      prev?.includes(productId)
-        ? prev?.filter((id) => id !== productId)
-        : [...prev, productId]
+      prev?.includes(productId) ? prev?.filter((id) => id !== productId) : [...prev, productId]
     );
   };
 

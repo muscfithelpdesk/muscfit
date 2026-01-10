@@ -2,7 +2,15 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import AppImage from '@/components/ui/AppImage';
 
-export default function HeroSection({ title, subtitle, ctaPrimary, ctaSecondary, backgroundImage, backgroundAlt, mobileHeroImage }) {
+export default function HeroSection({
+  title,
+  subtitle,
+  ctaPrimary,
+  ctaSecondary,
+  backgroundImage,
+  backgroundAlt,
+  mobileHeroImage,
+}) {
   return (
     <section className="relative w-full h-[85vh] md:h-screen overflow-hidden group perspective-1000 z-0">
       <div className="absolute inset-0">
@@ -63,13 +71,13 @@ HeroSection.propTypes = {
   subtitle: PropTypes.string.isRequired,
   ctaPrimary: PropTypes.shape({
     text: PropTypes.string.isRequired,
-    href: PropTypes.string.isRequired
+    href: PropTypes.string.isRequired,
   }).isRequired,
   ctaSecondary: PropTypes.shape({
     text: PropTypes.string.isRequired,
-    href: PropTypes.string.isRequired
+    href: PropTypes.string.isRequired,
   }).isRequired,
   backgroundImage: PropTypes.string.isRequired,
   mobileHeroImage: PropTypes.string,
-  backgroundAlt: PropTypes.string.isRequired
+  backgroundAlt: PropTypes.string.isRequired,
 };

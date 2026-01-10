@@ -6,7 +6,7 @@ export default function FilterSidebar({ filters, onFilterChange, gender }) {
   const [availableOptions, setAvailableOptions] = useState({
     brands: [],
     categories: [],
-    tags: []
+    tags: [],
   });
 
   useEffect(() => {
@@ -24,21 +24,21 @@ export default function FilterSidebar({ filters, onFilterChange, gender }) {
 
   const handleCategoryToggle = (category) => {
     const newCategories = filters?.categories?.includes(category)
-      ? filters?.categories?.filter(c => c !== category)
+      ? filters?.categories?.filter((c) => c !== category)
       : [...(filters?.categories || []), category];
     onFilterChange({ categories: newCategories });
   };
 
   const handleBrandToggle = (brand) => {
     const newBrands = filters?.brands?.includes(brand)
-      ? filters?.brands?.filter(b => b !== brand)
+      ? filters?.brands?.filter((b) => b !== brand)
       : [...(filters?.brands || []), brand];
     onFilterChange({ brands: newBrands });
   };
 
   const handleTagToggle = (tag) => {
     const newTags = filters?.tags?.includes(tag)
-      ? filters?.tags?.filter(t => t !== tag)
+      ? filters?.tags?.filter((t) => t !== tag)
       : [...(filters?.tags || []), tag];
     onFilterChange({ tags: newTags });
   };
@@ -54,7 +54,7 @@ export default function FilterSidebar({ filters, onFilterChange, gender }) {
       <div className="mb-6">
         <h3 className="font-semibold text-gray-900 mb-3">Category</h3>
         <div className="space-y-2">
-          {availableOptions?.categories?.map(category => (
+          {availableOptions?.categories?.map((category) => (
             <label key={category} className="flex items-center cursor-pointer">
               <input
                 type="checkbox"
@@ -71,7 +71,7 @@ export default function FilterSidebar({ filters, onFilterChange, gender }) {
       <div className="mb-6">
         <h3 className="font-semibold text-gray-900 mb-3">Brand</h3>
         <div className="space-y-2">
-          {availableOptions?.brands?.map(brand => (
+          {availableOptions?.brands?.map((brand) => (
             <label key={brand} className="flex items-center cursor-pointer">
               <input
                 type="checkbox"
@@ -93,13 +93,15 @@ export default function FilterSidebar({ filters, onFilterChange, gender }) {
             { label: '₹1,000 - ₹2,000', min: 1000, max: 2000 },
             { label: '₹2,000 - ₹3,000', min: 2000, max: 3000 },
             { label: '₹3,000 - ₹5,000', min: 3000, max: 5000 },
-            { label: 'Above ₹5,000', min: 5000, max: 10000 }
-          ]?.map(range => (
+            { label: 'Above ₹5,000', min: 5000, max: 10000 },
+          ]?.map((range) => (
             <label key={range?.label} className="flex items-center cursor-pointer">
               <input
                 type="radio"
                 name="priceRange"
-                checked={filters?.priceRange?.min === range?.min && filters?.priceRange?.max === range?.max}
+                checked={
+                  filters?.priceRange?.min === range?.min && filters?.priceRange?.max === range?.max
+                }
                 onChange={() => handlePriceChange(range?.min, range?.max)}
                 className="w-4 h-4 text-black border-gray-300 focus:ring-black"
               />
@@ -113,7 +115,7 @@ export default function FilterSidebar({ filters, onFilterChange, gender }) {
         <div className="mb-6">
           <h3 className="font-semibold text-gray-900 mb-3">Product Label</h3>
           <div className="space-y-2">
-            {availableOptions?.tags?.map(tag => (
+            {availableOptions?.tags?.map((tag) => (
               <label key={tag} className="flex items-center cursor-pointer">
                 <input
                   type="checkbox"
@@ -129,14 +131,16 @@ export default function FilterSidebar({ filters, onFilterChange, gender }) {
       )}
       {/* Clear Filters Button */}
       <button
-        onClick={() => onFilterChange({
-          categories: [],
-          brands: [],
-          priceRange: { min: 0, max: 10000 },
-          sizes: [],
-          colors: [],
-          tags: []
-        })}
+        onClick={() =>
+          onFilterChange({
+            categories: [],
+            brands: [],
+            priceRange: { min: 0, max: 10000 },
+            sizes: [],
+            colors: [],
+            tags: [],
+          })
+        }
         className="w-full mt-4 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
       >
         Clear All Filters

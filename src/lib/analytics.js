@@ -20,9 +20,11 @@ export function useGoogleAnalytics() {
       document.head?.appendChild(script);
 
       window.dataLayer = [];
-      window.gtag = function() { dataLayer?.push(arguments); };
-      gtag('js', new Date());
-      gtag('config', measurementId);
+      window.gtag = function () {
+        window.dataLayer?.push(arguments);
+      };
+      window.gtag('js', new Date());
+      window.gtag('config', measurementId);
     }
 
     const url = pathname + (searchParams?.toString() ? `?${searchParams}` : '');

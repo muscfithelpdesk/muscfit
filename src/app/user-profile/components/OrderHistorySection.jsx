@@ -31,9 +31,8 @@ export default function OrderHistorySection({ orders }) {
     return icons?.[status] || 'ShoppingBagIcon';
   };
 
-  const filteredOrders = selectedStatus === 'All' 
-    ? orders 
-    : orders?.filter(order => order?.status === selectedStatus);
+  const filteredOrders =
+    selectedStatus === 'All' ? orders : orders?.filter((order) => order?.status === selectedStatus);
 
   return (
     <div className="bg-card border border-border rounded-md p-4 md:p-6 lg:p-8">
@@ -41,7 +40,7 @@ export default function OrderHistorySection({ orders }) {
         <h2 className="font-heading text-lg md:text-xl lg:text-2xl font-semibold text-foreground">
           Order History
         </h2>
-        
+
         {/* Status Filter */}
         <div className="flex flex-wrap gap-2">
           {statusOptions?.map((status) => (
@@ -78,14 +77,14 @@ export default function OrderHistorySection({ orders }) {
                     <span className="font-heading text-sm md:text-base font-semibold text-foreground">
                       Order #{order?.orderNumber}
                     </span>
-                    <span className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-sm border ${getStatusColor(order?.status)}`}>
+                    <span
+                      className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-sm border ${getStatusColor(order?.status)}`}
+                    >
                       <Icon name={getStatusIcon(order?.status)} size={14} />
                       {order?.status}
                     </span>
                   </div>
-                  <p className="text-xs md:text-sm text-text-secondary">
-                    Placed on {order?.date}
-                  </p>
+                  <p className="text-xs md:text-sm text-text-secondary">Placed on {order?.date}</p>
                 </div>
                 <div className="text-left sm:text-right">
                   <p className="font-data text-lg md:text-xl font-bold text-primary">

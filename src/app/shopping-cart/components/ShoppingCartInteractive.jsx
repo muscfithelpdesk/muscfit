@@ -43,23 +43,21 @@ export default function ShoppingCartInteractive({ initialCartData, recommendedPr
   }, [cartItems]);
 
   const handleUpdateQuantity = (itemId, newQuantity) => {
-    setCartItems(prevItems =>
-      prevItems?.map(item =>
-        item?.id === itemId ? { ...item, quantity: newQuantity } : item
-      )
+    setCartItems((prevItems) =>
+      prevItems?.map((item) => (item?.id === itemId ? { ...item, quantity: newQuantity } : item))
     );
   };
 
   const handleRemoveItem = (itemId) => {
-    setCartItems(prevItems => prevItems?.filter(item => item?.id !== itemId));
+    setCartItems((prevItems) => prevItems?.filter((item) => item?.id !== itemId));
   };
 
   const handleToggleExpressShipping = () => {
-    setIsExpressShipping(prev => !prev);
+    setIsExpressShipping((prev) => !prev);
   };
 
   const calculateSubtotal = () => {
-    return cartItems?.reduce((total, item) => total + (item?.price * item?.quantity), 0);
+    return cartItems?.reduce((total, item) => total + item?.price * item?.quantity, 0);
   };
 
   const calculateDiscount = () => {

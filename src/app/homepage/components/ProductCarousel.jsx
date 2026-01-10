@@ -6,152 +6,153 @@ import ProductCard from './ProductCard';
 import Icon from '@/components/ui/AppIcon';
 
 export default function ProductCarousel({ products }) {
-    const scrollRef = useRef(null);
-    const [isDragging, setIsDragging] = useState(false);
-    const [startX, setStartX] = useState(0);
-    const [scrollLeft, setScrollLeft] = useState(0);
-    const [isPaused, setIsPaused] = useState(false);
+  const scrollRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
-    // Duplicate products for infinite scroll effect
-    const extendedProducts = [...products, ...products, ...products];
+  // Duplicate products for infinite scroll effect
+  const extendedProducts = [...products, ...products, ...products];
 
-    // Scroll buttons
-    const scroll = (direction) => {
-        if (scrollRef.current) {
-            const { clientWidth } = scrollRef.current;
-            const scrollAmount = direction === 'left' ? -clientWidth * 0.5 : clientWidth * 0.5;
-            scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  // Scroll buttons
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const { clientWidth } = scrollRef.current;
+      const scrollAmount = direction === 'left' ? -clientWidth * 0.5 : clientWidth * 0.5;
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  // Auto-scroll effect (Jump scroll every 5s)
+  useEffect(() => {
+    if (isPaused || isDragging) return;
+
+    const interval = setInterval(() => {
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth } = scrollRef.current;
+        const cardWidth = 320; // Approximate card width
+        const third = scrollWidth / 3;
+
+        // If we've scrolled past the second set, snap back to first set
+        if (scrollLeft >= 2 * third) {
+          scrollRef.current.scrollTo({ left: scrollLeft - third + cardWidth, behavior: 'smooth' });
+          // Provide instant snap-back if smooth wasn't enough, in next tick (optional, simplified here)
+          // actually to loop perfectly, we should snap silently then scroll.
+          // But for simple auto-scroll:
+          setTimeout(() => {
+            if (scrollRef.current)
+              scrollRef.current.scrollTo({ left: scrollLeft - third, behavior: 'auto' });
+          }, 500); // After animation
+        } else {
+          scrollRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
         }
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isPaused, isDragging]);
+
+  // Initialize position to the middle set of products
+  useEffect(() => {
+    const initScroll = () => {
+      if (scrollRef.current) {
+        const { scrollWidth } = scrollRef.current;
+        scrollRef.current.scrollLeft = scrollWidth / 3;
+      }
     };
 
-    // Auto-scroll effect (Jump scroll every 5s)
-    useEffect(() => {
-        if (isPaused || isDragging) return;
+    // Wait a bit for images and layout
+    const timeout = setTimeout(initScroll, 100);
+    return () => clearTimeout(timeout);
+  }, [products]);
 
-        const interval = setInterval(() => {
-            if (scrollRef.current) {
-                const { scrollLeft, scrollWidth } = scrollRef.current;
-                const cardWidth = 320; // Approximate card width
-                const third = scrollWidth / 3;
+  // Drag handlers
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+    setIsPaused(true);
+  };
 
-                // If we've scrolled past the second set, snap back to first set
-                if (scrollLeft >= 2 * third) {
-                    scrollRef.current.scrollTo({ left: scrollLeft - third + cardWidth, behavior: 'smooth' });
-                    // Provide instant snap-back if smooth wasn't enough, in next tick (optional, simplified here)
-                    // actually to loop perfectly, we should snap silently then scroll. 
-                    // But for simple auto-scroll:
-                    setTimeout(() => {
-                        if (scrollRef.current) scrollRef.current.scrollTo({ left: scrollLeft - third, behavior: 'auto' });
-                    }, 500); // After animation
-                } else {
-                    scrollRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
-                }
-            }
-        }, 3000);
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    setIsPaused(false);
+  };
 
-        return () => clearInterval(interval);
-    }, [isPaused, isDragging]);
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setIsPaused(false);
 
-    // Initialize position to the middle set of products
-    useEffect(() => {
-        const initScroll = () => {
-            if (scrollRef.current) {
-                const { scrollWidth } = scrollRef.current;
-                scrollRef.current.scrollLeft = scrollWidth / 3;
-            }
-        };
+    // Snap logic for infinite loop after drag
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth } = scrollRef.current;
+      const third = scrollWidth / 3;
+      if (scrollLeft >= 2 * third) {
+        scrollRef.current.scrollLeft = scrollLeft - third;
+      } else if (scrollLeft <= 0) {
+        scrollRef.current.scrollLeft = scrollLeft + third;
+      }
+    }
+  };
 
-        // Wait a bit for images and layout
-        const timeout = setTimeout(initScroll, 100);
-        return () => clearTimeout(timeout);
-    }, [products]);
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
 
-    // Drag handlers
-    const handleMouseDown = (e) => {
-        setIsDragging(true);
-        setStartX(e.pageX - scrollRef.current.offsetLeft);
-        setScrollLeft(scrollRef.current.scrollLeft);
-        setIsPaused(true);
-    };
+  return (
+    <div
+      className="relative group w-full"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Scroll Container */}
+      <div
+        ref={scrollRef}
+        className={`flex overflow-x-auto scroll-smooth no-scrollbar gap-4 pb-4 md:gap-6 px-4 md:px-0 transition-all ${isDragging ? 'cursor-grabbing select-none scroll-auto' : 'cursor-grab'}`}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+      >
+        {extendedProducts.map((product, index) => (
+          <div
+            key={`${product.id}-${index}`}
+            className="flex-none w-[280px] sm:w-[320px] md:w-[300px] lg:w-[320px]"
+          >
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </div>
 
-    const handleMouseLeave = () => {
-        setIsDragging(false);
-        setIsPaused(false);
-    };
+      {/* Navigation Buttons - More visible and consistent */}
+      <button
+        onClick={() => scroll('left')}
+        className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-xl rounded-full p-3 flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 md:opacity-0 md:group-hover:opacity-100"
+        aria-label="Scroll left"
+      >
+        <Icon name="ChevronLeftIcon" size={24} />
+      </button>
 
-    const handleMouseUp = () => {
-        setIsDragging(false);
-        setIsPaused(false);
+      <button
+        onClick={() => scroll('right')}
+        className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-xl rounded-full p-3 flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 md:opacity-0 md:group-hover:opacity-100"
+        aria-label="Scroll right"
+      >
+        <Icon name="ChevronRightIcon" size={24} />
+      </button>
 
-        // Snap logic for infinite loop after drag
-        if (scrollRef.current) {
-            const { scrollLeft, scrollWidth } = scrollRef.current;
-            const third = scrollWidth / 3;
-            if (scrollLeft >= 2 * third) {
-                scrollRef.current.scrollLeft = scrollLeft - third;
-            } else if (scrollLeft <= 0) {
-                scrollRef.current.scrollLeft = scrollLeft + third;
-            }
-        }
-    };
-
-    const handleMouseMove = (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - scrollRef.current.offsetLeft;
-        const walk = (x - startX) * 2;
-        scrollRef.current.scrollLeft = scrollLeft - walk;
-    };
-
-    return (
-        <div
-            className="relative group w-full"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={handleMouseLeave}
-        >
-            {/* Scroll Container */}
-            <div
-                ref={scrollRef}
-                className={`flex overflow-x-auto scroll-smooth no-scrollbar gap-4 pb-4 md:gap-6 px-4 md:px-0 transition-all ${isDragging ? 'cursor-grabbing select-none scroll-auto' : 'cursor-grab'}`}
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-                onMouseMove={handleMouseMove}
-            >
-                {extendedProducts.map((product, index) => (
-                    <div
-                        key={`${product.id}-${index}`}
-                        className="flex-none w-[280px] sm:w-[320px] md:w-[300px] lg:w-[320px]"
-                    >
-                        <ProductCard product={product} />
-                    </div>
-                ))}
-            </div>
-
-            {/* Navigation Buttons - More visible and consistent */}
-            <button
-                onClick={() => scroll('left')}
-                className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-xl rounded-full p-3 flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 md:opacity-0 md:group-hover:opacity-100"
-                aria-label="Scroll left"
-            >
-                <Icon name="ChevronLeftIcon" size={24} />
-            </button>
-
-            <button
-                onClick={() => scroll('right')}
-                className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-xl rounded-full p-3 flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 md:opacity-0 md:group-hover:opacity-100"
-                aria-label="Scroll right"
-            >
-                <Icon name="ChevronRightIcon" size={24} />
-            </button>
-
-            {/* Gradient hints for scrollability on mobile */}
-            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent pointer-events-none md:hidden z-10" />
-            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none md:hidden z-10" />
-        </div>
-    );
+      {/* Gradient hints for scrollability on mobile */}
+      <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent pointer-events-none md:hidden z-10" />
+      <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none md:hidden z-10" />
+    </div>
+  );
 }
 
 ProductCarousel.propTypes = {
-    products: PropTypes.array.isRequired
+  products: PropTypes.array.isRequired,
 };

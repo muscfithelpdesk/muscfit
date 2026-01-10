@@ -1,14 +1,14 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
-import { 
+import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
   onAuthStateChanged,
   RecaptchaVerifier,
   signInWithPhoneNumber,
-  updateProfile
+  updateProfile,
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import PropTypes from 'prop-types';
@@ -42,11 +42,11 @@ export function FirebaseAuthProvider({ children }) {
     try {
       setError(null);
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      
+
       if (displayName) {
         await updateProfile(userCredential?.user, { displayName });
       }
-      
+
       return { success: true, user: userCredential?.user };
     } catch (err) {
       setError(err?.message);
@@ -74,7 +74,7 @@ export function FirebaseAuthProvider({ children }) {
           size: 'invisible',
           callback: () => {
             // reCAPTCHA solved
-          }
+          },
         });
       }
       return window.recaptchaVerifier;
@@ -129,16 +129,12 @@ export function FirebaseAuthProvider({ children }) {
     setupRecaptcha,
     sendOTP,
     verifyOTP,
-    signOut
+    signOut,
   };
 
-  return (
-    <FirebaseAuthContext.Provider value={value}>
-      {children}
-    </FirebaseAuthContext.Provider>
-  );
+  return <FirebaseAuthContext.Provider value={value}>{children}</FirebaseAuthContext.Provider>;
 }
 
 FirebaseAuthProvider.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };

@@ -4,9 +4,9 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@/components/ui/AppIcon';
 
-export default function FilterSidebar({ 
-  categories, 
-  productTypes, 
+export default function FilterSidebar({
+  categories,
+  productTypes,
   priceRanges,
   selectedCategory,
   selectedTypes,
@@ -14,24 +14,23 @@ export default function FilterSidebar({
   onCategoryChange,
   onTypeToggle,
   onPriceRangeChange,
-  onClearFilters
+  onClearFilters,
 }) {
   const [expandedSections, setExpandedSections] = useState({
     category: true,
     type: true,
-    price: true
+    price: true,
   });
 
   const toggleSection = (section) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
-      [section]: !prev?.[section]
+      [section]: !prev?.[section],
     }));
   };
 
-  const hasActiveFilters = selectedCategory !== 'all' || 
-                          selectedTypes?.length > 0 || 
-                          selectedPriceRange !== 'all';
+  const hasActiveFilters =
+    selectedCategory !== 'all' || selectedTypes?.length > 0 || selectedPriceRange !== 'all';
 
   return (
     <div className="w-full bg-surface border border-border rounded-md">
@@ -53,10 +52,12 @@ export default function FilterSidebar({
           onClick={() => toggleSection('category')}
           className="w-full flex items-center justify-between p-4 md:p-6 hover:bg-muted/50 transition-colors duration-250"
         >
-          <span className="font-heading text-sm md:text-base font-semibold text-foreground">Category</span>
-          <Icon 
-            name={expandedSections?.category ? 'ChevronUpIcon' : 'ChevronDownIcon'} 
-            size={20} 
+          <span className="font-heading text-sm md:text-base font-semibold text-foreground">
+            Category
+          </span>
+          <Icon
+            name={expandedSections?.category ? 'ChevronUpIcon' : 'ChevronDownIcon'}
+            size={20}
             className="text-text-secondary"
           />
         </button>
@@ -88,10 +89,12 @@ export default function FilterSidebar({
           onClick={() => toggleSection('type')}
           className="w-full flex items-center justify-between p-4 md:p-6 hover:bg-muted/50 transition-colors duration-250"
         >
-          <span className="font-heading text-sm md:text-base font-semibold text-foreground">Product Type</span>
-          <Icon 
-            name={expandedSections?.type ? 'ChevronUpIcon' : 'ChevronDownIcon'} 
-            size={20} 
+          <span className="font-heading text-sm md:text-base font-semibold text-foreground">
+            Product Type
+          </span>
+          <Icon
+            name={expandedSections?.type ? 'ChevronUpIcon' : 'ChevronDownIcon'}
+            size={20}
             className="text-text-secondary"
           />
         </button>
@@ -122,10 +125,12 @@ export default function FilterSidebar({
           onClick={() => toggleSection('price')}
           className="w-full flex items-center justify-between p-4 md:p-6 hover:bg-muted/50 transition-colors duration-250"
         >
-          <span className="font-heading text-sm md:text-base font-semibold text-foreground">Price Range</span>
-          <Icon 
-            name={expandedSections?.price ? 'ChevronUpIcon' : 'ChevronDownIcon'} 
-            size={20} 
+          <span className="font-heading text-sm md:text-base font-semibold text-foreground">
+            Price Range
+          </span>
+          <Icon
+            name={expandedSections?.price ? 'ChevronUpIcon' : 'ChevronDownIcon'}
+            size={20}
             className="text-text-secondary"
           />
         </button>
@@ -156,26 +161,32 @@ export default function FilterSidebar({
 }
 
 FilterSidebar.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    count: PropTypes.number.isRequired
-  })).isRequired,
-  productTypes: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    count: PropTypes.number.isRequired
-  })).isRequired,
-  priceRanges: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    count: PropTypes.number.isRequired
-  })).isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      count: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  productTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      count: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  priceRanges: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      count: PropTypes.number.isRequired,
+    })
+  ).isRequired,
   selectedCategory: PropTypes.string.isRequired,
   selectedTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedPriceRange: PropTypes.string.isRequired,
   onCategoryChange: PropTypes.func.isRequired,
   onTypeToggle: PropTypes.func.isRequired,
   onPriceRangeChange: PropTypes.func.isRequired,
-  onClearFilters: PropTypes.func.isRequired
+  onClearFilters: PropTypes.func.isRequired,
 };

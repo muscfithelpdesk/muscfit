@@ -83,7 +83,7 @@ export default function WishlistSection({ wishlistItems, onRemove, onAddToCart }
                     {item?.name}
                   </h3>
                 </Link>
-                
+
                 <div className="flex items-center gap-2 mt-2">
                   <span className="font-data text-lg font-bold text-primary">
                     ₹{item?.price?.toLocaleString('en-IN')}
@@ -97,10 +97,10 @@ export default function WishlistSection({ wishlistItems, onRemove, onAddToCart }
 
                 {/* Stock Status */}
                 <div className="flex items-center gap-1 mt-2">
-                  <Icon 
-                    name={item?.inStock ? 'CheckCircleIcon' : 'XCircleIcon'} 
-                    size={14} 
-                    className={item?.inStock ? 'text-success' : 'text-error'} 
+                  <Icon
+                    name={item?.inStock ? 'CheckCircleIcon' : 'XCircleIcon'}
+                    size={14}
+                    className={item?.inStock ? 'text-success' : 'text-error'}
                   />
                   <span className={`text-xs ${item?.inStock ? 'text-success' : 'text-error'}`}>
                     {item?.inStock ? 'In Stock' : 'Out of Stock'}

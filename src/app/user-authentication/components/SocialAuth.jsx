@@ -5,9 +5,24 @@ import Icon from '@/components/ui/AppIcon';
 
 export default function SocialAuth({ isLoading }) {
   const socialProviders = [
-    { id: 'google', name: 'Google', icon: 'GlobeAltIcon', color: 'hover:bg-red-500/10 hover:border-red-500' },
-    { id: 'facebook', name: 'Facebook', icon: 'GlobeAltIcon', color: 'hover:bg-blue-500/10 hover:border-blue-500' },
-    { id: 'apple', name: 'Apple', icon: 'DevicePhoneMobileIcon', color: 'hover:bg-gray-500/10 hover:border-gray-500' }
+    {
+      id: 'google',
+      name: 'Google',
+      icon: 'GlobeAltIcon',
+      color: 'hover:bg-red-500/10 hover:border-red-500',
+    },
+    {
+      id: 'facebook',
+      name: 'Facebook',
+      icon: 'GlobeAltIcon',
+      color: 'hover:bg-blue-500/10 hover:border-blue-500',
+    },
+    {
+      id: 'apple',
+      name: 'Apple',
+      icon: 'DevicePhoneMobileIcon',
+      color: 'hover:bg-gray-500/10 hover:border-gray-500',
+    },
   ];
 
   const handleSocialAuth = (provider) => {
@@ -21,7 +36,9 @@ export default function SocialAuth({ isLoading }) {
           <div className="w-full border-t border-border"></div>
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-3 text-text-secondary font-caption">Or continue with</span>
+          <span className="bg-background px-3 text-text-secondary font-caption">
+            Or continue with
+          </span>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-3">
@@ -42,5 +59,5 @@ export default function SocialAuth({ isLoading }) {
 }
 
 SocialAuth.propTypes = {
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
 };

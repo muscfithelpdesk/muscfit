@@ -6,7 +6,10 @@ export const productService = {
     try {
       if (!supabase) return [];
 
-      let query = supabase.from('products').select(`
+      let query = supabase
+        .from('products')
+        .select(
+          `
           *,
           product_images!inner(
             id,
@@ -25,7 +28,10 @@ export const productService = {
             attribute_name,
             attribute_value
           )
-        `).eq('is_active', true).eq('product_images.is_primary', true);
+        `
+        )
+        .eq('is_active', true)
+        .eq('product_images.is_primary', true);
 
       // Apply filters
       if (filters?.gender) {
@@ -49,7 +55,9 @@ export const productService = {
 
       // Apply search
       if (filters?.search) {
-        query = query.or(`name.ilike.%${filters?.search}%,description.ilike.%${filters?.search}%,brand.ilike.%${filters?.search}%`);
+        query = query.or(
+          `name.ilike.%${filters?.search}%,description.ilike.%${filters?.search}%,brand.ilike.%${filters?.search}%`
+        );
       }
 
       // Apply sorting
@@ -59,8 +67,8 @@ export const productService = {
           'price-desc': { column: 'price', ascending: false },
           'name-asc': { column: 'name', ascending: true },
           'name-desc': { column: 'name', ascending: false },
-          'rating': { column: 'rating', ascending: false },
-          'newest': { column: 'created_at', ascending: false }
+          rating: { column: 'rating', ascending: false },
+          newest: { column: 'created_at', ascending: false },
         };
         const sort = sortOptions?.[filters?.sortBy];
         if (sort) {
@@ -73,7 +81,7 @@ export const productService = {
       if (error) throw error;
 
       // Convert to camelCase
-      return data?.map(product => this.convertToCamelCase(product)) || [];
+      return data?.map((product) => this.convertToCamelCase(product)) || [];
     } catch (error) {
       console.error('Error fetching products:', error);
       throw error;
@@ -128,7 +136,9 @@ export const productService = {
 
       // Apply search
       if (filters?.search) {
-        query = query.or(`name.ilike.%${filters?.search}%,description.ilike.%${filters?.search}%,brand.ilike.%${filters?.search}%`);
+        query = query.or(
+          `name.ilike.%${filters?.search}%,description.ilike.%${filters?.search}%,brand.ilike.%${filters?.search}%`
+        );
       }
 
       // Apply sorting
@@ -138,8 +148,8 @@ export const productService = {
           'price-desc': { column: 'price', ascending: false },
           'name-asc': { column: 'name', ascending: true },
           'name-desc': { column: 'name', ascending: false },
-          'rating': { column: 'rating', ascending: false },
-          'newest': { column: 'created_at', ascending: false }
+          rating: { column: 'rating', ascending: false },
+          newest: { column: 'created_at', ascending: false },
         };
         const sort = sortOptions?.[filters?.sortBy];
         if (sort) {
@@ -152,7 +162,7 @@ export const productService = {
       if (error) throw error;
 
       // Convert to camelCase
-      return data?.map(product => this.convertToCamelCase(product)) || [];
+      return data?.map((product) => this.convertToCamelCase(product)) || [];
     } catch (error) {
       console.error('Error fetching products:', error);
       throw error;
@@ -164,7 +174,10 @@ export const productService = {
     try {
       if (!supabase) return null;
 
-      const { data, error } = await supabase.from('products').select(`
+      const { data, error } = await supabase
+        .from('products')
+        .select(
+          `
           *,
           product_images(
             id,
@@ -184,7 +197,11 @@ export const productService = {
             attribute_name,
             attribute_value
           )
-        `).eq('id', productId).eq('is_active', true).single();
+        `
+        )
+        .eq('id', productId)
+        .eq('is_active', true)
+        .single();
 
       if (error) throw error;
 
@@ -211,14 +228,14 @@ export const productService = {
       if (error) throw error;
 
       // Extract unique values
-      const brands = [...new Set(data?.map(p => p?.brand))].sort();
-      const categories = [...new Set(data?.map(p => p?.category))].sort();
-      const tags = [...new Set(data?.map(p => p?.tag).filter(Boolean))].sort();
+      const brands = [...new Set(data?.map((p) => p?.brand))].sort();
+      const categories = [...new Set(data?.map((p) => p?.category))].sort();
+      const tags = [...new Set(data?.map((p) => p?.tag).filter(Boolean))].sort();
 
       return {
         brands,
         categories,
-        tags
+        tags,
       };
     } catch (error) {
       console.error('Error fetching filter options:', error);
@@ -231,7 +248,10 @@ export const productService = {
     try {
       if (!supabase) return [];
 
-      const { data, error } = await supabase.from('products').select(`
+      const { data, error } = await supabase
+        .from('products')
+        .select(
+          `
           *,
           product_images!inner(
             id,
@@ -239,11 +259,18 @@ export const productService = {
             alt_text,
             is_primary
           )
-        `).eq('is_active', true).eq('product_images.is_primary', true).or(`name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,brand.ilike.%${searchTerm}%`).limit(50);
+        `
+        )
+        .eq('is_active', true)
+        .eq('product_images.is_primary', true)
+        .or(
+          `name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,brand.ilike.%${searchTerm}%`
+        )
+        .limit(50);
 
       if (error) throw error;
 
-      return data?.map(product => this.convertToCamelCase(product)) || [];
+      return data?.map((product) => this.convertToCamelCase(product)) || [];
     } catch (error) {
       console.error('Error searching products:', error);
       throw error;
@@ -255,21 +282,23 @@ export const productService = {
     if (!product) return null;
 
     const plainImages = {
-      'tshirts': '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png',
-      'joggers': '/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png',
-      'hoodies': '/assets/images/products/plain_gray_hoodie_flat_lay_1767417698358.png',
-      'leggings': '/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png',
-      'shorts': '/assets/images/products/plain_black_shorts_flat_lay_1767418127534.png',
-      'default': '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png'
+      tshirts: '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png',
+      joggers: '/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png',
+      hoodies: '/assets/images/products/plain_gray_hoodie_flat_lay_1767417698358.png',
+      leggings: '/assets/images/products/plain_black_leggings_flat_lay_1767417679501.png',
+      shorts: '/assets/images/products/plain_black_shorts_flat_lay_1767418127534.png',
+      default: '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png',
     };
 
     const category = product?.category;
     // Find primary image from DB
-    const primaryImgObj = product?.product_images?.find(img => img.is_primary) || product?.product_images?.[0];
+    const primaryImgObj =
+      product?.product_images?.find((img) => img.is_primary) || product?.product_images?.[0];
     const dbImage = primaryImgObj?.image_url;
 
     // Use DB image if valid, otherwise fallback to static map
-    const finalImage = (dbImage && dbImage.length > 5) ? dbImage : (plainImages[category] || plainImages['default']);
+    const finalImage =
+      dbImage && dbImage.length > 5 ? dbImage : plainImages[category] || plainImages['default'];
 
     return {
       id: product?.id,
@@ -288,30 +317,32 @@ export const productService = {
       createdAt: product?.created_at,
       updatedAt: product?.updated_at,
       image: finalImage,
-      productImages: product?.product_images?.map(img => ({
+      productImages: product?.product_images?.map((img) => ({
         id: img?.id,
         imageUrl: img?.image_url,
         altText: img?.alt_text || product?.name,
         isPrimary: img?.is_primary,
-        displayOrder: img?.display_order
-      })) || [{
-        id: 'default',
-        imageUrl: finalImage,
-        altText: product?.name,
-        isPrimary: true,
-        displayOrder: 1
-      }],
-      productVariants: product?.product_variants?.map(v => ({
+        displayOrder: img?.display_order,
+      })) || [
+        {
+          id: 'default',
+          imageUrl: finalImage,
+          altText: product?.name,
+          isPrimary: true,
+          displayOrder: 1,
+        },
+      ],
+      productVariants: product?.product_variants?.map((v) => ({
         id: v?.id,
         size: v?.size,
         color: v?.color,
-        stockQuantity: v?.stock_quantity
+        stockQuantity: v?.stock_quantity,
       })),
-      productAttributes: product?.product_attributes?.map(attr => ({
+      productAttributes: product?.product_attributes?.map((attr) => ({
         id: attr?.id,
         attributeName: attr?.attribute_name,
-        attributeValue: attr?.attribute_value
-      }))
+        attributeValue: attr?.attribute_value,
+      })),
     };
   },
 
@@ -321,20 +352,23 @@ export const productService = {
       if (!supabase) throw new Error('Supabase client not initialized');
 
       // 1. Insert product details
-      const { data, error: productError } = await supabase.from('products').insert({
-        name: productData?.name,
-        description: productData?.description,
-        price: productData?.price,
-        original_price: productData?.originalPrice,
-        gender: productData?.gender,
-        category: productData?.category,
-        brand: productData?.brand,
-        tag: productData?.tag,
-        is_active: productData?.isActive ?? true,
-        stock_quantity: productData?.stockQuantity,
-        rating: 0,
-        review_count: 0
-      }).select();
+      const { data, error: productError } = await supabase
+        .from('products')
+        .insert({
+          name: productData?.name,
+          description: productData?.description,
+          price: productData?.price,
+          original_price: productData?.originalPrice,
+          gender: productData?.gender,
+          category: productData?.category,
+          brand: productData?.brand,
+          tag: productData?.tag,
+          is_active: productData?.isActive ?? true,
+          stock_quantity: productData?.stockQuantity,
+          rating: 0,
+          review_count: 0,
+        })
+        .select();
 
       if (productError) throw productError;
       const product = data?.[0];
@@ -346,7 +380,7 @@ export const productService = {
           image_url: productData.imageUrl,
           alt_text: productData.name,
           is_primary: true,
-          display_order: 1
+          display_order: 1,
         });
         if (imageError) throw imageError;
       }
@@ -382,7 +416,8 @@ export const productService = {
 
       console.log('💾 Database updates (snake_case):', dbUpdates);
 
-      const { data, error } = await supabase.from('products')
+      const { data, error } = await supabase
+        .from('products')
         .update(dbUpdates)
         .eq('id', id)
         .select();
@@ -396,14 +431,16 @@ export const productService = {
       if (updates.imageUrl) {
         console.log('🖼️ Updating image URL:', updates.imageUrl);
         // Check if primary image exists
-        const { data: images } = await supabase.from('product_images')
+        const { data: images } = await supabase
+          .from('product_images')
           .select('id')
           .eq('product_id', id)
           .eq('is_primary', true);
 
         if (images && images.length > 0) {
           // Update existing
-          await supabase.from('product_images')
+          await supabase
+            .from('product_images')
             .update({ image_url: updates.imageUrl })
             .eq('id', images[0].id);
           console.log('✅ Image updated');
@@ -414,14 +451,17 @@ export const productService = {
             image_url: updates.imageUrl,
             alt_text: updates.name || 'Product Image',
             is_primary: true,
-            display_order: 1
+            display_order: 1,
           });
           console.log('✅ Image inserted');
         }
       }
 
       // Fetch the complete updated product with all relations
-      const { data: completeProduct, error: fetchError } = await supabase.from('products').select(`
+      const { data: completeProduct, error: fetchError } = await supabase
+        .from('products')
+        .select(
+          `
           *,
           product_images(
             id,
@@ -441,7 +481,10 @@ export const productService = {
             attribute_name,
             attribute_value
           )
-        `).eq('id', id).single();
+        `
+        )
+        .eq('id', id)
+        .single();
 
       if (fetchError) throw fetchError;
 
@@ -466,14 +509,19 @@ export const productService = {
       console.error('Error deleting product:', error);
       throw error;
     }
-  }
+  },
 };
 
 export const wishlistService = {
   // Add to wishlist
   async add(userId, productId) {
     try {
-      const { data, error } = await supabase?.from('wishlists')?.insert({ user_id: userId, product_id: productId })?.select()?.single();
+      const { data, error } =
+        (await supabase
+          ?.from('wishlists')
+          ?.insert({ user_id: userId, product_id: productId })
+          ?.select()
+          ?.single()) || {};
 
       if (error) throw error;
       return data;
@@ -486,7 +534,12 @@ export const wishlistService = {
   // Remove from wishlist
   async remove(userId, productId) {
     try {
-      const { error } = await supabase?.from('wishlists')?.delete()?.eq('user_id', userId)?.eq('product_id', productId);
+      const { error } =
+        (await supabase
+          ?.from('wishlists')
+          ?.delete()
+          ?.eq('user_id', userId)
+          ?.eq('product_id', productId)) || {};
 
       if (error) throw error;
     } catch (error) {
@@ -498,13 +551,14 @@ export const wishlistService = {
   // Get user wishlist
   async getByUserId(userId) {
     try {
-      const { data, error } = await supabase?.from('wishlists')?.select('product_id')?.eq('user_id', userId);
+      const { data, error } =
+        (await supabase?.from('wishlists')?.select('product_id')?.eq('user_id', userId)) || {};
 
       if (error) throw error;
-      return data?.map(w => w?.product_id) || [];
+      return data?.map((w) => w?.product_id) || [];
     } catch (error) {
       console.error('Error fetching wishlist:', error);
       throw error;
     }
-  }
+  },
 };

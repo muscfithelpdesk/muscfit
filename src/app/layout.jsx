@@ -15,10 +15,11 @@ const outfit = Outfit({
 
 export const metadata = {
   title: 'MUSCFIT - Premium Fitness Apparel',
-  description: 'Discover premium fitness apparel designed for peak performance. Shop high-quality athletic wear including compression gear, training essentials, and lifestyle collections for men and women.',
+  description:
+    'Discover premium fitness apparel designed for peak performance. Shop high-quality athletic wear including compression gear, training essentials, and lifestyle collections for men and women.',
   icons: {
     icon: '/icon.png',
-  }
+  },
 };
 
 export default function RootLayout({ children }) {

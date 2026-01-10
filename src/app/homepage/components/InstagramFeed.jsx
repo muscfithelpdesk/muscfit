@@ -58,7 +58,7 @@ InstagramFeed.propTypes = {
       id: PropTypes.number.isRequired,
       src: PropTypes.string.isRequired,
       alt: PropTypes.string.isRequired,
-      link: PropTypes.string.isRequired
+      link: PropTypes.string.isRequired,
     })
-  ).isRequired
+  ).isRequired,
 };

@@ -21,8 +21,9 @@ export default function PromoCodeInput({ onPromoApplied }) {
       setLoading(true);
       setMessage(null);
 
-      const { data, error } = await supabase
-        ?.rpc('validate_promo_code', { promo_code_text: promoCode?.trim()?.toUpperCase() });
+      const { data, error } = await supabase?.rpc('validate_promo_code', {
+        promo_code_text: promoCode?.trim()?.toUpperCase(),
+      });
 
       if (error) throw error;
 
@@ -31,7 +32,7 @@ export default function PromoCodeInput({ onPromoApplied }) {
       if (result?.is_valid) {
         setAppliedCode({
           code: promoCode?.trim()?.toUpperCase(),
-          discount: result?.discount_percentage
+          discount: result?.discount_percentage,
         });
         setMessage({ type: 'success', text: result?.message });
         onPromoApplied?.(result?.discount_percentage);
@@ -83,12 +84,16 @@ export default function PromoCodeInput({ onPromoApplied }) {
       </div>
 
       {message && (
-        <div className={`flex items-center gap-2 px-3 py-2 rounded text-sm ${
-          message?.type === 'success' ?'bg-success/10 text-success border border-success/20' :'bg-error/10 text-error border border-error/20'
-        }`}>
-          <Icon 
-            name={message?.type === 'success' ? 'CheckCircleIcon' : 'ExclamationCircleIcon'} 
-            size={16} 
+        <div
+          className={`flex items-center gap-2 px-3 py-2 rounded text-sm ${
+            message?.type === 'success'
+              ? 'bg-success/10 text-success border border-success/20'
+              : 'bg-error/10 text-error border border-error/20'
+          }`}
+        >
+          <Icon
+            name={message?.type === 'success' ? 'CheckCircleIcon' : 'ExclamationCircleIcon'}
+            size={16}
           />
           <span>{message?.text}</span>
         </div>
@@ -117,5 +122,5 @@ export default function PromoCodeInput({ onPromoApplied }) {
 }
 
 PromoCodeInput.propTypes = {
-  onPromoApplied: PropTypes.func
+  onPromoApplied: PropTypes.func,
 };

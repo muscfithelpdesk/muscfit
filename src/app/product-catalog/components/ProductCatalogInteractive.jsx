@@ -33,9 +33,10 @@ export default function ProductCatalogInteractive() {
   };
 
   // Group products by gender for category display
-  const womenProducts = products?.filter(p => p?.gender === 'women')?.slice(0, 6) || [];
-  const menProducts = products?.filter(p => p?.gender === 'men')?.slice(0, 6) || [];
-  const compressionProducts = products?.filter(p => p?.gender === 'compression')?.slice(0, 6) || [];
+  const womenProducts = products?.filter((p) => p?.gender === 'women')?.slice(0, 6) || [];
+  const menProducts = products?.filter((p) => p?.gender === 'men')?.slice(0, 6) || [];
+  const compressionProducts =
+    products?.filter((p) => p?.gender === 'compression')?.slice(0, 6) || [];
 
   return (
     <div className="min-h-screen bg-background pt-[80px]">
@@ -43,7 +44,9 @@ export default function ProductCatalogInteractive() {
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">All Products</h1>
-          <p className="text-text-secondary">Browse our complete collection of premium athletic wear</p>
+          <p className="text-text-secondary">
+            Browse our complete collection of premium athletic wear
+          </p>
         </div>
 
         {/* Search Bar */}
@@ -62,7 +65,12 @@ export default function ProductCatalogInteractive() {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
             </svg>
           </div>
         </div>
@@ -80,8 +88,18 @@ export default function ProductCatalogInteractive() {
             <Link href="/women-catalog" className="group">
               <div className="bg-surface border border-border rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
                 <div className="aspect-video bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center">
-                  <svg className="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  <svg
+                    className="w-20 h-20 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
                   </svg>
                 </div>
                 <div className="p-6">
@@ -101,8 +119,18 @@ export default function ProductCatalogInteractive() {
             <Link href="/men-catalog" className="group">
               <div className="bg-surface border border-border rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
                 <div className="aspect-video bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-                  <svg className="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  <svg
+                    className="w-20 h-20 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
                   </svg>
                 </div>
                 <div className="p-6">
@@ -122,8 +150,18 @@ export default function ProductCatalogInteractive() {
             <Link href="/compression-wear-catalog" className="group">
               <div className="bg-surface border border-border rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
                 <div className="aspect-video bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
-                  <svg className="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  <svg
+                    className="w-20 h-20 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
                   </svg>
                 </div>
                 <div className="p-6">
@@ -149,19 +187,21 @@ export default function ProductCatalogInteractive() {
           </div>
         ) : searchTerm ? (
           /* Search Results */
-          (<div>
+          <div>
             <h2 className="text-2xl font-bold text-foreground mb-6">
               Search Results ({products?.length || 0})
             </h2>
             {products?.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {products?.map(product => (
+                {products?.map((product) => (
                   <ProductCard key={product?.id} product={product} />
                 ))}
               </div>
             ) : (
               <div className="text-center py-20">
-                <p className="text-text-secondary text-lg">No products found matching "{searchTerm}"</p>
+                <p className="text-text-secondary text-lg">
+                  No products found matching "{searchTerm}"
+                </p>
                 <button
                   onClick={() => setSearchTerm('')}
                   className="mt-4 text-primary hover:underline"
@@ -170,21 +210,24 @@ export default function ProductCatalogInteractive() {
                 </button>
               </div>
             )}
-          </div>)
+          </div>
         ) : (
           /* Category Sections */
-          (<div className="space-y-12">
+          <div className="space-y-12">
             {/* Women's Products */}
             {womenProducts?.length > 0 && (
               <div>
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-2xl font-bold text-foreground">Women's Favorites</h2>
-                  <Link href="/women-catalog" className="text-pink-600 hover:underline font-semibold">
+                  <Link
+                    href="/women-catalog"
+                    className="text-pink-600 hover:underline font-semibold"
+                  >
                     View All Women's →
                   </Link>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {womenProducts?.map(product => (
+                  {womenProducts?.map((product) => (
                     <ProductCard key={product?.id} product={product} />
                   ))}
                 </div>
@@ -200,7 +243,7 @@ export default function ProductCatalogInteractive() {
                   </Link>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {menProducts?.map(product => (
+                  {menProducts?.map((product) => (
                     <ProductCard key={product?.id} product={product} />
                   ))}
                 </div>
@@ -211,18 +254,21 @@ export default function ProductCatalogInteractive() {
               <div>
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-2xl font-bold text-foreground">Compression Favorites</h2>
-                  <Link href="/compression-wear-catalog" className="text-orange-600 hover:underline font-semibold">
+                  <Link
+                    href="/compression-wear-catalog"
+                    className="text-orange-600 hover:underline font-semibold"
+                  >
                     View All Compression →
                   </Link>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {compressionProducts?.map(product => (
+                  {compressionProducts?.map((product) => (
                     <ProductCard key={product?.id} product={product} />
                   ))}
                 </div>
               </div>
             )}
-          </div>)
+          </div>
         )}
       </div>
     </div>

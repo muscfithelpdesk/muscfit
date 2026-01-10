@@ -18,11 +18,7 @@ export default function BrandStory({ title, content, image, imageAlt }) {
           </div>
           <div className="order-1 lg:order-2 lg:col-span-5 flex justify-center lg:justify-end">
             <div className="w-full max-w-sm aspect-square rounded-md overflow-hidden shadow-sharp-lg">
-              <AppImage
-                src={image}
-                alt={imageAlt}
-                className="w-full h-full object-cover"
-              />
+              <AppImage src={image} alt={imageAlt} className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
@@ -35,5 +31,5 @@ BrandStory.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.arrayOf(PropTypes.string).isRequired,
   image: PropTypes.string.isRequired,
-  imageAlt: PropTypes.string.isRequired
+  imageAlt: PropTypes.string.isRequired,
 };

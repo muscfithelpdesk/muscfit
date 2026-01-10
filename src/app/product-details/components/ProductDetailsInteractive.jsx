@@ -7,11 +7,17 @@ import ProductInfo from './ProductInfo';
 import CustomerReviews from './CustomerReviews';
 import RelatedProducts from './RelatedProducts';
 
-export default function ProductDetailsInteractive({ productData, reviewsData, relatedProductsData }) {
+export default function ProductDetailsInteractive({
+  productData,
+  reviewsData,
+  relatedProductsData,
+}) {
   const [wishlist, setWishlist] = useState([]);
 
   const handleAddToCart = (productDetails) => {
-    alert(`Added to cart:\n${productDetails?.name}\nSize: ${productDetails?.selectedSize}\nColor: ${productDetails?.selectedColor?.name}\nQuantity: ${productDetails?.quantity}`);
+    alert(
+      `Added to cart:\n${productDetails?.name}\nSize: ${productDetails?.selectedSize}\nColor: ${productDetails?.selectedColor?.name}\nQuantity: ${productDetails?.quantity}`
+    );
   };
 
   const handleToggleWishlist = () => {

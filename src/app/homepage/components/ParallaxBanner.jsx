@@ -2,7 +2,14 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import AppImage from '@/components/ui/AppImage';
 
-export default function ParallaxBanner({ title, subtitle, ctaText, ctaHref, backgroundImage, backgroundAlt }) {
+export default function ParallaxBanner({
+  title,
+  subtitle,
+  ctaText,
+  ctaHref,
+  backgroundImage,
+  backgroundAlt,
+}) {
   return (
     <section className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden">
       <div className="absolute inset-0">
@@ -40,5 +47,5 @@ ParallaxBanner.propTypes = {
   ctaText: PropTypes.string.isRequired,
   ctaHref: PropTypes.string.isRequired,
   backgroundImage: PropTypes.string.isRequired,
-  backgroundAlt: PropTypes.string.isRequired
+  backgroundAlt: PropTypes.string.isRequired,
 };

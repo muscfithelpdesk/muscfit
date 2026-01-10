@@ -4,21 +4,20 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
-
 export default function LoginForm() {
   const router = useRouter();
   const { signIn } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [e?.target?.name]: e?.target?.value
+      [e?.target?.name]: e?.target?.value,
     }));
   };
 
@@ -94,11 +93,15 @@ export default function LoginForm() {
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
             <span className="text-text-secondary">Admin:</span>
-            <span className="font-mono text-foreground font-semibold">admin@muscfit.com / admin123</span>
+            <span className="font-mono text-foreground font-semibold">
+              admin@muscfit.com / admin123
+            </span>
           </div>
           <div className="flex justify-between">
             <span className="text-text-secondary">User:</span>
-            <span className="font-mono text-foreground font-semibold">user@muscfit.com / user123</span>
+            <span className="font-mono text-foreground font-semibold">
+              user@muscfit.com / user123
+            </span>
           </div>
         </div>
       </div>

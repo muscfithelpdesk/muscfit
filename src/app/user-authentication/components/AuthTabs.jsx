@@ -1,13 +1,12 @@
 'use client';
 
-
 import PropTypes from 'prop-types';
 import Icon from '@/components/ui/AppIcon';
 
 export default function AuthTabs({ activeTab, onTabChange }) {
   const tabs = [
     { id: 'login', label: 'Sign In', icon: 'ArrowRightOnRectangleIcon' },
-    { id: 'register', label: 'Create Account', icon: 'UserPlusIcon' }
+    { id: 'register', label: 'Create Account', icon: 'UserPlusIcon' },
   ];
 
   return (
@@ -32,5 +31,5 @@ export default function AuthTabs({ activeTab, onTabChange }) {
 
 AuthTabs.propTypes = {
   activeTab: PropTypes.oneOf(['login', 'register']).isRequired,
-  onTabChange: PropTypes.func.isRequired
+  onTabChange: PropTypes.func.isRequired,
 };

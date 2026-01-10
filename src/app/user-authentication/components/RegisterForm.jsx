@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
-
 export default function RegisterForm() {
   const router = useRouter();
   const { signUp } = useAuth();
@@ -12,15 +11,15 @@ export default function RegisterForm() {
     fullName: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [e?.target?.name]: e?.target?.value
+      [e?.target?.name]: e?.target?.value,
     }));
   };
 
@@ -35,11 +34,7 @@ export default function RegisterForm() {
       return;
     }
 
-    const result = await signUp(
-      formData?.email,
-      formData?.password,
-      formData?.fullName
-    );
+    const result = await signUp(formData?.email, formData?.password, formData?.fullName);
 
     if (result?.success) {
       router?.push('/');
@@ -108,7 +103,10 @@ export default function RegisterForm() {
         </div>
 
         <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-foreground mb-2">
+          <label
+            htmlFor="confirmPassword"
+            className="block text-sm font-medium text-foreground mb-2"
+          >
             Confirm Password
           </label>
           <input

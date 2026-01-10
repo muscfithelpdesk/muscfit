@@ -29,7 +29,7 @@ export default function UserProfileInteractive({ initialData }) {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tabParam = params?.get('tab');
-    if (tabParam && tabs?.some(tab => tab?.id === tabParam)) {
+    if (tabParam && tabs?.some((tab) => tab?.id === tabParam)) {
       setActiveTab(tabParam);
     }
   }, []);
@@ -49,11 +49,11 @@ export default function UserProfileInteractive({ initialData }) {
   };
 
   const handleSavePersonalInfo = (updatedData) => {
-    setUserData(prev => ({ ...prev, ...updatedData }));
+    setUserData((prev) => ({ ...prev, ...updatedData }));
   };
 
   const handleRemoveFromWishlist = (itemId) => {
-    setWishlistItems(prev => prev?.filter(item => item?.id !== itemId));
+    setWishlistItems((prev) => prev?.filter((item) => item?.id !== itemId));
   };
 
   const handleAddToCart = (item) => {
@@ -65,22 +65,22 @@ export default function UserProfileInteractive({ initialData }) {
       ...newAddress,
       id: `addr_${Date.now()}`,
     };
-    setAddresses(prev => [...prev, address]);
+    setAddresses((prev) => [...prev, address]);
   };
 
   const handleEditAddress = (addressId, updatedAddress) => {
-    setAddresses(prev =>
-      prev?.map(addr => (addr?.id === addressId ? { ...addr, ...updatedAddress } : addr))
+    setAddresses((prev) =>
+      prev?.map((addr) => (addr?.id === addressId ? { ...addr, ...updatedAddress } : addr))
     );
   };
 
   const handleDeleteAddress = (addressId) => {
-    setAddresses(prev => prev?.filter(addr => addr?.id !== addressId));
+    setAddresses((prev) => prev?.filter((addr) => addr?.id !== addressId));
   };
 
   const handleSetDefaultAddress = (addressId) => {
-    setAddresses(prev =>
-      prev?.map(addr => ({
+    setAddresses((prev) =>
+      prev?.map((addr) => ({
         ...addr,
         isDefault: addr?.id === addressId,
       }))
@@ -88,15 +88,12 @@ export default function UserProfileInteractive({ initialData }) {
   };
 
   const handleUpdateSettings = (updatedSettings) => {
-    setSettings(prev => ({ ...prev, ...updatedSettings }));
+    setSettings((prev) => ({ ...prev, ...updatedSettings }));
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <ProfileHeader 
-        userData={userData} 
-        completionPercentage={calculateCompletionPercentage()} 
-      />
+      <ProfileHeader userData={userData} completionPercentage={calculateCompletionPercentage()} />
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-12">
         {/* Tabs Navigation */}
         <div className="mb-6 md:mb-8">
@@ -108,7 +105,8 @@ export default function UserProfileInteractive({ initialData }) {
                   onClick={() => setActiveTab(tab?.id)}
                   className={`flex items-center gap-2 px-4 md:px-6 h-12 font-heading font-medium text-sm md:text-base whitespace-nowrap border-b-2 transition-all duration-250 flex-shrink-0 ${
                     activeTab === tab?.id
-                      ? 'border-primary text-primary' :'border-transparent text-text-secondary hover:text-foreground hover:border-border'
+                      ? 'border-primary text-primary'
+                      : 'border-transparent text-text-secondary hover:text-foreground hover:border-border'
                   }`}
                 >
                   <Icon name={tab?.icon} size={20} />
@@ -127,16 +125,11 @@ export default function UserProfileInteractive({ initialData }) {
         {/* Tab Content */}
         <div className="animate-fade-in">
           {activeTab === 'personal' && (
-            <PersonalInfoSection 
-              userData={userData} 
-              onSave={handleSavePersonalInfo} 
-            />
+            <PersonalInfoSection userData={userData} onSave={handleSavePersonalInfo} />
           )}
-          
-          {activeTab === 'orders' && (
-            <OrderHistorySection orders={orders} />
-          )}
-          
+
+          {activeTab === 'orders' && <OrderHistorySection orders={orders} />}
+
           {activeTab === 'wishlist' && (
             <WishlistSection
               wishlistItems={wishlistItems}
@@ -144,7 +137,7 @@ export default function UserProfileInteractive({ initialData }) {
               onAddToCart={handleAddToCart}
             />
           )}
-          
+
           {activeTab === 'addresses' && (
             <AddressBookSection
               addresses={addresses}
@@ -154,12 +147,9 @@ export default function UserProfileInteractive({ initialData }) {
               onSetDefault={handleSetDefaultAddress}
             />
           )}
-          
+
           {activeTab === 'settings' && (
-            <AccountSettingsSection
-              settings={settings}
-              onUpdateSettings={handleUpdateSettings}
-            />
+            <AccountSettingsSection settings={settings} onUpdateSettings={handleUpdateSettings} />
           )}
         </div>
       </div>

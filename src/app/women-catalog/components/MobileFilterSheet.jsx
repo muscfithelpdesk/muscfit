@@ -6,7 +6,7 @@ export default function MobileFilterSheet({ filters, onFilterChange, onClose, ge
   const [availableOptions, setAvailableOptions] = useState({
     brands: [],
     categories: [],
-    tags: []
+    tags: [],
   });
 
   useEffect(() => {
@@ -28,21 +28,21 @@ export default function MobileFilterSheet({ filters, onFilterChange, onClose, ge
 
   const handleCategoryToggle = (category) => {
     const newCategories = filters?.categories?.includes(category)
-      ? filters?.categories?.filter(c => c !== category)
+      ? filters?.categories?.filter((c) => c !== category)
       : [...(filters?.categories || []), category];
     onFilterChange({ categories: newCategories });
   };
 
   const handleBrandToggle = (brand) => {
     const newBrands = filters?.brands?.includes(brand)
-      ? filters?.brands?.filter(b => b !== brand)
+      ? filters?.brands?.filter((b) => b !== brand)
       : [...(filters?.brands || []), brand];
     onFilterChange({ brands: newBrands });
   };
 
   const handleTagToggle = (tag) => {
     const newTags = filters?.tags?.includes(tag)
-      ? filters?.tags?.filter(t => t !== tag)
+      ? filters?.tags?.filter((t) => t !== tag)
       : [...(filters?.tags || []), tag];
     onFilterChange({ tags: newTags });
   };
@@ -54,21 +54,20 @@ export default function MobileFilterSheet({ filters, onFilterChange, onClose, ge
   return (
     <div className="fixed inset-0 z-50 lg:hidden">
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black bg-opacity-50"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-black bg-opacity-50" onClick={onClose} />
       {/* Filter Sheet */}
       <div className="absolute inset-y-0 right-0 w-full max-w-md bg-background shadow-xl overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-background border-b border-border px-6 py-4 flex justify-between items-center">
           <h2 className="text-xl font-bold text-foreground">Filters</h2>
-          <button
-            onClick={onClose}
-            className="text-text-secondary hover:text-foreground"
-          >
+          <button onClick={onClose} className="text-text-secondary hover:text-foreground">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -79,7 +78,7 @@ export default function MobileFilterSheet({ filters, onFilterChange, onClose, ge
           <div className="mb-6">
             <h3 className="font-semibold text-foreground mb-3">Category</h3>
             <div className="space-y-2">
-              {availableOptions?.categories?.map(category => (
+              {availableOptions?.categories?.map((category) => (
                 <label key={category} className="flex items-center cursor-pointer">
                   <input
                     type="checkbox"
@@ -87,7 +86,9 @@ export default function MobileFilterSheet({ filters, onFilterChange, onClose, ge
                     onChange={() => handleCategoryToggle(category)}
                     className="w-4 h-4 text-primary border-border rounded focus:ring-primary"
                   />
-                  <span className="ml-2 text-text-secondary capitalize">{category?.replace('_', ' ')}</span>
+                  <span className="ml-2 text-text-secondary capitalize">
+                    {category?.replace('_', ' ')}
+                  </span>
                 </label>
               ))}
             </div>
@@ -97,7 +98,7 @@ export default function MobileFilterSheet({ filters, onFilterChange, onClose, ge
           <div className="mb-6">
             <h3 className="font-semibold text-foreground mb-3">Brand</h3>
             <div className="space-y-2">
-              {availableOptions?.brands?.map(brand => (
+              {availableOptions?.brands?.map((brand) => (
                 <label key={brand} className="flex items-center cursor-pointer">
                   <input
                     type="checkbox"
@@ -120,13 +121,16 @@ export default function MobileFilterSheet({ filters, onFilterChange, onClose, ge
                 { label: '₹1,000 - ₹2,000', min: 1000, max: 2000 },
                 { label: '₹2,000 - ₹3,000', min: 2000, max: 3000 },
                 { label: '₹3,000 - ₹5,000', min: 3000, max: 5000 },
-                { label: 'Above ₹5,000', min: 5000, max: 10000 }
-              ]?.map(range => (
+                { label: 'Above ₹5,000', min: 5000, max: 10000 },
+              ]?.map((range) => (
                 <label key={range?.label} className="flex items-center cursor-pointer">
                   <input
                     type="radio"
                     name="priceRange"
-                    checked={filters?.priceRange?.min === range?.min && filters?.priceRange?.max === range?.max}
+                    checked={
+                      filters?.priceRange?.min === range?.min &&
+                      filters?.priceRange?.max === range?.max
+                    }
                     onChange={() => handlePriceChange(range?.min, range?.max)}
                     className="w-4 h-4 text-primary border-border focus:ring-primary"
                   />
@@ -141,7 +145,7 @@ export default function MobileFilterSheet({ filters, onFilterChange, onClose, ge
             <div className="mb-6">
               <h3 className="font-semibold text-foreground mb-3">Product Label</h3>
               <div className="space-y-2">
-                {availableOptions?.tags?.map(tag => (
+                {availableOptions?.tags?.map((tag) => (
                   <label key={tag} className="flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -160,14 +164,16 @@ export default function MobileFilterSheet({ filters, onFilterChange, onClose, ge
         {/* Footer Actions */}
         <div className="sticky bottom-0 bg-background border-t border-border px-6 py-4 flex gap-3">
           <button
-            onClick={() => onFilterChange({
-              categories: [],
-              brands: [],
-              priceRange: { min: 0, max: 10000 },
-              sizes: [],
-              colors: [],
-              tags: []
-            })}
+            onClick={() =>
+              onFilterChange({
+                categories: [],
+                brands: [],
+                priceRange: { min: 0, max: 10000 },
+                sizes: [],
+                colors: [],
+                tags: [],
+              })
+            }
             className="flex-1 px-4 py-3 border border-border rounded-lg text-text-secondary hover:bg-muted transition-colors"
           >
             Clear All

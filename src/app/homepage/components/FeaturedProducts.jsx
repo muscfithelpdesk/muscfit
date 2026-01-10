@@ -35,7 +35,7 @@ FeaturedProducts.propTypes = {
       imageAlt: PropTypes.string.isRequired,
       tag: PropTypes.string,
       rating: PropTypes.number.isRequired,
-      reviews: PropTypes.number.isRequired
+      reviews: PropTypes.number.isRequired,
     })
-  ).isRequired
+  ).isRequired,
 };

@@ -32,7 +32,9 @@ export function AuthProvider({ children }) {
     });
 
     // Listen for auth changes - CRITICAL: Keep synchronous, no async in callback
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
@@ -51,9 +53,9 @@ export function AuthProvider({ children }) {
         options: {
           data: {
             full_name: fullName,
-            avatar_url: ''
-          }
-        }
+            avatar_url: '',
+          },
+        },
       });
 
       if (signUpError) throw signUpError;
@@ -72,7 +74,7 @@ export function AuthProvider({ children }) {
       setError(null);
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
-        password
+        password,
       });
 
       if (signInError) throw signInError;
@@ -106,7 +108,7 @@ export function AuthProvider({ children }) {
       if (!supabase) throw new Error('Supabase client not initialized');
       setError(null);
       const { data, error: updateError } = await supabase.auth.updateUser({
-        data: updates
+        data: updates,
       });
 
       if (updateError) throw updateError;
@@ -125,16 +127,12 @@ export function AuthProvider({ children }) {
     signUp,
     signIn,
     signOut,
-    updateProfile
+    updateProfile,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };

@@ -14,9 +14,7 @@ export default function TrustBadges({ badges }) {
               <h3 className="font-heading text-sm md:text-base font-semibold text-gray-900 mb-1">
                 {badge?.title}
               </h3>
-              <p className="text-xs md:text-sm text-gray-600 line-clamp-2">
-                {badge?.description}
-              </p>
+              <p className="text-xs md:text-sm text-gray-600 line-clamp-2">{badge?.description}</p>
             </div>
           ))}
         </div>
@@ -31,7 +29,7 @@ TrustBadges.propTypes = {
       id: PropTypes.number.isRequired,
       icon: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired
+      description: PropTypes.string.isRequired,
     })
-  ).isRequired
+  ).isRequired,
 };

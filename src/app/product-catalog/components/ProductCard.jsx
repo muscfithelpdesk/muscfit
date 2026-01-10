@@ -30,11 +30,13 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
       NEW: 'bg-primary text-primary-foreground',
       SALE: 'bg-[#9B1C1C] text-white',
       TRENDING: 'bg-primary text-primary-foreground',
-      HOT: 'bg-[#9B1C1C] text-white'
+      HOT: 'bg-[#9B1C1C] text-white',
     };
 
     return (
-      <span className={`absolute top-3 left-3 px-3 py-1 text-xs font-caption font-bold uppercase tracking-wider rounded-sm z-10 ${tagStyles?.[product?.tag]}`}>
+      <span
+        className={`absolute top-3 left-3 px-3 py-1 text-xs font-caption font-bold uppercase tracking-wider rounded-sm z-10 ${tagStyles?.[product?.tag]}`}
+      >
         {product?.tag}
       </span>
     );
@@ -54,8 +56,9 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
           <AppImage
             src={product?.image}
             alt={product?.alt}
-            className={`w-full h-full object-cover transition-all duration-500 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-              } ${isHovered ? 'scale-110' : 'scale-100'}`}
+            className={`w-full h-full object-cover transition-all duration-500 ${
+              imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+            } ${isHovered ? 'scale-110' : 'scale-100'}`}
             onLoad={() => setImageLoaded(true)}
           />
 
@@ -77,8 +80,11 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
           </button>
 
           {/* Quick Add Button - Desktop Only */}
-          <div className={`hidden md:flex absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent transition-all duration-250 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}>
+          <div
+            className={`hidden md:flex absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent transition-all duration-250 ${
+              isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
             <button
               onClick={(e) => {
                 e?.preventDefault();
@@ -104,9 +110,7 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
 
         {/* Rating */}
         <div className="flex items-center gap-2 mb-3">
-          <div className="flex items-center gap-1">
-            {renderStars(product?.rating)}
-          </div>
+          <div className="flex items-center gap-1">{renderStars(product?.rating)}</div>
           <span className="text-xs font-data text-text-secondary">({product?.reviewCount})</span>
         </div>
 
@@ -147,8 +151,8 @@ ProductCard.propTypes = {
     rating: PropTypes.number.isRequired,
     reviewCount: PropTypes.number.isRequired,
     tag: PropTypes.oneOf(['BESTSELLER', 'NEW', 'SALE', 'TRENDING', 'HOT']),
-    isWishlisted: PropTypes.bool.isRequired
+    isWishlisted: PropTypes.bool.isRequired,
   }).isRequired,
   onWishlistToggle: PropTypes.func.isRequired,
-  onQuickAdd: PropTypes.func.isRequired
+  onQuickAdd: PropTypes.func.isRequired,
 };

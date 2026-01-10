@@ -26,7 +26,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }) {
   const itemTotal = (item?.price * quantity)?.toFixed(2);
 
   return (
-    <div 
+    <div
       className={`flex flex-col sm:flex-row gap-4 p-4 md:p-6 bg-card border border-border rounded-md transition-all duration-250 ${
         isRemoving ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
       }`}
@@ -76,7 +76,9 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }) {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-auto">
           {/* Quantity Selector */}
           <div className="flex items-center gap-3">
-            <span className="text-xs md:text-sm font-caption text-text-secondary uppercase">Quantity:</span>
+            <span className="text-xs md:text-sm font-caption text-text-secondary uppercase">
+              Quantity:
+            </span>
             <div className="flex items-center gap-2 bg-surface border border-border rounded-md">
               <button
                 onClick={() => handleQuantityChange(quantity - 1)}
@@ -106,9 +108,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }) {
               <span className="font-data text-xl md:text-2xl font-bold text-primary whitespace-nowrap">
                 ₹{itemTotal}
               </span>
-              <span className="text-xs text-text-secondary">
-                ₹{item?.price?.toFixed(2)} each
-              </span>
+              <span className="text-xs text-text-secondary">₹{item?.price?.toFixed(2)} each</span>
             </div>
 
             {/* Remove Button - Mobile */}

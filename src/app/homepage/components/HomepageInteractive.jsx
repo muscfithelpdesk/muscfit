@@ -20,13 +20,11 @@ import CollectionSection from './CollectionSection';
 import QuickViewModal from './QuickViewModal';
 import { productService } from '@/lib/services/productService';
 
-
 export default function HomepageInteractive({ pageData }) {
   const [isPromoVisible, setIsPromoVisible] = useState(true);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [dbProducts, setDbProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,11 +55,11 @@ export default function HomepageInteractive({ pageData }) {
       <div className="fixed top-0 left-0 right-0 z-50">
         <PromoBar
           messages={[
-            "🔥 NEW YEAR SALE: Get 30% Off On All Compression Wear",
-            "🚚 Free Shipping On All Orders Above ₹2,999",
-            "⚡ Buy 2 Get 1 Free On All Training Essentials",
-            "🎁 Extra 10% Off On Your First Order | Use Code: MUSCFIT10",
-            "❄️ Winter Collection Now Live: Up to 40% Off"
+            '🔥 NEW YEAR SALE: Get 30% Off On All Compression Wear',
+            '🚚 Free Shipping On All Orders Above ₹2,999',
+            '⚡ Buy 2 Get 1 Free On All Training Essentials',
+            '🎁 Extra 10% Off On Your First Order | Use Code: MUSCFIT10',
+            '❄️ Winter Collection Now Live: Up to 40% Off',
           ]}
           isVisible={isPromoVisible}
           onDismiss={pageData?.promoBar?.dismissible ? handleDismissPromo : undefined}
@@ -79,9 +77,6 @@ export default function HomepageInteractive({ pageData }) {
           backgroundAlt={pageData?.hero?.backgroundAlt}
         />
 
-
-
-
         <CollectionSection
           title="MEN'S"
           subtitle="SHOP"
@@ -93,7 +88,9 @@ export default function HomepageInteractive({ pageData }) {
             { name: 'SHORTS', filter: 'shorts' },
             { name: 'ACCESSORIES', filter: 'accessories' },
           ]}
-          products={dbProducts.filter(p => !p.gender || p.gender === 'men' || p.gender === 'unisex')}
+          products={dbProducts.filter(
+            (p) => !p.gender || p.gender === 'men' || p.gender === 'unisex'
+          )}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
@@ -106,7 +103,7 @@ export default function HomepageInteractive({ pageData }) {
             { name: 'TOPS', filter: 'tshirts' },
             { name: 'SHORTS', filter: 'shorts' },
           ]}
-          products={dbProducts.filter(p => p.gender === 'women' || p.gender === 'unisex')}
+          products={dbProducts.filter((p) => p.gender === 'women' || p.gender === 'unisex')}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
@@ -119,15 +116,14 @@ export default function HomepageInteractive({ pageData }) {
             { name: 'FULL BODY', filter: 'leggings' },
             { name: 'ACCESSORIES', filter: 'accessories' },
           ]}
-          products={dbProducts.filter(p => p.gender === 'compression' || p.gender === 'unisex')}
+          products={dbProducts.filter((p) => p.gender === 'compression' || p.gender === 'unisex')}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
-
 
         <FeaturedProducts
           title="Bestselling Essentials"
           subtitle="Discover our most-loved pieces trusted by athletes worldwide"
-          products={dbProducts.filter(p => p.tag === 'BESTSELLER' || p.tag === 'HOT')}
+          products={dbProducts.filter((p) => p.tag === 'BESTSELLER' || p.tag === 'HOT')}
         />
 
         <StatsCounter stats={pageData?.stats} />
@@ -146,7 +142,9 @@ export default function HomepageInteractive({ pageData }) {
         <FeaturedProducts
           title="New Arrivals"
           subtitle="Fresh drops designed to elevate your performance"
-          products={dbProducts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 8)}
+          products={dbProducts
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            .slice(0, 8)}
         />
 
         <VideoSection
@@ -172,12 +170,7 @@ export default function HomepageInteractive({ pageData }) {
 
         <TrustBadges badges={pageData?.trustBadges} />
 
-
-
-        <Newsletter
-          title={pageData?.newsletter?.title}
-          subtitle={pageData?.newsletter?.subtitle}
-        />
+        <Newsletter title={pageData?.newsletter?.title} subtitle={pageData?.newsletter?.subtitle} />
 
         <Footer
           columns={pageData?.footer?.columns}
@@ -186,12 +179,8 @@ export default function HomepageInteractive({ pageData }) {
         />
 
         {quickViewProduct && (
-          <QuickViewModal
-            product={quickViewProduct}
-            onClose={() => setQuickViewProduct(null)}
-          />
+          <QuickViewModal product={quickViewProduct} onClose={() => setQuickViewProduct(null)} />
         )}
-
       </main>
     </div>
   );
@@ -201,7 +190,7 @@ HomepageInteractive.propTypes = {
   pageData: PropTypes.shape({
     promoBar: PropTypes.shape({
       message: PropTypes.string.isRequired,
-      dismissible: PropTypes.bool.isRequired
+      dismissible: PropTypes.bool.isRequired,
     }).isRequired,
     hero: PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -210,7 +199,7 @@ HomepageInteractive.propTypes = {
       ctaSecondary: PropTypes.object.isRequired,
       backgroundImage: PropTypes.string.isRequired,
       mobileHeroImage: PropTypes.string,
-      backgroundAlt: PropTypes.string.isRequired
+      backgroundAlt: PropTypes.string.isRequired,
     }).isRequired,
     features: PropTypes.array.isRequired,
     categories: PropTypes.array.isRequired,
@@ -223,6 +212,6 @@ HomepageInteractive.propTypes = {
     testimonials: PropTypes.object.isRequired,
     trustBadges: PropTypes.array.isRequired,
     newsletter: PropTypes.object.isRequired,
-    footer: PropTypes.object.isRequired
-  }).isRequired
+    footer: PropTypes.object.isRequired,
+  }).isRequired,
 };

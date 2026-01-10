@@ -34,7 +34,7 @@ FeaturesGrid.propTypes = {
       id: PropTypes.number.isRequired,
       icon: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired
+      description: PropTypes.string.isRequired,
     })
-  ).isRequired
+  ).isRequired,
 };

@@ -40,7 +40,7 @@ CommunityEngagement.propTypes = {
       id: PropTypes.number.isRequired,
       icon: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired
+      label: PropTypes.string.isRequired,
     })
-  ).isRequired
+  ).isRequired,
 };

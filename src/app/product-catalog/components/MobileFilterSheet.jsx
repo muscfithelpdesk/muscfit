@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import Icon from '@/components/ui/AppIcon';
 import FilterSidebar from './FilterSidebar';
 
-export default function MobileFilterSheet({ 
-  isOpen, 
+export default function MobileFilterSheet({
+  isOpen,
   onClose,
   categories,
   productTypes,
@@ -18,7 +18,7 @@ export default function MobileFilterSheet({
   onTypeToggle,
   onPriceRangeChange,
   onClearFilters,
-  activeFilterCount
+  activeFilterCount,
 }) {
   useEffect(() => {
     if (isOpen) {
@@ -37,10 +37,7 @@ export default function MobileFilterSheet({
   return (
     <>
       {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-black/85 z-70 animate-fade-in"
-        onClick={onClose}
-      ></div>
+      <div className="fixed inset-0 bg-black/85 z-70 animate-fade-in" onClick={onClose}></div>
 
       {/* Sheet */}
       <div className="fixed top-0 right-0 bottom-0 w-[320px] bg-background z-70 animate-slide-in-right overflow-y-auto">
@@ -98,21 +95,27 @@ export default function MobileFilterSheet({
 MobileFilterSheet.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  categories: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    count: PropTypes.number.isRequired
-  })).isRequired,
-  productTypes: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    count: PropTypes.number.isRequired
-  })).isRequired,
-  priceRanges: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    count: PropTypes.number.isRequired
-  })).isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      count: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  productTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      count: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  priceRanges: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      count: PropTypes.number.isRequired,
+    })
+  ).isRequired,
   selectedCategory: PropTypes.string.isRequired,
   selectedTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedPriceRange: PropTypes.string.isRequired,
@@ -120,5 +123,5 @@ MobileFilterSheet.propTypes = {
   onTypeToggle: PropTypes.func.isRequired,
   onPriceRangeChange: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
-  activeFilterCount: PropTypes.number.isRequired
+  activeFilterCount: PropTypes.number.isRequired,
 };

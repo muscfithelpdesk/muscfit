@@ -35,7 +35,7 @@ Testimonials.propTypes = {
       content: PropTypes.string.isRequired,
       rating: PropTypes.number.isRequired,
       avatar: PropTypes.string.isRequired,
-      avatarAlt: PropTypes.string.isRequired
+      avatarAlt: PropTypes.string.isRequired,
     })
-  ).isRequired
+  ).isRequired,
 };

@@ -19,9 +19,7 @@ export default function TestimonialCard({ testimonial }) {
       <div className="mb-4">
         <Icon name="ChatBubbleLeftIcon" size={32} className="text-primary/20" />
       </div>
-      <p className="text-sm md:text-base text-gray-700 mb-6 line-clamp-4">
-        {testimonial?.content}
-      </p>
+      <p className="text-sm md:text-base text-gray-700 mb-6 line-clamp-4">{testimonial?.content}</p>
       <div className="flex items-center gap-3">
         <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
           <AppImage
@@ -34,9 +32,7 @@ export default function TestimonialCard({ testimonial }) {
           <h4 className="font-heading text-sm md:text-base font-semibold text-gray-900 truncate">
             {testimonial?.name}
           </h4>
-          <p className="text-xs md:text-sm text-gray-600 truncate">
-            {testimonial?.role}
-          </p>
+          <p className="text-xs md:text-sm text-gray-600 truncate">{testimonial?.role}</p>
         </div>
       </div>
     </div>
@@ -51,6 +47,6 @@ TestimonialCard.propTypes = {
     content: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
     avatar: PropTypes.string.isRequired,
-    avatarAlt: PropTypes.string.isRequired
-  }).isRequired
+    avatarAlt: PropTypes.string.isRequired,
+  }).isRequired,
 };

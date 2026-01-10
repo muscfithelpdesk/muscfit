@@ -3,7 +3,8 @@ import UserProfileInteractive from './components/UserProfileInteractive';
 
 export const metadata = {
   title: 'My Profile - MUSCFIT',
-  description: 'Manage your MUSCFIT account, view order history, update personal information, and customize your shopping preferences.'
+  description:
+    'Manage your MUSCFIT account, view order history, update personal information, and customize your shopping preferences.',
 };
 
 export default function UserProfilePage() {
@@ -13,7 +14,7 @@ export default function UserProfilePage() {
       email: 'rahul.sharma@example.com',
       phone: '9876543210',
       dateOfBirth: '1995-08-15',
-      gender: 'Male'
+      gender: 'Male',
     },
     orders: [
       {
@@ -26,22 +27,23 @@ export default function UserProfilePage() {
           {
             id: 'item1',
             name: 'Performance Compression Tee - Black',
-            image: "https://images.unsplash.com/photo-1579675109935-a12dd235c97f",
+            image: 'https://images.unsplash.com/photo-1579675109935-a12dd235c97f',
             alt: 'Black compression athletic t-shirt with moisture-wicking fabric laid flat on white surface',
             size: 'L',
             quantity: 1,
-            price: 1899
+            price: 1899,
           },
           {
             id: 'item2',
             name: 'Elite Training Shorts - Navy',
-            image: "https://img.rocket.new/generatedImages/rocket_gen_img_141043265-1765255836176.png",
+            image:
+              'https://img.rocket.new/generatedImages/rocket_gen_img_141043265-1765255836176.png',
             alt: 'Navy blue athletic training shorts with side pockets displayed on mannequin',
             size: 'M',
             quantity: 2,
-            price: 1200
-          }]
-
+            price: 1200,
+          },
+        ],
       },
       {
         id: 'ORD002',
@@ -53,22 +55,23 @@ export default function UserProfilePage() {
           {
             id: 'item3',
             name: 'Premium Gym Hoodie - Charcoal',
-            image: "https://images.unsplash.com/photo-1605760641487-e8f2976c71e6",
+            image: 'https://images.unsplash.com/photo-1605760641487-e8f2976c71e6',
             alt: 'Charcoal gray athletic hoodie with zippered pockets hanging on wooden hanger',
             size: 'XL',
             quantity: 1,
-            price: 2999
+            price: 2999,
           },
           {
             id: 'item4',
             name: 'Compression Joggers - Black',
-            image: "https://img.rocket.new/generatedImages/rocket_gen_img_1dd85b5c9-1764657282681.png",
+            image:
+              'https://img.rocket.new/generatedImages/rocket_gen_img_1dd85b5c9-1764657282681.png',
             alt: 'Black compression jogger pants with tapered fit displayed on white background',
             size: 'L',
             quantity: 1,
-            price: 2500
-          }]
-
+            price: 2500,
+          },
+        ],
       },
       {
         id: 'ORD003',
@@ -80,56 +83,59 @@ export default function UserProfilePage() {
           {
             id: 'item5',
             name: 'Muscle Fit Tank Top - White',
-            image: "https://img.rocket.new/generatedImages/rocket_gen_img_103afc570-1765263027593.png",
+            image:
+              'https://img.rocket.new/generatedImages/rocket_gen_img_103afc570-1765263027593.png',
             alt: 'White muscle fit tank top with athletic cut displayed on male torso',
             size: 'M',
             quantity: 2,
-            price: 1899
-          }]
-
-      }],
+            price: 1899,
+          },
+        ],
+      },
+    ],
 
     wishlistItems: [
       {
         id: 'wish1',
         name: 'Pro Compression Leggings - Black',
-        image: "https://img.rocket.new/generatedImages/rocket_gen_img_16dc13c0a-1765976900735.png",
+        image: 'https://img.rocket.new/generatedImages/rocket_gen_img_16dc13c0a-1765976900735.png',
         alt: 'Black compression leggings with mesh panels worn by athletic woman in gym setting',
         price: 2499,
         originalPrice: 3499,
         discount: 29,
-        inStock: true
+        inStock: true,
       },
       {
         id: 'wish2',
         name: 'Performance Training Jacket - Red',
-        image: "https://img.rocket.new/generatedImages/rocket_gen_img_17ceabbbb-1766174688134.png",
+        image: 'https://img.rocket.new/generatedImages/rocket_gen_img_17ceabbbb-1766174688134.png',
         alt: 'Red athletic training jacket with reflective details on male model outdoors',
         price: 3999,
         originalPrice: null,
         discount: null,
-        inStock: true
+        inStock: true,
       },
       {
         id: 'wish3',
         name: 'Elite Gym Bag - Black/Orange',
-        image: "https://img.rocket.new/generatedImages/rocket_gen_img_18d4a649d-1765131813556.png",
+        image: 'https://img.rocket.new/generatedImages/rocket_gen_img_18d4a649d-1765131813556.png',
         alt: 'Black gym duffel bag with orange accents and multiple compartments on wooden floor',
         price: 1999,
         originalPrice: 2999,
         discount: 33,
-        inStock: false
+        inStock: false,
       },
       {
         id: 'wish4',
         name: 'Muscle Recovery Shorts - Navy',
-        image: "https://img.rocket.new/generatedImages/rocket_gen_img_13faf0ea4-1765215468696.png",
+        image: 'https://img.rocket.new/generatedImages/rocket_gen_img_13faf0ea4-1765215468696.png',
         alt: 'Navy blue athletic recovery shorts with compression technology on white background',
         price: 1799,
         originalPrice: null,
         discount: null,
-        inStock: true
-      }],
+        inStock: true,
+      },
+    ],
 
     addresses: [
       {
@@ -141,7 +147,7 @@ export default function UserProfilePage() {
         city: 'Bangalore',
         state: 'Karnataka',
         pincode: '560034',
-        isDefault: true
+        isDefault: true,
       },
       {
         id: 'addr2',
@@ -152,17 +158,18 @@ export default function UserProfilePage() {
         city: 'Bangalore',
         state: 'Karnataka',
         pincode: '560066',
-        isDefault: false
-      }],
+        isDefault: false,
+      },
+    ],
 
     settings: {
       notifications: {
         orderUpdates: true,
         promotions: true,
         newArrivals: false,
-        newsletter: true
-      }
-    }
+        newsletter: true,
+      },
+    },
   };
 
   return (
@@ -171,6 +178,6 @@ export default function UserProfilePage() {
       <div className="pt-[80px]">
         <UserProfileInteractive initialData={mockData} />
       </div>
-    </>);
-
+    </>
+  );
 }

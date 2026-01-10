@@ -14,9 +14,7 @@ export default function StatsCounter({ stats }) {
               <div className="font-data text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-2 whitespace-nowrap">
                 {stat?.value}
               </div>
-              <p className="text-sm md:text-base text-text-secondary line-clamp-2">
-                {stat?.label}
-              </p>
+              <p className="text-sm md:text-base text-text-secondary line-clamp-2">{stat?.label}</p>
             </div>
           ))}
         </div>
@@ -31,7 +29,7 @@ StatsCounter.propTypes = {
       id: PropTypes.number.isRequired,
       icon: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired
+      label: PropTypes.string.isRequired,
     })
-  ).isRequired
+  ).isRequired,
 };

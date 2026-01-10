@@ -31,23 +31,24 @@ export default function AdminPromoManagement() {
 
   const checkAdminStatus = async () => {
     try {
-      const { data: { user } } = await supabase?.auth?.getUser();
-      
+      const authResponse = await supabase?.auth?.getUser();
+      const user = authResponse?.data?.user;
+
       if (!user) {
         setError('Please log in to access this page');
         setLoading(false);
         return;
       }
 
-      const isUserAdmin = user?.user_metadata?.role === 'admin' || 
-                         user?.app_metadata?.role === 'admin';
-      
+      const isUserAdmin =
+        user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin';
+
       setIsAdmin(isUserAdmin);
-      
+
       if (!isUserAdmin) {
         setError('Access denied. Admin privileges required.');
       }
-      
+
       setLoading(false);
     } catch (err) {
       setError(err?.message || 'Failed to verify admin status');
@@ -58,10 +59,11 @@ export default function AdminPromoManagement() {
   const fetchPromoCodes = async () => {
     try {
       setLoading(true);
-      const { data, error: fetchError } = await supabase
-        ?.from('promo_codes')
-        ?.select('*')
-        ?.order('created_at', { ascending: false });
+      const { data, error: fetchError } =
+        (await supabase
+          ?.from('promo_codes')
+          ?.select('*')
+          ?.order('created_at', { ascending: false })) || {};
 
       if (fetchError) throw fetchError;
 
@@ -78,18 +80,22 @@ export default function AdminPromoManagement() {
     e?.preventDefault();
     try {
       setLoading(true);
-      
-      const { data: { user } } = await supabase?.auth?.getUser();
-      
-      const { data, error: createError } = await supabase
-        ?.from('promo_codes')
-        ?.insert([{
-          ...newPromoCode,
-          created_by: user?.id,
-          status: 'active'
-        }])
-        ?.select()
-        ?.single();
+
+      const authResponse = await supabase?.auth?.getUser();
+      const user = authResponse?.data?.user;
+
+      const { data, error: createError } =
+        (await supabase
+          ?.from('promo_codes')
+          ?.insert([
+            {
+              ...newPromoCode,
+              created_by: user?.id,
+              status: 'active',
+            },
+          ])
+          ?.select()
+          ?.single()) || {};
 
       if (createError) throw createError;
 
@@ -112,16 +118,14 @@ export default function AdminPromoManagement() {
 
   const updatePromoCodeStatus = async (id, newStatus) => {
     try {
-      const { error: updateError } = await supabase
-        ?.from('promo_codes')
-        ?.update({ status: newStatus })
-        ?.eq('id', id);
+      const { error: updateError } =
+        (await supabase?.from('promo_codes')?.update({ status: newStatus })?.eq('id', id)) || {};
 
       if (updateError) throw updateError;
 
-      setPromoCodes(promoCodes?.map(code => 
-        code?.id === id ? { ...code, status: newStatus } : code
-      ));
+      setPromoCodes(
+        promoCodes?.map((code) => (code?.id === id ? { ...code, status: newStatus } : code))
+      );
       setError(null);
     } catch (err) {
       setError(err?.message || 'Failed to update promo code status');
@@ -132,14 +136,12 @@ export default function AdminPromoManagement() {
     if (!confirm('Are you sure you want to delete this promo code?')) return;
 
     try {
-      const { error: deleteError } = await supabase
-        ?.from('promo_codes')
-        ?.delete()
-        ?.eq('id', id);
+      const { error: deleteError } =
+        (await supabase?.from('promo_codes')?.delete()?.eq('id', id)) || {};
 
       if (deleteError) throw deleteError;
 
-      setPromoCodes(promoCodes?.filter(code => code?.id !== id));
+      setPromoCodes(promoCodes?.filter((code) => code?.id !== id));
       setError(null);
     } catch (err) {
       setError(err?.message || 'Failed to delete promo code');
@@ -180,9 +182,11 @@ export default function AdminPromoManagement() {
         <div className="text-center max-w-md">
           <Icon name="ShieldExclamationIcon" size={64} className="text-error mx-auto mb-4" />
           <h1 className="text-h3 font-heading mb-2">Access Denied</h1>
-          <p className="text-text-secondary mb-4">{error || 'You do not have permission to access this page.'}</p>
+          <p className="text-text-secondary mb-4">
+            {error || 'You do not have permission to access this page.'}
+          </p>
           <button
-            onClick={() => window.location.href = '/'}
+            onClick={() => (window.location.href = '/')}
             className="px-6 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors"
           >
             Return to Home
@@ -216,7 +220,7 @@ export default function AdminPromoManagement() {
         )}
 
         <div className="grid gap-4">
-          {promoCodes?.map(code => (
+          {promoCodes?.map((code) => (
             <div key={code?.id} className="bg-card border border-border rounded-lg p-6">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex-1">
@@ -226,9 +230,7 @@ export default function AdminPromoManagement() {
                       {code?.status?.toUpperCase()}
                     </span>
                   </div>
-                  <p className="text-text-secondary mb-3">
-                    {code?.discount_percentage}% discount
-                  </p>
+                  <p className="text-text-secondary mb-3">{code?.discount_percentage}% discount</p>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                     <div>
                       <p className="text-text-secondary">Valid From</p>
@@ -246,9 +248,11 @@ export default function AdminPromoManagement() {
                       <p className="text-text-secondary">Usage</p>
                       <div className="flex items-center gap-2">
                         <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                          <div 
+                          <div
                             className="bg-primary h-full transition-all duration-300"
-                            style={{ width: `${getUsagePercentage(code?.current_uses, code?.max_uses)}%` }}
+                            style={{
+                              width: `${getUsagePercentage(code?.current_uses, code?.max_uses)}%`,
+                            }}
                           />
                         </div>
                         <span className="text-text-primary font-data whitespace-nowrap">
@@ -319,13 +323,13 @@ export default function AdminPromoManagement() {
 
               <form onSubmit={createPromoCode} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Code
-                  </label>
+                  <label className="block text-sm font-medium mb-2">Code</label>
                   <input
                     type="text"
                     value={newPromoCode?.code}
-                    onChange={(e) => setNewPromoCode({ ...newPromoCode, code: e?.target?.value?.toUpperCase() })}
+                    onChange={(e) =>
+                      setNewPromoCode({ ...newPromoCode, code: e?.target?.value?.toUpperCase() })
+                    }
                     className="w-full px-4 py-2 bg-input border border-border rounded focus:outline-none focus:ring-2 focus:ring-ring"
                     placeholder="SUMMER2024"
                     required
@@ -333,55 +337,58 @@ export default function AdminPromoManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Discount Percentage (%)
-                  </label>
+                  <label className="block text-sm font-medium mb-2">Discount Percentage (%)</label>
                   <input
                     type="number"
                     min="1"
                     max="100"
                     value={newPromoCode?.discount_percentage}
-                    onChange={(e) => setNewPromoCode({ ...newPromoCode, discount_percentage: parseInt(e?.target?.value) })}
+                    onChange={(e) =>
+                      setNewPromoCode({
+                        ...newPromoCode,
+                        discount_percentage: parseInt(e?.target?.value),
+                      })
+                    }
                     className="w-full px-4 py-2 bg-input border border-border rounded focus:outline-none focus:ring-2 focus:ring-ring"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Maximum Uses
-                  </label>
+                  <label className="block text-sm font-medium mb-2">Maximum Uses</label>
                   <input
                     type="number"
                     min="1"
                     value={newPromoCode?.max_uses}
-                    onChange={(e) => setNewPromoCode({ ...newPromoCode, max_uses: parseInt(e?.target?.value) })}
+                    onChange={(e) =>
+                      setNewPromoCode({ ...newPromoCode, max_uses: parseInt(e?.target?.value) })
+                    }
                     className="w-full px-4 py-2 bg-input border border-border rounded focus:outline-none focus:ring-2 focus:ring-ring"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Valid From
-                  </label>
+                  <label className="block text-sm font-medium mb-2">Valid From</label>
                   <input
                     type="datetime-local"
                     value={newPromoCode?.valid_from}
-                    onChange={(e) => setNewPromoCode({ ...newPromoCode, valid_from: e?.target?.value })}
+                    onChange={(e) =>
+                      setNewPromoCode({ ...newPromoCode, valid_from: e?.target?.value })
+                    }
                     className="w-full px-4 py-2 bg-input border border-border rounded focus:outline-none focus:ring-2 focus:ring-ring"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Valid Until
-                  </label>
+                  <label className="block text-sm font-medium mb-2">Valid Until</label>
                   <input
                     type="datetime-local"
                     value={newPromoCode?.valid_until}
-                    onChange={(e) => setNewPromoCode({ ...newPromoCode, valid_until: e?.target?.value })}
+                    onChange={(e) =>
+                      setNewPromoCode({ ...newPromoCode, valid_until: e?.target?.value })
+                    }
                     className="w-full px-4 py-2 bg-input border border-border rounded focus:outline-none focus:ring-2 focus:ring-ring"
                     required
                   />

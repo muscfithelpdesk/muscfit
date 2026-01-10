@@ -35,7 +35,8 @@ export default function ProductCard({ product }) {
     }
   };
 
-  const primaryImage = product?.productImages?.find(img => img?.isPrimary) || product?.productImages?.[0];
+  const primaryImage =
+    product?.productImages?.find((img) => img?.isPrimary) || product?.productImages?.[0];
   const hasDiscount = product?.originalPrice && product?.originalPrice > product?.price;
   const discountPercentage = hasDiscount
     ? Math.round(((product?.originalPrice - product?.price) / product?.originalPrice) * 100)
@@ -61,7 +62,9 @@ export default function ProductCard({ product }) {
           <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
           {/* Quick Add Overlay */}
-          <div className={`absolute bottom-0 left-0 right-0 p-2 md:p-4 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 md:translate-y-full opacity-100 md:opacity-0'} z-10`}>
+          <div
+            className={`absolute bottom-0 left-0 right-0 p-2 md:p-4 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 md:translate-y-full opacity-100 md:opacity-0'} z-10`}
+          >
             <button className="w-full py-2 md:py-2.5 glass-effect text-[#112D4E] font-bold text-[10px] md:text-xs uppercase tracking-[0.1em] rounded-lg shadow-lg hover:bg-white transition-colors">
               Add to Bag
             </button>
@@ -78,16 +81,25 @@ export default function ProductCard({ product }) {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
             </svg>
           </button>
 
           {/* Tag Badge */}
           {product?.tag && (
             <div className="absolute top-3 left-3 z-10">
-              <span className={`px-4 py-1.5 text-[10px] font-bold rounded-full premium-shadow ${product?.tag === 'SALE' ? 'bg-[#9B1C1C] text-white' :
-                  'glass-effect text-gray-900 shadow-sm'
-                }`}>
+              <span
+                className={`px-4 py-1.5 text-[10px] font-bold rounded-full premium-shadow ${
+                  product?.tag === 'SALE'
+                    ? 'bg-[#9B1C1C] text-white'
+                    : 'glass-effect text-gray-900 shadow-sm'
+                }`}
+              >
                 {product?.tag}
               </span>
             </div>
@@ -105,7 +117,9 @@ export default function ProductCard({ product }) {
 
         {/* Product Info */}
         <div className="p-5">
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{product?.brand || 'MUSCFIT PREMIUM'}</p>
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+            {product?.brand || 'MUSCFIT PREMIUM'}
+          </p>
           <h3 className="text-base font-bold text-[#112D4E] mb-2 leading-tight group-hover:text-blue-700 transition-colors line-clamp-2">
             {product?.name}
           </h3>
@@ -118,7 +132,9 @@ export default function ProductCard({ product }) {
               </svg>
               <span className="ml-1 text-xs font-bold text-gray-700">{product?.rating}</span>
             </div>
-            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">({product?.reviewCount} reviews)</span>
+            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">
+              ({product?.reviewCount} reviews)
+            </span>
           </div>
 
           {/* Price */}

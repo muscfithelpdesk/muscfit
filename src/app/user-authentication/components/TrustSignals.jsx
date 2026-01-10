@@ -4,7 +4,7 @@ export default function TrustSignals() {
   const trustFeatures = [
     { icon: 'ShieldCheckIcon', text: 'Secure SSL Encryption' },
     { icon: 'LockClosedIcon', text: 'Privacy Protected' },
-    { icon: 'CheckBadgeIcon', text: 'Verified Platform' }
+    { icon: 'CheckBadgeIcon', text: 'Verified Platform' },
   ];
 
   return (

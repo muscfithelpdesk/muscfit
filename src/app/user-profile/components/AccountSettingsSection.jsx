@@ -22,19 +22,19 @@ export default function AccountSettingsSection({ settings, onUpdateSettings }) {
 
   const handlePasswordChange = (e) => {
     const { name, value } = e?.target;
-    setPasswordData(prev => ({
+    setPasswordData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     if (passwordErrors?.[name]) {
-      setPasswordErrors(prev => ({ ...prev, [name]: '' }));
+      setPasswordErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
   const togglePasswordVisibility = (field) => {
-    setShowPasswords(prev => ({
+    setShowPasswords((prev) => ({
       ...prev,
-      [field]: !prev?.[field]
+      [field]: !prev?.[field],
     }));
   };
 
@@ -63,7 +63,7 @@ export default function AccountSettingsSection({ settings, onUpdateSettings }) {
 
   const handlePasswordSubmit = (e) => {
     e?.preventDefault();
-    
+
     if (validatePasswordForm()) {
       setIsChangingPassword(true);
       setTimeout(() => {
@@ -81,7 +81,7 @@ export default function AccountSettingsSection({ settings, onUpdateSettings }) {
   const handleNotificationChange = (key) => {
     const updatedNotifications = {
       ...notifications,
-      [key]: !notifications?.[key]
+      [key]: !notifications?.[key],
     };
     setNotifications(updatedNotifications);
     onUpdateSettings({ notifications: updatedNotifications });
@@ -101,7 +101,10 @@ export default function AccountSettingsSection({ settings, onUpdateSettings }) {
         <form onSubmit={handlePasswordSubmit} className="space-y-4">
           {/* Current Password */}
           <div>
-            <label htmlFor="currentPassword" className="block text-sm font-medium text-foreground mb-2">
+            <label
+              htmlFor="currentPassword"
+              className="block text-sm font-medium text-foreground mb-2"
+            >
               Current Password *
             </label>
             <div className="relative">
@@ -167,7 +170,10 @@ export default function AccountSettingsSection({ settings, onUpdateSettings }) {
 
           {/* Confirm Password */}
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-foreground mb-2">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-foreground mb-2"
+            >
               Confirm New Password *
             </label>
             <div className="relative">
@@ -228,19 +234,36 @@ export default function AccountSettingsSection({ settings, onUpdateSettings }) {
 
         <div className="space-y-4">
           {[
-            { key: 'orderUpdates', label: 'Order Updates', description: 'Get notified about your order status' },
-            { key: 'promotions', label: 'Promotions & Offers', description: 'Receive exclusive deals and discounts' },
-            { key: 'newArrivals', label: 'New Arrivals', description: 'Be the first to know about new products' },
-            { key: 'newsletter', label: 'Newsletter', description: 'Weekly fitness tips and product highlights' },
+            {
+              key: 'orderUpdates',
+              label: 'Order Updates',
+              description: 'Get notified about your order status',
+            },
+            {
+              key: 'promotions',
+              label: 'Promotions & Offers',
+              description: 'Receive exclusive deals and discounts',
+            },
+            {
+              key: 'newArrivals',
+              label: 'New Arrivals',
+              description: 'Be the first to know about new products',
+            },
+            {
+              key: 'newsletter',
+              label: 'Newsletter',
+              description: 'Weekly fitness tips and product highlights',
+            },
           ]?.map((item) => (
-            <div key={item?.key} className="flex items-start justify-between py-4 border-b border-border last:border-0">
+            <div
+              key={item?.key}
+              className="flex items-start justify-between py-4 border-b border-border last:border-0"
+            >
               <div className="flex-1">
                 <h4 className="font-heading text-base font-semibold text-foreground mb-1">
                   {item?.label}
                 </h4>
-                <p className="text-sm text-text-secondary">
-                  {item?.description}
-                </p>
+                <p className="text-sm text-text-secondary">{item?.description}</p>
               </div>
               <button
                 onClick={() => handleNotificationChange(item?.key)}
@@ -274,7 +297,9 @@ export default function AccountSettingsSection({ settings, onUpdateSettings }) {
             <div className="flex items-center gap-3">
               <Icon name="DocumentTextIcon" size={20} className="text-text-secondary" />
               <div>
-                <h4 className="font-heading text-sm font-semibold text-foreground">Download My Data</h4>
+                <h4 className="font-heading text-sm font-semibold text-foreground">
+                  Download My Data
+                </h4>
                 <p className="text-xs text-text-secondary mt-1">Get a copy of your account data</p>
               </div>
             </div>

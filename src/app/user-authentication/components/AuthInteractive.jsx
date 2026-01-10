@@ -19,7 +19,7 @@ export default function AuthInteractive({ initialMode }) {
 
   const mockCredentials = {
     email: 'john.doe@example.com',
-    password: 'Fitness@123'
+    password: 'Fitness@123',
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function AuthInteractive({ initialMode }) {
 
   const handleLogin = async (formData) => {
     setIsLoading(true);
-    
+
     setTimeout(() => {
       if (
         formData?.email === mockCredentials?.email &&
@@ -60,7 +60,7 @@ export default function AuthInteractive({ initialMode }) {
 
   const handleRegister = async (formData) => {
     setIsLoading(true);
-    
+
     setTimeout(() => {
       showNotification('success', 'Account created successfully! Redirecting to your profile...');
       setTimeout(() => {
@@ -71,7 +71,8 @@ export default function AuthInteractive({ initialMode }) {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    const newUrl = tab === 'register' ? '/user-authentication?mode=register' : '/user-authentication';
+    const newUrl =
+      tab === 'register' ? '/user-authentication?mode=register' : '/user-authentication';
     router?.push(newUrl);
   };
 
@@ -81,7 +82,9 @@ export default function AuthInteractive({ initialMode }) {
       {notification && (
         <div
           className={`fixed top-20 left-1/2 -translate-x-1/2 z-50 max-w-md w-full mx-4 p-4 rounded-md shadow-sharp-lg animate-scale-in ${
-            notification?.type === 'success' ?'bg-success text-success-foreground' :'bg-error text-error-foreground'
+            notification?.type === 'success'
+              ? 'bg-success text-success-foreground'
+              : 'bg-error text-error-foreground'
           }`}
         >
           <div className="flex items-start gap-3">
@@ -110,7 +113,9 @@ export default function AuthInteractive({ initialMode }) {
             Welcome to MUSCFIT
           </h1>
           <p className="text-sm md:text-base text-text-secondary">
-            {activeTab === 'login' ?'Sign in to access your personalized fitness journey' :'Create your account and start your transformation'}
+            {activeTab === 'login'
+              ? 'Sign in to access your personalized fitness journey'
+              : 'Create your account and start your transformation'}
           </p>
         </div>
 
@@ -136,11 +141,17 @@ export default function AuthInteractive({ initialMode }) {
       <div className="max-w-md mx-auto mt-6 text-center">
         <p className="text-xs text-text-secondary">
           By continuing, you agree to MUSCFIT&apos;s{' '}
-          <a href="/terms" className="text-primary hover:text-primary/80 transition-colors duration-250">
+          <a
+            href="/terms"
+            className="text-primary hover:text-primary/80 transition-colors duration-250"
+          >
             Terms of Service
           </a>{' '}
           and{' '}
-          <a href="/privacy" className="text-primary hover:text-primary/80 transition-colors duration-250">
+          <a
+            href="/privacy"
+            className="text-primary hover:text-primary/80 transition-colors duration-250"
+          >
             Privacy Policy
           </a>
         </p>
@@ -150,5 +161,5 @@ export default function AuthInteractive({ initialMode }) {
 }
 
 AuthInteractive.propTypes = {
-  initialMode: PropTypes.oneOf(['login', 'register']).isRequired
+  initialMode: PropTypes.oneOf(['login', 'register']).isRequired,
 };

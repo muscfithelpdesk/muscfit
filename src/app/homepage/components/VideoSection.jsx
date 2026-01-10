@@ -62,5 +62,5 @@ VideoSection.propTypes = {
   subtitle: PropTypes.string.isRequired,
   thumbnailImage: PropTypes.string.isRequired,
   thumbnailAlt: PropTypes.string.isRequired,
-  videoUrl: PropTypes.string.isRequired
+  videoUrl: PropTypes.string.isRequired,
 };

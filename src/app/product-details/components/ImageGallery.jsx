@@ -28,8 +28,9 @@ export default function ImageGallery({ images }) {
           <AppImage
             src={images?.[selectedImage]?.url || ''}
             alt={images?.[selectedImage]?.alt || 'Product image'}
-            className={`w-full h-full object-cover transition-transform duration-500 backface-hidden ${isZoomed ? 'scale-150' : 'scale-100'
-              }`}
+            className={`w-full h-full object-cover transition-transform duration-500 backface-hidden ${
+              isZoomed ? 'scale-150' : 'scale-100'
+            }`}
           />
         </div>
 
@@ -72,15 +73,13 @@ export default function ImageGallery({ images }) {
           <button
             key={index}
             onClick={() => setSelectedImage(index)}
-            className={`relative w-full aspect-square bg-surface rounded-sm overflow-hidden transition-all duration-250 ${selectedImage === index
-              ? 'ring-2 ring-primary scale-105' : 'hover:ring-2 hover:ring-border hover:scale-105'
-              }`}
+            className={`relative w-full aspect-square bg-surface rounded-sm overflow-hidden transition-all duration-250 ${
+              selectedImage === index
+                ? 'ring-2 ring-primary scale-105'
+                : 'hover:ring-2 hover:ring-border hover:scale-105'
+            }`}
           >
-            <AppImage
-              src={image?.url}
-              alt={image?.alt}
-              className="w-full h-full object-cover"
-            />
+            <AppImage src={image?.url} alt={image?.alt} className="w-full h-full object-cover" />
           </button>
         ))}
       </div>

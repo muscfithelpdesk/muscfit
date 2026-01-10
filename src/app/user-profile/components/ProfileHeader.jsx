@@ -23,17 +23,15 @@ export default function ProfileHeader({ userData, completionPercentage }) {
                 </div>
               )}
             </div>
-            
+
             <div>
               <h1 className="font-heading text-xl md:text-2xl lg:text-3xl font-bold text-foreground">
                 {userData?.name}
               </h1>
-              <p className="text-sm md:text-base text-text-secondary mt-1">
-                {userData?.email}
-              </p>
+              <p className="text-sm md:text-base text-text-secondary mt-1">{userData?.email}</p>
               <div className="flex items-center gap-2 mt-2">
                 <div className="h-2 w-32 md:w-40 bg-muted rounded-full overflow-hidden">
-                  <div 
+                  <div
                     className="h-full bg-primary transition-all duration-250"
                     style={{ width: `${completionPercentage}%` }}
                   ></div>

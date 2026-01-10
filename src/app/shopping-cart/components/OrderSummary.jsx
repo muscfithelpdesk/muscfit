@@ -9,11 +9,11 @@ import { useState } from 'react';
 export default function OrderSummary({ items }) {
   const [promoDiscount, setPromoDiscount] = useState(0);
 
-  const subtotal = items?.reduce((sum, item) => sum + (item?.price * item?.quantity), 0);
-  
+  const subtotal = items?.reduce((sum, item) => sum + item?.price * item?.quantity, 0);
+
   const promoAmount = (subtotal * promoDiscount) / 100;
   const discountedSubtotal = subtotal - promoAmount;
-  
+
   const shipping = discountedSubtotal > 50 ? 0 : 5.99;
   const tax = discountedSubtotal * 0.08;
   const total = discountedSubtotal + shipping + tax;
@@ -29,14 +29,14 @@ export default function OrderSummary({ items }) {
           <span className="text-text-secondary">Subtotal</span>
           <span className="text-text-primary font-data">${subtotal?.toFixed(2)}</span>
         </div>
-        
+
         {promoDiscount > 0 && (
           <div className="flex justify-between text-sm">
             <span className="text-success">Promo Discount ({promoDiscount}%)</span>
             <span className="text-success font-data">-${promoAmount?.toFixed(2)}</span>
           </div>
         )}
-        
+
         <div className="flex justify-between text-sm">
           <span className="text-text-secondary">Shipping</span>
           <span className="text-text-primary font-data">
@@ -63,10 +63,14 @@ export default function OrderSummary({ items }) {
           onClick={onToggleExpressShipping}
           className="w-full flex items-start gap-3 p-4 bg-surface hover:bg-muted border border-border rounded-md transition-all duration-250 hover:scale-[0.98] active:scale-95"
         >
-          <div className={`w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors duration-250 ${
-            isExpressShipping ? 'bg-primary border-primary' : 'border-border'
-          }`}>
-            {isExpressShipping && <Icon name="CheckIcon" size={14} className="text-primary-foreground" />}
+          <div
+            className={`w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors duration-250 ${
+              isExpressShipping ? 'bg-primary border-primary' : 'border-border'
+            }`}
+          >
+            {isExpressShipping && (
+              <Icon name="CheckIcon" size={14} className="text-primary-foreground" />
+            )}
           </div>
           <div className="flex-1 text-left">
             <div className="flex items-center justify-between gap-2 mb-1">

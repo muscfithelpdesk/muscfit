@@ -10,8 +10,10 @@ export default function PromoBar({ messages, isVisible = true, onDismiss }) {
   const [show, setShow] = useState(isVisible);
 
   const promoMessages = Array.isArray(messages)
-    ? messages.filter(msg => msg && msg.trim() !== '')
-    : (messages ? [messages] : []);
+    ? messages.filter((msg) => msg && msg.trim() !== '')
+    : messages
+      ? [messages]
+      : [];
 
   const handleNext = useCallback(() => {
     if (promoMessages.length <= 1) return;
@@ -64,15 +66,18 @@ export default function PromoBar({ messages, isVisible = true, onDismiss }) {
           {promoMessages.map((msg, idx) => (
             <div
               key={idx}
-              className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1) ${idx === currentIndex
-                ? 'opacity-100 translate-x-0'
-                : idx < currentIndex
-                  ? 'opacity-0 -translate-x-full'
-                  : 'opacity-0 translate-x-full'
-                }`}
+              className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1) ${
+                idx === currentIndex
+                  ? 'opacity-100 translate-x-0'
+                  : idx < currentIndex
+                    ? 'opacity-0 -translate-x-full'
+                    : 'opacity-0 translate-x-full'
+              }`}
             >
               <div className="flex items-center gap-2 md:gap-3">
-                <span className="hidden sm:inline-block px-2 py-0.5 bg-black text-white text-[9px] font-black tracking-tighter rounded-sm">SALE</span>
+                <span className="hidden sm:inline-block px-2 py-0.5 bg-black text-white text-[9px] font-black tracking-tighter rounded-sm">
+                  SALE
+                </span>
                 <p className="text-[10px] md:text-xs lg:text-sm font-heading font-black tracking-[0.12em] uppercase whitespace-nowrap text-black">
                   {msg}
                 </p>
@@ -112,10 +117,7 @@ export default function PromoBar({ messages, isVisible = true, onDismiss }) {
 }
 
 PromoBar.propTypes = {
-  messages: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string)
-  ]),
+  messages: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   isVisible: PropTypes.bool,
-  onDismiss: PropTypes.func
+  onDismiss: PropTypes.func,
 };

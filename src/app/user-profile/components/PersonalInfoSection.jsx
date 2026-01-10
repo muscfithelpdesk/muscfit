@@ -18,28 +18,28 @@ export default function PersonalInfoSection({ userData, onSave }) {
 
   const handleChange = (e) => {
     const { name, value } = e?.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     if (errors?.[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData?.name?.trim()) {
       newErrors.name = 'Name is required';
     }
-    
+
     if (!formData?.email?.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/?.test(formData?.email)) {
       newErrors.email = 'Invalid email format';
     }
-    
+
     if (!formData?.phone?.trim()) {
       newErrors.phone = 'Phone number is required';
     } else if (!/^[0-9]{10}$/?.test(formData?.phone?.replace(/\s/g, ''))) {
@@ -52,7 +52,7 @@ export default function PersonalInfoSection({ userData, onSave }) {
 
   const handleSubmit = (e) => {
     e?.preventDefault();
-    
+
     if (validateForm()) {
       setIsSaving(true);
       setTimeout(() => {
@@ -161,9 +161,7 @@ export default function PersonalInfoSection({ userData, onSave }) {
 
           {/* Gender */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-foreground mb-2">
-              Gender
-            </label>
+            <label className="block text-sm font-medium text-foreground mb-2">Gender</label>
             <div className="flex flex-wrap gap-3">
               {['Male', 'Female', 'Other', 'Prefer not to say']?.map((option) => (
                 <label key={option} className="flex items-center gap-2 cursor-pointer">

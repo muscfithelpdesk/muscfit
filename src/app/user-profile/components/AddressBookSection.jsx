@@ -4,7 +4,13 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@/components/ui/AppIcon';
 
-export default function AddressBookSection({ addresses, onAddAddress, onEditAddress, onDeleteAddress, onSetDefault }) {
+export default function AddressBookSection({
+  addresses,
+  onAddAddress,
+  onEditAddress,
+  onDeleteAddress,
+  onSetDefault,
+}) {
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
@@ -20,9 +26,9 @@ export default function AddressBookSection({ addresses, onAddAddress, onEditAddr
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e?.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -120,7 +126,10 @@ export default function AddressBookSection({ addresses, onAddAddress, onEditAddr
             </div>
 
             <div>
-              <label htmlFor="addressLine1" className="block text-sm font-medium text-foreground mb-2">
+              <label
+                htmlFor="addressLine1"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
                 Address Line 1 *
               </label>
               <input
@@ -136,7 +145,10 @@ export default function AddressBookSection({ addresses, onAddAddress, onEditAddr
             </div>
 
             <div>
-              <label htmlFor="addressLine2" className="block text-sm font-medium text-foreground mb-2">
+              <label
+                htmlFor="addressLine2"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
                 Address Line 2
               </label>
               <input
@@ -248,7 +260,7 @@ export default function AddressBookSection({ addresses, onAddAddress, onEditAddr
                 Default Address
               </span>
             )}
-            
+
             <h4 className="font-heading text-base font-semibold text-foreground mb-2">
               {address?.name}
             </h4>

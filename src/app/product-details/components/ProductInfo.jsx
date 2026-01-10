@@ -44,7 +44,9 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
         </h1>
         <div className="flex items-center gap-2">
           <span className="h-0.5 w-8 bg-black"></span>
-          <p className="text-xs font-bold tracking-[0.15em] text-gray-400 uppercase">{product?.category}</p>
+          <p className="text-xs font-bold tracking-[0.15em] text-gray-400 uppercase">
+            {product?.category}
+          </p>
         </div>
       </div>
       {/* Rating & Reviews */}
@@ -94,9 +96,11 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
             <button
               key={color?.name}
               onClick={() => setSelectedColor(color)}
-              className={`w-10 h-10 rounded-full transition-all duration-250 ${selectedColor?.name === color?.name
-                ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-110' : 'hover:scale-110'
-                }`}
+              className={`w-10 h-10 rounded-full transition-all duration-250 ${
+                selectedColor?.name === color?.name
+                  ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-110'
+                  : 'hover:scale-110'
+              }`}
               style={{ backgroundColor: color?.hex }}
               aria-label={`Select ${color?.name} color`}
             />
@@ -122,12 +126,13 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
               key={size}
               onClick={() => setSelectedSize(size)}
               disabled={!product?.availableSizes?.includes(size)}
-              className={`h-12 font-heading font-semibold text-sm rounded-sm transition-all duration-250 ${selectedSize === size
-                ? 'bg-primary text-primary-foreground'
-                : product?.availableSizes?.includes(size)
-                  ? 'bg-surface text-foreground hover:bg-muted'
-                  : 'bg-muted text-text-secondary cursor-not-allowed opacity-50'
-                }`}
+              className={`h-12 font-heading font-semibold text-sm rounded-sm transition-all duration-250 ${
+                selectedSize === size
+                  ? 'bg-primary text-primary-foreground'
+                  : product?.availableSizes?.includes(size)
+                    ? 'bg-surface text-foreground hover:bg-muted'
+                    : 'bg-muted text-text-secondary cursor-not-allowed opacity-50'
+              }`}
             >
               {size}
             </button>
@@ -140,9 +145,15 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border">
-                    <th className="text-left py-2 text-text-secondary font-caption uppercase">Size</th>
-                    <th className="text-left py-2 text-text-secondary font-caption uppercase">Chest (in)</th>
-                    <th className="text-left py-2 text-text-secondary font-caption uppercase">Waist (in)</th>
+                    <th className="text-left py-2 text-text-secondary font-caption uppercase">
+                      Size
+                    </th>
+                    <th className="text-left py-2 text-text-secondary font-caption uppercase">
+                      Chest (in)
+                    </th>
+                    <th className="text-left py-2 text-text-secondary font-caption uppercase">
+                      Waist (in)
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -208,10 +219,11 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
         </button>
         <button
           onClick={onToggleWishlist}
-          className={`h-14 w-14 sm:w-auto sm:px-6 rounded-md transition-all duration-250 hover:scale-[0.98] active:scale-95 flex items-center justify-center ${isInWishlist
-            ? 'bg-primary text-primary-foreground'
-            : 'bg-surface hover:bg-muted text-foreground'
-            }`}
+          className={`h-14 w-14 sm:w-auto sm:px-6 rounded-md transition-all duration-250 hover:scale-[0.98] active:scale-95 flex items-center justify-center ${
+            isInWishlist
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-surface hover:bg-muted text-foreground'
+          }`}
           aria-label="Add to wishlist"
         >
           <Icon name="HeartIcon" size={24} variant={isInWishlist ? 'solid' : 'outline'} />
@@ -239,18 +251,14 @@ export default function ProductInfo({ product, onAddToCart, onToggleWishlist, is
           <Icon name="TruckIcon" size={24} className="text-primary flex-shrink-0" />
           <div>
             <h4 className="font-heading font-semibold text-foreground mb-1">Express Shipping</h4>
-            <p className="text-sm text-text-secondary">
-              Estimated delivery: 3-5 business days
-            </p>
+            <p className="text-sm text-text-secondary">Estimated delivery: 3-5 business days</p>
           </div>
         </div>
         <div className="flex items-start gap-3 p-4 bg-surface rounded-md">
           <Icon name="ArrowPathIcon" size={24} className="text-primary flex-shrink-0" />
           <div>
             <h4 className="font-heading font-semibold text-foreground mb-1">Easy Returns</h4>
-            <p className="text-sm text-text-secondary">
-              30-day return policy on all products
-            </p>
+            <p className="text-sm text-text-secondary">30-day return policy on all products</p>
           </div>
         </div>
       </div>
