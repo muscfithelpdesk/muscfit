@@ -459,7 +459,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                             <img
                               src={
                                 idx === 0
-                                  ? 'https://images.unsplash.com/photo-1547941126-3d5322b218b0?q=80&w=600&auto=format&fit=crop'
+                                  ? '/assets/images/gym-bag-featured.png'
                                   : idx === 1
                                     ? 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600&auto=format&fit=crop'
                                     : '/assets/images/supplements-featured.png'
