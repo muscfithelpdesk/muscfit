@@ -41,11 +41,10 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
               <button
                 key={tab.name}
                 onClick={() => setActiveTab(tab.name)}
-                className={`hover:text-black transition-colors relative pb-1 ${
-                  activeTab === tab.name
+                className={`hover:text-black transition-colors relative pb-1 ${activeTab === tab.name
                     ? 'text-black after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black'
                     : ''
-                }`}
+                  }`}
               >
                 {tab.name}
               </button>
@@ -64,8 +63,11 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
               ?.filter((product) => {
                 const currentTab = tabs.find((t) => t.name === activeTab);
                 if (!currentTab?.filter) return true;
-                // Strict match with category
-                return (product.category || '').toLowerCase() === currentTab.filter.toLowerCase();
+                // Match with category or tag
+                return (
+                  (product.category || '').toLowerCase() === currentTab.filter.toLowerCase() ||
+                  (product.tag || '').toLowerCase() === currentTab.filter.toLowerCase()
+                );
               })
               .map((product) => (
                 <div
@@ -120,11 +122,10 @@ function ModernProductCard({ product, onQuickView }) {
             e.stopPropagation();
             onQuickView(product);
           }}
-          className={`absolute bottom-0 left-0 right-0 h-8 md:h-10 bg-[#2C3E50]/90 flex items-center justify-center transition-all duration-300 z-20 ${
-            isHovered
+          className={`absolute bottom-0 left-0 right-0 h-8 md:h-10 bg-[#2C3E50]/90 flex items-center justify-center transition-all duration-300 z-20 ${isHovered
               ? 'translate-y-0 opacity-100'
               : 'translate-y-2 md:translate-y-full opacity-100 md:opacity-0'
-          }`}
+            }`}
         >
           <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase">
             Quick view
