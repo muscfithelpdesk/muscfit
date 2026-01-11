@@ -104,13 +104,6 @@ export default function HomepageInteractive({ pageData }) {
                 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=2600&auto=format&fit=crop',
               backgroundAlt: 'Modern vibrant gym atmosphere',
             },
-            {
-              title: 'BEYOND LIMITS',
-              subtitle: 'TRUSTED BY PROFESSIONALS',
-              backgroundImage:
-                'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=2600&auto=format&fit=crop',
-              backgroundAlt: 'Extremely dynamic and vibrant professional athlete portrait',
-            },
           ]}
           ctaPrimary={pageData?.hero?.ctaPrimary}
           ctaSecondary={pageData?.hero?.ctaSecondary}
