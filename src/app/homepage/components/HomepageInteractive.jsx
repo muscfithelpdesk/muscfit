@@ -129,10 +129,34 @@ export default function HomepageInteractive({ pageData }) {
           ]}
           products={[
             ...dbProducts.filter((p) => !p.gender || p.gender === 'men' || p.gender === 'unisex'),
-            ...dbProducts
-              .filter((p) => p.gender === 'women' || p.gender === 'unisex')
-              .slice(0, 4)
-              .map((p) => ({ ...p, category: 'winter-arc' })),
+            {
+              id: 'wa-h-1',
+              name: 'WINTER ARC HOODIE (BLUE)',
+              price: 1599,
+              image: '/assets/images/products/winter-arc-hoodie-blue.png',
+              category: 'winter-arc',
+            },
+            {
+              id: 'wa-p-1',
+              name: 'WINTER ARC PANTS (BLUE)',
+              price: 1599,
+              image: '/assets/images/products/winter-arc-pants-blue.jpg',
+              category: 'winter-arc',
+            },
+            {
+              id: 'wa-h-2',
+              name: 'WINTER ARC HOODIE (BLACK)',
+              price: 1599,
+              image: '/assets/images/products/winter-arc-hoodie-black.png',
+              category: 'winter-arc',
+            },
+            {
+              id: 'wa-b-1',
+              name: 'WINTER ARC ACCESSORY SET',
+              price: 1299,
+              image: '/assets/images/products/winter-arc-beanie.png',
+              category: 'winter-arc',
+            },
           ]}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
