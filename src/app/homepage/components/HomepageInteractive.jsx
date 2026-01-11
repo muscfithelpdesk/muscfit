@@ -120,16 +120,20 @@ export default function HomepageInteractive({ pageData }) {
           title="MEN'S"
           subtitle="SHOP"
           tabs={[
-            { name: 'WINTER-ARC' },
+            { name: 'WINTER-ARC', filter: 'winter-arc' },
             { name: "MEN'S TSHIRTS", filter: 'tshirts' },
             { name: 'JOGGERS', filter: 'joggers' },
             { name: 'STRINGERS', filter: 'tshirts' },
             { name: 'SHORTS', filter: 'shorts' },
             { name: 'ACCESSORIES', filter: 'accessories' },
           ]}
-          products={dbProducts.filter(
-            (p) => !p.gender || p.gender === 'men' || p.gender === 'unisex'
-          )}
+          products={[
+            ...dbProducts.filter((p) => !p.gender || p.gender === 'men' || p.gender === 'unisex'),
+            ...dbProducts
+              .filter((p) => p.gender === 'women' || p.gender === 'unisex')
+              .slice(0, 4)
+              .map((p) => ({ ...p, category: 'winter-arc' })),
+          ]}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
