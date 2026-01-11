@@ -47,9 +47,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
       label: 'Men',
       path: '/men-catalog',
       subcategories: [
-        { name: 'Topwear', path: '/men-catalog?type=topwear' },
-        { name: 'Bottomwear', path: '/men-catalog?type=bottomwear' },
-        { name: 'Innerwear', path: '/men-catalog?type=innerwear' },
+        { name: 'Topwear', path: '/men-catalog?category=Topwear' },
+        { name: 'Bottomwear', path: '/men-catalog?category=Bottomwear' },
+        { name: 'Innerwear', path: '/men-catalog?category=Innerwear' },
       ],
       featuredImage: '/assets/images/no_image.png',
       featuredAlt: "Men's athletic wear collection",
@@ -58,9 +58,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
       label: 'Women',
       path: '/women-catalog',
       subcategories: [
-        { name: 'Topwear', path: '/women-catalog?type=topwear' },
-        { name: 'Bottomwear', path: '/women-catalog?type=bottomwear' },
-        { name: 'Innerwear', path: '/women-catalog?type=innerwear' },
+        { name: 'Topwear', path: '/women-catalog?category=Topwear' },
+        { name: 'Bottomwear', path: '/women-catalog?category=Bottomwear' },
+        { name: 'Innerwear', path: '/women-catalog?category=Innerwear' },
       ],
       featuredImage: '/assets/images/no_image.png',
       featuredAlt: "Women's athletic wear collection",
@@ -69,20 +69,20 @@ export default function Header({ topOffset = 0, isFixed = true }) {
       label: 'Compression Series',
       path: '/compression-wear-catalog',
       subcategories: [
-        { name: 'Topwear', path: '/compression-wear-catalog?type=topwear' },
-        { name: 'Bottomwear', path: '/compression-wear-catalog?type=bottomwear' },
-        { name: 'Full Body', path: '/compression-wear-catalog?type=fullbody' },
+        { name: 'Topwear', path: '/compression-wear-catalog?category=Topwear' },
+        { name: 'Bottomwear', path: '/compression-wear-catalog?category=Bottomwear' },
+        { name: 'Full Body', path: '/compression-wear-catalog?category=Full Body' },
       ],
       featuredImage: '/assets/images/compression-featured.png',
       featuredAlt: 'Compression wear collection',
     },
     accessories: {
       label: 'Accessories',
-      path: '/accessories-catalog',
+      path: '/men-catalog?tag=accessories',
       subcategories: [
-        { name: 'Gym Bags', path: '/accessories-catalog?type=bags' },
-        { name: 'Equipment', path: '/accessories-catalog?type=equipment' },
-        { name: 'Supplements', path: '/accessories-catalog?type=supplements' },
+        { name: 'Gym Bags', path: '/men-catalog?search=gym bags' },
+        { name: 'Equipment', path: '/men-catalog?search=equipment' },
+        { name: 'Supplements', path: '/men-catalog?search=supplements' },
       ],
       featuredImage: '/assets/images/no_image.png',
       featuredAlt: 'Fitness accessories collection',
@@ -185,8 +185,6 @@ export default function Header({ topOffset = 0, isFixed = true }) {
         targetCatalog = '/women-catalog';
       } else if (pathname?.startsWith('/compression-wear-catalog')) {
         targetCatalog = '/compression-wear-catalog';
-      } else if (pathname?.startsWith('/accessories-catalog')) {
-        targetCatalog = '/accessories-catalog';
       }
       router?.push(`${targetCatalog}?search=${encodeURIComponent(searchQuery)}`);
       setIsSearchOpen(false);
