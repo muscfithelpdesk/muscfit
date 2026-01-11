@@ -24,78 +24,7 @@ import { productService } from '@/lib/services/productService';
 import { uploadService } from '@/lib/services/uploadService';
 
 // Mock data for orders
-const mockOrders = [
-  {
-    id: 'ORD-2024-001',
-    customer: { name: 'Rahul Sharma', email: 'rahul.sharma@example.com', phone: '9876543210' },
-    orderDate: '2024-12-20',
-    totalAmount: 4599,
-    paymentMethod: 'UPI',
-    paymentStatus: 'Paid',
-    orderStatus: 'Delivered',
-    items: [
-      { name: 'Performance Compression Tee', quantity: 2, price: 1299 },
-      { name: 'Elite Training Shorts', quantity: 1, price: 2001 },
-    ],
-
-    shippingAddress: '123 MG Road, Bangalore, Karnataka 560001',
-  },
-  {
-    id: 'ORD-2024-002',
-    customer: { name: 'Priya Patel', email: 'priya.patel@example.com', phone: '9123456789' },
-    orderDate: '2024-12-21',
-    totalAmount: 8999,
-    paymentMethod: 'Credit Card',
-    paymentStatus: 'Paid',
-    orderStatus: 'Shipped',
-    items: [
-      { name: 'Premium Yoga Mat', quantity: 1, price: 2499 },
-      { name: 'Resistance Bands Set', quantity: 1, price: 1500 },
-      { name: 'Protein Shaker', quantity: 3, price: 1500 },
-    ],
-
-    shippingAddress: '456 Park Street, Mumbai, Maharashtra 400001',
-  },
-  {
-    id: 'ORD-2024-003',
-    customer: { name: 'Amit Kumar', email: 'amit.kumar@example.com', phone: '9988776655' },
-    orderDate: '2024-12-22',
-    totalAmount: 3299,
-    paymentMethod: 'Net Banking',
-    paymentStatus: 'Paid',
-    orderStatus: 'Processing',
-    items: [{ name: 'Running Shoes Pro', quantity: 1, price: 3299 }],
-
-    shippingAddress: '789 Connaught Place, New Delhi, Delhi 110001',
-  },
-  {
-    id: 'ORD-2024-004',
-    customer: { name: 'Sneha Reddy', email: 'sneha.reddy@example.com', phone: '9876512340' },
-    orderDate: '2024-12-23',
-    totalAmount: 5499,
-    paymentMethod: 'COD',
-    paymentStatus: 'Pending',
-    orderStatus: 'Pending',
-    items: [
-      { name: 'Gym Bag Premium', quantity: 1, price: 1999 },
-      { name: 'Workout Gloves', quantity: 2, price: 1750 },
-    ],
-
-    shippingAddress: '321 Jubilee Hills, Hyderabad, Telangana 500033',
-  },
-  {
-    id: 'ORD-2024-005',
-    customer: { name: 'Vikram Singh', email: 'vikram.singh@example.com', phone: '9123498765' },
-    orderDate: '2024-12-19',
-    totalAmount: 12999,
-    paymentMethod: 'UPI',
-    paymentStatus: 'Paid',
-    orderStatus: 'Cancelled',
-    items: [{ name: 'Smart Fitness Watch', quantity: 1, price: 12999 }],
-
-    shippingAddress: '654 Civil Lines, Jaipur, Rajasthan 302006',
-  },
-];
+const mockOrders = [];
 
 // Mock data for products
 // Mock data for products removed - using real data via productService
@@ -790,11 +719,10 @@ export default function AdminDashboard() {
               <button
                 key={tab?.id}
                 onClick={() => setActiveTab(tab?.id)}
-                className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all ${
-                  activeTab === tab?.id
+                className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all ${activeTab === tab?.id
                     ? 'text-primary border-b-2 border-primary'
                     : 'text-text-secondary hover:text-foreground'
-                }`}
+                  }`}
               >
                 <Icon name={tab?.icon} size={20} />
                 {tab?.label}
