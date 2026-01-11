@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
 
@@ -9,6 +9,45 @@ import PropTypes from 'prop-types';
 export default function CollectionSection({ title, subtitle, tabs, products, onQuickView, id }) {
   const [activeTab, setActiveTab] = useState(tabs[0]?.name);
   const scrollRef = useRef(null);
+
+  // Handle hash-based navigation to specific tabs
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash && id) {
+        // Check if hash matches this section's ID
+        if (hash.startsWith(`#${id}`)) {
+          // Extract tab filter from hash (e.g., #explore-accessories-gym-bags -> gym-bags)
+          const tabFilter = hash.replace(`#${id}-`, '').toLowerCase();
+
+          // Find matching tab
+          const matchingTab = tabs.find(tab => {
+            const tabName = tab.name.toLowerCase().replace(/\s+/g, '-');
+            return tabName === tabFilter || tab.filter === tabFilter;
+          });
+
+          if (matchingTab) {
+            setActiveTab(matchingTab.name);
+          }
+
+          // Scroll to section
+          setTimeout(() => {
+            const element = document.getElementById(id);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 100);
+        }
+      }
+    };
+
+    // Check hash on mount
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [id, tabs]);
 
   const scrollRight = () => {
     if (scrollRef.current) {

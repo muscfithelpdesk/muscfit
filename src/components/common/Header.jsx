@@ -80,9 +80,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
       label: 'Accessories',
       path: '/#explore-accessories',
       subcategories: [
-        { name: 'Gym Bags', path: '/#explore-accessories' },
-        { name: 'Equipment', path: '/#explore-accessories' },
-        { name: 'Supplements', path: '/#explore-accessories' },
+        { name: 'Gym Bags', path: '/#explore-accessories-gym-bags' },
+        { name: 'Equipment', path: '/#explore-accessories-equipment' },
+        { name: 'Supplements', path: '/#explore-accessories-supplements' },
       ],
       featuredImage: '/assets/images/no_image.png',
       featuredAlt: 'Fitness accessories collection',
