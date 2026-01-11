@@ -133,6 +133,51 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // Sign in with Phone (OTP)
+  const signInWithPhone = async (phone) => {
+    try {
+      if (!supabase) throw new Error('Supabase client not initialized');
+      setError(null);
+
+      // Ensure phone is in E.164 format (e.g. +919876543210)
+      const formattedPhone = phone.startsWith('+') ? phone : `+91${phone}`;
+
+      const { data, error: otpError } = await supabase.auth.signInWithOtp({
+        phone: formattedPhone,
+      });
+
+      if (otpError) throw otpError;
+
+      return { success: true, data };
+    } catch (err) {
+      setError(err?.message);
+      return { success: false, error: err?.message };
+    }
+  };
+
+  // Verify OTP
+  const verifyOTP = async (phone, token) => {
+    try {
+      if (!supabase) throw new Error('Supabase client not initialized');
+      setError(null);
+
+      const formattedPhone = phone.startsWith('+') ? phone : `+91${phone}`;
+
+      const { data, error: verifyError } = await supabase.auth.verifyOtp({
+        phone: formattedPhone,
+        token,
+        type: 'sms',
+      });
+
+      if (verifyError) throw verifyError;
+
+      return { success: true, data };
+    } catch (err) {
+      setError(err?.message);
+      return { success: false, error: err?.message };
+    }
+  };
+
   // Update user profile
   const updateProfile = async (updates) => {
     try {
@@ -157,6 +202,8 @@ export function AuthProvider({ children }) {
     error,
     signUp,
     signIn,
+    signInWithPhone,
+    verifyOTP,
     signOut,
     updateProfile,
   };

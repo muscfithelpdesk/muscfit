@@ -4,109 +4,100 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
-export default function LoginForm() {
+export default function LoginForm({ identifier, authMethod, onEdit }) {
   const router = useRouter();
-  const { signIn } = useAuth();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const { signIn, verifyOTP } = useAuth();
+  const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e?.target?.name]: e?.target?.value,
-    }));
-  };
 
   const handleSubmit = async (e) => {
     e?.preventDefault();
     setLoading(true);
     setError('');
 
-    const result = await signIn(formData?.email, formData?.password);
+    let result;
+    if (authMethod === 'phone') {
+      result = await verifyOTP(identifier, code);
+    } else {
+      result = await signIn(identifier, code);
+    }
 
     if (result?.success) {
-      router?.push('/');
+      router?.push('/user-profile');
     } else {
-      setError(result?.error || 'Login failed');
+      setError(result?.error || 'Authentication failed. Please try again.');
     }
 
     setLoading(false);
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="flex-1 flex flex-col justify-center h-full">
+      <div className="mb-8">
+        <button
+          onClick={onEdit}
+          className="text-xs font-bold text-gray-400 flex items-center gap-1 hover:text-black transition-colors"
+        >
+          <Icon name="ArrowLeftIcon" size={14} />
+          {identifier}
+        </button>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-8">
         {error && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800 text-sm">{error}</p>
+          <div className="p-4 bg-red-50 border border-red-100 rounded-lg animate-shake">
+            <p className="text-red-600 text-xs font-bold flex items-center gap-2">
+              <Icon name="ExclamationCircleIcon" size={16} />
+              {error}
+            </p>
           </div>
         )}
 
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-            Email Address
-          </label>
+        <div className="relative group">
           <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData?.email}
-            onChange={handleChange}
+            type={authMethod === 'phone' ? 'text' : 'password'}
+            id="code"
+            name="code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
             required
-            className="w-full px-4 py-3 bg-white border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
-            placeholder="Enter your email"
+            autoFocus
+            className="w-full px-0 py-3 bg-transparent border-b-2 border-gray-200 focus:border-black outline-none transition-all duration-300 text-lg font-medium peer placeholder-transparent"
+            placeholder={authMethod === 'phone' ? 'Enter 6-digit OTP' : 'Enter Password'}
           />
-        </div>
-
-        <div>
-          <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
-            Password
+          <label className="absolute left-0 -top-3.5 text-gray-500 text-xs transition-all peer-placeholder-shown:text-lg peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-black peer-focus:text-xs pointer-events-none">
+            {authMethod === 'phone' ? 'Enter OTP' : 'Enter Password'}
           </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData?.password}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-3 bg-white border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
-            placeholder="Enter your password"
-          />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 disabled:bg-gray-400 transition-colors font-semibold"
+          className="w-full h-14 bg-black text-white font-black text-sm tracking-widest uppercase hover:bg-gray-800 transition-all rounded-sm shadow-lg disabled:bg-gray-400 group relative overflow-hidden"
         >
-          {loading ? 'Signing in...' : 'Sign In'}
+          <span className="relative z-10">{loading ? 'VERIFYING...' : 'LOGIN'}</span>
+          <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
         </button>
       </form>
 
-      {/* Demo Credentials Section */}
-      <div className="mt-8 p-4 bg-muted border border-border rounded-lg">
-        <h3 className="text-sm font-semibold text-foreground mb-3">Demo Credentials:</h3>
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between">
-            <span className="text-text-secondary">Admin:</span>
-            <span className="font-mono text-foreground font-semibold">
-              admin@muscfit.com / admin123
-            </span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-text-secondary">User:</span>
-            <span className="font-mono text-foreground font-semibold">
-              user@muscfit.com / user123
-            </span>
-          </div>
+      {authMethod === 'phone' && (
+        <div className="mt-6 text-center">
+          <button className="text-xs font-bold text-gray-500 hover:text-black transition-colors">
+            Resend OTP?
+          </button>
         </div>
+      )}
+
+      <div className="mt-auto pt-8 text-center text-[10px] text-gray-400">
+        By continuing, you agree to MUSCFIT&apos;s Terms of Use and Privacy Policy.
       </div>
     </div>
   );
 }
 
-LoginForm.propTypes = {};
+LoginForm.propTypes = {
+  identifier: PropTypes.string.isRequired,
+  authMethod: PropTypes.oneOf(['phone', 'email']).isRequired,
+  onEdit: PropTypes.func.isRequired,
+};
