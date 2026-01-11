@@ -36,7 +36,7 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
             if (element) {
               element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-          }, 100);
+          }, 0);
         }
       }
     };
