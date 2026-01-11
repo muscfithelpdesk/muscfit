@@ -218,9 +218,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 <img
                   src="/assets/images/logo-v4.png"
                   alt="MUSCFIT Logo"
-                  className={`transition-all duration-300 w-auto max-w-none object-contain ${
-                    scrolled ? 'h-[82px] md:h-[92px]' : 'h-[102px] md:h-[202px]'
-                  }`}
+                  className={`transition-all duration-300 w-auto max-w-none object-contain ${scrolled ? 'h-[82px] md:h-[92px]' : 'h-[102px] md:h-[202px]'
+                    }`}
                 />
               </div>
             </Link>
@@ -228,7 +227,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
           {/* Center Navigation - Desktop */}
           {!isAdminPage && (
-            <nav className="hidden md:flex items-center justify-center gap-8 lg:gap-12 flex-1">
+            <nav className="hidden md:flex items-center justify-start gap-6 lg:gap-8 flex-1 ml-4 lg:ml-8">
               {/* Men Navigation Item */}
               <div className="relative" ref={menDropdownRef}>
                 <button
@@ -523,6 +522,28 @@ export default function Header({ topOffset = 0, isFixed = true }) {
             </nav>
           )}
 
+          {/* Persistent Search Bar - Desktop */}
+          {!isAdminPage && (
+            <div className="hidden md:flex flex-1 max-w-[400px] lg:max-w-[500px] mx-4 lg:mx-8">
+              <form onSubmit={handleSearchSubmit} className="relative w-full group">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Icon
+                    name="MagnifyingGlassIcon"
+                    size={18}
+                    className="text-text-secondary group-focus-within:text-primary transition-colors"
+                  />
+                </div>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e?.target.value)}
+                  placeholder="Search for products, brands and more"
+                  className="block w-full h-10 pl-10 pr-3 bg-surface border border-transparent focus:border-primary/20 focus:bg-white focus:ring-4 focus:ring-primary/5 rounded-md text-sm font-medium transition-all duration-300 placeholder:text-text-secondary/60"
+                />
+              </form>
+            </div>
+          )}
+
           {/* Right Action Icons */}
           {/* Right Action Icons - Myntra Style */}
           <div className="flex items-center justify-end gap-1 md:gap-4 w-auto lg:w-1/3 pr-2 md:pr-0">
@@ -640,8 +661,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               )}
             </div>
 
-            {/* Magnifying Glass (Search) - Placed after Profile as requested */}
-            <div className="relative group flex items-center" ref={searchRef}>
+            {/* Mobile Search Icon - Only visible on mobile now */}
+            <div className="relative group flex md:hidden items-center" ref={searchRef}>
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                 className="flex flex-col items-center gap-1 group/btn px-3 transition-all duration-300 relative py-1"
@@ -652,14 +673,13 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   size={20}
                   className="text-text-secondary group-hover/btn:text-primary transition-colors"
                 />
-                <span className="text-[10px] md:text-[11px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
+                <span className="text-[10px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
                   Search
                 </span>
-                <div className="absolute -bottom-1 left-3 right-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></div>
               </button>
 
               {isSearchOpen && (
-                <div className="fixed md:absolute left-4 right-4 md:left-auto md:right-0 top-[85px] md:top-full mt-2 w-auto md:w-[320px] bg-background border border-border shadow-sharp-lg border-t-2 border-t-primary animate-scale-in-origin-top z-[100] p-4">
+                <div className="fixed left-4 right-4 top-[85px] mt-2 bg-background border border-border shadow-sharp-lg border-t-2 border-t-primary animate-scale-in-origin-top z-[100] p-4">
                   <form onSubmit={handleSearchSubmit} className="relative">
                     <input
                       type="text"
@@ -676,25 +696,6 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       <Icon name="MagnifyingGlassIcon" size={16} />
                     </button>
                   </form>
-                  {recentSearches?.length > 0 && (
-                    <div className="mt-4 px-1">
-                      <p className="text-[9px] font-black text-text-secondary uppercase tracking-[0.2em] mb-2 leading-none">
-                        Trending
-                      </p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {recentSearches?.map((search, index) => (
-                          <Link
-                            key={index}
-                            href={`/men-catalog?search=${encodeURIComponent(search)}`}
-                            className="px-2.5 py-1 text-[10px] bg-surface hover:bg-primary/10 hover:text-primary text-text-secondary rounded-full transition-all font-bold border border-border/50"
-                            onClick={() => setIsSearchOpen(false)}
-                          >
-                            {search}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
