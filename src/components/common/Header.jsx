@@ -380,17 +380,17 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 {isCompressionDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsCompressionDropdownOpen(false)}
-                    className="absolute top-full left-1/2 -translate-x-1/2 w-[700px] bg-zinc-900 border border-zinc-800 shadow-sharp-lg rounded-xl animate-scale-in-origin-top z-40 overflow-hidden"
+                    className="absolute top-full left-1/2 -translate-x-1/2 w-[700px] bg-background border border-border shadow-sharp-lg rounded-xl animate-scale-in-origin-top z-40 overflow-hidden"
                   >
                     <div className="flex h-[380px]">
-                      <div className="w-1/3 bg-black p-6 flex flex-col justify-between relative overflow-hidden">
+                      <div className="w-1/3 bg-surface/50 p-6 flex flex-col justify-between relative overflow-hidden">
                         <div className="relative z-10">
-                          <h3 className="text-white font-heading text-2xl font-bold leading-tight">
+                          <h3 className="text-foreground font-heading text-2xl font-bold leading-tight">
                             Elite
                             <br />
                             Compression
                           </h3>
-                          <p className="text-gray-400 text-xs mt-2">
+                          <p className="text-text-secondary text-xs mt-2 font-medium">
                             Maximize focus. Minimize fatigue.
                           </p>
                         </div>
@@ -399,7 +399,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                             <Link
                               key={subcat?.path}
                               href={subcat?.path}
-                              className="block text-gray-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm transition-colors"
+                              className="block text-text-secondary hover:text-primary hover:bg-primary/5 px-3 py-2 rounded-md text-sm font-semibold transition-colors"
                               onClick={() => setIsCompressionDropdownOpen(false)}
                             >
                               {subcat?.name}
@@ -407,7 +407,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                           ))}
                         </div>
                         {/* Abstract BG element */}
-                        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-indigo-600 rounded-full blur-[80px] opacity-40"></div>
+                        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-[80px]"></div>
                       </div>
 
                       <div className="w-2/3 relative group">
@@ -445,42 +445,74 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 {isAccessoriesDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsAccessoriesDropdownOpen(false)}
-                    className="absolute top-full left-1/2 -translate-x-1/2 w-[500px] bg-background border border-border shadow-sharp-lg rounded-xl animate-scale-in-origin-top z-40 overflow-hidden"
+                    className="absolute top-full left-1/2 -translate-x-1/2 w-[850px] bg-background border border-border shadow-sharp-lg rounded-xl animate-scale-in-origin-top z-40 overflow-hidden"
                   >
-                    <div className="p-6">
-                      <div className="grid grid-cols-2 gap-4">
+                    <div className="p-8">
+                      <div className="grid grid-cols-4 gap-6">
                         {navigationCategories?.accessories?.subcategories?.map((subcat, idx) => (
                           <Link
                             key={subcat?.path}
                             href={subcat?.path}
-                            className="group/acc p-4 rounded-lg bg-surface hover:bg-muted transition-colors flex flex-col items-center text-center gap-3 border border-border hover:border-primary/30"
+                            className="group/acc relative h-[280px] rounded-xl overflow-hidden shadow-sm hover:shadow-sharp-lg transition-all duration-300"
                             onClick={() => setIsAccessoriesDropdownOpen(false)}
                           >
-                            <div className="w-12 h-12 rounded-full bg-background flex items-center justify-center shadow-sm group-hover/acc:scale-110 transition-transform">
-                              <Icon
-                                name={
-                                  idx === 0
-                                    ? 'ShoppingBagIcon'
-                                    : idx === 1
-                                      ? 'WrenchIcon'
-                                      : 'SparklesIcon'
-                                }
-                                size={20}
-                                className="text-primary"
-                              />
+                            <img
+                              src={
+                                idx === 0
+                                  ? 'https://images.unsplash.com/photo-1547941126-3d5322b218b0?q=80&w=600&auto=format&fit=crop'
+                                  : idx === 1
+                                    ? 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600&auto=format&fit=crop'
+                                    : 'https://images.unsplash.com/photo-1593094859945-d22797e8848d?q=80&w=600&auto=format&fit=crop'
+                              }
+                              alt={subcat?.name}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover/acc:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-5">
+                              <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mb-3 group-hover/acc:bg-primary transition-colors duration-300">
+                                <Icon
+                                  name={
+                                    idx === 0
+                                      ? 'ShoppingBagIcon'
+                                      : idx === 1
+                                        ? 'WrenchIcon'
+                                        : 'SparklesIcon'
+                                  }
+                                  size={18}
+                                  className="text-white"
+                                />
+                              </div>
+                              <span className="font-heading font-black text-white text-lg uppercase tracking-tight">
+                                {subcat?.name}
+                              </span>
+                              <span className="text-white/60 text-[10px] font-bold uppercase tracking-widest mt-1 group-hover/acc:text-primary transition-colors">
+                                Explore Collection
+                              </span>
                             </div>
-                            <span className="font-heading font-bold text-foreground">
-                              {subcat?.name}
-                            </span>
                           </Link>
                         ))}
-                        {/* Extra Promo Card for filler */}
+                        {/* Extra Promo Card */}
                         <Link
                           href="/accessories-catalog"
-                          className="p-4 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-700 text-white flex flex-col items-center justify-center text-center gap-1 hover:brightness-110 transition-all"
+                          className="group/all relative h-[280px] rounded-xl overflow-hidden bg-primary flex flex-col items-center justify-center text-center p-6 hover:brightness-110 transition-all border-2 border-primary"
+                          onClick={() => setIsAccessoriesDropdownOpen(false)}
                         >
-                          <span className="font-bold text-lg">Shop All</span>
-                          <span className="text-xs opacity-80">View Full Collection</span>
+                          <div className="absolute inset-0 opacity-20 pointer-events-none">
+                            <div className="absolute top-0 left-0 w-24 h-24 bg-white rounded-full blur-[50px]"></div>
+                            <div className="absolute bottom-0 right-0 w-32 h-32 bg-black rounded-full blur-[60px]"></div>
+                          </div>
+                          <div className="relative z-10 flex flex-col items-center">
+                            <div className="w-16 h-16 rounded-full bg-black/20 flex items-center justify-center mb-4 group-hover/all:scale-110 transition-transform">
+                              <Icon name="ArrowRightIcon" size={32} className="text-white" />
+                            </div>
+                            <span className="font-heading font-black text-white text-2xl uppercase leading-tight tracking-tighter">
+                              See All
+                              <br />
+                              Premium
+                            </span>
+                            <span className="text-white/80 text-xs font-bold uppercase tracking-[0.2em] mt-3 pb-1 border-b-2 border-white/30 group-hover:border-white transition-all">
+                              View More
+                            </span>
+                          </div>
                         </Link>
                       </div>
                     </div>
