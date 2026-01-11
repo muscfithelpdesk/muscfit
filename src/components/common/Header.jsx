@@ -23,6 +23,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
   const { user, signOut } = useAuth();
 
   const searchRef = useRef(null);
+  const overlayRef = useRef(null);
   const cartRef = useRef(null);
   const profileRef = useRef(null);
   const mobileMenuRef = useRef(null);
@@ -113,7 +114,12 @@ export default function Header({ topOffset = 0, isFixed = true }) {
     };
 
     const handleClickOutside = (event) => {
-      if (searchRef?.current && !searchRef?.current?.contains(event?.target)) {
+      if (
+        searchRef?.current &&
+        !searchRef?.current?.contains(event?.target) &&
+        overlayRef?.current &&
+        !overlayRef?.current?.contains(event?.target)
+      ) {
         setIsSearchOpen(false);
       }
       if (cartRef?.current && !cartRef?.current?.contains(event?.target)) {
@@ -173,7 +179,16 @@ export default function Header({ topOffset = 0, isFixed = true }) {
   const handleSearchSubmit = (e) => {
     e?.preventDefault();
     if (searchQuery?.trim()) {
-      router?.push(`/men-catalog?search=${encodeURIComponent(searchQuery)}`);
+      // Determine which catalog to search based on current page
+      let targetCatalog = '/men-catalog';
+      if (pathname?.startsWith('/women-catalog')) {
+        targetCatalog = '/women-catalog';
+      } else if (pathname?.startsWith('/compression-wear-catalog')) {
+        targetCatalog = '/compression-wear-catalog';
+      } else if (pathname?.startsWith('/accessories-catalog')) {
+        targetCatalog = '/accessories-catalog';
+      }
+      router?.push(`${targetCatalog}?search=${encodeURIComponent(searchQuery)}`);
       setIsSearchOpen(false);
     }
   };
@@ -925,7 +940,10 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           />
 
           {/* Search Container */}
-          <div className="absolute top-0 inset-x-0 bg-background shadow-sharp-lg animate-fade-in border-b border-border">
+          <div
+            ref={overlayRef}
+            className="absolute top-0 inset-x-0 bg-background shadow-sharp-lg animate-fade-in border-b border-border"
+          >
             <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8 md:py-12">
               <div className="flex items-center gap-4 mb-8">
                 <div className="flex-1 relative flex items-center group">
@@ -995,16 +1013,28 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       'Accessories',
                       'Supplements',
                       'Performance Shorts',
-                    ]?.map((term) => (
-                      <Link
-                        key={term}
-                        href={`/men-catalog?search=${encodeURIComponent(term)}`}
-                        className="px-6 py-3 bg-surface hover:bg-primary text-text-secondary hover:text-white rounded-full text-sm font-bold transition-all border border-border/50 hover:border-primary uppercase tracking-tighter"
-                        onClick={() => setIsSearchOpen(false)}
-                      >
-                        {term}
-                      </Link>
-                    ))}
+                    ]?.map((term) => {
+                      // Determine target catalog based on current page
+                      let targetCatalog = '/men-catalog';
+                      if (pathname?.startsWith('/women-catalog')) {
+                        targetCatalog = '/women-catalog';
+                      } else if (pathname?.startsWith('/compression-wear-catalog')) {
+                        targetCatalog = '/compression-wear-catalog';
+                      } else if (pathname?.startsWith('/accessories-catalog')) {
+                        targetCatalog = '/accessories-catalog';
+                      }
+
+                      return (
+                        <Link
+                          key={term}
+                          href={`${targetCatalog}?search=${encodeURIComponent(term)}`}
+                          className="px-6 py-3 bg-surface hover:bg-primary text-text-secondary hover:text-white rounded-full text-sm font-bold transition-all border border-border/50 hover:border-primary uppercase tracking-tighter"
+                          onClick={() => setIsSearchOpen(false)}
+                        >
+                          {term}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
 

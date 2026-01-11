@@ -7,6 +7,9 @@ import ProductCard from '../../women-catalog/components/ProductCard';
 import MobileFilterSheet from '../../women-catalog/components/MobileFilterSheet';
 
 export default function MenCatalogInteractive() {
+  const searchParams = useSearchParams();
+  const querySearch = searchParams.get('search') || '';
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -20,53 +23,58 @@ export default function MenCatalogInteractive() {
     tags: [],
   });
   const [sortBy, setSortBy] = useState('newest');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(querySearch);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
-  const searchParams = useSearchParams();
-  const querySearch = searchParams.get('search') || '';
-
   useEffect(() => {
-    if (querySearch) {
-      setSearchTerm(querySearch);
-    }
+    setSearchTerm(querySearch);
   }, [querySearch]);
 
   useEffect(() => {
-    loadProducts();
+    let isMounted = true;
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const filterParams = {
+          gender: 'men',
+          search: searchTerm,
+          sortBy: sortBy,
+          minPrice: filters?.priceRange?.min,
+          maxPrice: filters?.priceRange?.max,
+        };
+
+        if (filters?.categories?.length > 0) {
+          filterParams.category = filters?.categories?.[0];
+        }
+        if (filters?.brands?.length > 0) {
+          filterParams.brand = filters?.brands?.[0];
+        }
+        if (filters?.tags?.length > 0) {
+          filterParams.tag = filters?.tags?.[0];
+        }
+
+        const data = await productService?.getAll(filterParams);
+        if (isMounted) {
+          setProducts(data);
+          setError('');
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError(err?.message || 'Failed to load products');
+        }
+        console.error('Error loading products:', err);
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchProducts();
+    return () => {
+      isMounted = false;
+    };
   }, [filters, sortBy, searchTerm]);
-
-  const loadProducts = async () => {
-    try {
-      setLoading(true);
-      const filterParams = {
-        gender: 'men',
-        search: searchTerm,
-        sortBy: sortBy,
-        minPrice: filters?.priceRange?.min,
-        maxPrice: filters?.priceRange?.max,
-      };
-
-      if (filters?.categories?.length > 0) {
-        filterParams.category = filters?.categories?.[0];
-      }
-      if (filters?.brands?.length > 0) {
-        filterParams.brand = filters?.brands?.[0];
-      }
-      if (filters?.tags?.length > 0) {
-        filterParams.tag = filters?.tags?.[0];
-      }
-
-      const data = await productService?.getAll(filterParams);
-      setProducts(data);
-      setError('');
-    } catch (err) {
-      setError(err?.message || 'Failed to load products');
-      console.error('Error loading products:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleFilterChange = (newFilters) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
