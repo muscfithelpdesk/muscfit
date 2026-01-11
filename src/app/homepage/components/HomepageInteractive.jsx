@@ -185,11 +185,38 @@ export default function HomepageInteractive({ pageData }) {
           subtitle="EXPLORE"
           tabs={[
             { name: 'GYM BAGS', filter: 'accessories' },
-            { name: 'EQUIPMENT', filter: 'accessories' },
+            { name: 'EQUIPMENT', filter: 'equipment' },
             { name: 'SUPPLEMENTS', filter: 'supplements' },
           ]}
           products={[
-            ...dbProducts.filter((p) => p.category === 'accessories'),
+            {
+              id: 'acc-1',
+              name: 'PROBURST DUFFEL BAG',
+              price: 2499,
+              image: '/assets/images/products/proburst_duffel.png',
+              category: 'accessories',
+            },
+            {
+              id: 'acc-2',
+              name: 'PREMIUM SHAKER BOTTLE',
+              price: 899,
+              image: '/assets/images/products/premium_shaker.png',
+              category: 'accessories',
+            },
+            {
+              id: 'acc-3',
+              name: 'DUMBBELL STORAGE RACK',
+              price: 5999,
+              image: '/assets/images/products/dumbbell_rack.png',
+              category: 'equipment',
+            },
+            {
+              id: 'acc-4',
+              name: 'WEIGHT PLATE RACK',
+              price: 3499,
+              image: '/assets/images/products/plate_rack.png',
+              category: 'equipment',
+            },
             {
               id: 'acc-s-1',
               name: 'WHEY PROTEIN - VANILLA',
@@ -201,13 +228,6 @@ export default function HomepageInteractive({ pageData }) {
               id: 'acc-s-2',
               name: 'PRE-WORKOUT ENERGY',
               price: 1899,
-              image: '/assets/images/supplements-featured.png',
-              category: 'supplements',
-            },
-            {
-              id: 'acc-s-3',
-              name: 'BCAA RECOVERY BLEND',
-              price: 1499,
               image: '/assets/images/supplements-featured.png',
               category: 'supplements',
             },
