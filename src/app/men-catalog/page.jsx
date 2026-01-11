@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Header from '@/components/common/Header';
 import MenCatalogInteractive from './components/MenCatalogInteractive';
 
@@ -11,7 +12,13 @@ export default function MenCatalogPage() {
   return (
     <>
       <Header />
-      <MenCatalogInteractive />
+      <Suspense fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        </div>
+      }>
+        <MenCatalogInteractive />
+      </Suspense>
     </>
   );
 }
