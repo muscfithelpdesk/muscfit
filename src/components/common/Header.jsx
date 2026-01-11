@@ -233,12 +233,12 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
             <Link
               href="/"
-              className="group z-50 flex items-center flex-shrink-0 h-full p-[3px]"
+              className="z-50 flex items-center flex-shrink-0"
             >
               <img
                 src="/assets/images/logo-v4.png"
                 alt="MUSCFIT Logo"
-                className={`transition-all duration-300 w-auto max-w-none object-contain translate-y-[2px] ${scrolled ? 'h-[78px] md:h-[82px]' : 'h-[104px] md:h-[116px]'
+                className={`transition-all duration-300 w-auto max-w-none object-contain ${scrolled ? 'h-[50px] md:h-[60px]' : 'h-[70px] md:h-[80px]'
                   }`}
               />
             </Link>
@@ -542,9 +542,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           </div>
 
           {/* Right Group: Search and Icons */}
-          <div className="flex items-center flex-1 justify-end h-full gap-4 md:gap-8 ml-4 lg:ml-12 overflow-visible">
+          <div className="flex items-center justify-end h-full gap-2 md:gap-4 overflow-visible">
             {!isAdminPage && (
-              <div className="flex-1 max-w-[550px] flex items-center">
+              <div className="hidden lg:flex items-center min-w-[300px] xl:min-w-[450px]">
                 <div
                   className="relative w-full group cursor-text"
                   onClick={() => setIsSearchOpen(true)}
@@ -552,12 +552,12 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Icon
                       name="MagnifyingGlassIcon"
-                      size={20}
+                      size={18}
                       className="text-text-secondary group-hover:text-primary transition-colors"
                     />
                   </div>
-                  <div className="block w-full h-10 pl-11 pr-4 bg-muted/40 border border-border/50 hover:border-primary/30 hover:bg-muted/60 rounded-lg text-[13px] font-semibold transition-all duration-300 flex items-center text-text-secondary select-none shadow-sm">
-                    Search for products, brands and more
+                  <div className="block w-full h-9 pl-11 pr-4 bg-muted/20 border border-border/50 hover:border-primary/30 hover:bg-muted/40 rounded-full text-[12px] font-semibold transition-all duration-300 flex items-center text-text-secondary select-none">
+                    Search...
                   </div>
                 </div>
               </div>
