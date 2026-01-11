@@ -57,6 +57,8 @@ export function AuthProvider({ children }) {
             await supabase.from('profiles').upsert({
               id: user.id,
               name: user.user_metadata.full_name,
+              phone: user.user_metadata.phone,
+              fitness_goal: user.user_metadata.fitness_goal,
               email: user.email,
               updated_at: new Date(),
             });
@@ -70,7 +72,7 @@ export function AuthProvider({ children }) {
   }, [user]);
 
   // Sign up with email and password
-  const signUp = async (email, password, fullName) => {
+  const signUp = async (email, password, fullName, phone, fitnessGoal) => {
     try {
       if (!supabase) throw new Error('Supabase client not initialized');
       setError(null);
@@ -80,6 +82,8 @@ export function AuthProvider({ children }) {
         options: {
           data: {
             full_name: fullName,
+            phone: phone,
+            fitness_goal: fitnessGoal,
             avatar_url: '',
           },
         },

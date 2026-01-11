@@ -10,6 +10,8 @@ export default function RegisterForm() {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
+    phone: '',
+    fitnessGoal: '',
     password: '',
     confirmPassword: '',
   });
@@ -34,7 +36,13 @@ export default function RegisterForm() {
       return;
     }
 
-    const result = await signUp(formData?.email, formData?.password, formData?.fullName);
+    const result = await signUp(
+      formData?.email,
+      formData?.password,
+      formData?.fullName,
+      formData?.phone,
+      formData?.fitnessGoal
+    );
 
     if (result?.success) {
       router?.push('/');
@@ -84,6 +92,40 @@ export default function RegisterForm() {
             className="w-full px-4 py-3 bg-white border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
             placeholder="Enter your email"
           />
+        </div>
+
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData?.phone}
+            onChange={handleChange}
+            className="w-full px-4 py-3 bg-white border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
+            placeholder="Enter your phone number"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="fitnessGoal" className="block text-sm font-medium text-foreground mb-2">
+            Fitness Goal
+          </label>
+          <select
+            id="fitnessGoal"
+            name="fitnessGoal"
+            value={formData?.fitnessGoal}
+            onChange={handleChange}
+            className="w-full px-4 py-3 bg-white border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
+          >
+            <option value="">Select a goal</option>
+            <option value="build_muscle">Build Muscle</option>
+            <option value="lose_weight">Lose Weight</option>
+            <option value="improve_endurance">Improve Endurance</option>
+            <option value="stay_fit">Stay Fit</option>
+          </select>
         </div>
 
         <div>

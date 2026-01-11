@@ -107,6 +107,11 @@ export default function Header({ topOffset = 0, isFixed = true }) {
   ];
 
   const recentSearches = ['compression shirts', 'running shorts', 'training gear'];
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -576,12 +581,12 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       size={20}
                       className="text-text-secondary group-hover/btn:text-primary transition-colors"
                     />
-                    {user && (
+                    {isMounted && user && (
                       <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-green-500 rounded-full border border-background"></span>
                     )}
                   </div>
                   <span className="text-[10px] md:text-[11px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
-                    Profile
+                    {isMounted && user ? 'Account' : 'Profile'}
                   </span>
                   <div className="absolute -bottom-1 left-3 right-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></div>
                 </Link>
@@ -597,7 +602,16 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                         <p className="text-[11px] text-text-secondary mb-4 leading-tight">
                           To access account and manage orders
                         </p>
-                        {!user ? (
+                        {!isMounted ? (
+                          // Skeleton for auth state
+                          <div className="flex items-center gap-3 p-2 bg-muted/20 rounded-md animate-pulse">
+                            <div className="w-9 h-9 rounded-full bg-gray-200"></div>
+                            <div className="flex-1 space-y-1">
+                              <div className="h-3 bg-gray-200 rounded w-20"></div>
+                              <div className="h-2 bg-gray-200 rounded w-32"></div>
+                            </div>
+                          </div>
+                        ) : !user ? (
                           <Link
                             href="/user-authentication"
                             className="inline-block px-5 py-2.5 border border-border text-primary font-bold text-[11px] hover:border-primary hover:bg-primary/5 transition-all uppercase tracking-widest"
