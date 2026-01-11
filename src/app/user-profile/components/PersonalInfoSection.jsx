@@ -9,6 +9,7 @@ export default function PersonalInfoSection({ userData, onSave }) {
     name: userData?.name,
     email: userData?.email,
     phone: userData?.phone,
+    fitnessGoal: userData?.fitnessGoal,
     dateOfBirth: userData?.dateOfBirth,
     gender: userData?.gender,
   });
@@ -83,9 +84,8 @@ export default function PersonalInfoSection({ userData, onSave }) {
               name="name"
               value={formData?.name}
               onChange={handleChange}
-              className={`w-full h-12 px-4 bg-input text-foreground border ${
-                errors?.name ? 'border-error' : 'border-border'
-              } rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-250`}
+              className={`w-full h-12 px-4 bg-input text-foreground border ${errors?.name ? 'border-error' : 'border-border'
+                } rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-250`}
               placeholder="Enter your full name"
             />
             {errors?.name && (
@@ -107,9 +107,8 @@ export default function PersonalInfoSection({ userData, onSave }) {
               name="email"
               value={formData?.email}
               onChange={handleChange}
-              className={`w-full h-12 px-4 bg-input text-foreground border ${
-                errors?.email ? 'border-error' : 'border-border'
-              } rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-250`}
+              className={`w-full h-12 px-4 bg-input text-foreground border ${errors?.email ? 'border-error' : 'border-border'
+                } rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-250`}
               placeholder="your.email@example.com"
             />
             {errors?.email && (
@@ -131,9 +130,8 @@ export default function PersonalInfoSection({ userData, onSave }) {
               name="phone"
               value={formData?.phone}
               onChange={handleChange}
-              className={`w-full h-12 px-4 bg-input text-foreground border ${
-                errors?.phone ? 'border-error' : 'border-border'
-              } rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-250`}
+              className={`w-full h-12 px-4 bg-input text-foreground border ${errors?.phone ? 'border-error' : 'border-border'
+                } rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-250`}
               placeholder="9876543210"
             />
             {errors?.phone && (
@@ -157,6 +155,26 @@ export default function PersonalInfoSection({ userData, onSave }) {
               onChange={handleChange}
               className="w-full h-12 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-250"
             />
+          </div>
+
+          {/* Fitness Goal */}
+          <div>
+            <label htmlFor="fitnessGoal" className="block text-sm font-medium text-foreground mb-2">
+              Fitness Goal
+            </label>
+            <select
+              id="fitnessGoal"
+              name="fitnessGoal"
+              value={formData?.fitnessGoal}
+              onChange={handleChange}
+              className="w-full h-12 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-250"
+            >
+              <option value="">Select a goal</option>
+              <option value="build_muscle">Build Muscle</option>
+              <option value="lose_weight">Lose Weight</option>
+              <option value="improve_endurance">Improve Endurance</option>
+              <option value="stay_fit">Stay Fit</option>
+            </select>
           </div>
 
           {/* Gender */}
@@ -210,6 +228,7 @@ PersonalInfoSection.propTypes = {
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
+    fitnessGoal: PropTypes.string,
     dateOfBirth: PropTypes.string,
     gender: PropTypes.string,
   }).isRequired,

@@ -50,7 +50,8 @@ export default function UserProfileInteractive({ initialData }) {
         setUserData({
           name: profile.name || user.user_metadata?.full_name || '',
           email: profile.email || user.email || '',
-          phone: profile.phone || '',
+          phone: profile.phone || user.user_metadata?.phone || '',
+          fitnessGoal: profile.fitness_goal || user.user_metadata?.fitness_goal || '',
           dateOfBirth: profile.date_of_birth || '',
           gender: profile.gender || '',
         });
@@ -59,7 +60,8 @@ export default function UserProfileInteractive({ initialData }) {
         setUserData({
           name: user.user_metadata?.full_name || '',
           email: user.email || '',
-          phone: '',
+          phone: user.user_metadata?.phone || '',
+          fitnessGoal: user.user_metadata?.fitness_goal || '',
           dateOfBirth: '',
           gender: '',
         });
@@ -103,6 +105,7 @@ export default function UserProfileInteractive({ initialData }) {
         name: updatedData.name,
         email: updatedData.email,
         phone: updatedData.phone,
+        fitness_goal: updatedData.fitnessGoal,
         date_of_birth: updatedData.dateOfBirth,
         gender: updatedData.gender,
       });
@@ -223,11 +226,10 @@ export default function UserProfileInteractive({ initialData }) {
                 <button
                   key={tab?.id}
                   onClick={() => setActiveTab(tab?.id)}
-                  className={`flex items-center gap-2 px-4 md:px-6 h-12 font-heading font-medium text-sm md:text-base whitespace-nowrap border-b-2 transition-all duration-250 flex-shrink-0 ${
-                    activeTab === tab?.id
-                      ? 'border-primary text-primary'
-                      : 'border-transparent text-text-secondary hover:text-foreground hover:border-border'
-                  }`}
+                  className={`flex items-center gap-2 px-4 md:px-6 h-12 font-heading font-medium text-sm md:text-base whitespace-nowrap border-b-2 transition-all duration-250 flex-shrink-0 ${activeTab === tab?.id
+                    ? 'border-primary text-primary'
+                    : 'border-transparent text-text-secondary hover:text-foreground hover:border-border'
+                    }`}
                 >
                   <Icon name={tab?.icon} size={20} />
                   <span>{tab?.label}</span>
@@ -283,6 +285,7 @@ UserProfileInteractive.propTypes = {
       name: PropTypes.string.isRequired,
       email: PropTypes.string.isRequired,
       phone: PropTypes.string.isRequired,
+      fitnessGoal: PropTypes.string,
       dateOfBirth: PropTypes.string,
       gender: PropTypes.string,
     }).isRequired,

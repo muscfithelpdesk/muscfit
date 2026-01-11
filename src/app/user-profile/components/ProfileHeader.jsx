@@ -40,6 +40,13 @@ export default function ProfileHeader({ userData, completionPercentage }) {
                   {completionPercentage}% Complete
                 </span>
               </div>
+              {userData?.fitnessGoal && (
+                <div className="flex items-center gap-2 mt-3">
+                  <span className="px-3 py-1 bg-primary/10 text-primary text-[10px] md:text-xs font-bold rounded-full border border-primary/20 uppercase tracking-tighter">
+                    Goal: {userData?.fitnessGoal?.replace('_', ' ')}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
@@ -67,6 +74,7 @@ ProfileHeader.propTypes = {
   userData: PropTypes.shape({
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
+    fitnessGoal: PropTypes.string,
   }).isRequired,
   completionPercentage: PropTypes.number.isRequired,
 };
