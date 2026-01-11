@@ -397,7 +397,8 @@ export const productService = {
       if (filters?.sortBy) {
         if (filters.sortBy === 'price-asc') mergedProducts.sort((a, b) => a.price - b.price);
         if (filters.sortBy === 'price-desc') mergedProducts.sort((a, b) => b.price - a.price);
-        if (filters.sortBy === 'name-asc') mergedProducts.sort((a, b) => a.name.localeCompare(b.name));
+        if (filters.sortBy === 'name-asc')
+          mergedProducts.sort((a, b) => a.name.localeCompare(b.name));
         if (filters.sortBy === 'rating') mergedProducts.sort((a, b) => b.rating - a.rating);
         if (filters.sortBy === 'newest')
           mergedProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -646,14 +647,14 @@ export const productService = {
         isPrimary: img?.is_primary,
         displayOrder: img?.display_order,
       })) || [
-          {
-            id: 'default',
-            imageUrl: finalImage,
-            altText: product?.name,
-            isPrimary: true,
-            displayOrder: 1,
-          },
-        ],
+        {
+          id: 'default',
+          imageUrl: finalImage,
+          altText: product?.name,
+          isPrimary: true,
+          displayOrder: 1,
+        },
+      ],
       productVariants: product?.product_variants?.map((v) => ({
         id: v?.id,
         size: v?.size,

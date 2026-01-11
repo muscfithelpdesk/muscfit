@@ -43,7 +43,7 @@ export default function UserProfileInteractive({ initialData }) {
       const [profile, userOrders, userAddresses] = await Promise.all([
         userService.getProfile(user.id),
         orderService.getUserOrders(user.id),
-        userService.getAddresses(user.id)
+        userService.getAddresses(user.id),
       ]);
 
       if (profile) {
@@ -104,7 +104,7 @@ export default function UserProfileInteractive({ initialData }) {
         email: updatedData.email,
         phone: updatedData.phone,
         date_of_birth: updatedData.dateOfBirth,
-        gender: updatedData.gender
+        gender: updatedData.gender,
       });
 
       if (result.success) {
@@ -134,7 +134,7 @@ export default function UserProfileInteractive({ initialData }) {
         city: newAddress.city,
         state: newAddress.state,
         pincode: newAddress.pincode,
-        is_default: newAddress.isDefault
+        is_default: newAddress.isDefault,
       });
 
       if (result.success) {
@@ -157,7 +157,7 @@ export default function UserProfileInteractive({ initialData }) {
         city: updatedAddress.city,
         state: updatedAddress.state,
         pincode: updatedAddress.pincode,
-        is_default: updatedAddress.isDefault
+        is_default: updatedAddress.isDefault,
       });
 
       if (result.success) {
@@ -184,11 +184,11 @@ export default function UserProfileInteractive({ initialData }) {
     try {
       // Find current default and unset it, or just let backend handle if logic exists
       // Simpler: find the address, update it to default. Supabase/Service handles the rest.
-      const addressToUpdate = addresses.find(a => a.id === addressId);
+      const addressToUpdate = addresses.find((a) => a.id === addressId);
       if (addressToUpdate) {
         const result = await userService.saveAddress(user.id, {
           ...addressToUpdate,
-          is_default: true
+          is_default: true,
         });
         if (result.success) {
           fetchUserData();
@@ -223,10 +223,11 @@ export default function UserProfileInteractive({ initialData }) {
                 <button
                   key={tab?.id}
                   onClick={() => setActiveTab(tab?.id)}
-                  className={`flex items-center gap-2 px-4 md:px-6 h-12 font-heading font-medium text-sm md:text-base whitespace-nowrap border-b-2 transition-all duration-250 flex-shrink-0 ${activeTab === tab?.id
-                    ? 'border-primary text-primary'
-                    : 'border-transparent text-text-secondary hover:text-foreground hover:border-border'
-                    }`}
+                  className={`flex items-center gap-2 px-4 md:px-6 h-12 font-heading font-medium text-sm md:text-base whitespace-nowrap border-b-2 transition-all duration-250 flex-shrink-0 ${
+                    activeTab === tab?.id
+                      ? 'border-primary text-primary'
+                      : 'border-transparent text-text-secondary hover:text-foreground hover:border-border'
+                  }`}
                 >
                   <Icon name={tab?.icon} size={20} />
                   <span>{tab?.label}</span>

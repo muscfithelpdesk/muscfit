@@ -150,15 +150,18 @@ export default function Homepage() {
       features: [
         {
           title: 'AeroDry™ Moisture Tech',
-          description: 'Advanced wicking fibers that move sweat away from the body 40% faster than standard performance fabrics.',
+          description:
+            'Advanced wicking fibers that move sweat away from the body 40% faster than standard performance fabrics.',
         },
         {
           title: '4-Way Muscle Support',
-          description: 'Engineered compression zones that stabilize active muscles and reduce fatigue during high-intensity training.',
+          description:
+            'Engineered compression zones that stabilize active muscles and reduce fatigue during high-intensity training.',
         },
         {
           title: 'Intelligent Thermal Control',
-          description: 'Adaptive micro-pores that open to release heat during peak effort and close to retain warmth during recovery.',
+          description:
+            'Adaptive micro-pores that open to release heat during peak effort and close to retain warmth during recovery.',
         },
       ],
     },

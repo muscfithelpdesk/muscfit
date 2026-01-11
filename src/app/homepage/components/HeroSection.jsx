@@ -42,16 +42,18 @@ export default function HeroSection({ slides, ctaPrimary }) {
       {slides?.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
         >
           <div className="absolute inset-0 block">
             <AppImage
               src={slide?.backgroundImage}
               alt={slide?.backgroundAlt}
               fill
-              className={`w-full h-full object-cover object-center transition-transform duration-[10s] ease-out ${index === currentSlide ? 'scale-105' : 'scale-100'
-                }`}
+              className={`w-full h-full object-cover object-center transition-transform duration-[10s] ease-out ${
+                index === currentSlide ? 'scale-105' : 'scale-100'
+              }`}
               priority={index === 0}
             />
           </div>
@@ -65,8 +67,9 @@ export default function HeroSection({ slides, ctaPrimary }) {
       {/* Content Layer */}
       <div className="relative z-30 h-full w-full flex flex-col justify-center items-center text-center px-4 md:px-6 lg:px-8">
         <div
-          className={`max-w-7xl mx-auto w-full transition-all duration-500 transform ${isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-            }`}
+          className={`max-w-7xl mx-auto w-full transition-all duration-500 transform ${
+            isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+          }`}
         >
           <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-2 tracking-tighter uppercase italic drop-shadow-xl">
             {slides[currentSlide]?.title}
@@ -97,8 +100,9 @@ export default function HeroSection({ slides, ctaPrimary }) {
           <button
             key={index}
             onClick={() => handleManualSlide(index)}
-            className={`h-1 transition-all duration-500 rounded-full ${index === currentSlide ? 'w-8 bg-primary' : 'w-2 bg-white/50 hover:bg-white'
-              }`}
+            className={`h-1 transition-all duration-500 rounded-full ${
+              index === currentSlide ? 'w-8 bg-primary' : 'w-2 bg-white/50 hover:bg-white'
+            }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

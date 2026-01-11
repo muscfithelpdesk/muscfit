@@ -56,7 +56,7 @@ export default function ChatbotPopup() {
       lowerQuery.includes('code') ||
       lowerQuery.includes('coupon')
     ) {
-      return "Current Offers:\n• 🔥 NEW YEAR SALE: 30% OFF on all Compression Wear.\n• 🛍️ Buy 2 Get 1 FREE on Training Essentials.\n• 🎁 First Order: Extra 10% OFF with code MUSCFIT10.\n• ❄️ Winter Drop: Up to 40% OFF.";
+      return 'Current Offers:\n• 🔥 NEW YEAR SALE: 30% OFF on all Compression Wear.\n• 🛍️ Buy 2 Get 1 FREE on Training Essentials.\n• 🎁 First Order: Extra 10% OFF with code MUSCFIT10.\n• ❄️ Winter Drop: Up to 40% OFF.';
     }
 
     // 2. Products & Categories
@@ -72,7 +72,7 @@ export default function ChatbotPopup() {
       return "For Women, we offer high-performance Leggings, Sports Bras, Crop Tops, and Winter Jackets. Explore the full range under the 'Women' tab.";
     }
     if (lowerQuery.includes('compression') || lowerQuery.includes('base layer')) {
-      return "Our specialty! The Elite Compression & Tech-Fit™ Series improves recovery and focus. We have compression tops, bottoms, and full body suits available at 30% OFF right now.";
+      return 'Our specialty! The Elite Compression & Tech-Fit™ Series improves recovery and focus. We have compression tops, bottoms, and full body suits available at 30% OFF right now.';
     }
     if (
       lowerQuery.includes('accessory') ||
@@ -81,10 +81,14 @@ export default function ChatbotPopup() {
       lowerQuery.includes('belt') ||
       lowerQuery.includes('equipment')
     ) {
-      return "Complete your kit with our Accessories! We stock Training Bags, Lifting Belts, and performance Gear.";
+      return 'Complete your kit with our Accessories! We stock Training Bags, Lifting Belts, and performance Gear.';
     }
-    if (lowerQuery.includes('winter') || lowerQuery.includes('jacket') || lowerQuery.includes('hoodie')) {
-      return "Our Winter Collection is now LIVE! Get up to 40% OFF on premium Jackets, Hoodies, and ARC series gear.";
+    if (
+      lowerQuery.includes('winter') ||
+      lowerQuery.includes('jacket') ||
+      lowerQuery.includes('hoodie')
+    ) {
+      return 'Our Winter Collection is now LIVE! Get up to 40% OFF on premium Jackets, Hoodies, and ARC series gear.';
     }
 
     // 3. Operations (Order, Shipping, Returns, Payment)
@@ -121,7 +125,7 @@ export default function ChatbotPopup() {
       return 'We accept 100% secure payments via UPI, Credit/Debit Cards, Net Banking, and COD (Cash on Delivery) for select locations.';
     }
     if (lowerQuery.includes('size') || lowerQuery.includes('fit') || lowerQuery.includes('chart')) {
-      return "Check our Size Guide on any product page for the perfect fit. Our gear is built for an athletic fit, so we recommend true-to-size for most!";
+      return 'Check our Size Guide on any product page for the perfect fit. Our gear is built for an athletic fit, so we recommend true-to-size for most!';
     }
 
     // 4. Support / Contact
@@ -132,7 +136,7 @@ export default function ChatbotPopup() {
       lowerQuery.includes('support') ||
       lowerQuery.includes('human')
     ) {
-      return "Our team is here 24/7! Email us at support@muscfit.com if you need any expert assistance.";
+      return 'Our team is here 24/7! Email us at support@muscfit.com if you need any expert assistance.';
     }
 
     // 5. Fallback for unrelated queries (Strict Mode)
@@ -216,10 +220,11 @@ export default function ChatbotPopup() {
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'}`}>
               <div
-                className={`max-w-[80%] p-3 text-sm rounded-2xl ${msg.isBot
+                className={`max-w-[80%] p-3 text-sm rounded-2xl ${
+                  msg.isBot
                     ? 'bg-zinc-800 text-zinc-100 rounded-tl-none border border-white/5'
                     : 'bg-white text-black rounded-tr-none shadow-lg'
-                  }`}
+                }`}
               >
                 {msg.text}
               </div>

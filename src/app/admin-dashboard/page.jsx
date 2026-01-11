@@ -719,10 +719,11 @@ export default function AdminDashboard() {
               <button
                 key={tab?.id}
                 onClick={() => setActiveTab(tab?.id)}
-                className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all ${activeTab === tab?.id
+                className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all ${
+                  activeTab === tab?.id
                     ? 'text-primary border-b-2 border-primary'
                     : 'text-text-secondary hover:text-foreground'
-                  }`}
+                }`}
               >
                 <Icon name={tab?.icon} size={20} />
                 {tab?.label}

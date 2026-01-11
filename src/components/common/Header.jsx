@@ -218,8 +218,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 <img
                   src="/assets/images/logo-v4.png"
                   alt="MUSCFIT Logo"
-                  className={`transition-all duration-300 w-auto max-w-none object-contain ${scrolled ? 'h-[82px] md:h-[92px]' : 'h-[102px] md:h-[202px]'
-                    }`}
+                  className={`transition-all duration-300 w-auto max-w-none object-contain ${
+                    scrolled ? 'h-[82px] md:h-[92px]' : 'h-[102px] md:h-[202px]'
+                  }`}
                 />
               </div>
             </Link>
