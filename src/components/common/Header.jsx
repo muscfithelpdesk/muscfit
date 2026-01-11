@@ -18,6 +18,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [cartItemCount, setCartItemCount] = useState(3);
   const [scrolled, setScrolled] = useState(false);
+  const [isSearchEntering, setIsSearchEntering] = useState(false);
 
   const { user, signOut } = useAuth();
 
@@ -162,12 +163,12 @@ export default function Header({ topOffset = 0, isFixed = true }) {
   }, []);
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
+    if (isMobileMenuOpen || isSearchOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, isSearchOpen]);
 
   const handleSearchSubmit = (e) => {
     e?.preventDefault();
@@ -525,7 +526,10 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           {/* Persistent Search Bar - Desktop */}
           {!isAdminPage && (
             <div className="hidden md:flex flex-1 max-w-[400px] lg:max-w-[500px] mx-4 lg:mx-8">
-              <form onSubmit={handleSearchSubmit} className="relative w-full group">
+              <div
+                className="relative w-full group cursor-text"
+                onClick={() => setIsSearchOpen(true)}
+              >
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Icon
                     name="MagnifyingGlassIcon"
@@ -533,14 +537,10 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                     className="text-text-secondary group-focus-within:text-primary transition-colors"
                   />
                 </div>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e?.target.value)}
-                  placeholder="Search for products, brands and more"
-                  className="block w-full h-10 pl-10 pr-3 bg-surface border border-transparent focus:border-primary/20 focus:bg-white focus:ring-4 focus:ring-primary/5 rounded-md text-sm font-medium transition-all duration-300 placeholder:text-text-secondary/60"
-                />
-              </form>
+                <div className="block w-full h-10 pl-10 pr-3 bg-surface border border-transparent rounded-md text-sm font-medium transition-all duration-300 flex items-center text-text-secondary/60 select-none">
+                  Search for products, brands and more
+                </div>
+              </div>
             </div>
           )}
 
@@ -677,27 +677,6 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   Search
                 </span>
               </button>
-
-              {isSearchOpen && (
-                <div className="fixed left-4 right-4 top-[85px] mt-2 bg-background border border-border shadow-sharp-lg border-t-2 border-t-primary animate-scale-in-origin-top z-[100] p-4">
-                  <form onSubmit={handleSearchSubmit} className="relative">
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e?.target.value)}
-                      placeholder="Try 'Compression shirts'..."
-                      className="w-full h-10 px-4 pr-10 bg-surface text-xs font-bold border-none focus:ring-1 focus:ring-primary/20 transition-all placeholder:font-medium uppercase tracking-tight"
-                      autoFocus
-                    />
-                    <button
-                      type="submit"
-                      className="absolute right-0 top-0 bottom-0 px-3 text-text-secondary hover:text-primary"
-                    >
-                      <Icon name="MagnifyingGlassIcon" size={16} />
-                    </button>
-                  </form>
-                </div>
-              )}
             </div>
 
             {/* Wishlist Button */}
@@ -936,6 +915,132 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           </div>
         </>
       )}
+      {/* Mega Search Overlay */}
+      {isSearchOpen && (
+        <div className="fixed inset-0 z-[100] transition-all duration-300">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setIsSearchOpen(false)}
+          />
+
+          {/* Search Container */}
+          <div className="absolute top-0 inset-x-0 bg-background shadow-sharp-lg animate-fade-in border-b border-border">
+            <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8 md:py-12">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="flex-1 relative flex items-center group">
+                  <Icon
+                    name="MagnifyingGlassIcon"
+                    size={28}
+                    className="absolute left-4 text-text-secondary group-focus-within:text-primary transition-colors"
+                  />
+                  <form onSubmit={handleSearchSubmit} className="w-full">
+                    <input
+                      type="text"
+                      autoFocus
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e?.target.value)}
+                      placeholder="SEARCH FOR PRODUCTS, BRANDS AND MORE..."
+                      className="w-full h-16 md:h-20 pl-16 pr-8 bg-surface border-none text-xl md:text-3xl font-heading font-black text-foreground placeholder:text-text-secondary/30 focus:ring-0 transition-all uppercase tracking-tight"
+                    />
+                  </form>
+                </div>
+                <button
+                  onClick={() => setIsSearchOpen(false)}
+                  className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-surface text-text-secondary hover:text-primary hover:bg-muted transition-all duration-250"
+                  aria-label="Close search"
+                >
+                  <Icon name="XMarkIcon" size={32} />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 pt-8 border-t border-border/50">
+                {/* Popular Categories */}
+                <div>
+                  <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-6 border-l-4 border-primary pl-4">
+                    Top Categories
+                  </h3>
+                  <div className="grid grid-cols-1 gap-3">
+                    {Object.values(navigationCategories)?.map((cat) => (
+                      <Link
+                        key={cat?.path}
+                        href={cat?.path}
+                        className="group flex items-center justify-between p-4 bg-muted/20 hover:bg-primary/5 rounded-sm transition-all border border-transparent hover:border-primary/10"
+                        onClick={() => setIsSearchOpen(false)}
+                      >
+                        <span className="font-heading font-bold text-base md:text-lg text-foreground group-hover:text-primary">
+                          {cat?.label}
+                        </span>
+                        <Icon
+                          name="ArrowRightIcon"
+                          size={18}
+                          className="text-text-secondary group-hover:text-primary group-hover:translate-x-1 transition-all"
+                        />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Trending Searches */}
+                <div>
+                  <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-6 border-l-4 border-primary pl-4">
+                    Trending Now
+                  </h3>
+                  <div className="flex flex-wrap gap-3">
+                    {[
+                      'Compression Tees',
+                      'Gym Bags',
+                      'Winter Arc',
+                      'Training Gear',
+                      'Accessories',
+                      'Supplements',
+                      'Performance Shorts',
+                    ]?.map((term) => (
+                      <Link
+                        key={term}
+                        href={`/search?q=${encodeURIComponent(term)}`}
+                        className="px-6 py-3 bg-surface hover:bg-primary text-text-secondary hover:text-white rounded-full text-sm font-bold transition-all border border-border/50 hover:border-primary uppercase tracking-tighter"
+                        onClick={() => setIsSearchOpen(false)}
+                      >
+                        {term}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Featured Products/Collections Preview */}
+                <div className="hidden lg:block">
+                  <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-6 border-l-4 border-primary pl-4">
+                    New Arrivals
+                  </h3>
+                  <div className="space-y-4">
+                    <Link
+                      href="/men-catalog?type=winter-arc"
+                      className="group block relative h-48 rounded-xl overflow-hidden"
+                      onClick={() => setIsSearchOpen(false)}
+                    >
+                      <img
+                        src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=600&auto=format&fit=crop"
+                        alt="Winter Arc"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                        <span className="text-white font-heading font-black text-2xl uppercase italic tracking-tighter">
+                          Winter Arc '24
+                        </span>
+                        <span className="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">
+                          Shop Now
+                        </span>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Recaptcha Container (invisible) */}
       <div id="recaptcha-container"></div>
     </>
