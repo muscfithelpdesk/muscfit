@@ -245,7 +245,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
             {/* Center Navigation - Desktop - Grouped with Logo */}
             {!isAdminPage && (
-              <nav className="hidden md:flex items-center gap-5 lg:gap-8 h-full">
+              <nav className="hidden md:flex items-center gap-5 lg:gap-8 h-full mr-8 lg:mr-16">
                 {/* Men Navigation Item */}
                 <div className="relative" ref={menDropdownRef}>
                   <button
