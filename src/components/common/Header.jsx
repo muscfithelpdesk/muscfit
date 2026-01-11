@@ -194,11 +194,11 @@ export default function Header({ topOffset = 0, isFixed = true }) {
         className={`${isFixed ? 'fixed left-0 right-0 z-50' : 'relative'} transition-all duration-300 bg-background shadow-sharp border-b border-gray-100`}
         style={{
           top: isFixed ? (scrolled ? '0' : `${topOffset}px`) : 'auto',
-          '--header-height': scrolled ? '80px' : '120px',
+          '--header-height': scrolled ? '86px' : '126px',
         }}
       >
         <div
-          className={`flex items-center justify-between transition-all duration-300 px-4 md:px-8 lg:px-12 ${scrolled ? 'h-[60px] md:h-[70px]' : 'h-[70px] md:h-[100px]'}`}
+          className={`flex items-center justify-between transition-all duration-300 px-4 md:px-8 lg:px-12 ${scrolled ? 'h-[66px] md:h-[76px]' : 'h-[76px] md:h-[106px]'}`}
         >
           {/* Left Group: Logo and Nav */}
           <div className="flex items-center gap-6 lg:gap-10 h-full flex-shrink-0">
@@ -214,12 +214,12 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
             <Link
               href="/"
-              className="group z-50 flex items-center flex-shrink-0 h-full"
+              className="group z-50 flex items-center flex-shrink-0 h-full p-[3px]"
             >
               <img
                 src="/assets/images/logo-v4.png"
                 alt="MUSCFIT Logo"
-                className={`transition-all duration-300 w-auto max-w-none object-contain translate-y-[2px] ${scrolled ? 'h-[52px] md:h-[56px]' : 'h-[68px] md:h-[80px]'
+                className={`transition-all duration-300 w-auto max-w-none object-contain translate-y-[2px] ${scrolled ? 'h-[58px] md:h-[62px]' : 'h-[74px] md:h-[86px]'
                   }`}
               />
             </Link>
