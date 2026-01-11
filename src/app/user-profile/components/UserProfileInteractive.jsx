@@ -12,7 +12,7 @@ import AccountSettingsSection from './AccountSettingsSection';
 import { useAuth } from '@/contexts/AuthContext';
 import { userService } from '@/lib/services/userService';
 import { orderService } from '@/lib/services/orderService';
-import { toast } from 'react-hot-toast'; // Assuming hot-toast is available or similar
+import { orderService } from '@/lib/services/orderService';
 
 export default function UserProfileInteractive({ initialData }) {
   const { user } = useAuth();
@@ -23,6 +23,14 @@ export default function UserProfileInteractive({ initialData }) {
   const [addresses, setAddresses] = useState([]);
   const [settings, setSettings] = useState(initialData?.settings);
   const [isLoading, setIsLoading] = useState(true);
+
+  const tabs = [
+    { id: 'personal', label: 'Personal Info', icon: 'UserIcon' },
+    { id: 'orders', label: 'Order History', icon: 'ShoppingBagIcon', badge: orders?.length },
+    { id: 'wishlist', label: 'Wishlist', icon: 'HeartIcon', badge: wishlistItems?.length },
+    { id: 'addresses', label: 'Addresses', icon: 'MapPinIcon', badge: addresses?.length },
+    { id: 'settings', label: 'Settings', icon: 'Cog6ToothIcon' },
+  ];
 
   useEffect(() => {
     if (user) {
@@ -217,8 +225,8 @@ export default function UserProfileInteractive({ initialData }) {
                   key={tab?.id}
                   onClick={() => setActiveTab(tab?.id)}
                   className={`flex items-center gap-2 px-4 md:px-6 h-12 font-heading font-medium text-sm md:text-base whitespace-nowrap border-b-2 transition-all duration-250 flex-shrink-0 ${activeTab === tab?.id
-                      ? 'border-primary text-primary'
-                      : 'border-transparent text-text-secondary hover:text-foreground hover:border-border'
+                    ? 'border-primary text-primary'
+                    : 'border-transparent text-text-secondary hover:text-foreground hover:border-border'
                     }`}
                 >
                   <Icon name={tab?.icon} size={20} />
