@@ -2,7 +2,7 @@ import Header from '@/components/common/Header';
 import ProductCatalogInteractive from '../product-catalog/components/ProductCatalogInteractive';
 
 export const metadata = {
-  title: "Men\'s Athletic Wear - MUSCFIT",
+  title: 'MF',
   description:
     'Shop premium mens fitness apparel including tank tops, training shorts, compression wear, hoodies, and performance t-shirts built for intense workouts.',
 };

@@ -2,7 +2,7 @@ import Header from '@/components/common/Header';
 import UserProfileInteractive from './components/UserProfileInteractive';
 
 export const metadata = {
-  title: 'My Profile - MUSCFIT',
+  title: 'MF',
   description:
     'Manage your MUSCFIT account, view order history, update personal information, and customize your shopping preferences.',
 };

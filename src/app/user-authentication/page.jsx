@@ -3,7 +3,7 @@ import Header from '@/components/common/Header';
 import AuthInteractive from './components/AuthInteractive';
 
 export const metadata = {
-  title: 'Sign In | MUSCFIT - Premium Fitness Apparel',
+  title: 'MF',
   description:
     'Sign in to your MUSCFIT account to access personalized shopping features, track orders, and manage your fitness apparel wishlist.',
 };
