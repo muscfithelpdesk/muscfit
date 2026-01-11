@@ -181,6 +181,7 @@ export default function HomepageInteractive({ pageData }) {
         />
 
         <CollectionSection
+          id="explore-accessories"
           title="ACCESSORIES"
           subtitle="EXPLORE"
           tabs={[

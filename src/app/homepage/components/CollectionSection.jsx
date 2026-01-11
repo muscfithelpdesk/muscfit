@@ -6,7 +6,7 @@ import Icon from '@/components/ui/AppIcon';
 
 import PropTypes from 'prop-types';
 
-export default function CollectionSection({ title, subtitle, tabs, products, onQuickView }) {
+export default function CollectionSection({ title, subtitle, tabs, products, onQuickView, id }) {
   const [activeTab, setActiveTab] = useState(tabs[0]?.name);
   const scrollRef = useRef(null);
 
@@ -23,7 +23,7 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
   };
 
   return (
-    <section className="py-12 bg-white border-b border-gray-50">
+    <section id={id} className="py-12 bg-white border-b border-gray-50">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-gray-100">
@@ -41,11 +41,10 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
               <button
                 key={tab.name}
                 onClick={() => setActiveTab(tab.name)}
-                className={`hover:text-black transition-colors relative pb-1 ${
-                  activeTab === tab.name
-                    ? 'text-black after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black'
-                    : ''
-                }`}
+                className={`hover:text-black transition-colors relative pb-1 ${activeTab === tab.name
+                  ? 'text-black after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black'
+                  : ''
+                  }`}
               >
                 {tab.name}
               </button>
@@ -123,11 +122,10 @@ function ModernProductCard({ product, onQuickView }) {
             e.stopPropagation();
             onQuickView(product);
           }}
-          className={`absolute bottom-0 left-0 right-0 h-8 md:h-10 bg-[#2C3E50]/90 flex items-center justify-center transition-all duration-300 z-20 ${
-            isHovered
-              ? 'translate-y-0 opacity-100'
-              : 'translate-y-2 md:translate-y-full opacity-100 md:opacity-0'
-          }`}
+          className={`absolute bottom-0 left-0 right-0 h-8 md:h-10 bg-[#2C3E50]/90 flex items-center justify-center transition-all duration-300 z-20 ${isHovered
+            ? 'translate-y-0 opacity-100'
+            : 'translate-y-2 md:translate-y-full opacity-100 md:opacity-0'
+            }`}
         >
           <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase">
             Quick view
@@ -161,6 +159,7 @@ CollectionSection.propTypes = {
   ).isRequired,
   products: PropTypes.arrayOf(PropTypes.object).isRequired,
   onQuickView: PropTypes.func.isRequired,
+  id: PropTypes.string,
 };
 
 ModernProductCard.propTypes = {

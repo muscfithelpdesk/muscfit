@@ -78,11 +78,11 @@ export default function Header({ topOffset = 0, isFixed = true }) {
     },
     accessories: {
       label: 'Accessories',
-      path: '/men-catalog?tag=accessories',
+      path: '/#explore-accessories',
       subcategories: [
-        { name: 'Gym Bags', path: '/men-catalog?search=gym bags' },
-        { name: 'Equipment', path: '/men-catalog?search=equipment' },
-        { name: 'Supplements', path: '/men-catalog?search=supplements' },
+        { name: 'Gym Bags', path: '/#explore-accessories' },
+        { name: 'Equipment', path: '/#explore-accessories' },
+        { name: 'Supplements', path: '/#explore-accessories' },
       ],
       featuredImage: '/assets/images/no_image.png',
       featuredAlt: 'Fitness accessories collection',
