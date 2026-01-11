@@ -2,7 +2,7 @@ import Header from '@/components/common/Header';
 import ShoppingCartInteractive from './components/ShoppingCartInteractive';
 
 export const metadata = {
-  title: 'MF',
+  title: 'Shopping Cart - MUSCFIT',
   description:
     'Review your selected fitness apparel items, modify quantities, and proceed to secure checkout with confidence.',
 };

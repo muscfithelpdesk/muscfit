@@ -2,7 +2,7 @@ import Header from '@/components/common/Header';
 import ProductCatalogInteractive from '../product-catalog/components/ProductCatalogInteractive';
 
 export const metadata = {
-  title: 'MF',
+  title: "Women\'s Athletic Wear - MUSCFIT",
   description:
     'Discover premium womens fitness apparel including sports bras, leggings, yoga wear, and athletic tops designed for performance and style.',
 };
