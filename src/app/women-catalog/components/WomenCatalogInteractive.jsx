@@ -1,5 +1,5 @@
-'use client';
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { productService } from '@/lib/services/productService';
 import FilterSidebar from './FilterSidebar';
 import ProductCard from './ProductCard';
@@ -21,6 +21,15 @@ export default function WomenCatalogInteractive() {
   const [sortBy, setSortBy] = useState('newest');
   const [searchTerm, setSearchTerm] = useState('');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+
+  const searchParams = useSearchParams();
+  const querySearch = searchParams.get('search') || '';
+
+  useEffect(() => {
+    if (querySearch) {
+      setSearchTerm(querySearch);
+    }
+  }, [querySearch]);
 
   useEffect(() => {
     loadProducts();

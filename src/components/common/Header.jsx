@@ -173,7 +173,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
   const handleSearchSubmit = (e) => {
     e?.preventDefault();
     if (searchQuery?.trim()) {
-      window.location.href = `/men-catalog?search=${encodeURIComponent(searchQuery)}`;
+      router?.push(`/men-catalog?search=${encodeURIComponent(searchQuery)}`);
+      setIsSearchOpen(false);
     }
   };
 
@@ -997,7 +998,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                     ]?.map((term) => (
                       <Link
                         key={term}
-                        href={`/search?q=${encodeURIComponent(term)}`}
+                        href={`/men-catalog?search=${encodeURIComponent(term)}`}
                         className="px-6 py-3 bg-surface hover:bg-primary text-text-secondary hover:text-white rounded-full text-sm font-bold transition-all border border-border/50 hover:border-primary uppercase tracking-tighter"
                         onClick={() => setIsSearchOpen(false)}
                       >
