@@ -9,22 +9,63 @@ import OrderHistorySection from './OrderHistorySection';
 import WishlistSection from './WishlistSection';
 import AddressBookSection from './AddressBookSection';
 import AccountSettingsSection from './AccountSettingsSection';
+import { useAuth } from '@/contexts/AuthContext';
+import { userService } from '@/lib/services/userService';
+import { orderService } from '@/lib/services/orderService';
+import { toast } from 'react-hot-toast'; // Assuming hot-toast is available or similar
 
 export default function UserProfileInteractive({ initialData }) {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('personal');
   const [userData, setUserData] = useState(initialData?.userData);
-  const [orders, setOrders] = useState(initialData?.orders);
-  const [wishlistItems, setWishlistItems] = useState(initialData?.wishlistItems);
-  const [addresses, setAddresses] = useState(initialData?.addresses);
+  const [orders, setOrders] = useState([]);
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [addresses, setAddresses] = useState([]);
   const [settings, setSettings] = useState(initialData?.settings);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const tabs = [
-    { id: 'personal', label: 'Personal Info', icon: 'UserIcon' },
-    { id: 'orders', label: 'Order History', icon: 'ShoppingBagIcon', badge: orders?.length },
-    { id: 'wishlist', label: 'Wishlist', icon: 'HeartIcon', badge: wishlistItems?.length },
-    { id: 'addresses', label: 'Addresses', icon: 'MapPinIcon', badge: addresses?.length },
-    { id: 'settings', label: 'Settings', icon: 'Cog6ToothIcon' },
-  ];
+  useEffect(() => {
+    if (user) {
+      fetchUserData();
+    }
+  }, [user]);
+
+  const fetchUserData = async () => {
+    setIsLoading(true);
+    try {
+      const [profile, userOrders, userAddresses] = await Promise.all([
+        userService.getProfile(user.id),
+        orderService.getUserOrders(user.id),
+        userService.getAddresses(user.id)
+      ]);
+
+      if (profile) {
+        setUserData({
+          name: profile.name || user.user_metadata?.full_name || '',
+          email: profile.email || user.email || '',
+          phone: profile.phone || '',
+          dateOfBirth: profile.date_of_birth || '',
+          gender: profile.gender || '',
+        });
+      } else {
+        // Fallback to auth metadata if profile doesn't exist yet
+        setUserData({
+          name: user.user_metadata?.full_name || '',
+          email: user.email || '',
+          phone: '',
+          dateOfBirth: '',
+          gender: '',
+        });
+      }
+
+      setOrders(userOrders || []);
+      setAddresses(userAddresses || []);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -48,8 +89,23 @@ export default function UserProfileInteractive({ initialData }) {
     return Math.round((completed / total) * 100);
   };
 
-  const handleSavePersonalInfo = (updatedData) => {
-    setUserData((prev) => ({ ...prev, ...updatedData }));
+  const handleSavePersonalInfo = async (updatedData) => {
+    if (!user) return;
+    try {
+      const result = await userService.updateProfile(user.id, {
+        name: updatedData.name,
+        email: updatedData.email,
+        phone: updatedData.phone,
+        date_of_birth: updatedData.dateOfBirth,
+        gender: updatedData.gender
+      });
+
+      if (result.success) {
+        setUserData((prev) => ({ ...prev, ...updatedData }));
+      }
+    } catch (error) {
+      console.error('Failed to save profile:', error);
+    }
   };
 
   const handleRemoveFromWishlist = (itemId) => {
@@ -60,36 +116,93 @@ export default function UserProfileInteractive({ initialData }) {
     console.log('Adding to cart:', item);
   };
 
-  const handleAddAddress = (newAddress) => {
-    const address = {
-      ...newAddress,
-      id: `addr_${Date.now()}`,
-    };
-    setAddresses((prev) => [...prev, address]);
+  const handleAddAddress = async (newAddress) => {
+    if (!user) return;
+    try {
+      const result = await userService.saveAddress(user.id, {
+        name: newAddress.name,
+        phone: newAddress.phone,
+        address_line1: newAddress.addressLine1,
+        address_line2: newAddress.addressLine2,
+        city: newAddress.city,
+        state: newAddress.state,
+        pincode: newAddress.pincode,
+        is_default: newAddress.isDefault
+      });
+
+      if (result.success) {
+        fetchUserData(); // Refresh addresses
+      }
+    } catch (error) {
+      console.error('Failed to add address:', error);
+    }
   };
 
-  const handleEditAddress = (addressId, updatedAddress) => {
-    setAddresses((prev) =>
-      prev?.map((addr) => (addr?.id === addressId ? { ...addr, ...updatedAddress } : addr))
-    );
+  const handleEditAddress = async (addressId, updatedAddress) => {
+    if (!user) return;
+    try {
+      const result = await userService.saveAddress(user.id, {
+        id: addressId,
+        name: updatedAddress.name,
+        phone: updatedAddress.phone,
+        address_line1: updatedAddress.addressLine1,
+        address_line2: updatedAddress.addressLine2,
+        city: updatedAddress.city,
+        state: updatedAddress.state,
+        pincode: updatedAddress.pincode,
+        is_default: updatedAddress.isDefault
+      });
+
+      if (result.success) {
+        fetchUserData();
+      }
+    } catch (error) {
+      console.error('Failed to update address:', error);
+    }
   };
 
-  const handleDeleteAddress = (addressId) => {
-    setAddresses((prev) => prev?.filter((addr) => addr?.id !== addressId));
+  const handleDeleteAddress = async (addressId) => {
+    try {
+      const result = await userService.deleteAddress(addressId);
+      if (result.success) {
+        setAddresses((prev) => prev?.filter((addr) => addr?.id !== addressId));
+      }
+    } catch (error) {
+      console.error('Failed to delete address:', error);
+    }
   };
 
-  const handleSetDefaultAddress = (addressId) => {
-    setAddresses((prev) =>
-      prev?.map((addr) => ({
-        ...addr,
-        isDefault: addr?.id === addressId,
-      }))
-    );
+  const handleSetDefaultAddress = async (addressId) => {
+    if (!user) return;
+    try {
+      // Find current default and unset it, or just let backend handle if logic exists
+      // Simpler: find the address, update it to default. Supabase/Service handles the rest.
+      const addressToUpdate = addresses.find(a => a.id === addressId);
+      if (addressToUpdate) {
+        const result = await userService.saveAddress(user.id, {
+          ...addressToUpdate,
+          is_default: true
+        });
+        if (result.success) {
+          fetchUserData();
+        }
+      }
+    } catch (error) {
+      console.error('Failed to set default address:', error);
+    }
   };
 
   const handleUpdateSettings = (updatedSettings) => {
     setSettings((prev) => ({ ...prev, ...updatedSettings }));
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Icon name="ArrowPathIcon" size={40} className="animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -103,11 +216,10 @@ export default function UserProfileInteractive({ initialData }) {
                 <button
                   key={tab?.id}
                   onClick={() => setActiveTab(tab?.id)}
-                  className={`flex items-center gap-2 px-4 md:px-6 h-12 font-heading font-medium text-sm md:text-base whitespace-nowrap border-b-2 transition-all duration-250 flex-shrink-0 ${
-                    activeTab === tab?.id
+                  className={`flex items-center gap-2 px-4 md:px-6 h-12 font-heading font-medium text-sm md:text-base whitespace-nowrap border-b-2 transition-all duration-250 flex-shrink-0 ${activeTab === tab?.id
                       ? 'border-primary text-primary'
                       : 'border-transparent text-text-secondary hover:text-foreground hover:border-border'
-                  }`}
+                    }`}
                 >
                   <Icon name={tab?.icon} size={20} />
                   <span>{tab?.label}</span>

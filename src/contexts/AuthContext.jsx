@@ -31,11 +31,31 @@ export function AuthProvider({ children }) {
       setLoading(false);
     });
 
-    // Listen for auth changes - CRITICAL: Keep synchronous, no async in callback
+    // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const currentUser = session?.user ?? null;
+
+      if (currentUser) {
+        // Sync profile metadata to database if it's a new login/signup
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', currentUser.id)
+          .single();
+
+        if (!profile && currentUser.user_metadata?.full_name) {
+          await supabase.from('profiles').upsert({
+            id: currentUser.id,
+            name: currentUser.user_metadata.full_name,
+            email: currentUser.email,
+            updated_at: new Date(),
+          });
+        }
+      }
+
+      setUser(currentUser);
       setLoading(false);
     });
 
