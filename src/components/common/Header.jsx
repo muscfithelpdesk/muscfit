@@ -236,9 +236,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               className="group z-50 flex items-center flex-shrink-0 h-full p-[3px]"
             >
               <img
-                src="/icon.png"
+                src="/assets/images/logo-v4.png"
                 alt="MUSCFIT Logo"
-                className={`transition-all duration-300 w-auto max-w-none object-contain rounded-full border border-gray-100 shadow-sm ${scrolled ? 'h-[50px] md:h-[60px]' : 'h-[70px] md:h-[80px]'
+                className={`transition-all duration-300 w-auto max-w-none object-contain translate-y-[2px] ${scrolled ? 'h-[78px] md:h-[82px]' : 'h-[104px] md:h-[116px]'
                   }`}
               />
             </Link>

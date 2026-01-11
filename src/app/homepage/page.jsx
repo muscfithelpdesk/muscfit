@@ -1,7 +1,7 @@
 import HomepageInteractive from './components/HomepageInteractive';
 
 export const metadata = {
-  title: 'MUSCFIT - Premium Fitness Apparel | High-Performance Athletic Wear',
+  title: 'MF',
   description:
     'Discover premium fitness apparel designed for peak performance. Shop high-quality athletic wear including compression gear, training essentials, and lifestyle collections for men and women.',
 };
