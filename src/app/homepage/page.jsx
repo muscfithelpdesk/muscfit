@@ -144,14 +144,23 @@ export default function Homepage() {
       products: [],
     },
 
-    video: {
-      title: 'Experience MUSCFIT',
-      subtitle: 'See how our premium athletic wear transforms your training',
-      thumbnailImage:
-        'https://img.rocket.new/generatedImages/rocket_gen_img_1ebf7ad66-1764766557650.png',
-      thumbnailAlt:
-        'Fitness trainer demonstrating workout technique in professional gym environment',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    experience: {
+      title: 'PERFORMANCE TECHNOLOGY',
+      subtitle: 'Engineered for the elite. Designed for the driven.',
+      features: [
+        {
+          title: 'AeroDry™ Moisture Tech',
+          description: 'Advanced wicking fibers that move sweat away from the body 40% faster than standard performance fabrics.',
+        },
+        {
+          title: '4-Way Muscle Support',
+          description: 'Engineered compression zones that stabilize active muscles and reduce fatigue during high-intensity training.',
+        },
+        {
+          title: 'Intelligent Thermal Control',
+          description: 'Adaptive micro-pores that open to release heat during peak effort and close to retain warmth during recovery.',
+        },
+      ],
     },
 
     brandStory: {

@@ -9,7 +9,7 @@ import FeaturesGrid from './FeaturesGrid';
 import FeaturedProducts from './FeaturedProducts';
 import StatsCounter from './StatsCounter';
 import ParallaxBanner from './ParallaxBanner';
-import VideoSection from './VideoSection';
+import PerformanceVisuals from './PerformanceVisuals';
 import BrandStory from './BrandStory';
 import Testimonials from './Testimonials';
 import TrustBadges from './TrustBadges';
@@ -267,12 +267,10 @@ export default function HomepageInteractive({ pageData }) {
             .slice(0, 8)}
         />
 
-        <VideoSection
-          title={pageData?.video?.title}
-          subtitle={pageData?.video?.subtitle}
-          thumbnailImage={pageData?.video?.thumbnailImage}
-          thumbnailAlt={pageData?.video?.thumbnailAlt}
-          videoUrl={pageData?.video?.videoUrl}
+        <PerformanceVisuals
+          title={pageData?.experience?.title}
+          subtitle={pageData?.experience?.subtitle}
+          features={pageData?.experience?.features}
         />
 
         <BrandStory
