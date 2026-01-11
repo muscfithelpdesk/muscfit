@@ -180,6 +180,41 @@ export default function HomepageInteractive({ pageData }) {
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
+        <CollectionSection
+          title="ACCESSORIES"
+          subtitle="EXPLORE"
+          tabs={[
+            { name: 'GYM BAGS', filter: 'accessories' },
+            { name: 'EQUIPMENT', filter: 'accessories' },
+            { name: 'SUPPLEMENTS', filter: 'supplements' },
+          ]}
+          products={[
+            ...dbProducts.filter((p) => p.category === 'accessories'),
+            {
+              id: 'acc-s-1',
+              name: 'WHEY PROTEIN - VANILLA',
+              price: 2499,
+              image: '/assets/images/supplements-featured.png',
+              category: 'supplements',
+            },
+            {
+              id: 'acc-s-2',
+              name: 'PRE-WORKOUT ENERGY',
+              price: 1899,
+              image: '/assets/images/supplements-featured.png',
+              category: 'supplements',
+            },
+            {
+              id: 'acc-s-3',
+              name: 'BCAA RECOVERY BLEND',
+              price: 1499,
+              image: '/assets/images/supplements-featured.png',
+              category: 'supplements',
+            },
+          ]}
+          onQuickView={(p) => setQuickViewProduct(p)}
+        />
+
         <FeaturedProducts
           title="Bestselling Essentials"
           subtitle="Discover our most-loved pieces trusted by athletes worldwide"
