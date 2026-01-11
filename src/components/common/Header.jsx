@@ -200,7 +200,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
         <div
           className={`flex items-center justify-between transition-all duration-300 px-4 md:px-8 lg:px-12 ${scrolled ? 'h-[60px] md:h-[80px]' : 'h-[70px] md:h-[120px]'}`}
         >
-          <div className="flex items-center gap-4 w-auto min-w-[120px] md:min-w-[150px]">
+          <div className="flex items-center gap-4 min-w-fit">
             {!isAdminPage && (
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -213,13 +213,13 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
             <Link
               href="/"
-              className="group z-50 block h-full flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:left-8 lg:left-12 md:translate-x-0 md:top-1/2 md:-translate-y-1/2 pr-4"
+              className="group z-50 block flex-shrink-0 relative md:static"
             >
-              <div className="absolute inset-0 flex items-center justify-center md:justify-start">
+              <div className="flex items-center">
                 <img
                   src="/assets/images/logo-v4.png"
                   alt="MUSCFIT Logo"
-                  className={`transition-all duration-300 w-auto max-w-none object-contain ${scrolled ? 'h-[82px] md:h-[92px]' : 'h-[102px] md:h-[202px]'
+                  className={`transition-all duration-300 w-auto max-w-none object-contain ${scrolled ? 'h-[62px] md:h-[72px]' : 'h-[82px] md:h-[132px]'
                     }`}
                 />
               </div>
@@ -228,7 +228,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
           {/* Center Navigation - Desktop */}
           {!isAdminPage && (
-            <nav className="hidden md:flex items-center justify-start gap-4 lg:gap-6 ml-6 lg:ml-10">
+            <nav className="hidden md:flex items-center justify-start gap-4 lg:gap-6 ml-4 lg:ml-6 flex-shrink-0">
               {/* Men Navigation Item */}
               <div className="relative" ref={menDropdownRef}>
                 <button
@@ -523,12 +523,15 @@ export default function Header({ topOffset = 0, isFixed = true }) {
             </nav>
           )}
 
-          {/* Persistent Search Bar - Desktop */}
+          {/* Persistent Search Bar - Desktop - Extra Wide */}
           {!isAdminPage && (
-            <div className="hidden md:flex flex-1 mx-8 lg:mx-12">
+            <div className="hidden md:flex flex-[2] mx-6 lg:mx-10 min-w-[300px]">
               <div
                 className="relative w-full group cursor-text"
-                onClick={() => setIsSearchOpen(true)}
+                onClick={() => {
+                  console.log("Opening search overlay...");
+                  setIsSearchOpen(true);
+                }}
               >
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <Icon
@@ -537,7 +540,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                     className="text-text-secondary group-hover:text-primary transition-colors"
                   />
                 </div>
-                <div className="block w-full h-12 pl-12 pr-4 bg-muted/30 border border-transparent hover:border-primary/20 hover:bg-muted/50 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center text-text-secondary/80 select-none shadow-sm">
+                <div className="block w-full h-11 pl-12 pr-4 bg-muted/40 border border-border/50 hover:border-primary/30 hover:bg-muted/60 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center text-text-secondary select-none shadow-sm">
                   Search for products, brands and more
                 </div>
               </div>
@@ -546,7 +549,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
           {/* Right Action Icons */}
           {/* Right Action Icons - Myntra Style */}
-          <div className="flex items-center justify-end gap-1 md:gap-4 w-auto pr-2 md:pr-0 min-w-[200px] lg:min-w-[240px]">
+          <div className="flex items-center justify-end gap-1 md:gap-4 w-auto min-w-fit pr-2 md:pr-0">
             {/* Profile Button */}
             <div
               className="relative group h-full flex items-center"
