@@ -71,7 +71,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
         { name: 'Bottomwear', path: '/compression-wear-catalog?type=bottomwear' },
         { name: 'Full Body', path: '/compression-wear-catalog?type=fullbody' },
       ],
-      featuredImage: '/assets/images/no_image.png',
+      featuredImage: '/assets/images/compression-featured.png',
       featuredAlt: 'Compression wear collection',
     },
     accessories: {
@@ -412,7 +412,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
                       <div className="w-2/3 relative group">
                         <img
-                          src="https://images.unsplash.com/photo-1517438476312-10d79c67750d?q=80&w=700&auto=format&fit=crop"
+                          src="/assets/images/compression-featured.png"
                           alt="Compression Banner"
                           className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                         />
