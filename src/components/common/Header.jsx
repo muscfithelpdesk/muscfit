@@ -383,7 +383,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                     className="absolute top-full left-1/2 -translate-x-1/2 w-[700px] bg-background border border-border shadow-sharp-lg rounded-xl animate-scale-in-origin-top z-40 overflow-hidden"
                   >
                     <div className="flex h-[380px]">
-                      <div className="w-1/3 bg-surface/50 p-6 flex flex-col justify-between relative overflow-hidden">
+                      <div className="w-1/3 bg-surface/50 p-6 flex flex-col justify-between relative overflow-hidden border-r border-border">
                         <div className="relative z-10">
                           <h3 className="text-foreground font-heading text-2xl font-bold leading-tight">
                             Elite
