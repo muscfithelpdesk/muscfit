@@ -380,17 +380,17 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 {isCompressionDropdownOpen && (
                   <div
                     onMouseLeave={() => setIsCompressionDropdownOpen(false)}
-                    className="absolute top-full left-1/2 -translate-x-1/2 w-[700px] bg-zinc-900 border border-zinc-800 shadow-sharp-lg rounded-xl animate-scale-in-origin-top z-40 overflow-hidden"
+                    className="absolute top-full left-1/2 -translate-x-1/2 w-[700px] bg-background border border-border shadow-sharp-lg rounded-xl animate-scale-in-origin-top z-40 overflow-hidden"
                   >
                     <div className="flex h-[380px]">
-                      <div className="w-1/3 bg-black p-6 flex flex-col justify-between relative overflow-hidden border-r border-zinc-800">
+                      <div className="w-1/3 bg-surface/50 p-6 flex flex-col justify-between relative overflow-hidden border-r border-border">
                         <div className="relative z-10">
-                          <h3 className="text-white font-heading text-2xl font-bold leading-tight">
+                          <h3 className="text-foreground font-heading text-2xl font-bold leading-tight">
                             Elite
                             <br />
                             Compression
                           </h3>
-                          <p className="text-gray-400 text-xs mt-2 font-medium">
+                          <p className="text-text-secondary text-xs mt-2 font-medium">
                             Maximize focus. Minimize fatigue.
                           </p>
                         </div>
@@ -399,7 +399,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                             <Link
                               key={subcat?.path}
                               href={subcat?.path}
-                              className="block text-gray-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-semibold transition-colors"
+                              className="block text-text-secondary hover:text-primary hover:bg-primary/5 px-3 py-2 rounded-md text-sm font-semibold transition-colors"
                               onClick={() => setIsCompressionDropdownOpen(false)}
                             >
                               {subcat?.name}
@@ -407,14 +407,14 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                           ))}
                         </div>
                         {/* Abstract BG element */}
-                        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-[80px]"></div>
+                        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-[80px]"></div>
                       </div>
 
-                      <div className="w-2/3 relative group">
+                      <div className="w-2/3 relative group bg-black">
                         <img
                           src="/assets/images/compression-featured.png"
                           alt="Compression Banner"
-                          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                          className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
                         />
                         <div className="absolute bottom-6 right-6 text-right">
                           <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-lg border border-white/20 inline-block">
