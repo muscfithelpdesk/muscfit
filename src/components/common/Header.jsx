@@ -505,7 +505,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                           ))}
                           {/* Extra Promo Card */}
                           <Link
-                            href="/accessories-catalog"
+                            href="/#explore-accessories"
                             className="group/all relative h-[280px] rounded-xl overflow-hidden bg-primary flex flex-col items-center justify-center text-center p-6 hover:brightness-110 transition-all border-2 border-primary"
                             onClick={() => setIsAccessoriesDropdownOpen(false)}
                           >

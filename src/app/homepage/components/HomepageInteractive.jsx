@@ -186,7 +186,7 @@ export default function HomepageInteractive({ pageData }) {
           subtitle="EXPLORE"
           tabs={[
             { name: 'NEW DROPS', filter: 'featured-acc' },
-            { name: 'GYM BAGS', filter: 'accessories' },
+            { name: 'GYM BAGS', filter: 'gym-bags' },
             { name: 'EQUIPMENT', filter: 'equipment' },
             { name: 'SUPPLEMENTS', filter: 'supplements' },
           ]}
@@ -196,7 +196,7 @@ export default function HomepageInteractive({ pageData }) {
               name: 'MUSCFIT DUFFEL BAG',
               price: 2499,
               image: '/assets/images/products/muscfit_duffel.jpg',
-              category: 'accessories',
+              category: 'gym-bags',
               tag: 'featured-acc',
             },
             {
