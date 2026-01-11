@@ -184,6 +184,7 @@ export default function HomepageInteractive({ pageData }) {
           title="ACCESSORIES"
           subtitle="EXPLORE"
           tabs={[
+            { name: 'NEW DROPS', filter: 'featured-acc' },
             { name: 'GYM BAGS', filter: 'accessories' },
             { name: 'EQUIPMENT', filter: 'equipment' },
             { name: 'SUPPLEMENTS', filter: 'supplements' },
@@ -191,10 +192,11 @@ export default function HomepageInteractive({ pageData }) {
           products={[
             {
               id: 'acc-1',
-              name: 'PROBURST DUFFEL BAG',
+              name: 'MUSCFIT DUFFEL BAG',
               price: 2499,
-              image: '/assets/images/products/proburst_duffel.png',
+              image: '/assets/images/products/muscfit_duffel.jpg',
               category: 'accessories',
+              tag: 'featured-acc',
             },
             {
               id: 'acc-2',
@@ -202,6 +204,7 @@ export default function HomepageInteractive({ pageData }) {
               price: 899,
               image: '/assets/images/products/premium_shaker.png',
               category: 'accessories',
+              tag: 'featured-acc',
             },
             {
               id: 'acc-3',
@@ -209,6 +212,7 @@ export default function HomepageInteractive({ pageData }) {
               price: 5999,
               image: '/assets/images/products/dumbbell_rack.png',
               category: 'equipment',
+              tag: 'featured-acc',
             },
             {
               id: 'acc-4',
@@ -216,6 +220,7 @@ export default function HomepageInteractive({ pageData }) {
               price: 3499,
               image: '/assets/images/products/plate_rack.png',
               category: 'equipment',
+              tag: 'featured-acc',
             },
             {
               id: 'acc-s-1',
