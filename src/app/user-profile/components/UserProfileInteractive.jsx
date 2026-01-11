@@ -12,7 +12,6 @@ import AccountSettingsSection from './AccountSettingsSection';
 import { useAuth } from '@/contexts/AuthContext';
 import { userService } from '@/lib/services/userService';
 import { orderService } from '@/lib/services/orderService';
-import { orderService } from '@/lib/services/orderService';
 
 export default function UserProfileInteractive({ initialData }) {
   const { user } = useAuth();
