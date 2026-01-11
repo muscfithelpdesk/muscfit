@@ -542,9 +542,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           </div>
 
           {/* Right Group: Search and Icons */}
-          <div className="flex items-center justify-end h-full gap-2 md:gap-4 overflow-visible">
+          <div className="flex items-center justify-end h-full gap-2 md:gap-3 overflow-visible flex-1">
             {!isAdminPage && (
-              <div className="hidden lg:flex items-center min-w-[300px] xl:min-w-[450px]">
+              <div className="hidden lg:flex items-center w-full max-w-[280px] xl:max-w-[380px]">
                 <div
                   className="relative w-full group cursor-text"
                   onClick={() => setIsSearchOpen(true)}
@@ -563,7 +563,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               </div>
             )}
 
-            <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
+            <div className="flex items-center gap-1.5 md:gap-2.5 flex-shrink-0">
               {/* Profile Button */}
               <div
                 className="relative group h-full flex items-center"
