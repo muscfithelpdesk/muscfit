@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import PropTypes from 'prop-types';
 import { useAuth } from '@/contexts/AuthContext';
+import Icon from '@/components/ui/AppIcon';
 
 export default function RegisterForm({ identifier, authMethod, onEdit }) {
   const router = useRouter();

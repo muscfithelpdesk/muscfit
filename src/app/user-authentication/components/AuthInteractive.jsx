@@ -3,12 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import PropTypes from 'prop-types';
-import AuthTabs from './AuthTabs';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-import SocialAuth from './SocialAuth';
-import TrustSignals from './TrustSignals';
 import Icon from '@/components/ui/AppIcon';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function AuthInteractive({ initialMode }) {
   const router = useRouter();
