@@ -200,7 +200,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
         <div
           className={`flex items-center justify-between transition-all duration-300 px-4 md:px-8 lg:px-12 ${scrolled ? 'h-[60px] md:h-[80px]' : 'h-[70px] md:h-[120px]'}`}
         >
-          <div className="flex items-center gap-4 w-1/4">
+          <div className="flex items-center gap-4 w-auto min-w-[120px] md:min-w-[150px]">
             {!isAdminPage && (
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -228,7 +228,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
           {/* Center Navigation - Desktop */}
           {!isAdminPage && (
-            <nav className="hidden md:flex items-center justify-start gap-6 lg:gap-8 flex-1 ml-4 lg:ml-8">
+            <nav className="hidden md:flex items-center justify-start gap-4 lg:gap-6 ml-6 lg:ml-10">
               {/* Men Navigation Item */}
               <div className="relative" ref={menDropdownRef}>
                 <button
@@ -372,7 +372,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                     setIsWomenDropdownOpen(false);
                     setIsAccessoriesDropdownOpen(false);
                   }}
-                  className="font-heading text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4"
+                  className="font-heading text-base lg:text-lg font-bold text-text-secondary hover:text-primary transition-colors duration-250 relative group flex items-center gap-1 py-4 whitespace-nowrap"
                 >
                   {navigationCategories?.compression?.label}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-250"></span>
@@ -525,19 +525,19 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
           {/* Persistent Search Bar - Desktop */}
           {!isAdminPage && (
-            <div className="hidden md:flex flex-1 max-w-[400px] lg:max-w-[500px] mx-4 lg:mx-8">
+            <div className="hidden md:flex flex-1 mx-8 lg:mx-12">
               <div
                 className="relative w-full group cursor-text"
                 onClick={() => setIsSearchOpen(true)}
               >
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <Icon
                     name="MagnifyingGlassIcon"
-                    size={18}
-                    className="text-text-secondary group-focus-within:text-primary transition-colors"
+                    size={20}
+                    className="text-text-secondary group-hover:text-primary transition-colors"
                   />
                 </div>
-                <div className="block w-full h-10 pl-10 pr-3 bg-surface border border-transparent rounded-md text-sm font-medium transition-all duration-300 flex items-center text-text-secondary/60 select-none">
+                <div className="block w-full h-12 pl-12 pr-4 bg-muted/30 border border-transparent hover:border-primary/20 hover:bg-muted/50 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center text-text-secondary/80 select-none shadow-sm">
                   Search for products, brands and more
                 </div>
               </div>
@@ -546,7 +546,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
           {/* Right Action Icons */}
           {/* Right Action Icons - Myntra Style */}
-          <div className="flex items-center justify-end gap-1 md:gap-4 w-auto lg:w-1/3 pr-2 md:pr-0">
+          <div className="flex items-center justify-end gap-1 md:gap-4 w-auto pr-2 md:pr-0 min-w-[200px] lg:min-w-[240px]">
             {/* Profile Button */}
             <div
               className="relative group h-full flex items-center"
