@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 export default function CollectionSection({ title, subtitle, tabs, products, onQuickView, id }) {
   const [activeTab, setActiveTab] = useState(tabs[0]?.name);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const scrollRef = useRef(null);
 
   // Handle hash-based navigation to specific tabs
@@ -49,6 +50,13 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [id, tabs]);
 
+  // Reset scroll position when tab changes
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+    }
+  }, [activeTab]);
+
   const scrollRight = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
@@ -79,7 +87,21 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
             {tabs?.map((tab) => (
               <button
                 key={tab.name}
-                onClick={() => setActiveTab(tab.name)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+
+                  // Add transition state for visual feedback
+                  setIsTransitioning(true);
+
+                  // Update active tab
+                  setActiveTab(tab.name);
+
+                  // Reset transition state after a brief delay
+                  setTimeout(() => {
+                    setIsTransitioning(false);
+                  }, 150);
+                }}
                 className={`hover:text-black transition-colors relative pb-1 ${activeTab === tab.name
                   ? 'text-black after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-black'
                   : ''
@@ -95,7 +117,8 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
         <div className="relative group">
           <div
             ref={scrollRef}
-            className="flex overflow-x-auto no-scrollbar pb-8 scroll-smooth"
+            className={`flex overflow-x-auto no-scrollbar pb-8 scroll-smooth transition-opacity duration-150 ${isTransitioning ? 'opacity-50' : 'opacity-100'
+              }`}
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {products
