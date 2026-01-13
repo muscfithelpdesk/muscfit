@@ -727,7 +727,7 @@ export const productService = {
       let filteredBasics = formattedBasics;
       if (activeFilters?.gender) {
         filteredBasics = filteredBasics.filter(
-          (p) => p.gender === activeFilters.gender || p.gender === 'unisex'
+          (p) => p.gender === activeFilters.gender
         );
       }
       if (activeFilters?.category) {
