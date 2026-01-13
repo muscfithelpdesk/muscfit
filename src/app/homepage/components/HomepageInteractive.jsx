@@ -229,7 +229,29 @@ export default function HomepageInteractive({ pageData }) {
             { name: 'FULL BODY', filter: 'leggings' },
             { name: 'ACCESSORIES', filter: 'accessories' },
           ]}
-          products={dbProducts.filter((p) => p.gender === 'compression' || p.gender === 'unisex')}
+          products={[
+            ...dbProducts.filter((p) => p.gender === 'compression' || p.gender === 'unisex'),
+            {
+              id: 'compression-1',
+              name: 'Elite Compression Long Sleeve - Taupe',
+              price: 1599,
+              image: '/assets/images/compression-1.png',
+              imageAlt: 'Elite Compression Long Sleeve - Taupe',
+              gender: 'compression',
+              category: 'tshirts',
+              tag: 'featured',
+            },
+            {
+              id: 'compression-2',
+              name: 'Pro Performance Base Layer - Olive',
+              price: 1799,
+              image: '/assets/images/compression-2.png',
+              imageAlt: 'Pro Performance Base Layer - Olive',
+              gender: 'compression',
+              category: 'tshirts',
+              tag: 'featured',
+            },
+          ]}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
