@@ -18,7 +18,6 @@ import Newsletter from './Newsletter';
 import Footer from './Footer';
 import CollectionSection from './CollectionSection';
 import QuickViewModal from './QuickViewModal';
-import WomenExploreGallery from './WomenExploreGallery';
 import { productService } from '@/lib/services/productService';
 
 export default function HomepageInteractive({ pageData }) {
@@ -164,11 +163,35 @@ export default function HomepageInteractive({ pageData }) {
             { name: 'TOPS', filter: 'tshirts' },
             { name: 'SHORTS', filter: 'shorts' },
           ]}
-          products={dbProducts.filter((p) => p.gender === 'women' || p.gender === 'unisex')}
+          products={[
+            ...dbProducts.filter((p) => p.gender === 'women' || p.gender === 'unisex'),
+            {
+              id: 'women-explore-1',
+              name: 'Women\'s Athletic Wear - Dark Brown Set',
+              price: 0,
+              image: '/assets/images/women-explore-1.jpg',
+              imageAlt: 'Women\'s Athletic Wear - Dark Brown Set',
+              gender: 'women',
+            },
+            {
+              id: 'women-explore-2',
+              name: 'Women\'s Athletic Wear - Dark Grey Top',
+              price: 0,
+              image: '/assets/images/women-explore-2.jpg',
+              imageAlt: 'Women\'s Athletic Wear - Dark Grey Top',
+              gender: 'women',
+            },
+            {
+              id: 'women-explore-3',
+              name: 'Women\'s Athletic Wear - Lavender Top',
+              price: 0,
+              image: '/assets/images/women-explore-3.jpg',
+              imageAlt: 'Women\'s Athletic Wear - Lavender Top',
+              gender: 'women',
+            },
+          ]}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
-
-        <WomenExploreGallery />
 
         <CollectionSection
           title="COMPRESSION"
