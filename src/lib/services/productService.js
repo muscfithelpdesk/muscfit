@@ -570,46 +570,75 @@ export const productService = {
     if (activeFilters.search) {
       let term = activeFilters.search.toLowerCase().trim();
 
-      // 1. Extract Gender/Category keywords using word boundaries (prevent "supplement" matching "men")
-      const menRegex = /\b(men|mens|man|male)\b/i;
-      const womenRegex = /\b(women|womens|woman|female)\b/i;
-      const accRegex = /\b(accessories|accessory|equipment|gear|bag|bags|supplement|supplements|protein|nutrition)\b/i;
-      const compRegex = /\b(compression|running|base layer)\b/i;
+      // 1. Advanced NLP & Tokenization
+      const synonyms = {
+        'tee': 'tshirt',
+        't-shirt': 'tshirt',
+        'shirt': 'tshirt',
+        'joggers': 'pants',
+        'track': 'pants',
+        'bottoms': 'pants',
+        'leggings': 'tights',
+        'bag': 'accessories',
+        'duffel': 'accessories',
+        'backpack': 'accessories',
+        'supplements': 'nutrition',
+        'protein': 'nutrition',
+        'whey': 'nutrition',
+        'wrist': 'straps',
+        'belt': 'gear'
+      };
 
-      // Check filters and apply strict rules
-      if (menRegex.test(term)) {
-        activeFilters.gender = 'men';
-        // Remove the keyword from the search term to clean up results (e.g. "men tshirt" -> "tshirt")
-        term = term.replace(menRegex, '').trim();
-      } else if (womenRegex.test(term)) {
-        activeFilters.gender = 'women';
-        term = term.replace(womenRegex, '').trim();
-      } else if (compRegex.test(term)) {
-        // Note: Compression is a 'gender' type in our DB schema
-        activeFilters.gender = 'compression';
-        term = term.replace(compRegex, '').trim();
-      } else if (accRegex.test(term)) {
-        // Special Accessories handling: Include all accessory-related categories
-        // Verify we match general accessory terms or specific ones
-        if (term.includes('accessories') || term.includes('accessory') || term.includes('equipment') || term.includes('gear') || term.includes('supplement') || term.includes('protein')) {
-          activeFilters.categories = ['accessories', 'equipment', 'supplements', 'gym-bags'];
-          // Remove the general terms including bag/bags to allow "Gym Bags" -> "Gym"
-          term = term.replace(/\b(accessories|accessory|equipment|gear|supplement|supplements|protein|nutrition|bag|bags)\b/i, '').trim();
-        } else {
-          // If detailed word like "bag" is present, we might want to still filter by category?
-          // For now, let's broaden the scope if it matches the regex
-          activeFilters.categories = ['accessories', 'equipment', 'supplements', 'gym-bags'];
+      // Extract Filters from Natural Language
+      const genderMap = {
+        'men': 'men', 'mens': 'men', 'male': 'men', 'man': 'men',
+        'women': 'women', 'womens': 'women', 'female': 'women', 'woman': 'women',
+        'compression': 'compression'
+      };
+
+      const categoryKeywords = {
+        'bag': ['accessories', 'gym-bags'],
+        'duffel': ['accessories', 'gym-bags'],
+        'equipment': ['accessories', 'equipment'],
+        'supplement': ['accessories', 'supplements'],
+        'protein': ['accessories', 'supplements'],
+        'nutrition': ['accessories', 'supplements'],
+        'hoodie': ['hoodies', 'winter-arc'],
+        'jacket': ['hoodies', 'winter-arc'],
+        'jogger': ['joggers', 'winter-arc'],
+        'legging': ['leggings']
+      };
+
+      // Tokenize
+      let tokens = term.split(/\s+/);
+      const cleanedTokens = [];
+
+      tokens.forEach(t => {
+        const lowerT = t.toLowerCase().replace(/s$/, ''); // Remove simple plurals
+
+        // Check Gender
+        if (genderMap[lowerT] || genderMap[t.toLowerCase()]) {
+          activeFilters.gender = genderMap[lowerT] || genderMap[t.toLowerCase()];
+          return; // Consumed
         }
-      }
 
-      // 2. Update the search filter
-      if (!term) {
-        // If the user only typed "men" or "accessories", remove the text search entirely 
-        // so we return ALL items in that category/gender instead of looking for the word "men" in the description.
-        delete activeFilters.search;
+        // Check Category triggers
+        for (const [key, cats] of Object.entries(categoryKeywords)) {
+          if (lowerT.includes(key)) {
+            activeFilters.categories = Array.from(new Set([...(activeFilters.categories || []), ...cats]));
+            // Don't consume entirely, might be part of name (e.g. "Hoodie")
+          }
+        }
+
+        cleanedTokens.push(t);
+      });
+
+      // Update search term with cleaned tokens for fuzzy matching
+      // We keep the generic words for the text search score but use the filters for hard exclusion
+      if (cleanedTokens.length === 0 && activeFilters.gender) {
+        delete activeFilters.search; // Pure filter
       } else {
-        // Otherwise search for the remaining specific item (e.g. "tshirt") within that gender
-        activeFilters.search = term;
+        activeFilters.search = cleanedTokens.join(' ');
       }
     }
 
@@ -746,11 +775,37 @@ export const productService = {
         filteredBasics = filteredBasics.filter((p) => p.tag === activeFilters.tag);
       }
       if (activeFilters?.search) {
-        const search = activeFilters.search.toLowerCase();
-        filteredBasics = filteredBasics.filter(
-          (p) =>
-            p.name.toLowerCase().includes(search) || p.description.toLowerCase().includes(search)
-        );
+        const searchTokens = activeFilters.search.toLowerCase().split(/\s+/);
+
+        // Calculate Score
+        filteredBasics = filteredBasics.map(p => {
+          let score = 0;
+          const name = p.name.toLowerCase();
+          const desc = p.description.toLowerCase();
+          const cat = p.category.toLowerCase();
+          const tags = (p.tag || '').toLowerCase();
+
+          searchTokens.forEach(token => {
+            const cleanToken = token.replace(/s$/, ''); // Remove plural
+            // Exact Match Bonus
+            if (name === token) score += 50;
+
+            // Name Match
+            if (name.includes(token)) score += 20;
+            if (name.includes(cleanToken)) score += 15;
+
+            // Category/Tag Match
+            if (cat.includes(token) || cat.includes(cleanToken)) score += 10;
+            if (tags.includes(token)) score += 10;
+
+            // Description Match (Lower weight)
+            if (desc.includes(token)) score += 5;
+          });
+
+          return { ...p, _searchScore: score };
+        })
+          .filter(p => p._searchScore > 0) // Must match something
+          .sort((a, b) => b._searchScore - a._searchScore); // Best match first
       }
       if (activeFilters?.minPrice) {
         filteredBasics = filteredBasics.filter((p) => p.price >= activeFilters.minPrice);
