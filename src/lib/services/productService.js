@@ -201,7 +201,7 @@ const BASIC_CATALOG = [
     is_active: true,
     rating: 4.7,
     review_count: 92,
-    image_url: '/assets/images/products/plain_black_shorts_flat_lay_1767418127534.png',
+    image_url: '/assets/images/products/muscfit_duffel.jpg',
   },
   {
     id: 'a-wb-b-2',
@@ -216,7 +216,7 @@ const BASIC_CATALOG = [
     is_active: true,
     rating: 4.8,
     review_count: 42,
-    image_url: '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png',
+    image_url: '/assets/images/products/muscfit_duffel.jpg', // Placeholder reusing duffel
   },
   {
     id: 'a-gb-t-3',
@@ -231,7 +231,7 @@ const BASIC_CATALOG = [
     is_active: true,
     rating: 4.9,
     review_count: 156,
-    image_url: '/assets/images/products/plain_gray_joggers_flat_lay_2_1767417737544.png',
+    image_url: '/assets/images/accessory-gloves.jpg', // Placeholder reusing gloves
   },
   {
     id: 'a-bb-w-4',
@@ -246,7 +246,7 @@ const BASIC_CATALOG = [
     is_active: true,
     rating: 4.8,
     review_count: 234,
-    image_url: '/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png',
+    image_url: '/assets/images/accessory-gloves.jpg',
   },
 
   // --- MIGRATED FROM HOMEPAGE ---
@@ -589,13 +589,16 @@ export const productService = {
         activeFilters.gender = 'compression';
         term = term.replace(compRegex, '').trim();
       } else if (accRegex.test(term)) {
-        // Prioritize separating accessories
-        activeFilters.category = 'accessories';
-        // Remove 'accessories' word but keep specific terms like 'bag' if needed for fuzzy match logic later, 
-        // but generally for 'accessories' filter we might just want to show the category?
-        // Let's remove the generic term 'accessories' but keep specific items
-        if (term.includes('accessories')) {
-          term = term.replace(/\b(accessories|accessory)\b/i, '').trim();
+        // Special Accessories handling: Include all accessory-related categories
+        // Verify we match general accessory terms or specific ones
+        if (term.includes('accessories') || term.includes('accessory') || term.includes('equipment') || term.includes('gear')) {
+          activeFilters.categories = ['accessories', 'equipment', 'supplements', 'gym-bags'];
+          // Remove the general terms
+          term = term.replace(/\b(accessories|accessory|equipment|gear)\b/i, '').trim();
+        } else {
+          // If detailed word like "bag" is present, we might want to still filter by category?
+          // For now, let's broaden the scope if it matches the regex
+          activeFilters.categories = ['accessories', 'equipment', 'supplements', 'gym-bags'];
         }
       }
 
@@ -646,6 +649,9 @@ export const productService = {
         }
         if (activeFilters?.category) {
           query = query.eq('category', activeFilters?.category);
+        }
+        if (activeFilters?.categories) {
+          query = query.in('category', activeFilters?.categories);
         }
         if (activeFilters?.brand) {
           query = query.eq('brand', activeFilters?.brand);
@@ -732,6 +738,9 @@ export const productService = {
       }
       if (activeFilters?.category) {
         filteredBasics = filteredBasics.filter((p) => p.category === activeFilters.category);
+      }
+      if (activeFilters?.categories) {
+        filteredBasics = filteredBasics.filter((p) => activeFilters.categories.includes(p.category));
       }
       if (activeFilters?.tag) {
         filteredBasics = filteredBasics.filter((p) => p.tag === activeFilters.tag);
