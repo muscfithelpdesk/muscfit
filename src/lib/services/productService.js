@@ -564,6 +564,25 @@ const BASIC_CATALOG = [
 export const productService = {
   // Get all products with optional filters
   async getAll(filters = {}) {
+    // Clone filters to avoid mutation side effects and implement smart keywords
+    const activeFilters = { ...filters };
+
+    if (activeFilters.search) {
+      const term = activeFilters.search.toLowerCase().trim();
+
+      // Smart Keyword Mapping: Convert broad search terms into strict filters
+      if (['men', 'mens', 'man'].includes(term)) {
+        activeFilters.gender = 'men';
+        delete activeFilters.search; // Remove text search to prevent fuzzy matching noise
+      } else if (['women', 'womens', 'woman'].includes(term)) {
+        activeFilters.gender = 'women';
+        delete activeFilters.search;
+      } else if (['compression'].includes(term)) {
+        activeFilters.gender = 'compression';
+        delete activeFilters.search;
+      }
+    }
+
     let dbProducts = [];
     try {
       if (supabase) {
@@ -595,34 +614,34 @@ export const productService = {
           .eq('product_images.is_primary', true);
 
         // Apply filters
-        if (filters?.gender) {
-          query = query.eq('gender', filters?.gender);
+        if (activeFilters?.gender) {
+          query = query.eq('gender', activeFilters?.gender);
         }
-        if (filters?.category) {
-          query = query.eq('category', filters?.category);
+        if (activeFilters?.category) {
+          query = query.eq('category', activeFilters?.category);
         }
-        if (filters?.brand) {
-          query = query.eq('brand', filters?.brand);
+        if (activeFilters?.brand) {
+          query = query.eq('brand', activeFilters?.brand);
         }
-        if (filters?.tag) {
-          query = query.eq('tag', filters?.tag);
+        if (activeFilters?.tag) {
+          query = query.eq('tag', activeFilters?.tag);
         }
-        if (filters?.minPrice) {
-          query = query.gte('price', filters?.minPrice);
+        if (activeFilters?.minPrice) {
+          query = query.gte('price', activeFilters?.minPrice);
         }
-        if (filters?.maxPrice) {
-          query = query.lte('price', filters?.maxPrice);
+        if (activeFilters?.maxPrice) {
+          query = query.lte('price', activeFilters?.maxPrice);
         }
 
         // Apply search
-        if (filters?.search) {
+        if (activeFilters?.search) {
           query = query.or(
-            `name.ilike.%${filters?.search}%,description.ilike.%${filters?.search}%,brand.ilike.%${filters?.search}%`
+            `name.ilike.%${activeFilters?.search}%,description.ilike.%${activeFilters?.search}%,brand.ilike.%${activeFilters?.search}%`
           );
         }
 
         // Apply sorting
-        if (filters?.sortBy) {
+        if (activeFilters?.sortBy) {
           const sortOptions = {
             'price-asc': { column: 'price', ascending: true },
             'price-desc': { column: 'price', ascending: false },
@@ -631,7 +650,7 @@ export const productService = {
             rating: { column: 'rating', ascending: false },
             newest: { column: 'created_at', ascending: false },
           };
-          const sort = sortOptions?.[filters?.sortBy];
+          const sort = sortOptions?.[activeFilters?.sortBy];
           if (sort) {
             query = query.order(sort?.column, { ascending: sort?.ascending });
           }
@@ -679,29 +698,29 @@ export const productService = {
 
       // Apply filtering to basic catalog as well
       let filteredBasics = formattedBasics;
-      if (filters?.gender) {
+      if (activeFilters?.gender) {
         filteredBasics = filteredBasics.filter(
-          (p) => p.gender === filters.gender || p.gender === 'unisex'
+          (p) => p.gender === activeFilters.gender || p.gender === 'unisex'
         );
       }
-      if (filters?.category) {
-        filteredBasics = filteredBasics.filter((p) => p.category === filters.category);
+      if (activeFilters?.category) {
+        filteredBasics = filteredBasics.filter((p) => p.category === activeFilters.category);
       }
-      if (filters?.tag) {
-        filteredBasics = filteredBasics.filter((p) => p.tag === filters.tag);
+      if (activeFilters?.tag) {
+        filteredBasics = filteredBasics.filter((p) => p.tag === activeFilters.tag);
       }
-      if (filters?.search) {
-        const search = filters.search.toLowerCase();
+      if (activeFilters?.search) {
+        const search = activeFilters.search.toLowerCase();
         filteredBasics = filteredBasics.filter(
           (p) =>
             p.name.toLowerCase().includes(search) || p.description.toLowerCase().includes(search)
         );
       }
-      if (filters?.minPrice) {
-        filteredBasics = filteredBasics.filter((p) => p.price >= filters.minPrice);
+      if (activeFilters?.minPrice) {
+        filteredBasics = filteredBasics.filter((p) => p.price >= activeFilters.minPrice);
       }
-      if (filters?.maxPrice) {
-        filteredBasics = filteredBasics.filter((p) => p.price <= filters.maxPrice);
+      if (activeFilters?.maxPrice) {
+        filteredBasics = filteredBasics.filter((p) => p.price <= activeFilters.maxPrice);
       }
 
       // Add unique basics to merged list (avoiding ID collisions if any)
@@ -712,13 +731,13 @@ export const productService = {
       });
 
       // Apply final sorting to merged list
-      if (filters?.sortBy) {
-        if (filters.sortBy === 'price-asc') mergedProducts.sort((a, b) => a.price - b.price);
-        if (filters.sortBy === 'price-desc') mergedProducts.sort((a, b) => b.price - a.price);
-        if (filters.sortBy === 'name-asc')
+      if (activeFilters?.sortBy) {
+        if (activeFilters.sortBy === 'price-asc') mergedProducts.sort((a, b) => a.price - b.price);
+        if (activeFilters.sortBy === 'price-desc') mergedProducts.sort((a, b) => b.price - a.price);
+        if (activeFilters.sortBy === 'name-asc')
           mergedProducts.sort((a, b) => a.name.localeCompare(b.name));
-        if (filters.sortBy === 'rating') mergedProducts.sort((a, b) => b.rating - a.rating);
-        if (filters.sortBy === 'newest')
+        if (activeFilters.sortBy === 'rating') mergedProducts.sort((a, b) => b.rating - a.rating);
+        if (activeFilters.sortBy === 'newest')
           mergedProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       }
 
