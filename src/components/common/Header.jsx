@@ -970,8 +970,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       autoFocus
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e?.target.value)}
-                      placeholder="SEARCH FOR PRODUCTS, BRANDS AND MORE..."
-                      className="w-full h-16 md:h-20 pl-16 pr-8 bg-surface border-none text-xl md:text-3xl font-heading font-black text-foreground placeholder:text-text-secondary/[0.05] focus:ring-0 transition-all uppercase tracking-tight"
+                      className="w-full h-16 md:h-20 pl-16 pr-8 bg-surface border-none text-xl md:text-3xl font-heading font-black text-foreground focus:ring-0 transition-all uppercase tracking-tight"
                     />
                   </form>
                 </div>
