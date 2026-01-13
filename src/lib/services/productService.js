@@ -190,7 +190,7 @@ const BASIC_CATALOG = [
   // Accessories (4 Items)
   {
     id: 'a-bb-b-1',
-    name: 'Tactical Utility Duffel (45L) - Blackout',
+    name: 'MuscFIT Tactical Gym Bag (45L) - Blackout',
     description: 'Military-grade durability. Wet/dry separation pocket, dedicated shoe compartment, and Molle webbing system.',
     price: 2499,
     original_price: 3499,
@@ -205,7 +205,7 @@ const BASIC_CATALOG = [
   },
   {
     id: 'a-wb-b-2',
-    name: 'Essential Training Bag (White)',
+    name: 'MuscFIT Tactical Gym Bag (45L) - Arctic White',
     description: 'Minimalist white training bag. Water-resistant material.',
     price: 2499,
     original_price: 3499,
@@ -220,7 +220,7 @@ const BASIC_CATALOG = [
   },
   {
     id: 'a-gb-t-3',
-    name: 'Pro Lever Lifting Belt (10mm) - Grey',
+    name: 'MuscFIT Pro Lever Belt (10mm)',
     description: 'Competition grade leather belt with quick-release lever mechanism for maximum intra-abdominal pressure.',
     price: 1599,
     original_price: 2199,
@@ -235,7 +235,7 @@ const BASIC_CATALOG = [
   },
   {
     id: 'a-bb-w-4',
-    name: 'Heavy Duty Wrist Support Wraps',
+    name: 'MuscFIT Heavy Duty Wrist Wraps',
     description: 'Maximum stability for heavy pressing movements. Bench press approved with reinforced thumb loops.',
     price: 799,
     original_price: 1199,
@@ -253,7 +253,7 @@ const BASIC_CATALOG = [
   // Winter Arc Collection
   {
     id: 'wa-h-1',
-    name: 'WINTER ARC HOODIE (BLUE)',
+    name: 'MuscFIT Winter Arc Hoodie (Blue)',
     description: 'Premium heavyweight hoodie for the winter arc. Fleece-lined for warmth.',
     price: 1599,
     original_price: 2499,
@@ -268,7 +268,7 @@ const BASIC_CATALOG = [
   },
   {
     id: 'wa-p-1',
-    name: 'WINTER ARC PANTS (BLUE)',
+    name: 'MuscFIT Winter Arc Joggers (Blue)',
     description: 'Matching thermal pants for the ultimate winter training set.',
     price: 1599,
     original_price: 2299,
@@ -283,7 +283,7 @@ const BASIC_CATALOG = [
   },
   {
     id: 'wa-h-2',
-    name: 'WINTER ARC HOODIE (BLACK)',
+    name: 'MuscFIT Winter Arc Hoodie (Black)',
     description: 'The classic black heavyweight hoodie. Essential for cold starts.',
     price: 1599,
     original_price: 2499,
@@ -298,7 +298,7 @@ const BASIC_CATALOG = [
   },
   {
     id: 'wa-b-1',
-    name: 'WINTER ARC ACCESSORY SET',
+    name: 'MuscFIT Winter Beanie & Glove Set',
     description: 'Complete winter accessories including beanie and gloves.',
     price: 1299,
     original_price: 1899,
@@ -315,7 +315,7 @@ const BASIC_CATALOG = [
   // Men's Specific
   {
     id: 'men-shop-1',
-    name: 'Compression Training Shirt - Charcoal',
+    name: 'MuscFIT Compression Training Shirt - Charcoal',
     description: 'Advanced compression technology for maximum muscle support.',
     price: 1499,
     original_price: 1999,
@@ -330,7 +330,7 @@ const BASIC_CATALOG = [
   },
   {
     id: 'men-shop-2',
-    name: 'Performance Graphic Shorts - Black',
+    name: 'MuscFIT Graphic Performance Shorts',
     description: 'Lightweight shorts with bold graphic design for statement training.',
     price: 1199,
     original_price: 1599,
@@ -347,7 +347,7 @@ const BASIC_CATALOG = [
   // Women's Specific
   {
     id: 'women-shop-1',
-    name: 'Performance Long Sleeve - Pink',
+    name: 'MuscFIT Performance Long Sleeve',
     description: 'Breathable long sleeve top in energetic pink. Moisture-wicking.',
     price: 1299,
     original_price: 1799,
@@ -362,7 +362,7 @@ const BASIC_CATALOG = [
   },
   {
     id: 'women-shop-2',
-    name: 'Seamless Crop Top - Grey',
+    name: 'MuscFIT Seamless Crop Top',
     description: 'Seamless construction for zero chafing. Perfect crop fit.',
     price: 999,
     original_price: 1499,
@@ -377,7 +377,7 @@ const BASIC_CATALOG = [
   },
   {
     id: 'women-shop-3',
-    name: 'Lounge Hoodie Set - Brown',
+    name: 'MuscFIT Lounge Hoodie Set',
     description: 'Cozy brown hoodie set for rest days and recovery.',
     price: 2499,
     original_price: 3499,
@@ -394,7 +394,7 @@ const BASIC_CATALOG = [
   // Compression Featured
   {
     id: 'compression-1',
-    name: 'Elite Compression Long Sleeve - Taupe',
+    name: 'MuscFIT Elite Compression Long Sleeve',
     description: 'Pro-grade compression in earth tone Taupe.',
     price: 1599,
     original_price: 2199,
@@ -409,7 +409,7 @@ const BASIC_CATALOG = [
   },
   {
     id: 'compression-2',
-    name: 'Pro Performance Base Layer - Olive',
+    name: 'MuscFIT Pro Base Layer - Olive',
     description: 'Tactical olive base layer for serious athletes.',
     price: 1799,
     original_price: 2299,
@@ -426,7 +426,7 @@ const BASIC_CATALOG = [
   // Accessories Expanded
   {
     id: 'acc-1',
-    name: 'MUSCFIT DUFFEL BAG',
+    name: 'MuscFIT Ultimate Gym Bag',
     description: 'Large capacity duffel for all your gear.',
     price: 2499,
     original_price: 3999,
