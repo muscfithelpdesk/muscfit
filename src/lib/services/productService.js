@@ -573,7 +573,7 @@ export const productService = {
       // 1. Extract Gender/Category keywords using word boundaries (prevent "supplement" matching "men")
       const menRegex = /\b(men|mens|man|male)\b/i;
       const womenRegex = /\b(women|womens|woman|female)\b/i;
-      const accRegex = /\b(accessories|accessory|equipment|gear|bag|bags)\b/i;
+      const accRegex = /\b(accessories|accessory|equipment|gear|bag|bags|supplement|supplements|protein|nutrition)\b/i;
       const compRegex = /\b(compression|running|base layer)\b/i;
 
       // Check filters and apply strict rules
@@ -591,10 +591,10 @@ export const productService = {
       } else if (accRegex.test(term)) {
         // Special Accessories handling: Include all accessory-related categories
         // Verify we match general accessory terms or specific ones
-        if (term.includes('accessories') || term.includes('accessory') || term.includes('equipment') || term.includes('gear')) {
+        if (term.includes('accessories') || term.includes('accessory') || term.includes('equipment') || term.includes('gear') || term.includes('supplement') || term.includes('protein')) {
           activeFilters.categories = ['accessories', 'equipment', 'supplements', 'gym-bags'];
           // Remove the general terms
-          term = term.replace(/\b(accessories|accessory|equipment|gear)\b/i, '').trim();
+          term = term.replace(/\b(accessories|accessory|equipment|gear|supplement|supplements|protein|nutrition)\b/i, '').trim();
         } else {
           // If detailed word like "bag" is present, we might want to still filter by category?
           // For now, let's broaden the scope if it matches the regex

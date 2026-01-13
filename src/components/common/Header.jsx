@@ -1028,11 +1028,11 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                     {[
                       'Men\'s T-Shirts',
                       'Women\'s Leggings',
+                      'Winter Arc',
                       'Compression Layers',
                       'Gym Bags',
-                      'Protein Supplements',
-                      'Winter Arc',
-                      'Equipment'
+                      'Equipment',
+                      'Protein Supplements'
                     ]?.map((term) => {
                       return (
                         <Link
