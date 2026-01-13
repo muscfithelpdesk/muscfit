@@ -839,6 +839,51 @@ export const productService = {
     }
   },
 
+  // Get autocomplete suggestions
+  async getSuggestions(term) {
+    if (!term || term.length < 1) return [];
+
+    const search = term.toLowerCase();
+    const suggestions = [];
+    const seen = new Set();
+
+    // 1. Category Suggestions (High Priority)
+    // "Joggers" matches "J"
+    const uniqueCategories = [...new Set(BASIC_CATALOG.map(p => p.category))];
+    uniqueCategories.forEach(cat => {
+      const displayCat = cat.replace(/-/g, ' '); // gym-bags -> gym bags
+      if (displayCat.startsWith(search)) {
+        const label = displayCat.charAt(0).toUpperCase() + displayCat.slice(1);
+        if (!seen.has(label)) {
+          // Find a representative image for the category
+          const repProduct = BASIC_CATALOG.find(p => p.category === cat);
+          suggestions.push({ type: 'category', text: label, image: repProduct?.image_url });
+          seen.add(label);
+        }
+      }
+    });
+
+    // 2. Product Suggestions
+    // "Tactical Gym Bag" matches "G" (Gym) or "T" (Tactical) or "B" (Bag)
+    BASIC_CATALOG.forEach(p => {
+      if (suggestions.length >= 8) return;
+
+      const name = p.name;
+      const nameLower = name.toLowerCase();
+
+      // Check if ANY word in the name starts with the search term
+      const words = nameLower.split(/[\s-]+/); // Split on space or hyphen
+      const isMatch = words.some(w => w.startsWith(search));
+
+      if (isMatch && !seen.has(name)) {
+        suggestions.push({ type: 'product', text: name, image: p.image_url });
+        seen.add(name);
+      }
+    });
+
+    return suggestions.slice(0, 8);
+  },
+
   // Get all products for admin (including inactive and without image filters)
   async getAllForAdmin(filters = {}) {
     try {
