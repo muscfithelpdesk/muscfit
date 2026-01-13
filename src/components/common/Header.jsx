@@ -7,11 +7,14 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
 import { useRouter, usePathname } from 'next/navigation';
 
+import { productService } from '@/lib/services/productService'; // Import Service
+
 export default function Header({ topOffset = 0, isFixed = true }) {
   const router = useRouter();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [suggestions, setSuggestions] = useState([]); // Add suggestions state
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false);
@@ -181,8 +184,24 @@ export default function Header({ topOffset = 0, isFixed = true }) {
     if (searchQuery?.trim()) {
       router?.push(`/search?q=${encodeURIComponent(searchQuery)}`);
       setIsSearchOpen(false);
+      setSuggestions([]); // Clear suggestions
     }
   };
+
+  // Autocomplete Handler
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (searchQuery.length > 0) {
+        const results = await productService.getSuggestions(searchQuery);
+        setSuggestions(results);
+      } else {
+        setSuggestions([]);
+      }
+    };
+
+    const debounce = setTimeout(fetchSuggestions, 300);
+    return () => clearTimeout(debounce);
+  }, [searchQuery]);
 
 
 
@@ -1048,6 +1067,36 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   </div>
                 </div>
 
+                {/* Autocomplete Suggestions */}
+                {suggestions.length > 0 && (
+                  <div className="absolute top-[80px] left-0 right-0 bg-background z-50 p-4 shadow-lg border-t border-border">
+                    <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-4 pl-4 border-l-4 border-primary">
+                      Suggestions
+                    </h3>
+                    <ul className="space-y-2">
+                      {suggestions.map((s, idx) => (
+                        <li key={idx}>
+                          <button
+                            className="flex items-center gap-3 w-full text-left p-2 hover:bg-muted/30 rounded-lg group transition-colors"
+                            onClick={() => {
+                              router.push(`/search?q=${encodeURIComponent(s.text)}`);
+                              setIsSearchOpen(false);
+                              setSuggestions([]);
+                            }}
+                          >
+                            <div className="w-10 h-10 rounded bg-muted overflow-hidden flex-shrink-0">
+                              {s.image && <img src={s.image} alt="" className="w-full h-full object-cover" />}
+                            </div>
+                            <span className="font-heading font-medium group-hover:text-primary transition-colors">
+                              {s.text}
+                            </span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 {/* Featured Products/Collections Preview */}
                 <div className="hidden lg:block">
                   <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-6 border-l-4 border-primary pl-4">
@@ -1075,10 +1124,10 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                     </Link>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
+              </div >
+            </div >
+          </div >
+        </div >
       )}
 
       {/* Recaptcha Container (invisible) */}
