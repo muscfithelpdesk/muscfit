@@ -11,7 +11,9 @@ import AddressBookSection from './AddressBookSection';
 import AccountSettingsSection from './AccountSettingsSection';
 import { useAuth } from '@/contexts/AuthContext';
 import { userService } from '@/lib/services/userService';
+import { userService } from '@/lib/services/userService';
 import { orderService } from '@/lib/services/orderService';
+import { wishlistService } from '@/lib/services/wishlistService';
 
 export default function UserProfileInteractive({ initialData }) {
   const { user } = useAuth();
@@ -40,10 +42,13 @@ export default function UserProfileInteractive({ initialData }) {
   const fetchUserData = async () => {
     setIsLoading(true);
     try {
-      const [profile, userOrders, userAddresses] = await Promise.all([
+      const [profile, userOrders, userAddresses, userWishlist] = await Promise.all([
+        userService.getProfile(user.id),
+        orderService.getUserOrders(user.id),
         userService.getProfile(user.id),
         orderService.getUserOrders(user.id),
         userService.getAddresses(user.id),
+        wishlistService.getWishlist(user.id),
       ]);
 
       if (profile) {
@@ -69,6 +74,7 @@ export default function UserProfileInteractive({ initialData }) {
 
       setOrders(userOrders || []);
       setAddresses(userAddresses || []);
+      setWishlistItems(userWishlist || []);
     } catch (error) {
       console.error('Error fetching user data:', error);
     } finally {
@@ -118,8 +124,14 @@ export default function UserProfileInteractive({ initialData }) {
     }
   };
 
-  const handleRemoveFromWishlist = (itemId) => {
-    setWishlistItems((prev) => prev?.filter((item) => item?.id !== itemId));
+  const handleRemoveFromWishlist = async (itemId) => {
+    if (!user) return;
+    try {
+      await wishlistService.removeFromWishlist(user.id, itemId);
+      setWishlistItems((prev) => prev?.filter((item) => item?.id !== itemId));
+    } catch (error) {
+      console.error('Failed to remove from wishlist:', error);
+    }
   };
 
   const handleAddToCart = (item) => {

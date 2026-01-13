@@ -5,14 +5,56 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
+import { useAuth } from '@/contexts/AuthContext';
+import { wishlistService } from '@/lib/services/wishlistService';
+import { useEffect } from 'react';
 
 export default function ProductCard({ product }) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleWishlistToggle = (e) => {
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user && product?.id) {
+      checkWishlistStatus();
+    }
+  }, [user, product]);
+
+  const checkWishlistStatus = async () => {
+    try {
+      const inWishlist = await wishlistService.isInWishlist(user.id, product.id);
+      setIsWishlisted(inWishlist);
+    } catch (error) {
+      console.error('Error checking wishlist status:', error);
+    }
+  };
+
+  const handleWishlistToggle = async (e) => {
     e?.preventDefault();
-    setIsWishlisted(!isWishlisted);
+    e?.stopPropagation();
+
+    if (!user) {
+      // Redirect to login or show toast
+      window.location.href = '/user-authentication';
+      return;
+    }
+
+    // Optimistic update
+    const previousState = isWishlisted;
+    setIsWishlisted(!previousState);
+
+    try {
+      if (previousState) {
+        await wishlistService.removeFromWishlist(user.id, product.id);
+      } else {
+        await wishlistService.addToWishlist(user.id, product.id);
+      }
+    } catch (error) {
+      // Revert on error
+      setIsWishlisted(previousState);
+      console.error('Error toggling wishlist:', error);
+    }
   };
 
   const handleQuickAdd = (e) => {

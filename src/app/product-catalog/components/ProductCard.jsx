@@ -5,8 +5,13 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
+import { useAuth } from '@/contexts/AuthContext';
+import { wishlistService } from '@/lib/services/wishlistService';
+import { useEffect } from 'react';
 
-export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
+export default function ProductCard({ product, onQuickAdd }) {
+  const { user } = useAuth();
+  const [isWishlisted, setIsWishlisted] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -42,6 +47,45 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
     );
   };
 
+  useEffect(() => {
+    if (user && product?.id) {
+      checkWishlistStatus();
+    }
+  }, [user, product]);
+
+  const checkWishlistStatus = async () => {
+    try {
+      const inWishlist = await wishlistService.isInWishlist(user.id, product.id);
+      setIsWishlisted(inWishlist);
+    } catch (error) {
+      console.error('Error checking wishlist status:', error);
+    }
+  };
+
+  const handleWishlistToggle = async (e) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+
+    if (!user) {
+      window.location.href = '/user-authentication';
+      return;
+    }
+
+    const previousState = isWishlisted;
+    setIsWishlisted(!previousState);
+
+    try {
+      if (previousState) {
+        await wishlistService.removeFromWishlist(user.id, product.id);
+      } else {
+        await wishlistService.addToWishlist(user.id, product.id);
+      }
+    } catch (error) {
+      setIsWishlisted(previousState);
+      console.error('Error toggling wishlist:', error);
+    }
+  };
+
   return (
     <div
       className="group w-full min-w-0 bg-card border border-border rounded-md overflow-hidden hover:shadow-sharp-lg transition-all duration-250"
@@ -56,34 +100,29 @@ export default function ProductCard({ product, onWishlistToggle, onQuickAdd }) {
           <AppImage
             src={product?.image}
             alt={product?.alt}
-            className={`w-full h-full object-cover transition-all duration-500 ${
-              imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-            } ${isHovered ? 'scale-110' : 'scale-100'}`}
+            className={`w-full h-full object-cover transition-all duration-500 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+              } ${isHovered ? 'scale-110' : 'scale-100'}`}
             onLoad={() => setImageLoaded(true)}
           />
 
           {/* Wishlist Button */}
           <button
-            onClick={(e) => {
-              e?.preventDefault();
-              onWishlistToggle(product?.id);
-            }}
+            onClick={handleWishlistToggle}
             className="absolute top-3 right-3 w-10 h-10 bg-background/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-background transition-all duration-250 hover:scale-110 active:scale-95 z-10"
-            aria-label={product?.isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+            aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
           >
             <Icon
               name="HeartIcon"
               size={20}
-              variant={product?.isWishlisted ? 'solid' : 'outline'}
-              className={product?.isWishlisted ? 'text-error' : 'text-text-secondary'}
+              variant={isWishlisted ? 'solid' : 'outline'}
+              className={isWishlisted ? 'text-error' : 'text-text-secondary'}
             />
           </button>
 
           {/* Quick Add Button - Desktop Only */}
           <div
-            className={`hidden md:flex absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent transition-all duration-250 ${
-              isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
+            className={`hidden md:flex absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent transition-all duration-250 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
           >
             <button
               onClick={(e) => {
@@ -153,6 +192,5 @@ ProductCard.propTypes = {
     tag: PropTypes.oneOf(['BESTSELLER', 'NEW', 'SALE', 'TRENDING', 'HOT']),
     isWishlisted: PropTypes.bool.isRequired,
   }).isRequired,
-  onWishlistToggle: PropTypes.func.isRequired,
-  onQuickAdd: PropTypes.func.isRequired,
+  onQuickAdd: PropTypes.func,
 };

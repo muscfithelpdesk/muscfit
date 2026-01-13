@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
-import { wishlistService } from '@/lib/services/productService';
+import { wishlistService } from '@/lib/services/wishlistService';
+import { useEffect } from 'react';
 
 export default function ProductCard({ product }) {
   const { user } = useAuth();
@@ -10,28 +11,45 @@ export default function ProductCard({ product }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
+  useEffect(() => {
+    if (user && product?.id) {
+      checkWishlistStatus();
+    }
+  }, [user, product]);
+
+  const checkWishlistStatus = async () => {
+    try {
+      const inWishlist = await wishlistService.isInWishlist(user.id, product.id);
+      setIsWishlisted(inWishlist);
+    } catch (error) {
+      console.error('Error checking wishlist status:', error);
+    }
+  };
+
   const handleWishlistToggle = async (e) => {
     e?.preventDefault();
+    e?.stopPropagation();
 
     if (!user) {
-      alert('Please login to add items to wishlist');
+      // Redirect or show toast
+      window.location.href = '/user-authentication';
       return;
     }
 
-    setIsLoading(true);
+    // Optimistic update
+    const previousState = isWishlisted;
+    setIsWishlisted(!previousState);
+
     try {
-      if (isWishlisted) {
-        await wishlistService?.remove(user?.id, product?.id);
-        setIsWishlisted(false);
+      if (previousState) {
+        await wishlistService.removeFromWishlist(user.id, product.id);
       } else {
-        await wishlistService?.add(user?.id, product?.id);
-        setIsWishlisted(true);
+        await wishlistService.addToWishlist(user.id, product.id);
       }
     } catch (error) {
+      // Revert
+      setIsWishlisted(previousState);
       console.error('Error toggling wishlist:', error);
-      alert('Failed to update wishlist');
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -94,11 +112,10 @@ export default function ProductCard({ product }) {
           {product?.tag && (
             <div className="absolute top-3 left-3 z-10">
               <span
-                className={`px-4 py-1.5 text-[10px] font-bold rounded-full premium-shadow ${
-                  product?.tag === 'SALE'
+                className={`px-4 py-1.5 text-[10px] font-bold rounded-full premium-shadow ${product?.tag === 'SALE'
                     ? 'bg-[#9B1C1C] text-white'
                     : 'glass-effect text-gray-900 shadow-sm'
-                }`}
+                  }`}
               >
                 {product?.tag}
               </span>
