@@ -120,57 +120,15 @@ export default function HomepageInteractive({ pageData }) {
             { name: 'SHORTS', filter: 'shorts' },
             { name: 'ACCESSORIES', filter: 'accessories' },
           ]}
-          products={[
-            ...dbProducts.filter((p) => !p.gender || p.gender === 'men' || p.gender === 'unisex'),
-            {
-              id: 'wa-h-1',
-              name: 'WINTER ARC HOODIE (BLUE)',
-              price: 1599,
-              image: '/assets/images/products/winter-arc-hoodie-blue.png',
-              category: 'winter-arc',
-            },
-            {
-              id: 'wa-p-1',
-              name: 'WINTER ARC PANTS (BLUE)',
-              price: 1599,
-              image: '/assets/images/products/winter-arc-pants-blue.jpg',
-              category: 'winter-arc',
-            },
-            {
-              id: 'wa-h-2',
-              name: 'WINTER ARC HOODIE (BLACK)',
-              price: 1599,
-              image: '/assets/images/products/winter-arc-hoodie-black.png',
-              category: 'winter-arc',
-            },
-            {
-              id: 'wa-b-1',
-              name: 'WINTER ARC ACCESSORY SET',
-              price: 1299,
-              image: '/assets/images/products/winter-arc-beanie.png',
-              category: 'winter-arc',
-            },
-            {
-              id: 'men-shop-1',
-              name: 'Compression Training Shirt - Charcoal',
-              price: 1499,
-              image: '/assets/images/men-shop-1.jpg',
-              imageAlt: 'Compression Training Shirt - Charcoal',
-              gender: 'men',
-              category: 'tshirts',
-              tag: 'featured',
-            },
-            {
-              id: 'men-shop-2',
-              name: 'Performance Graphic Shorts - Black',
-              price: 1199,
-              image: '/assets/images/men-shop-2.png',
-              imageAlt: 'Performance Graphic Shorts - Black',
-              gender: 'men',
-              category: 'shorts',
-              tag: 'featured',
-            },
-          ]}
+          products={dbProducts.filter(
+            (p) =>
+              (p.gender === 'men' || p.gender === 'unisex') &&
+              (p.category === 'winter-arc' ||
+                p.category === 'tshirts' ||
+                p.category === 'joggers' ||
+                p.category === 'shorts' ||
+                p.category === 'accessories')
+          )}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
@@ -183,40 +141,9 @@ export default function HomepageInteractive({ pageData }) {
             { name: 'TOPS', filter: 'tshirts' },
             { name: 'SHORTS', filter: 'shorts' },
           ]}
-          products={[
-            ...dbProducts.filter((p) => p.gender === 'women' || p.gender === 'unisex'),
-
-            {
-              id: 'women-shop-1',
-              name: 'Performance Long Sleeve - Pink',
-              price: 1299,
-              image: '/assets/images/women-shop-1.jpg',
-              imageAlt: 'Performance Long Sleeve - Pink',
-              gender: 'women',
-              category: 'tshirts',
-              tag: 'featured',
-            },
-            {
-              id: 'women-shop-2',
-              name: 'Seamless Crop Top - Grey',
-              price: 999,
-              image: '/assets/images/women-shop-2.jpg',
-              imageAlt: 'Seamless Crop Top - Grey',
-              gender: 'women',
-              category: 'tshirts',
-              tag: 'featured',
-            },
-            {
-              id: 'women-shop-3',
-              name: 'Lounge Hoodie Set - Brown',
-              price: 2499,
-              image: '/assets/images/women-shop-3.png',
-              imageAlt: 'Lounge Hoodie Set - Brown',
-              gender: 'women',
-              category: 'leggings',
-              tag: 'featured',
-            },
-          ]}
+          products={dbProducts.filter(
+            (p) => p.gender === 'women' || (p.gender === 'unisex' && p.category !== 'winter-arc')
+          )}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
@@ -229,29 +156,9 @@ export default function HomepageInteractive({ pageData }) {
             { name: 'FULL BODY', filter: 'leggings' },
             { name: 'ACCESSORIES', filter: 'accessories' },
           ]}
-          products={[
-            ...dbProducts.filter((p) => p.gender === 'compression' || p.gender === 'unisex'),
-            {
-              id: 'compression-1',
-              name: 'Elite Compression Long Sleeve - Taupe',
-              price: 1599,
-              image: '/assets/images/compression-1.png',
-              imageAlt: 'Elite Compression Long Sleeve - Taupe',
-              gender: 'compression',
-              category: 'tshirts',
-              tag: 'featured',
-            },
-            {
-              id: 'compression-2',
-              name: 'Pro Performance Base Layer - Olive',
-              price: 1799,
-              image: '/assets/images/compression-2.png',
-              imageAlt: 'Pro Performance Base Layer - Olive',
-              gender: 'compression',
-              category: 'tshirts',
-              tag: 'featured',
-            },
-          ]}
+          products={dbProducts.filter(
+            (p) => p.gender === 'compression' || (p.gender === 'unisex' && p.tag === 'PRO')
+          )}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
@@ -265,78 +172,14 @@ export default function HomepageInteractive({ pageData }) {
             { name: 'EQUIPMENT', filter: 'equipment' },
             { name: 'SUPPLEMENTS', filter: 'supplements' },
           ]}
-          products={[
-            {
-              id: 'acc-1',
-              name: 'MUSCFIT DUFFEL BAG',
-              price: 2499,
-              image: '/assets/images/products/muscfit_duffel.jpg',
-              category: 'gym-bags',
-              tag: 'featured-acc',
-            },
-            {
-              id: 'acc-2',
-              name: 'PREMIUM SHAKER BOTTLE',
-              price: 899,
-              image: '/assets/images/products/premium_shaker.png',
-              category: 'accessories',
-              tag: 'featured-acc',
-            },
-            {
-              id: 'acc-new-1',
-              name: 'WHEY PROTEIN ISOLATE',
-              price: 2999,
-              image: '/assets/images/accessory-protein.jpg',
-              category: 'supplements',
-              tag: 'featured-acc',
-            },
-            {
-              id: 'acc-new-2',
-              name: 'PROFESSIONAL POWER RACK',
-              price: 24999,
-              image: '/assets/images/accessory-rack.png',
-              category: 'equipment',
-              tag: 'featured-acc',
-            },
-            {
-              id: 'acc-new-3',
-              name: 'GRIP PRO GLOVES',
-              price: 899,
-              image: '/assets/images/accessory-gloves.jpg',
-              category: 'equipment',
-              tag: 'featured-acc',
-            },
-            {
-              id: 'acc-3',
-              name: 'DUMBBELL STORAGE RACK',
-              price: 5999,
-              image: '/assets/images/products/dumbbell_rack.png',
-              category: 'equipment',
-              tag: 'featured-acc',
-            },
-            {
-              id: 'acc-4',
-              name: 'WEIGHT PLATE RACK',
-              price: 3499,
-              image: '/assets/images/products/plate_rack.png',
-              category: 'equipment',
-              tag: 'featured-acc',
-            },
-            {
-              id: 'acc-s-1',
-              name: 'WHEY PROTEIN - VANILLA',
-              price: 2499,
-              image: '/assets/images/supplements-featured.png',
-              category: 'supplements',
-            },
-            {
-              id: 'acc-s-2',
-              name: 'PRE-WORKOUT ENERGY',
-              price: 1899,
-              image: '/assets/images/supplements-featured.png',
-              category: 'supplements',
-            },
-          ]}
+          products={dbProducts.filter(
+            (p) =>
+              p.category === 'accessories' ||
+              p.category === 'gym-bags' ||
+              p.category === 'equipment' ||
+              p.category === 'supplements' ||
+              p.tag === 'featured-acc'
+          )}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 

@@ -248,13 +248,324 @@ const BASIC_CATALOG = [
     review_count: 234,
     image_url: '/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png',
   },
+
+  // --- MIGRATED FROM HOMEPAGE ---
+  // Winter Arc Collection
+  {
+    id: 'wa-h-1',
+    name: 'WINTER ARC HOODIE (BLUE)',
+    description: 'Premium heavyweight hoodie for the winter arc. Fleece-lined for warmth.',
+    price: 1599,
+    original_price: 2499,
+    gender: 'men',
+    category: 'winter-arc',
+    brand: 'MUSCFIT',
+    tag: 'limited',
+    is_active: true,
+    rating: 4.9,
+    review_count: 42,
+    image_url: '/assets/images/products/winter-arc-hoodie-blue.png',
+  },
+  {
+    id: 'wa-p-1',
+    name: 'WINTER ARC PANTS (BLUE)',
+    description: 'Matching thermal pants for the ultimate winter training set.',
+    price: 1599,
+    original_price: 2299,
+    gender: 'men',
+    category: 'winter-arc',
+    brand: 'MUSCFIT',
+    tag: 'limited',
+    is_active: true,
+    rating: 4.8,
+    review_count: 36,
+    image_url: '/assets/images/products/winter-arc-pants-blue.jpg',
+  },
+  {
+    id: 'wa-h-2',
+    name: 'WINTER ARC HOODIE (BLACK)',
+    description: 'The classic black heavyweight hoodie. Essential for cold starts.',
+    price: 1599,
+    original_price: 2499,
+    gender: 'men',
+    category: 'winter-arc',
+    brand: 'MUSCFIT',
+    tag: 'limited',
+    is_active: true,
+    rating: 5.0,
+    review_count: 58,
+    image_url: '/assets/images/products/winter-arc-hoodie-black.png',
+  },
+  {
+    id: 'wa-b-1',
+    name: 'WINTER ARC ACCESSORY SET',
+    description: 'Complete winter accessories including beanie and gloves.',
+    price: 1299,
+    original_price: 1899,
+    gender: 'unisex',
+    category: 'winter-arc',
+    brand: 'MUSCFIT',
+    tag: 'bundle',
+    is_active: true,
+    rating: 4.7,
+    review_count: 24,
+    image_url: '/assets/images/products/winter-arc-beanie.png',
+  },
+
+  // Men's Specific
+  {
+    id: 'men-shop-1',
+    name: 'Compression Training Shirt - Charcoal',
+    description: 'Advanced compression technology for maximum muscle support.',
+    price: 1499,
+    original_price: 1999,
+    gender: 'men',
+    category: 'tshirts',
+    brand: 'MUSCFIT',
+    tag: 'featured',
+    is_active: true,
+    rating: 4.6,
+    review_count: 89,
+    image_url: '/assets/images/men-shop-1.jpg',
+  },
+  {
+    id: 'men-shop-2',
+    name: 'Performance Graphic Shorts - Black',
+    description: 'Lightweight shorts with bold graphic design for statement training.',
+    price: 1199,
+    original_price: 1599,
+    gender: 'men',
+    category: 'shorts',
+    brand: 'MUSCFIT',
+    tag: 'featured',
+    is_active: true,
+    rating: 4.8,
+    review_count: 112,
+    image_url: '/assets/images/men-shop-2.png',
+  },
+
+  // Women's Specific
+  {
+    id: 'women-shop-1',
+    name: 'Performance Long Sleeve - Pink',
+    description: 'Breathable long sleeve top in energetic pink. Moisture-wicking.',
+    price: 1299,
+    original_price: 1799,
+    gender: 'women',
+    category: 'tshirts',
+    brand: 'MUSCFIT',
+    tag: 'featured',
+    is_active: true,
+    rating: 4.9,
+    review_count: 145,
+    image_url: '/assets/images/women-shop-1.jpg',
+  },
+  {
+    id: 'women-shop-2',
+    name: 'Seamless Crop Top - Grey',
+    description: 'Seamless construction for zero chafing. Perfect crop fit.',
+    price: 999,
+    original_price: 1499,
+    gender: 'women',
+    category: 'tshirts',
+    brand: 'MUSCFIT',
+    tag: 'featured',
+    is_active: true,
+    rating: 4.7,
+    review_count: 98,
+    image_url: '/assets/images/women-shop-2.jpg',
+  },
+  {
+    id: 'women-shop-3',
+    name: 'Lounge Hoodie Set - Brown',
+    description: 'Cozy brown hoodie set for rest days and recovery.',
+    price: 2499,
+    original_price: 3499,
+    gender: 'women',
+    category: 'leggings', // Mapped to existing cats or allow new 'sets'
+    brand: 'MUSCFIT',
+    tag: 'featured',
+    is_active: true,
+    rating: 4.8,
+    review_count: 67,
+    image_url: '/assets/images/women-shop-3.png',
+  },
+
+  // Compression Featured
+  {
+    id: 'compression-1',
+    name: 'Elite Compression Long Sleeve - Taupe',
+    description: 'Pro-grade compression in earth tone Taupe.',
+    price: 1599,
+    original_price: 2199,
+    gender: 'compression',
+    category: 'tshirts',
+    brand: 'MUSCFIT',
+    tag: 'featured',
+    is_active: true,
+    rating: 4.9,
+    review_count: 123,
+    image_url: '/assets/images/compression-1.png',
+  },
+  {
+    id: 'compression-2',
+    name: 'Pro Performance Base Layer - Olive',
+    description: 'Tactical olive base layer for serious athletes.',
+    price: 1799,
+    original_price: 2299,
+    gender: 'compression',
+    category: 'tshirts',
+    brand: 'MUSCFIT',
+    tag: 'featured',
+    is_active: true,
+    rating: 4.8,
+    review_count: 88,
+    image_url: '/assets/images/compression-2.png',
+  },
+
+  // Accessories Expanded
+  {
+    id: 'acc-1',
+    name: 'MUSCFIT DUFFEL BAG',
+    description: 'Large capacity duffel for all your gear.',
+    price: 2499,
+    original_price: 3999,
+    gender: 'unisex',
+    category: 'gym-bags',
+    brand: 'MUSCFIT',
+    tag: 'featured-acc',
+    is_active: true,
+    rating: 4.9,
+    review_count: 210,
+    image_url: '/assets/images/products/muscfit_duffel.jpg',
+  },
+  {
+    id: 'acc-2',
+    name: 'PREMIUM SHAKER BOTTLE',
+    description: 'Leak-proof premium shaker.',
+    price: 899,
+    original_price: 1299,
+    gender: 'unisex',
+    category: 'accessories',
+    brand: 'MUSCFIT',
+    tag: 'featured-acc',
+    is_active: true,
+    rating: 4.6,
+    review_count: 450,
+    image_url: '/assets/images/products/premium_shaker.png',
+  },
+  {
+    id: 'acc-new-1',
+    name: 'WHEY PROTEIN ISOLATE',
+    description: 'Pure isolate protein for maximum absorption.',
+    price: 2999,
+    original_price: 3599,
+    gender: 'unisex',
+    category: 'supplements',
+    brand: 'MUSCFIT',
+    tag: 'featured-acc',
+    is_active: true,
+    rating: 4.8,
+    review_count: 500,
+    image_url: '/assets/images/accessory-protein.jpg',
+  },
+  {
+    id: 'acc-new-2',
+    name: 'PROFESSIONAL POWER RACK',
+    description: 'Identify your true strength with our pro rack.',
+    price: 24999,
+    original_price: 29999,
+    gender: 'unisex',
+    category: 'equipment',
+    brand: 'MUSCFIT',
+    tag: 'featured-acc',
+    is_active: true,
+    rating: 5.0,
+    review_count: 12,
+    image_url: '/assets/images/accessory-rack.png',
+  },
+  {
+    id: 'acc-new-3',
+    name: 'GRIP PRO GLOVES',
+    description: 'Enhanced grip technology.',
+    price: 899,
+    original_price: 1199,
+    gender: 'unisex',
+    category: 'equipment',
+    brand: 'MUSCFIT',
+    tag: 'featured-acc',
+    is_active: true,
+    rating: 4.7,
+    review_count: 89,
+    image_url: '/assets/images/accessory-gloves.jpg',
+  },
+  {
+    id: 'acc-3',
+    name: 'DUMBBELL STORAGE RACK',
+    description: 'Organize your weights efficiently.',
+    price: 5999,
+    original_price: 7999,
+    gender: 'unisex',
+    category: 'equipment',
+    brand: 'MUSCFIT',
+    tag: 'featured-acc',
+    is_active: true,
+    rating: 4.8,
+    review_count: 45,
+    image_url: '/assets/images/products/dumbbell_rack.png',
+  },
+  {
+    id: 'acc-4',
+    name: 'WEIGHT PLATE RACK',
+    description: 'Heavy duty plate storage.',
+    price: 3499,
+    original_price: 4999,
+    gender: 'unisex',
+    category: 'equipment',
+    brand: 'MUSCFIT',
+    tag: 'featured-acc',
+    is_active: true,
+    rating: 4.9,
+    review_count: 34,
+    image_url: '/assets/images/products/plate_rack.png',
+  },
+  {
+    id: 'acc-s-1',
+    name: 'WHEY PROTEIN - VANILLA',
+    description: 'Classic vanilla flavor.',
+    price: 2499,
+    original_price: 3299,
+    gender: 'unisex',
+    category: 'supplements',
+    brand: 'MUSCFIT',
+    tag: 'featured',
+    is_active: true,
+    rating: 4.8,
+    review_count: 156,
+    image_url: '/assets/images/supplements-featured.png',
+  },
+  {
+    id: 'acc-s-2',
+    name: 'PRE-WORKOUT ENERGY',
+    description: 'Explosive energy for your best workouts.',
+    price: 1899,
+    original_price: 2499,
+    gender: 'unisex',
+    category: 'supplements',
+    brand: 'MUSCFIT',
+    tag: 'featured',
+    is_active: true,
+    rating: 4.9,
+    review_count: 230,
+    image_url: '/assets/images/supplements-featured.png',
+  },
 ];
 
 export const productService = {
   // Get all products with optional filters
   async getAll(filters = {}) {
+    let dbProducts = [];
     try {
-      let dbProducts = [];
       if (supabase) {
         let query = supabase
           .from('products')
@@ -327,11 +638,18 @@ export const productService = {
         }
 
         const { data, error } = await query;
-        if (!error && data) {
+        if (error) throw error;
+
+        if (data) {
           dbProducts = data.map((product) => this.convertToCamelCase(product));
         }
       }
+    } catch (error) {
+      console.warn('Error fetching products from DB (using fallback):', error);
+      // Do not throw, allow fallback to basic catalog
+    }
 
+    try {
       // Merge with hardcoded basic catalog
       let mergedProducts = [...dbProducts];
 
@@ -406,8 +724,8 @@ export const productService = {
 
       return mergedProducts;
     } catch (error) {
-      console.error('Error fetching products:', error);
-      throw error;
+      console.error('Error processing basic catalog:', error);
+      return [];
     }
   },
 
@@ -647,14 +965,14 @@ export const productService = {
         isPrimary: img?.is_primary,
         displayOrder: img?.display_order,
       })) || [
-        {
-          id: 'default',
-          imageUrl: finalImage,
-          altText: product?.name,
-          isPrimary: true,
-          displayOrder: 1,
-        },
-      ],
+          {
+            id: 'default',
+            imageUrl: finalImage,
+            altText: product?.name,
+            isPrimary: true,
+            displayOrder: 1,
+          },
+        ],
       productVariants: product?.product_variants?.map((v) => ({
         id: v?.id,
         size: v?.size,
