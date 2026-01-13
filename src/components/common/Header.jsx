@@ -179,14 +179,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
   const handleSearchSubmit = (e) => {
     e?.preventDefault();
     if (searchQuery?.trim()) {
-      // Determine which catalog to search based on current page
-      let targetCatalog = '/men-catalog';
-      if (pathname?.startsWith('/women-catalog')) {
-        targetCatalog = '/women-catalog';
-      } else if (pathname?.startsWith('/compression-wear-catalog')) {
-        targetCatalog = '/compression-wear-catalog';
-      }
-      router?.push(`${targetCatalog}?search=${encodeURIComponent(searchQuery)}`);
+      router?.push(`/search?q=${encodeURIComponent(searchQuery)}`);
       setIsSearchOpen(false);
     }
   };
@@ -1041,20 +1034,10 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       'Supplements',
                       'Performance Shorts',
                     ]?.map((term) => {
-                      // Determine target catalog based on current page
-                      let targetCatalog = '/men-catalog';
-                      if (pathname?.startsWith('/women-catalog')) {
-                        targetCatalog = '/women-catalog';
-                      } else if (pathname?.startsWith('/compression-wear-catalog')) {
-                        targetCatalog = '/compression-wear-catalog';
-                      } else if (pathname?.startsWith('/accessories-catalog')) {
-                        targetCatalog = '/accessories-catalog';
-                      }
-
                       return (
                         <Link
                           key={term}
-                          href={`${targetCatalog}?search=${encodeURIComponent(term)}`}
+                          href={`/search?q=${encodeURIComponent(term)}`}
                           className="px-6 py-3 bg-surface hover:bg-primary text-text-secondary hover:text-white rounded-full text-sm font-bold transition-all border border-border/50 hover:border-primary uppercase tracking-tighter"
                           onClick={() => setIsSearchOpen(false)}
                         >
