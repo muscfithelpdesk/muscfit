@@ -18,6 +18,7 @@ import Newsletter from './Newsletter';
 import Footer from './Footer';
 import CollectionSection from './CollectionSection';
 import QuickViewModal from './QuickViewModal';
+import WomenExploreGallery from './WomenExploreGallery';
 import { productService } from '@/lib/services/productService';
 
 export default function HomepageInteractive({ pageData }) {
@@ -166,6 +167,8 @@ export default function HomepageInteractive({ pageData }) {
           products={dbProducts.filter((p) => p.gender === 'women' || p.gender === 'unisex')}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
+
+        <WomenExploreGallery />
 
         <CollectionSection
           title="COMPRESSION"
