@@ -11,7 +11,6 @@ import AddressBookSection from './AddressBookSection';
 import AccountSettingsSection from './AccountSettingsSection';
 import { useAuth } from '@/contexts/AuthContext';
 import { userService } from '@/lib/services/userService';
-import { userService } from '@/lib/services/userService';
 import { orderService } from '@/lib/services/orderService';
 import { wishlistService } from '@/lib/services/wishlistService';
 
