@@ -195,6 +195,36 @@ export default function HomepageInteractive({ pageData }) {
               category: 'tshirts',
               tag: 'featured',
             },
+            {
+              id: 'women-shop-1',
+              name: 'Performance Long Sleeve - Pink',
+              price: 1299,
+              image: '/assets/images/women-shop-1.jpg',
+              imageAlt: 'Performance Long Sleeve - Pink',
+              gender: 'women',
+              category: 'tshirts',
+              tag: 'featured',
+            },
+            {
+              id: 'women-shop-2',
+              name: 'Seamless Crop Top - Grey',
+              price: 999,
+              image: '/assets/images/women-shop-2.jpg',
+              imageAlt: 'Seamless Crop Top - Grey',
+              gender: 'women',
+              category: 'tshirts',
+              tag: 'featured',
+            },
+            {
+              id: 'women-shop-3',
+              name: 'Lounge Hoodie Set - Brown',
+              price: 2499,
+              image: '/assets/images/women-shop-3.png',
+              imageAlt: 'Lounge Hoodie Set - Brown',
+              gender: 'women',
+              category: 'leggings',
+              tag: 'featured',
+            },
           ]}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
