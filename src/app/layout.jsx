@@ -14,11 +14,11 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: 'MF',
+  title: 'WELCOME TO MUSCFIT',
   description:
     'Discover premium fitness apparel designed for peak performance. Shop high-quality athletic wear including compression gear, training essentials, and lifestyle collections for men and women.',
   icons: {
-    icon: '/icon.png',
+    icon: '/assets/images/favicon_new.png',
   },
 };
 
