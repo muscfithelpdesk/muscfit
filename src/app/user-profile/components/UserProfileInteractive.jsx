@@ -15,7 +15,7 @@ import { orderService } from '@/lib/services/orderService';
 import { wishlistService } from '@/lib/services/wishlistService';
 
 export default function UserProfileInteractive({ initialData }) {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [activeTab, setActiveTab] = useState('personal');
   const [userData, setUserData] = useState(initialData?.userData);
   const [orders, setOrders] = useState([]);
@@ -33,10 +33,18 @@ export default function UserProfileInteractive({ initialData }) {
   ];
 
   useEffect(() => {
+    if (authLoading) return;
+
+    if (!user) {
+      // Redirect if not logged in
+      window.location.href = '/user-authentication';
+      return;
+    }
+
     if (user) {
       fetchUserData();
     }
-  }, [user]);
+  }, [user, authLoading]);
 
   const fetchUserData = async () => {
     setIsLoading(true);
@@ -217,13 +225,15 @@ export default function UserProfileInteractive({ initialData }) {
     setSettings((prev) => ({ ...prev, ...updatedSettings }));
   };
 
-  if (isLoading) {
+  if (isLoading || authLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Icon name="ArrowPathIcon" size={40} className="animate-spin text-primary" />
       </div>
     );
   }
+
+  if (!user) return null; // Should redirect via effect
 
   return (
     <div className="min-h-screen bg-background">
