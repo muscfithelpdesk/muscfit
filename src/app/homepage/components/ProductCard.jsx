@@ -6,6 +6,7 @@ import Link from 'next/link';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCart } from '@/contexts/CartContext';
 import { wishlistService } from '@/lib/services/wishlistService';
 import { useEffect } from 'react';
 
@@ -14,6 +15,7 @@ export default function ProductCard({ product }) {
   const [isHovered, setIsHovered] = useState(false);
 
   const { user } = useAuth();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     if (user && product?.id) {
@@ -59,7 +61,8 @@ export default function ProductCard({ product }) {
 
   const handleQuickAdd = (e) => {
     e?.preventDefault();
-    alert(`Added ${product?.name} to cart`);
+    e?.stopPropagation();
+    addToCart(product);
   };
 
   return (

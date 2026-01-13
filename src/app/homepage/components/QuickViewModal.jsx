@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
+import { useCart } from '@/contexts/CartContext';
 
 import PropTypes from 'prop-types';
 
 export default function QuickViewModal({ product, onClose }) {
+  const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState('M');
   const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
 
@@ -61,11 +63,10 @@ export default function QuickViewModal({ product, onClose }) {
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
-                  className={`w-12 h-12 flex items-center justify-center border-2 font-bold transition-all ${
-                    selectedSize === size
-                      ? 'border-gray-900 bg-gray-900 text-white'
-                      : 'border-gray-200 text-gray-400 hover:border-gray-400'
-                  }`}
+                  className={`w-12 h-12 flex items-center justify-center border-2 font-bold transition-all ${selectedSize === size
+                    ? 'border-gray-900 bg-gray-900 text-white'
+                    : 'border-gray-200 text-gray-400 hover:border-gray-400'
+                    }`}
                 >
                   {size}
                 </button>
@@ -79,7 +80,13 @@ export default function QuickViewModal({ product, onClose }) {
           </p>
 
           <div className="mt-auto flex flex-col gap-3">
-            <button className="w-full py-4 bg-primary text-white font-bold uppercase tracking-widest hover:bg-black/90 transition-colors">
+            <button
+              onClick={() => {
+                addToCart(product);
+                onClose();
+              }}
+              className="w-full py-4 bg-primary text-white font-bold uppercase tracking-widest hover:bg-black/90 transition-colors"
+            >
               Add to Cart
             </button>
             <button

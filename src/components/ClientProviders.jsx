@@ -2,6 +2,7 @@
 
 import { Suspense } from 'react';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { CartProvider } from '@/contexts/CartContext';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 export default function ClientProviders({ children }) {
@@ -10,7 +11,11 @@ export default function ClientProviders({ children }) {
       <Suspense fallback={null}>
         <GoogleAnalytics />
       </Suspense>
-      <AuthProvider>{children}</AuthProvider>
+      <AuthProvider>
+        <CartProvider>
+          {children}
+        </CartProvider>
+      </AuthProvider>
 
       <script
         type="module"

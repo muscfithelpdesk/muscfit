@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/AppIcon';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCart } from '@/contexts/CartContext';
 import { useRouter, usePathname } from 'next/navigation';
 
 export default function Header({ topOffset = 0, isFixed = true }) {
@@ -16,11 +17,20 @@ export default function Header({ topOffset = 0, isFixed = true }) {
   const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [cartItemCount, setCartItemCount] = useState(3);
   const [scrolled, setScrolled] = useState(false);
   const [isSearchEntering, setIsSearchEntering] = useState(false);
 
   const { user, signOut } = useAuth();
+  const { cartItems, cartCount, cartTotal, removeFromCart, isSidebarOpen, setIsSidebarOpen } = useCart();
+
+  useEffect(() => {
+    if (isSidebarOpen) {
+      setIsCartOpen(true);
+      // Reset after opening so it doesn't get stuck open if user manually closes
+      // But actually we might want to just sync them. For now, this is simple.
+      setIsSidebarOpen(false);
+    }
+  }, [isSidebarOpen, setIsSidebarOpen]);
 
   const searchRef = useRef(null);
   const overlayRef = useRef(null);
@@ -89,22 +99,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
     },
   };
 
-  const cartItems = [
-    {
-      id: 1,
-      name: 'Performance Compression Tee',
-      price: 89.99,
-      quantity: 1,
-      image: '/assets/images/product-1.jpg',
-    },
-    {
-      id: 2,
-      name: 'Elite Training Shorts',
-      price: 69.99,
-      quantity: 2,
-      image: '/assets/images/product-2.jpg',
-    },
-  ];
+
 
   const recentSearches = ['compression shirts', 'running shorts', 'training gear'];
   const [isMounted, setIsMounted] = useState(false);
@@ -196,9 +191,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
     }
   };
 
-  const calculateCartTotal = () => {
-    return cartItems?.reduce((total, item) => total + item?.price * item?.quantity, 0)?.toFixed(2);
-  };
+
 
   const handleLogout = async () => {
     const result = await signOut();
@@ -721,7 +714,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 <div className="absolute -bottom-1 left-3 right-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></div>
               </Link>
 
-              {/* Bag Button */}
+              {/* Cart Button */}
               <div
                 className="relative group h-full flex items-center"
                 ref={cartRef}
@@ -738,9 +731,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       size={20}
                       className="text-text-secondary group-hover/btn:text-primary transition-colors"
                     />
-                    {cartItemCount > 0 && (
-                      <span className="absolute -top-1.5 -right-2 w-4 h-4 bg-primary text-[9px] text-white font-black rounded-full flex items-center justify-center border border-background shadow-sm">
-                        {cartItemCount}
+                    {isMounted && cartCount > 0 && (
+                      <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-primary text-primary-foreground text-[9px] font-black flex items-center justify-center rounded-full border border-background">
+                        {cartCount}
                       </span>
                     )}
                   </div>
@@ -750,63 +743,86 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   <div className="absolute -bottom-1 left-3 right-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></div>
                 </Link>
 
-                {/* Mini Cart Dropdown on Hover */}
+                {/* Cart Dropdown */}
                 {isCartOpen && (
-                  <div className="absolute top-full right-[-20px] pt-2 z-[100] animate-fade-in-up md:block hidden">
-                    <div className="w-[300px] bg-background border border-border shadow-sharp-lg rounded-sm overflow-hidden">
-                      <div className="p-4 border-b border-border bg-surface/30">
-                        <h3 className="font-heading text-xs font-black text-foreground uppercase tracking-widest">
-                          Your Selection ({cartItemCount})
-                        </h3>
+                  <div className="absolute top-full right-[-80px] pt-2 z-[100] animate-fade-in-up">
+                    <div className="w-[360px] bg-background border border-border shadow-sharp-lg rounded-sm overflow-hidden">
+                      <div className="p-5 border-b border-border bg-surface/10 flex justify-between items-center">
+                        <h4 className="font-heading text-sm font-black text-foreground uppercase tracking-tight">
+                          Shopping Bag
+                        </h4>
+                        <span className="text-xs font-bold text-text-secondary">
+                          {cartCount} items
+                        </span>
                       </div>
 
-                      <div className="max-h-[320px] overflow-y-auto custom-scrollbar">
-                        {cartItems?.map((item) => (
-                          <div
-                            key={item?.id}
-                            className="flex gap-4 p-4 border-b border-white hover:bg-muted/30 transition-all group/item"
-                          >
-                            <div className="w-14 h-18 bg-muted/10 flex-shrink-0 overflow-hidden rounded-sm ring-1 ring-border/50">
-                              <img
-                                src={item?.image}
-                                alt={item?.name}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover/item:scale-110"
-                                onError={(e) => (e.target.src = '/assets/images/no-image.png')}
-                              />
-                            </div>
-                            <div className="flex-1 min-w-0 py-0.5">
-                              <h4 className="text-[11px] font-bold text-foreground line-clamp-2 leading-tight uppercase tracking-tight">
-                                {item?.name}
-                              </h4>
-                              <div className="flex items-center justify-between mt-2">
-                                <span className="text-[10px] text-text-secondary font-medium">
+                      <div className="max-h-[320px] overflow-y-auto scrollbar-thin">
+                        {cartItems?.length > 0 ? (
+                          cartItems?.map((item) => (
+                            <div
+                              key={item?.id}
+                              className="flex gap-4 p-5 border-b border-border last:border-b-0 hover:bg-surface/30 transition-colors"
+                            >
+                              <div className="w-16 h-20 bg-muted rounded-md overflow-hidden flex-shrink-0 border border-border/50">
+                                <img
+                                  src={item?.image}
+                                  alt={item?.name}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h5 className="font-heading text-sm font-bold text-foreground truncate mb-1">
+                                  {item?.name}
+                                </h5>
+                                <p className="text-xs text-text-secondary mb-2">
                                   Qty: {item?.quantity}
-                                </span>
-                                <span className="text-[11px] font-black text-primary">
-                                  ₹{item?.price}
-                                </span>
+                                </p>
+                                <div className="flex justify-between items-center">
+                                  <span className="text-sm font-black text-primary">
+                                    ₹{item?.price}
+                                  </span>
+                                  <button onClick={() => removeFromCart(item.id)} className="text-xs font-bold text-red-500 hover:text-red-600 transition-colors uppercase tracking-wider">
+                                    Remove
+                                  </button>
+                                </div>
                               </div>
                             </div>
+                          ))
+                        ) : (
+                          <div className="p-8 text-center">
+                            <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-3">
+                              <Icon name="ShoppingBagIcon" size={24} className="text-text-secondary/50" />
+                            </div>
+                            <p className="text-sm font-bold text-text-secondary">
+                              Your bag is empty
+                            </p>
+                            <Link
+                              href="/men-catalog"
+                              className="inline-block mt-3 text-xs font-black text-primary uppercase border-b-2 border-primary pb-0.5 hover:opacity-80"
+                              onClick={() => setIsCartOpen(false)}
+                            >
+                              Start Shopping
+                            </Link>
                           </div>
-                        ))}
+                        )}
                       </div>
 
-                      <div className="p-4 bg-muted/10">
-                        <div className="flex justify-between items-center mb-4 px-1">
-                          <span className="text-[10px] font-bold text-text-secondary uppercase tracking-[0.1em]">
-                            Subtotal
-                          </span>
-                          <span className="text-sm font-black text-foreground">
-                            ₹{calculateCartTotal()}
-                          </span>
+                      {cartItems?.length > 0 && (
+                        <div className="p-5 bg-surface/10 border-t border-border">
+                          <div className="flex justify-between items-center mb-4">
+                            <span className="text-sm font-bold text-text-secondary">Total</span>
+                            <span className="font-heading text-lg font-black text-foreground">
+                              ₹{cartTotal.toFixed(2)}
+                            </span>
+                          </div>
+                          <Link
+                            href="/shopping-cart"
+                            className="block w-full py-3 bg-foreground text-background text-xs font-black uppercase tracking-widest text-center hover:bg-primary hover:text-foreground transition-all duration-300 rounded-sm"
+                          >
+                            Checkout
+                          </Link>
                         </div>
-                        <Link
-                          href="/shopping-cart"
-                          className="block w-full py-3 bg-black text-white text-[10px] font-black uppercase tracking-[0.2em] text-center hover:bg-primary transition-all rounded-sm shadow-sm active:scale-[0.98]"
-                        >
-                          Inspect Bag
-                        </Link>
-                      </div>
+                      )}
                     </div>
                   </div>
                 )}

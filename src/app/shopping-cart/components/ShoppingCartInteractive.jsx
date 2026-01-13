@@ -1,55 +1,24 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useCart } from '@/contexts/CartContext';
 import CartItem from './CartItem';
 import OrderSummary from './OrderSummary';
 import EmptyCart from './EmptyCart';
 
 export default function ShoppingCartInteractive({ initialCartData, recommendedProducts }) {
-  const [cartItems, setCartItems] = useState([]);
+  const { cartItems, updateQuantity, removeFromCart, cartTotal, loading } = useCart();
   const [isExpressShipping, setIsExpressShipping] = useState(false);
 
-  useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem('muscfit_cart');
-      if (savedCart) {
-        const parsedCart = JSON.parse(savedCart);
-        if (Array.isArray(parsedCart)) {
-          setCartItems(parsedCart);
-        } else {
-          // Invalid data format
-          setCartItems(initialCartData || []);
-        }
-      } else {
-        setCartItems(initialCartData || []);
-      }
-    } catch (error) {
-      console.error('Error loading cart:', error);
-      setCartItems(initialCartData || []);
-    }
-  }, [initialCartData]);
-
-  useEffect(() => {
-    try {
-      if (cartItems?.length > 0) {
-        localStorage.setItem('muscfit_cart', JSON.stringify(cartItems));
-      } else {
-        localStorage.removeItem('muscfit_cart');
-      }
-    } catch (error) {
-      console.error('Error saving cart:', error);
-    }
-  }, [cartItems]);
+  // Removed local storage logic as it's handled by CartContext
 
   const handleUpdateQuantity = (itemId, newQuantity) => {
-    setCartItems((prevItems) =>
-      prevItems?.map((item) => (item?.id === itemId ? { ...item, quantity: newQuantity } : item))
-    );
+    updateQuantity(itemId, newQuantity);
   };
 
   const handleRemoveItem = (itemId) => {
-    setCartItems((prevItems) => prevItems?.filter((item) => item?.id !== itemId));
+    removeFromCart(itemId);
   };
 
   const handleToggleExpressShipping = () => {
@@ -57,7 +26,11 @@ export default function ShoppingCartInteractive({ initialCartData, recommendedPr
   };
 
   const calculateSubtotal = () => {
-    return cartItems?.reduce((total, item) => total + item?.price * item?.quantity, 0);
+    // Rely on context cartTotal or recalculate if needed to decouple shipping logic
+    // CartContext provides cartTotal which is sum of item * quantity.
+    // If we want consistency, we can use cartTotal directly or keep this for flexible shipping calculation
+    // Let's use cartTotal from context for the base, but we need numeric value
+    return cartTotal;
   };
 
   const calculateDiscount = () => {
@@ -88,7 +61,7 @@ export default function ShoppingCartInteractive({ initialCartData, recommendedPr
     return subtotal - discount + shipping + tax;
   };
 
-  if (cartItems?.length === 0) {
+  if (!loading && cartItems?.length === 0) {
     return <EmptyCart recommendedProducts={recommendedProducts} />;
   }
 

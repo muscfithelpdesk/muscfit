@@ -2,11 +2,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCart } from '@/contexts/CartContext';
 import { wishlistService } from '@/lib/services/wishlistService';
 import { useEffect } from 'react';
 
 export default function ProductCard({ product }) {
   const { user } = useAuth();
+  const { addToCart } = useCart();
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -83,7 +85,14 @@ export default function ProductCard({ product }) {
           <div
             className={`absolute bottom-0 left-0 right-0 p-2 md:p-4 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 md:translate-y-full opacity-100 md:opacity-0'} z-10`}
           >
-            <button className="w-full py-2 md:py-2.5 glass-effect text-[#112D4E] font-bold text-[10px] md:text-xs uppercase tracking-[0.1em] rounded-lg shadow-lg hover:bg-white transition-colors">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                addToCart(product);
+              }}
+              className="w-full py-2 md:py-2.5 glass-effect text-[#112D4E] font-bold text-[10px] md:text-xs uppercase tracking-[0.1em] rounded-lg shadow-lg hover:bg-white transition-colors"
+            >
               Add to Bag
             </button>
           </div>
@@ -113,8 +122,8 @@ export default function ProductCard({ product }) {
             <div className="absolute top-3 left-3 z-10">
               <span
                 className={`px-4 py-1.5 text-[10px] font-bold rounded-full premium-shadow ${product?.tag === 'SALE'
-                    ? 'bg-[#9B1C1C] text-white'
-                    : 'glass-effect text-gray-900 shadow-sm'
+                  ? 'bg-[#9B1C1C] text-white'
+                  : 'glass-effect text-gray-900 shadow-sm'
                   }`}
               >
                 {product?.tag}

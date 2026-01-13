@@ -6,11 +6,13 @@ import Link from 'next/link';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCart } from '@/contexts/CartContext';
 import { wishlistService } from '@/lib/services/wishlistService';
 import { useEffect } from 'react';
 
-export default function ProductCard({ product, onQuickAdd }) {
+export default function ProductCard({ product }) {
   const { user } = useAuth();
+  const { addToCart } = useCart();
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -127,7 +129,8 @@ export default function ProductCard({ product, onQuickAdd }) {
             <button
               onClick={(e) => {
                 e?.preventDefault();
-                onQuickAdd(product?.id);
+                e?.stopPropagation();
+                addToCart(product);
               }}
               className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold rounded-sm flex items-center justify-center gap-2 transition-all duration-250 hover:scale-[0.98] active:scale-95"
             >
