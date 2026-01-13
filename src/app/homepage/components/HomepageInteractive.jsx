@@ -172,6 +172,8 @@ export default function HomepageInteractive({ pageData }) {
               image: '/assets/images/women-explore-1.jpg',
               imageAlt: 'Women\'s Athletic Wear - Dark Brown Set',
               gender: 'women',
+              category: 'leggings',
+              tag: 'featured',
             },
             {
               id: 'women-explore-2',
@@ -180,6 +182,8 @@ export default function HomepageInteractive({ pageData }) {
               image: '/assets/images/women-explore-2.jpg',
               imageAlt: 'Women\'s Athletic Wear - Dark Grey Top',
               gender: 'women',
+              category: 'tshirts',
+              tag: 'featured',
             },
             {
               id: 'women-explore-3',
@@ -188,6 +192,8 @@ export default function HomepageInteractive({ pageData }) {
               image: '/assets/images/women-explore-3.jpg',
               imageAlt: 'Women\'s Athletic Wear - Lavender Top',
               gender: 'women',
+              category: 'tshirts',
+              tag: 'featured',
             },
           ]}
           onQuickView={(p) => setQuickViewProduct(p)}

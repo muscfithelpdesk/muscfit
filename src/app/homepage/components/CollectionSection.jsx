@@ -59,15 +59,48 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+      const scrollAmount = scrollRef.current.clientWidth * 0.8;
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+      const scrollAmount = scrollRef.current.clientWidth * 0.8;
+      scrollRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     }
   };
+
+  // Check if we can scroll left or right
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+        setCanScrollLeft(scrollLeft > 0);
+        setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+      }
+    };
+
+    checkScroll();
+    const scrollElement = scrollRef.current;
+    if (scrollElement) {
+      scrollElement.addEventListener('scroll', checkScroll);
+      // Check on resize
+      window.addEventListener('resize', checkScroll);
+      // Initial check after a delay to ensure content is loaded
+      setTimeout(checkScroll, 100);
+    }
+
+    return () => {
+      if (scrollElement) {
+        scrollElement.removeEventListener('scroll', checkScroll);
+      }
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, [products, activeTab]);
 
   return (
     <section id={id} className="py-12 bg-white border-b border-gray-50">
@@ -114,7 +147,7 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
         </div>
 
         {/* Product Slider Area */}
-        <div className="relative group">
+        <div className="relative group" style={{ position: 'relative' }}>
           <div
             ref={scrollRef}
             className={`flex overflow-x-auto no-scrollbar pb-8 scroll-smooth transition-opacity duration-150 ${isTransitioning ? 'opacity-50' : 'opacity-100'
@@ -125,6 +158,10 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
               ?.filter((product) => {
                 const currentTab = tabs.find((t) => t.name === activeTab);
                 if (!currentTab?.filter) return true;
+                // Show featured images in all tabs
+                if (product.tag === 'featured' || product.id?.startsWith('women-explore')) {
+                  return true;
+                }
                 // Match with category or tag
                 return (
                   (product.category || '').toLowerCase() === currentTab.filter.toLowerCase() ||
@@ -142,19 +179,33 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
           </div>
 
           {/* Navigation Arrows */}
-          <button
-            onClick={scrollLeft}
-            className="absolute left-0 top-[40%] -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all opacity-0 group-hover:opacity-100 hidden md:flex -translate-x-1/2"
-          >
-            <Icon name="ChevronLeftIcon" size={24} className="text-gray-800" />
-          </button>
+          {canScrollLeft && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                scrollLeft();
+              }}
+              className="absolute left-2 md:left-0 top-[40%] -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all opacity-100 md:-translate-x-1/2 cursor-pointer"
+              aria-label="Scroll left"
+            >
+              <Icon name="ChevronLeftIcon" size={20} className="md:w-6 md:h-6 text-gray-800" />
+            </button>
+          )}
 
-          <button
-            onClick={scrollRight}
-            className="absolute right-0 top-[40%] -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all opacity-0 group-hover:opacity-100 hidden md:flex translate-x-1/2"
-          >
-            <Icon name="ChevronRightIcon" size={24} className="text-gray-800" />
-          </button>
+          {canScrollRight && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                scrollRight();
+              }}
+              className="absolute right-2 md:right-0 top-[40%] -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all opacity-100 md:translate-x-1/2 cursor-pointer"
+              aria-label="Scroll right"
+            >
+              <Icon name="ChevronRightIcon" size={20} className="md:w-6 md:h-6 text-gray-800" />
+            </button>
+          )}
         </div>
       </div>
     </section>
