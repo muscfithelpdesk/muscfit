@@ -19,9 +19,9 @@ export const metadata = {
     'Discover premium fitness apparel designed for peak performance. Shop high-quality athletic wear including compression gear, training essentials, and lifestyle collections for men and women.',
 
   icons: {
-    icon: '/logo-v4.png',
-    shortcut: '/logo-v4.png',
-    apple: '/logo-v4.png',
+    icon: '/logo-v5.png',
+    shortcut: '/logo-v5.png',
+    apple: '/logo-v5.png',
   },
 };
 
