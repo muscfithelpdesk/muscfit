@@ -336,20 +336,39 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   {isWomenDropdownOpen && (
                     <div
                       onMouseLeave={() => setIsWomenDropdownOpen(false)}
-                      className="absolute top-full left-1/2 -translate-x-1/2 w-[650px] bg-background border border-border shadow-sharp-lg rounded-xl animate-scale-in-origin-top z-40 overflow-hidden"
+                      className="absolute top-full left-1/2 -translate-x-1/2 w-[750px] bg-background border border-border shadow-sharp-lg rounded-xl animate-scale-in-origin-top z-40 overflow-hidden"
                     >
-                      <div className="flex h-[350px]">
-                        {/* Featured Image Left */}
-                        <div className="w-1/2 h-full relative group cursor-pointer border-r border-border">
-                          <img
-                            src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=600&auto=format&fit=crop"
-                            alt="Women's Featured"
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                          />
-                          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                            <h4 className="text-white font-heading text-3xl font-bold border-2 border-white px-4 py-2">
-                              WOMEN
-                            </h4>
+                      <div className="flex h-[400px]">
+                        {/* Three Images Grid Left */}
+                        <div className="w-1/2 h-full border-r border-border p-2">
+                          <div className="grid grid-cols-2 gap-2 h-full">
+                            {/* First Image - Full Height */}
+                            <div className="row-span-2 relative group cursor-pointer overflow-hidden rounded-lg">
+                              <img
+                                src="/assets/images/women-explore-1.jpg"
+                                alt="Women's Athletic Wear - Dark Brown Set"
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                            </div>
+                            {/* Second Image */}
+                            <div className="relative group cursor-pointer overflow-hidden rounded-lg">
+                              <img
+                                src="/assets/images/women-explore-2.jpg"
+                                alt="Women's Athletic Wear - Dark Grey Top"
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                            </div>
+                            {/* Third Image */}
+                            <div className="relative group cursor-pointer overflow-hidden rounded-lg">
+                              <img
+                                src="/assets/images/women-explore-3.jpg"
+                                alt="Women's Athletic Wear - Lavender Top"
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                            </div>
                           </div>
                         </div>
 
