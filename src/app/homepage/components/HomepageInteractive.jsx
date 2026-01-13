@@ -150,6 +150,26 @@ export default function HomepageInteractive({ pageData }) {
               image: '/assets/images/products/winter-arc-beanie.png',
               category: 'winter-arc',
             },
+            {
+              id: 'men-shop-1',
+              name: 'Compression Training Shirt - Charcoal',
+              price: 1499,
+              image: '/assets/images/men-shop-1.jpg',
+              imageAlt: 'Compression Training Shirt - Charcoal',
+              gender: 'men',
+              category: 'tshirts',
+              tag: 'featured',
+            },
+            {
+              id: 'men-shop-2',
+              name: 'Performance Graphic Shorts - Black',
+              price: 1199,
+              image: '/assets/images/men-shop-2.png',
+              imageAlt: 'Performance Graphic Shorts - Black',
+              gender: 'men',
+              category: 'shorts',
+              tag: 'featured',
+            },
           ]}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
