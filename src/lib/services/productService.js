@@ -568,18 +568,45 @@ export const productService = {
     const activeFilters = { ...filters };
 
     if (activeFilters.search) {
-      const term = activeFilters.search.toLowerCase().trim();
+      let term = activeFilters.search.toLowerCase().trim();
 
-      // Smart Keyword Mapping: Convert broad search terms into strict filters
-      if (['men', 'mens', 'man'].includes(term)) {
+      // 1. Extract Gender/Category keywords using word boundaries (prevent "supplement" matching "men")
+      const menRegex = /\b(men|mens|man|male)\b/i;
+      const womenRegex = /\b(women|womens|woman|female)\b/i;
+      const accRegex = /\b(accessories|accessory|equipment|gear|bag|bags)\b/i;
+      const compRegex = /\b(compression|running|base layer)\b/i;
+
+      // Check filters and apply strict rules
+      if (menRegex.test(term)) {
         activeFilters.gender = 'men';
-        delete activeFilters.search; // Remove text search to prevent fuzzy matching noise
-      } else if (['women', 'womens', 'woman'].includes(term)) {
+        // Remove the keyword from the search term to clean up results (e.g. "men tshirt" -> "tshirt")
+        term = term.replace(menRegex, '').trim();
+      } else if (womenRegex.test(term)) {
         activeFilters.gender = 'women';
-        delete activeFilters.search;
-      } else if (['compression'].includes(term)) {
+        term = term.replace(womenRegex, '').trim();
+      } else if (compRegex.test(term)) {
+        // Note: Compression is a 'gender' type in our DB schema
         activeFilters.gender = 'compression';
+        term = term.replace(compRegex, '').trim();
+      } else if (accRegex.test(term)) {
+        // Prioritize separating accessories
+        activeFilters.category = 'accessories';
+        // Remove 'accessories' word but keep specific terms like 'bag' if needed for fuzzy match logic later, 
+        // but generally for 'accessories' filter we might just want to show the category?
+        // Let's remove the generic term 'accessories' but keep specific items
+        if (term.includes('accessories')) {
+          term = term.replace(/\b(accessories|accessory)\b/i, '').trim();
+        }
+      }
+
+      // 2. Update the search filter
+      if (!term) {
+        // If the user only typed "men" or "accessories", remove the text search entirely 
+        // so we return ALL items in that category/gender instead of looking for the word "men" in the description.
         delete activeFilters.search;
+      } else {
+        // Otherwise search for the remaining specific item (e.g. "tshirt") within that gender
+        activeFilters.search = term;
       }
     }
 
