@@ -165,36 +165,7 @@ export default function HomepageInteractive({ pageData }) {
           ]}
           products={[
             ...dbProducts.filter((p) => p.gender === 'women' || p.gender === 'unisex'),
-            {
-              id: 'women-explore-1',
-              name: 'Women\'s Athletic Wear - Dark Brown Set',
-              price: 0,
-              image: '/assets/images/women-explore-1.jpg',
-              imageAlt: 'Women\'s Athletic Wear - Dark Brown Set',
-              gender: 'women',
-              category: 'leggings',
-              tag: 'featured',
-            },
-            {
-              id: 'women-explore-2',
-              name: 'Women\'s Athletic Wear - Dark Grey Top',
-              price: 0,
-              image: '/assets/images/women-explore-2.jpg',
-              imageAlt: 'Women\'s Athletic Wear - Dark Grey Top',
-              gender: 'women',
-              category: 'tshirts',
-              tag: 'featured',
-            },
-            {
-              id: 'women-explore-3',
-              name: 'Women\'s Athletic Wear - Lavender Top',
-              price: 0,
-              image: '/assets/images/women-explore-3.jpg',
-              imageAlt: 'Women\'s Athletic Wear - Lavender Top',
-              gender: 'women',
-              category: 'tshirts',
-              tag: 'featured',
-            },
+
             {
               id: 'women-shop-1',
               name: 'Performance Long Sleeve - Pink',
