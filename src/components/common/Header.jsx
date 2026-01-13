@@ -88,7 +88,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
     },
     accessories: {
       label: 'Accessories',
-      path: '/#explore-accessories',
+      path: '/search?q=accessories',
       subcategories: [
         { name: 'Gym Bags', path: '/#explore-accessories-gym-bags' },
         { name: 'Equipment', path: '/#explore-accessories-equipment' },
@@ -1026,13 +1026,13 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   </h3>
                   <div className="flex flex-wrap gap-3">
                     {[
-                      'Compression Tees',
+                      'Men\'s T-Shirts',
+                      'Women\'s Leggings',
+                      'Compression Layers',
                       'Gym Bags',
+                      'Protein Supplements',
                       'Winter Arc',
-                      'Training Gear',
-                      'Accessories',
-                      'Supplements',
-                      'Performance Shorts',
+                      'Equipment'
                     ]?.map((term) => {
                       return (
                         <Link
