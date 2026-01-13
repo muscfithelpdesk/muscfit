@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
+import { useAuth } from '@/contexts/AuthContext';
+import { wishlistService } from '@/lib/services/wishlistService';
 
 import PropTypes from 'prop-types';
 
@@ -214,6 +216,47 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
 
 function ModernProductCard({ product, onQuickView }) {
   const [isHovered, setIsHovered] = useState(false);
+  const { user } = useAuth();
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  useEffect(() => {
+    if (user && product?.id) {
+      checkWishlistStatus();
+    }
+  }, [user, product]);
+
+  const checkWishlistStatus = async () => {
+    try {
+      const inWishlist = await wishlistService.isInWishlist(user.id, product.id);
+      setIsWishlisted(inWishlist);
+    } catch (error) {
+      console.error('Error checking wishlist status:', error);
+    }
+  };
+
+  const handleWishlistToggle = async (e) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+
+    if (!user) {
+      window.location.href = '/user-authentication';
+      return;
+    }
+
+    const previousState = isWishlisted;
+    setIsWishlisted(!previousState);
+
+    try {
+      if (previousState) {
+        await wishlistService.removeFromWishlist(user.id, product.id);
+      } else {
+        await wishlistService.addToWishlist(user.id, product.id);
+      }
+    } catch (error) {
+      setIsWishlisted(previousState);
+      console.error('Error toggling wishlist:', error);
+    }
+  };
 
   return (
     <div
@@ -227,6 +270,20 @@ function ModernProductCard({ product, onQuickView }) {
           alt={product?.imageAlt || product?.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
+
+        {/* Wishlist Button */}
+        <button
+          onClick={handleWishlistToggle}
+          className="absolute top-2 right-2 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-all duration-250 shadow-sm z-30"
+          aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+        >
+          <Icon
+            name="HeartIcon"
+            size={16}
+            variant={isWishlisted ? 'solid' : 'outline'}
+            className={isWishlisted ? 'text-primary' : 'text-gray-700'}
+          />
+        </button>
 
         {/* Quick View Button */}
         <button
