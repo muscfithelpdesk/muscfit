@@ -593,8 +593,8 @@ export const productService = {
         // Verify we match general accessory terms or specific ones
         if (term.includes('accessories') || term.includes('accessory') || term.includes('equipment') || term.includes('gear') || term.includes('supplement') || term.includes('protein')) {
           activeFilters.categories = ['accessories', 'equipment', 'supplements', 'gym-bags'];
-          // Remove the general terms
-          term = term.replace(/\b(accessories|accessory|equipment|gear|supplement|supplements|protein|nutrition)\b/i, '').trim();
+          // Remove the general terms including bag/bags to allow "Gym Bags" -> "Gym"
+          term = term.replace(/\b(accessories|accessory|equipment|gear|supplement|supplements|protein|nutrition|bag|bags)\b/i, '').trim();
         } else {
           // If detailed word like "bag" is present, we might want to still filter by category?
           // For now, let's broaden the scope if it matches the regex
