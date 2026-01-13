@@ -22,11 +22,8 @@ import {
 import { supabase } from '@/lib/supabase';
 import { productService } from '@/lib/services/productService';
 import { uploadService } from '@/lib/services/uploadService';
+import { orderService } from '@/lib/services/orderService';
 
-// Mock data for orders
-const mockOrders = [];
-
-// Mock data for products
 // Mock data for products removed - using real data via productService
 
 const statusColors = {
@@ -263,7 +260,7 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('orders');
 
   // Orders state
-  const [orders, setOrders] = useState(mockOrders);
+  const [orders, setOrders] = useState([]);
   const [orderSearchQuery, setOrderSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
   const [filterPaymentMethod, setFilterPaymentMethod] = useState('All');
@@ -452,10 +449,19 @@ export default function AdminDashboard() {
   };
 
   // Order handlers
-  const handleStatusChange = (orderId, newStatus) => {
-    setOrders(
-      orders?.map((order) => (order?.id === orderId ? { ...order, orderStatus: newStatus } : order))
-    );
+  // Order handlers
+  const handleStatusChange = async (orderId, newStatus) => {
+    try {
+      await orderService.updateOrderStatus(orderId, newStatus);
+      setOrders(
+        orders?.map((order) =>
+          order?.id === orderId ? { ...order, orderStatus: newStatus } : order
+        )
+      );
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      alert('Failed to update order status');
+    }
   };
 
   const toggleExpand = (orderId) => {
@@ -473,8 +479,19 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (activeTab === 'products') {
       loadProducts();
+    } else if (activeTab === 'orders') {
+      loadOrders();
     }
   }, [activeTab]);
+
+  const loadOrders = async () => {
+    try {
+      const data = await orderService.getAllOrders();
+      setOrders(data);
+    } catch (error) {
+      console.error('Error loading orders:', error);
+    }
+  };
 
   const loadProducts = async () => {
     try {
@@ -719,11 +736,10 @@ export default function AdminDashboard() {
               <button
                 key={tab?.id}
                 onClick={() => setActiveTab(tab?.id)}
-                className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all ${
-                  activeTab === tab?.id
+                className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all ${activeTab === tab?.id
                     ? 'text-primary border-b-2 border-primary'
                     : 'text-text-secondary hover:text-foreground'
-                }`}
+                  }`}
               >
                 <Icon name={tab?.icon} size={20} />
                 {tab?.label}

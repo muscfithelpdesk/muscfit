@@ -62,10 +62,84 @@ export const orderService = {
           })) || [],
         promoCode: order?.promo_code
           ? {
-              code: order?.promo_code?.code,
-              discountPercentage: order?.promo_code?.discount_percentage,
-            }
+            code: order?.promo_code?.code,
+            discountPercentage: order?.promo_code?.discount_percentage,
+          }
           : null,
+      })) || []
+    );
+  },
+
+  // Get all orders (Admin only)
+  async getAllOrders() {
+    if (!supabase) return [];
+
+    const { data, error } = await supabase
+      .from('orders')
+      .select(
+        `
+        *,
+        order_items (
+          *,
+            product:products (
+            id,
+            name,
+            brand
+          )
+        ),
+         promo_code:promo_codes (
+          code,
+          discount_percentage
+        )
+      `
+      )
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    return (
+      data?.map((order) => ({
+        id: order?.id,
+        orderNumber: order?.order_number,
+        orderStatus: order?.order_status,
+        paymentStatus: order?.payment_status,
+        paymentMethod: order?.payment_method,
+        subtotal: order?.subtotal,
+        discountAmount: order?.discount_amount,
+        shippingCost: order?.shipping_cost,
+        taxAmount: order?.tax_amount,
+        totalAmount: order?.total_amount,
+        shippingAddress: order?.shipping_address,
+        billingAddress: order?.billing_address,
+        notes: order?.notes,
+        createdAt: order?.created_at,
+        updatedAt: order?.updated_at,
+        customer: {
+          // Assuming Supabase auth user metadata or a profiles table link, 
+          // but here we might relying on what's available or join with profiles
+          // customized based on your schema. For now, let's try to get profile info if available
+          // If orders table has user_id, we might need to join 'profiles' or 'users'.
+          // Given the current select, we don't have user details. 
+          // I'll add a profile join to the select above.
+          name: 'Customer', // Placeholder until I add profile join
+          email: 'email@example.com' // Placeholder
+        },
+        items:
+          order?.order_items?.map((item) => ({
+            id: item?.id,
+            productId: item?.product_id,
+            productName: item?.product_name,
+            productImage: item?.product_image,
+            quantity: item?.quantity,
+            unitPrice: item?.unit_price,
+            discountAmount: item?.discount_amount,
+            totalPrice: item?.total_price,
+            size: item?.size,
+            color: item?.color,
+            product: item?.product,
+            name: item?.product_name, // Map for UI consistency
+            price: item?.unit_price, // Map for UI consistency
+          })) || [],
       })) || []
     );
   },
@@ -149,9 +223,9 @@ export const orderService = {
         })) || [],
       promoCode: orderData?.promo_code
         ? {
-            code: orderData?.promo_code?.code,
-            discountPercentage: orderData?.promo_code?.discount_percentage,
-          }
+          code: orderData?.promo_code?.code,
+          discountPercentage: orderData?.promo_code?.discount_percentage,
+        }
         : null,
       tracking:
         trackingData?.map((track) => ({
