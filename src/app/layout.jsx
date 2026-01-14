@@ -1,4 +1,4 @@
-import { Inter, Outfit } from 'next/font/google';
+import { Inter, Outfit, Anton } from 'next/font/google';
 import '@/styles/index.css';
 import ClientProviders from '@/components/ClientProviders';
 import ChatbotPopup from '@/components/common/ChatbotPopup';
@@ -11,6 +11,12 @@ const inter = Inter({
 const outfit = Outfit({
   subsets: ['latin'],
   variable: '--font-outfit',
+});
+
+const anton = Anton({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-anton',
 });
 
 export const metadata = {
@@ -27,7 +33,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable} ${anton.variable}`}>
       <body className="font-body">
         <ClientProviders>
           {children}

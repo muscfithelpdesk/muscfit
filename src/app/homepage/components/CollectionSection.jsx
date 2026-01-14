@@ -108,12 +108,15 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
     <section id={id} className="py-12 bg-white border-b border-gray-50">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-gray-100">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-gray-100">
           <div>
-            <p className="text-[10px] md:text-sm font-bold tracking-widest text-text-secondary mb-1 uppercase">
-              {subtitle}
-            </p>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">
+            <div className="flex items-center gap-3 mb-1">
+              <span className="h-[2px] w-8 bg-red-600"></span>
+              <p className="text-[10px] md:text-xs font-bold tracking-[0.4em] text-red-600 uppercase">
+                {subtitle}
+              </p>
+            </div>
+            <h2 className="text-5xl md:text-8xl font-[family-name:var(--font-anton)] italic text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-800 to-gray-400 tracking-tighter drop-shadow-sm">
               {title}
             </h2>
           </div>
