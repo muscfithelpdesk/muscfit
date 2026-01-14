@@ -167,6 +167,17 @@ export default function NewArrivalsCarousel({ products }) {
                         <Icon name="ChevronRightIcon" size={20} className="text-black" />
                     </button>
                 </div>
+
+                {/* Progress Bar (Thin) */}
+                <div className="w-full h-[2px] bg-gray-200 mt-2 overflow-hidden max-w-sm mx-auto rounded-full">
+                    <div
+                        className="h-full bg-black transition-all duration-300 ease-out rounded-full"
+                        style={{
+                            width: `${(100 / products.length)}%`,
+                            transform: `translateX(${activeIndex * 100}%)`
+                        }}
+                    ></div>
+                </div>
             </div>
         </section>
     );
