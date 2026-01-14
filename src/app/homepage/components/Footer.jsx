@@ -90,14 +90,19 @@ export default function Footer({ columns, socialLinks, paymentMethods }) {
             {paymentMethods?.map((method) => (
               <div
                 key={method?.id}
-                className="w-10 h-7 bg-white border border-gray-200 rounded-[2px] flex items-center justify-center"
+                className="w-10 h-7 bg-white border border-gray-200 rounded-[2px] flex items-center justify-center cursor-help hover:border-black transition-colors"
+                title="Secure Payment Method"
               >
                 <Icon name={method?.icon} size={20} className="text-zinc-800" />
               </div>
             ))}
-            <div className="w-10 h-7 bg-black text-white rounded-[2px] flex items-center justify-center text-[10px] font-bold">
+            <Link
+              href="/shopping-cart"
+              className="w-10 h-7 bg-black text-white rounded-[2px] flex items-center justify-center text-[10px] font-bold hover:bg-zinc-800 transition-colors"
+              title="Proceed to Cart"
+            >
               PAY
-            </div>
+            </Link>
           </div>
 
           {/* Social Icons (Right) */}
