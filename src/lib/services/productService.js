@@ -392,21 +392,7 @@ const BASIC_CATALOG = [
   },
 
   // Compression Featured
-  {
-    id: 'compression-1',
-    name: 'VELD-TRACK COMPRESSION FULL SUIT',
-    description: 'Next-gen recovery wear. Features integrated Veld-Track nodes for targeted compression and biometric thermal regulation. The ultimate recovery tool.',
-    price: 4999,
-    original_price: 6999,
-    gender: 'compression',
-    category: 'tshirts',
-    brand: 'MUSCFIT',
-    tag: 'HOT',
-    is_active: true,
-    rating: 5.0,
-    review_count: 12,
-    image_url: '/assets/images/products/veld-track-compression.png',
-  },
+
   {
     id: 'compression-2',
     name: 'MuscFIT Pro Base Layer - Olive',
