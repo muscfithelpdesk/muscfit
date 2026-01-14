@@ -149,7 +149,10 @@ export default function HomepageInteractive({ pageData }) {
             { name: 'SHORTS', filter: 'shorts' },
           ]}
           products={dbProducts.filter(
-            (p) => p.gender === 'women' || (p.gender === 'unisex' && p.category !== 'winter-arc')
+            (p) =>
+            (p.gender === 'women' ||
+              (p.gender === 'unisex' &&
+                !['winter-arc', 'supplements', 'equipment', 'gym-bags'].includes(p.category)))
           )}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
