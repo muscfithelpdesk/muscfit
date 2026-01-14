@@ -209,7 +209,7 @@ export default function InfoPage({ params }) {
     <div className="bg-white min-h-screen flex flex-col font-sans text-black">
       <Header isFixed={true} topOffset={0} />
 
-      <main className="flex-grow pt-32 md:pt-40 px-4 md:px-8 max-w-[1000px] mx-auto w-full mb-20 animate-fade-in-up">
+      <main className="flex-grow pt-24 md:pt-40 px-4 md:px-8 max-w-[1000px] mx-auto w-full mb-20 animate-fade-in-up">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-zinc-500 mb-8 font-medium uppercase tracking-wide">
           <span>Home</span>
@@ -218,13 +218,13 @@ export default function InfoPage({ params }) {
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl md:text-6xl font-black uppercase mb-8 tracking-tight">{title}</h1>
+        <h1 className="text-3xl md:text-6xl font-black uppercase mb-8 tracking-tight">{title}</h1>
 
         {/* Decorative Divider */}
         <div className="w-24 h-1 bg-black mb-12"></div>
 
         {/* Content Content */}
-        <div className="prose prose-lg max-w-none text-zinc-700 space-y-6 leading-relaxed">
+        <div className="prose md:prose-lg max-w-none text-zinc-700 space-y-6 leading-relaxed">
           {contentMap[slug] || (
             <>
               <p className="text-xl font-medium text-black">
