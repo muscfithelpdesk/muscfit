@@ -135,7 +135,7 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
                         return (
                             <div
                                 key={product.id}
-                                className={`absolute top-0 w-[280px] md:w-[600px] h-[200px] md:h-[350px] transition-all duration-700 ease-in-out origin-center ${className}`}
+                                className={`absolute top-0 w-[280px] md:w-[600px] h-[200px] md:h-[350px] transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] origin-center ${className}`}
                                 style={style}
                                 onClick={!isDragging ? onClick : undefined}
                             >
