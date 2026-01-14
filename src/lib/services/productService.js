@@ -968,43 +968,93 @@ export const productService = {
   // Get single product by ID
   async getById(productId) {
     try {
-      if (!supabase) return null;
+      let productData = null;
 
-      const { data, error } = await supabase
-        .from('products')
-        .select(
+      // 1. Try fetching from Supabase
+      if (supabase) {
+        const { data, error } = await supabase
+          .from('products')
+          .select(
+            `
+            *,
+            product_images(
+              id,
+              image_url,
+              alt_text,
+              is_primary,
+              display_order
+            ),
+            product_variants(
+              id,
+              size,
+              color,
+              stock_quantity
+            ),
+            product_attributes(
+              id,
+              attribute_name,
+              attribute_value
+            )
           `
-          *,
-          product_images(
-            id,
-            image_url,
-            alt_text,
-            is_primary,
-            display_order
-          ),
-          product_variants(
-            id,
-            size,
-            color,
-            stock_quantity
-          ),
-          product_attributes(
-            id,
-            attribute_name,
-            attribute_value
           )
-        `
-        )
-        .eq('id', productId)
-        .eq('is_active', true)
-        .single();
+          .eq('id', productId)
+          .single();
 
-      if (error) throw error;
+        if (!error && data) {
+          productData = this.convertToCamelCase(data);
+        }
+      }
 
-      return this.convertToCamelCase(data);
+      // 2. Fallback to BASIC_CATALOG if not found in DB
+      if (!productData) {
+        const basicProduct = BASIC_CATALOG.find((p) => p.id === productId);
+        if (basicProduct) {
+          // Format basic product to match application structure
+          productData = {
+            id: basicProduct.id,
+            name: basicProduct.name,
+            description: basicProduct.description,
+            price: basicProduct.price,
+            originalPrice: basicProduct.original_price,
+            gender: basicProduct.gender,
+            category: basicProduct.category,
+            brand: basicProduct.brand,
+            rating: basicProduct.rating,
+            reviewCount: basicProduct.review_count,
+            tag: basicProduct.tag,
+            isActive: basicProduct.is_active,
+            image: basicProduct.image_url,
+            productImages: [
+              {
+                id: 'basic-img-' + basicProduct.id,
+                imageUrl: basicProduct.image_url,
+                altText: basicProduct.name,
+                isPrimary: true,
+                displayOrder: 1,
+              },
+            ],
+            productVariants: [
+              { id: 'v-s', size: 'S', color: 'Solid', stockQuantity: 50 },
+              { id: 'v-m', size: 'M', color: 'Solid', stockQuantity: 50 },
+              { id: 'v-l', size: 'L', color: 'Solid', stockQuantity: 50 },
+              { id: 'v-xl', size: 'XL', color: 'Solid', stockQuantity: 50 },
+              { id: 'v-xxl', size: 'XXL', color: 'Solid', stockQuantity: 50 },
+            ],
+            productAttributes: [],
+          };
+        }
+      }
+
+      if (!productData) {
+        throw new Error(`Product not found with ID: ${productId}`);
+      }
+
+      return productData;
     } catch (error) {
-      console.error('Error fetching product:', error);
-      throw error;
+      console.warn(`Error fetching product ${productId}:`, error);
+      // Depending on requirement, we might want to return null instead of throwing
+      // But page.jsx expects null or throw to show "Not Found"
+      return null;
     }
   },
 
