@@ -42,12 +42,12 @@ export default function InfoPage({ params }) {
           <div className="border border-black p-6 text-center">
             <h3 className="font-bold uppercase text-sm tracking-wide mb-2">Email Us</h3>
             <p className="text-zinc-600 mb-2">For general inquiries</p>
-            <a href="mailto:support@muscfit.com" className="font-bold underline">support@muscfit.com</a>
+            <a href="mailto:muscfithelpdesk@gmail.com" className="font-bold underline">muscfithelpdesk@gmail.com</a>
           </div>
           <div className="border border-black p-6 text-center">
             <h3 className="font-bold uppercase text-sm tracking-wide mb-2">Call Us</h3>
             <p className="text-zinc-600 mb-2">Mon-Fri, 9am - 6pm</p>
-            <a href="tel:+919876543210" className="font-bold underline">+91 987 654 3210</a>
+            <a href="tel:+919911386842" className="font-bold underline">+91 99113 86842</a>
           </div>
           <div className="border border-black p-6 text-center">
             <h3 className="font-bold uppercase text-sm tracking-wide mb-2">Live Chat</h3>
