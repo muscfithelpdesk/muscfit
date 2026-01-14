@@ -547,6 +547,9 @@ const BASIC_CATALOG = [
   },
 ];
 
+// Discontinued products to filter out from all views
+const DENIED_IDS = ['compression-1', 'veld-track-compression-suit'];
+
 export const productService = {
   // Get all products with optional filters
   async getAll(filters = {}) {
@@ -818,7 +821,7 @@ export const productService = {
           mergedProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       }
 
-      return mergedProducts;
+      return mergedProducts.filter(p => !DENIED_IDS.includes(p.id));
     } catch (error) {
       console.error('Error processing basic catalog:', error);
       return [];
@@ -953,6 +956,8 @@ export const productService = {
 
   // Get single product by ID
   async getById(productId) {
+    if (DENIED_IDS.includes(productId)) return null;
+
     try {
       let productData = null;
 
