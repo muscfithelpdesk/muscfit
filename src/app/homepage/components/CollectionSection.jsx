@@ -272,6 +272,11 @@ function ModernProductCard({ product, onQuickView }) {
           src={product?.image}
           alt={product?.imageAlt || product?.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onQuickView(product);
+          }}
         />
 
         {/* Wishlist Button */}

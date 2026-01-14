@@ -7,7 +7,7 @@ import Icon from '@/components/ui/AppIcon';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function NewArrivalsCarousel({ products }) {
+export default function NewArrivalsCarousel({ products, onQuickView }) {
     const scrollRef = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -117,10 +117,9 @@ export default function NewArrivalsCarousel({ products }) {
                             else if (isPrev || isNext) transformClass = 'scale-95 opacity-85 z-10';
 
                             return (
-                                <Link
-                                    href={`/product-details?id=${product.id}`}
+                                <div
                                     key={product.id}
-                                    className={`flex-shrink-0 w-[220px] md:w-[260px] snap-center transition-all duration-500 ease-out relative bg-[#F5F5F7] rounded-xl overflow-hidden h-[320px] mx-[-12px] md:mx-[-18px] ${transformClass}`}
+                                    className={`flex-shrink-0 w-[220px] md:w-[260px] snap-center transition-all duration-500 ease-out relative bg-[#F5F5F7] rounded-xl overflow-hidden h-[320px] mx-[-12px] md:mx-[-18px] ${transformClass} group/card`}
                                 >
                                     {/* Background Text */}
                                     <div className="absolute top-6 left-0 right-0 text-center pointer-events-none z-0">
@@ -129,30 +128,41 @@ export default function NewArrivalsCarousel({ products }) {
                                         </span>
                                     </div>
 
-                                    {/* Product Image */}
-                                    <div className="absolute inset-0 z-10 flex items-end justify-center pb-0">
+                                    {/* Product Image - Triggers Quick View */}
+                                    <div
+                                        className="absolute inset-0 z-10 flex items-end justify-center pb-0 cursor-pointer"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            if (onQuickView) onQuickView(product);
+                                        }}
+                                    >
                                         <div className="relative w-full h-[80%]">
                                             <Image
                                                 src={product.productImages?.[0]?.imageUrl || product.imageUrl || '/assets/images/no_image.png'}
                                                 alt={product.name}
                                                 fill
-                                                className="object-contain drop-shadow-xl transition-transform duration-500"
+                                                className="object-contain drop-shadow-xl transition-transform duration-500 group-hover/card:scale-105"
                                                 sizes="(max-width: 768px) 220px, 260px"
                                                 priority={index < 4}
                                             />
                                         </div>
                                     </div>
 
-                                    {/* Content Overlay */}
-                                    <div className={`absolute bottom-0 left-0 right-0 p-4 z-20 bg-gradient-to-t from-black/80 to-transparent pt-16 transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+                                    {/* Content Overlay - Navigates to Details */}
+                                    <Link
+                                        href={`/product-details?id=${product.id}`}
+                                        className={`absolute bottom-0 left-0 right-0 p-4 z-20 bg-gradient-to-t from-black/80 to-transparent pt-16 transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-0'} hover:opacity-100`}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
                                         <h3 className="font-heading font-bold text-lg text-white uppercase tracking-wide mb-0.5 leading-none">
                                             {product.name}
                                         </h3>
                                         <p className="text-gray-200 text-[10px] font-medium uppercase tracking-widest mb-0">
                                             {product.tag || 'Just Launched'}
                                         </p>
-                                    </div>
-                                </Link>
+                                    </Link>
+                                </div>
                             );
                         })}
                     </div>
@@ -194,4 +204,5 @@ export default function NewArrivalsCarousel({ products }) {
 
 NewArrivalsCarousel.propTypes = {
     products: PropTypes.array.isRequired,
+    onQuickView: PropTypes.func,
 };

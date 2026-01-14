@@ -114,6 +114,7 @@ export default function HomepageInteractive({ pageData }) {
           products={dbProducts
             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
             .slice(0, 8)}
+          onQuickView={(p) => setQuickViewProduct(p)}
         />
 
         <CollectionSection
