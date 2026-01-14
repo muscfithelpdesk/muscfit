@@ -51,8 +51,15 @@ export default function InfoPage({ params }) {
           </div>
           <div className="border border-black p-6 text-center">
             <h3 className="font-bold uppercase text-sm tracking-wide mb-2">Live Chat</h3>
-            <p className="text-zinc-600 mb-2">Instant support</p>
-            <button className="font-bold underline">Start Chat</button>
+            <p className="text-zinc-600 mb-2">Instant support via WhatsApp</p>
+            <a
+              href="https://wa.me/919911386842"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold underline hover:text-green-600 transition-colors"
+            >
+              Start Chat
+            </a>
           </div>
         </div>
       </>
