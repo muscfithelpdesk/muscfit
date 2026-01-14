@@ -66,8 +66,8 @@ const BASIC_CATALOG = [
   // Women's Collection (4 Items)
   {
     id: 'w-bb-l-1',
-    name: "Vital Seamless Leggings 2.0 - Black",
-    description: 'Squat-proof, high-waisted seamless technology. Contouring textures map your body for a flattering fit.',
+    name: "MuscFIT Signature Leggings - Black",
+    description: 'The icon. High-waisted seamless leggings featuring our signature bold branding. Squat-proof, sculpting, and engineered for performance.',
     price: 1599,
     original_price: 2199,
     gender: 'women',
@@ -77,7 +77,7 @@ const BASIC_CATALOG = [
     is_active: true,
     rating: 4.9,
     review_count: 342,
-    image_url: '/assets/images/products/womens_black_leggings_basic.png',
+    image_url: '/assets/images/products/muscfit_branded_leggings.png',
   },
   {
     id: 'w-gb-l-2',
@@ -394,18 +394,18 @@ const BASIC_CATALOG = [
   // Compression Featured
   {
     id: 'compression-1',
-    name: 'MuscFIT Elite Compression Long Sleeve',
-    description: 'Pro-grade compression in earth tone Taupe.',
-    price: 1599,
-    original_price: 2199,
+    name: 'VELD-TRACK COMPRESSION FULL SUIT',
+    description: 'Next-gen recovery wear. Features integrated Veld-Track nodes for targeted compression and biometric thermal regulation. The ultimate recovery tool.',
+    price: 4999,
+    original_price: 6999,
     gender: 'compression',
     category: 'tshirts',
     brand: 'MUSCFIT',
-    tag: 'featured',
+    tag: 'HOT',
     is_active: true,
-    rating: 4.9,
-    review_count: 123,
-    image_url: '/assets/images/compression-1.png',
+    rating: 5.0,
+    review_count: 12,
+    image_url: '/assets/images/products/veld-track-compression.png',
   },
   {
     id: 'compression-2',
