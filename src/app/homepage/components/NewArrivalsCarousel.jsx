@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@/components/ui/AppIcon';
-import Icon from '@/components/ui/AppIcon';
+
 import Link from 'next/link';
 import Image from 'next/image';
 
