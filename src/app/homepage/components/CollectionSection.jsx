@@ -116,7 +116,7 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
                 {subtitle}
               </p>
             </div>
-            <h2 className="text-5xl md:text-8xl font-[family-name:var(--font-anton)] italic text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-800 to-gray-400 tracking-tighter drop-shadow-sm">
+            <h2 className="text-5xl md:text-8xl font-[family-name:var(--font-anton)] italic text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-800 to-gray-400 tracking-tighter drop-shadow-sm pr-4 pb-2">
               {title}
             </h2>
           </div>
