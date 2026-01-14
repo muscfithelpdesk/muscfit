@@ -186,6 +186,52 @@ const BASIC_CATALOG = [
     review_count: 112,
     image_url: '/assets/images/products/mens_black_tshirt_basic.png',
   },
+  // GEMINI GENERATED COMPRESSION PRODUCTS
+  {
+    id: 'gen-c-ls-1',
+    name: "Hyper-Flex Compression Long Sleeve - Midnight",
+    description: "Advanced moisture-wicking compression top with targeted support zones for upper body stability. Features 4-way stretch Hydro-Cool fabric.",
+    price: 1499,
+    original_price: 2299,
+    gender: 'compression',
+    category: 'tshirts',
+    brand: 'MUSCFIT',
+    tag: 'PRO',
+    is_active: true,
+    rating: 4.9,
+    review_count: 15,
+    image_url: '/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png', // Placeholder
+  },
+  {
+    id: 'gen-c-lg-2',
+    name: "Recovery Pro Gradient Tights - Onyx",
+    description: "Medical-grade gradient compression engineered to accelerate muscle recovery and reduce lactic acid buildup post-workout.",
+    price: 1899,
+    original_price: 2599,
+    gender: 'compression',
+    category: 'leggings',
+    brand: 'MUSCFIT',
+    tag: 'RECOVERY',
+    is_active: true,
+    rating: 4.8,
+    review_count: 28,
+    image_url: '/assets/images/products/mens_black_joggers_basic.png', // Placeholder
+  },
+  {
+    id: 'gen-c-tk-3',
+    name: "Core Stabilizer Tank - Graphite",
+    description: "Sleeveless compression baselayer designed for maximum core engagement and breathability during heavy compound lifts.",
+    price: 999,
+    original_price: 1499,
+    gender: 'compression',
+    category: 'tshirts',
+    brand: 'MUSCFIT',
+    tag: 'ESSENTIAL',
+    is_active: true,
+    rating: 4.7,
+    review_count: 42,
+    image_url: '/assets/images/products/mens_grey_tshirt_basic.png', // Placeholder
+  },
 
   // Accessories (4 Items)
   {
@@ -548,8 +594,8 @@ const BASIC_CATALOG = [
 ];
 
 // Discontinued products to filter out from all views
-const DENIED_IDS = ['compression-1', 'veld-track-compression-suit'];
-const DENIED_NAMES = ['VELD-TRACK', 'COMPRESSION FULL SUIT']; // Combined filters
+const DENIED_IDS = ['compression-1', 'veld-track-compression-suit', 'full-body-compression'];
+const DENIED_NAMES = ['VELD', 'TRACK', 'COMPRESSION FULL SUIT', 'FULL BODY']; // Aggressive filtering
 
 
 export const productService = {
