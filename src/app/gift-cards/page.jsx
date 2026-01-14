@@ -2,8 +2,13 @@
 
 import Link from 'next/link';
 import Icon from '@/components/ui/AppIcon';
+import { useEffect } from 'react';
 
 export default function GiftCardsPage() {
+    useEffect(() => {
+        console.log('Gift Cards Page Mounted');
+    }, []);
+
     return (
         <div className="min-h-screen bg-background pt-[120px] pb-20">
             <div className="max-w-[1400px] mx-auto px-4 md:px-8">
