@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@/components/ui/AppIcon';
 import Link from 'next/link';
@@ -10,20 +10,60 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
+    // Drag/Swipe State
+    const [isDragging, setIsDragging] = useState(false);
+    const [startPos, setStartPos] = useState(0);
+    const [currentTranslate, setCurrentTranslate] = useState(0);
+    const containerRef = useRef(null);
+
     const nextSlide = useCallback(() => {
         setActiveIndex((current) => (current + 1) % products.length);
+        setCurrentTranslate(0);
     }, [products.length]);
 
-    const prevSlide = () => {
+    const prevSlide = useCallback(() => {
         setActiveIndex((current) => (current - 1 + products.length) % products.length);
-    };
+        setCurrentTranslate(0);
+    }, [products.length]);
 
     // Auto-play functionality
     useEffect(() => {
-        if (!isAutoPlaying || products.length <= 1) return;
+        if (!isAutoPlaying || products.length <= 1 || isDragging) return;
         const timer = setInterval(nextSlide, 4000);
         return () => clearInterval(timer);
-    }, [isAutoPlaying, nextSlide, products.length]);
+    }, [isAutoPlaying, nextSlide, products.length, isDragging]);
+
+    // Drag Handlers
+    const handleDragStart = (e) => {
+        setIsDragging(true);
+        setStartPos(getPositionX(e));
+        setIsAutoPlaying(false);
+    };
+
+    const handleDragMove = (e) => {
+        if (!isDragging) return;
+        const currentPosition = getPositionX(e);
+        const diff = currentPosition - startPos;
+        setCurrentTranslate(diff);
+    };
+
+    const handleDragEnd = () => {
+        setIsDragging(false);
+        const threshold = 50; // Minimum drag distance to trigger change
+
+        if (currentTranslate < -threshold) {
+            nextSlide();
+        } else if (currentTranslate > threshold) {
+            prevSlide();
+        } else {
+            setCurrentTranslate(0); // Reset if drag was minimal
+        }
+        setIsAutoPlaying(true);
+    };
+
+    const getPositionX = (e) => {
+        return e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+    };
 
     if (!products || products.length === 0) return null;
 
@@ -39,7 +79,8 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
         // Active Center Item
         if (relativePos === 0) {
             return {
-                className: 'z-30 opacity-100 scale-100 translate-x-0 cursor-default',
+                className: 'z-30 opacity-100 scale-100 cursor-grab active:cursor-grabbing',
+                style: { transform: `translateX(${currentTranslate}px)` },
                 isInteractable: true
             };
         }
@@ -47,6 +88,7 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
         if (relativePos === -1) {
             return {
                 className: 'z-20 opacity-60 scale-90 -translate-x-[60%] blur-[1px] cursor-pointer hover:opacity-80',
+                style: {},
                 onClick: prevSlide
             };
         }
@@ -54,18 +96,20 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
         if (relativePos === 1) {
             return {
                 className: 'z-20 opacity-60 scale-90 translate-x-[60%] blur-[1px] cursor-pointer hover:opacity-80',
+                style: {},
                 onClick: nextSlide
             };
         }
         // Hidden items
         return {
             className: 'z-0 opacity-0 scale-50 translate-x-0 hidden',
+            style: {},
             isDisabled: true
         };
     };
 
     return (
-        <section className="py-16 bg-background relative overflow-hidden">
+        <section className="py-16 bg-background relative overflow-hidden select-none">
             <div className="max-w-[1400px] mx-auto px-4">
                 <h2 className="font-heading text-3xl md:text-5xl font-black text-foreground uppercase tracking-tighter mb-12 text-center italic">
                     Fresh Drops
@@ -73,19 +117,30 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
 
                 {/* Carousel Container */}
                 <div
-                    className="relative h-[300px] md:h-[450px] w-full max-w-5xl mx-auto flex items-center justify-center perspective-[1000px]"
-                    onMouseEnter={() => setIsAutoPlaying(false)}
-                    onMouseLeave={() => setIsAutoPlaying(true)}
+                    ref={containerRef}
+                    className="relative h-[300px] md:h-[450px] w-full max-w-5xl mx-auto flex items-center justify-center perspective-[1000px] touch-pan-y"
+                    onMouseEnter={() => !isDragging && setIsAutoPlaying(false)}
+                    onMouseLeave={() => !isDragging && setIsAutoPlaying(true)}
+                    // Mouse Events
+                    onMouseDown={handleDragStart}
+                    onMouseMove={handleDragMove}
+                    onMouseUp={handleDragEnd}
+                    onMouseLeave={isDragging ? handleDragEnd : undefined}
+                    // Touch Events
+                    onTouchStart={handleDragStart}
+                    onTouchMove={handleDragMove}
+                    onTouchEnd={handleDragEnd}
                 >
                     {products.map((product, index) => {
-                        const { className, onClick, isInteractable, isDisabled } = getSlideStyles(index);
+                        const { className, style, onClick, isInteractable, isDisabled } = getSlideStyles(index);
                         if (isDisabled) return null;
 
                         return (
                             <div
                                 key={product.id}
                                 className={`absolute top-0 w-[280px] md:w-[600px] h-[200px] md:h-[350px] transition-all duration-700 ease-in-out origin-center ${className}`}
-                                onClick={onClick}
+                                style={style}
+                                onClick={!isDragging ? onClick : undefined}
                             >
                                 <div className="relative w-full h-full bg-[#f2f2f2] rounded-2xl overflow-hidden shadow-2xl border border-white/50 group/card">
 
@@ -98,8 +153,9 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
 
                                     {/* Product Image - Centered and Large */}
                                     <div
-                                        className={`absolute inset-0 z-10 flex items-center justify-center p-6 ${isInteractable ? 'cursor-pointer' : ''}`}
+                                        className="absolute inset-0 z-10 flex items-center justify-center p-6"
                                         onClick={(e) => {
+                                            if (isDragging) return; // Prevent click if dragging
                                             if (isInteractable && onQuickView) {
                                                 e.preventDefault();
                                                 e.stopPropagation();
@@ -112,7 +168,7 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
                                                 src={product.productImages?.[0]?.imageUrl || product.imageUrl || '/assets/images/no_image.png'}
                                                 alt={product.name}
                                                 fill
-                                                className="object-contain drop-shadow-2xl"
+                                                className="object-contain drop-shadow-2xl pointer-events-none" // prevent image drag
                                                 sizes="(max-width: 768px) 300px, 600px"
                                                 priority={index === activeIndex}
                                             />
@@ -124,8 +180,9 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
                                         <div className="absolute inset-0 p-6 md:p-8 z-20 flex flex-col justify-end pointer-events-none">
                                             <div className="pointer-events-auto transform translate-y-2 group-hover/card:translate-y-0 transition-transform duration-500">
                                                 <Link
-                                                    href={`/product-details?id=${product.id}`}
-                                                    className="group/link block"
+                                                    href={isDragging ? '#' : `/product-details?id=${product.id}`}
+                                                    onClick={(e) => isDragging && e.preventDefault()} // Prevent link click if dragging
+                                                    className={`group/link block ${isDragging ? 'pointer-events-none' : ''}`}
                                                 >
                                                     <h3 className="font-heading font-black text-2xl md:text-5xl text-black uppercase tracking-wide mb-1 leading-none">
                                                         {product.name}
@@ -144,14 +201,14 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
 
                     {/* Navigation Buttons - Absolute positioned relative to container */}
                     <button
-                        onClick={prevSlide}
+                        onClick={(e) => { e.stopPropagation(); prevSlide(); }}
                         className="absolute left-0 md:-left-12 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-14 md:h-14 bg-white shadow-sharp-md border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 disabled:opacity-50"
                         aria-label="Previous slide"
                     >
                         <Icon name="ChevronLeftIcon" size={24} />
                     </button>
                     <button
-                        onClick={nextSlide}
+                        onClick={(e) => { e.stopPropagation(); nextSlide(); }}
                         className="absolute right-0 md:-right-12 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-14 md:h-14 bg-white shadow-sharp-md border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 disabled:opacity-50"
                         aria-label="Next slide"
                     >
