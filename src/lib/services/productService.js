@@ -232,6 +232,21 @@ const BASIC_CATALOG = [
     review_count: 42,
     image_url: '/assets/images/products/mens_grey_tshirt_basic.png', // Placeholder
   },
+  {
+    id: 'gen-c-st-4',
+    name: "Sculpt-X Compression Set - Mocha",
+    description: "Premium full-coverage compression set featuring high-waisted shorts and long-sleeve crop top. Engineered for contouring and maximum flexibility.",
+    price: 3499,
+    original_price: 4999,
+    gender: 'compression',
+    category: 'leggings',
+    brand: 'MUSCFIT',
+    tag: 'NEW',
+    is_active: true,
+    rating: 5.0,
+    review_count: 4,
+    image_url: '/assets/images/products/compression_set_brown.png',
+  },
 
   // Accessories (4 Items)
   {
