@@ -116,7 +116,7 @@ export default function NewArrivalsCarousel({ products }) {
 
                             return (
                                 <Link
-                                    href={`/product-details/${product.id}`}
+                                    href={`/product-details?id=${product.id}`}
                                     key={product.id}
                                     className={`flex-shrink-0 w-[220px] md:w-[260px] snap-center transition-all duration-500 ease-out relative bg-[#F5F5F7] rounded-xl overflow-hidden h-[320px] mx-[-12px] md:mx-[-18px] ${transformClass}`}
                                 >
