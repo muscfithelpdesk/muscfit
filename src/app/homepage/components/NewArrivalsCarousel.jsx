@@ -3,7 +3,9 @@
 import { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@/components/ui/AppIcon';
+import Icon from '@/components/ui/AppIcon';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function NewArrivalsCarousel({ products }) {
     const scrollRef = useRef(null);
@@ -129,11 +131,16 @@ export default function NewArrivalsCarousel({ products }) {
 
                                     {/* Product Image */}
                                     <div className="absolute inset-0 z-10 flex items-end justify-center pb-0">
-                                        <img
-                                            src={product.productImages?.[0]?.imageUrl || product.imageUrl || '/assets/images/no_image.png'}
-                                            alt={product.name}
-                                            className="h-[80%] w-auto object-contain drop-shadow-xl transition-transform duration-500"
-                                        />
+                                        <div className="relative w-full h-[80%]">
+                                            <Image
+                                                src={product.productImages?.[0]?.imageUrl || product.imageUrl || '/assets/images/no_image.png'}
+                                                alt={product.name}
+                                                fill
+                                                className="object-contain drop-shadow-xl transition-transform duration-500"
+                                                sizes="(max-width: 768px) 220px, 260px"
+                                                priority={index < 4}
+                                            />
+                                        </div>
                                     </div>
 
                                     {/* Content Overlay */}

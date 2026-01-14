@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 export default function GiftCardsPage() {
     useEffect(() => {
-        console.log('Gift Cards Page Mounted');
+        console.log('Gift Cards Page Mounted ');
     }, []);
 
     return (

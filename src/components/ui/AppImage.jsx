@@ -45,8 +45,18 @@ function AppImage({
 
   const commonClassName = `${className} ${onClick ? 'cursor-pointer hover:opacity-90 transition-opacity' : ''}`;
 
-  // For external URLs or when in doubt, use regular img tag
-  if (isExternal && !isLocal) {
+  // Whitelisted domains from next.config.mjs
+  const OPTIMIZED_DOMAINS = [
+    'images.unsplash.com',
+    'images.pexels.com',
+    'images.pixabay.com',
+    'img.rocket.new'
+  ];
+
+  const isOptimizedExternal = isExternal && OPTIMIZED_DOMAINS.some(domain => imageSrc?.includes(domain));
+
+  // For external URLs that are NOT optimized, use regular img tag
+  if (isExternal && !isLocal && !isOptimizedExternal) {
     const imgStyle = {};
 
     if (width) imgStyle.width = width;
@@ -86,16 +96,16 @@ function AppImage({
     );
   }
 
-  // For local images and data URLs, use Next.js Image component
+  // For local images AND optimized external URLs, use Next.js Image component
   const imageProps = {
     src: imageSrc,
     alt,
     className: commonClassName,
     priority,
     quality,
-    placeholder,
+    placeholder: placeholder === 'blur' && blurDataURL ? 'blur' : 'empty', // Only use blur if data URL provided
     blurDataURL,
-    unoptimized: true,
+    // Remove unoptimized: true to enable optimization
     onError: handleError,
     onLoad: handleLoad,
     onClick,
@@ -105,7 +115,12 @@ function AppImage({
   if (fill) {
     return (
       <div className={`relative ${className}`}>
-        <Image {...imageProps} fill sizes={sizes || '100vw'} style={{ objectFit: 'cover' }} />
+        <Image
+          {...imageProps}
+          fill
+          sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
+          style={{ objectFit: 'cover' }}
+        />
       </div>
     );
   }

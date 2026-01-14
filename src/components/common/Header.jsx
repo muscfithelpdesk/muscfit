@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
 import { useRouter, usePathname } from 'next/navigation';
 
+import Image from 'next/image';
 import { productService } from '@/lib/services/productService'; // Import Service
 
 export default function Header({ topOffset = 0, isFixed = true }) {
@@ -238,14 +239,18 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
             <Link
               href="/"
-              className="z-50 flex items-center flex-shrink-0"
+              className="z-50 flex items-center flex-shrink-0 relative"
             >
-              <img
-                src="/assets/images/logo-v4.png"
-                alt="MUSCFIT Logo"
-                className={`transition-all duration-300 w-auto max-w-none object-contain ${scrolled ? 'h-[50px] md:h-[60px]' : 'h-[70px] md:h-[80px]'
-                  }`}
-              />
+              <div className={`relative transition-all duration-300 ${scrolled ? 'h-[50px] w-[150px] md:h-[60px] md:w-[180px]' : 'h-[70px] w-[210px] md:h-[80px] md:w-[240px]'}`}>
+                <Image
+                  src="/assets/images/logo-v4.png"
+                  alt="MUSCFIT Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                  sizes="(max-width: 768px) 150px, 240px"
+                />
+              </div>
             </Link>
 
             {/* Center Navigation - Desktop - Grouped with Logo */}
@@ -304,12 +309,14 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
                         {/* Featured Image */}
                         <div className="w-3/5 h-full relative group cursor-pointer">
-                          <img
+                          <Image
                             src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=600&auto=format&fit=crop"
                             alt="Men's Featured"
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, 400px"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 z-10">
                             <span className="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">
                               New Collection
                             </span>
@@ -346,12 +353,14 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       <div className="flex h-[350px]">
                         {/* Featured Image Left */}
                         <div className="w-1/2 h-full relative group cursor-pointer border-r border-border">
-                          <img
+                          <Image
                             src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=600&auto=format&fit=crop"
                             alt="Women's Featured"
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, 350px"
                           />
-                          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center z-10">
                             <h4 className="text-white font-heading text-3xl font-bold border-2 border-white px-4 py-2">
                               WOMEN
                             </h4>
@@ -434,12 +443,14 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                         </div>
 
                         <div className="w-2/3 relative group bg-black">
-                          <img
+                          <Image
                             src="/assets/images/compression-featured.png"
                             alt="Compression Banner"
-                            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+                            fill
+                            className="object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+                            sizes="(max-width: 768px) 100vw, 500px"
                           />
-                          <div className="absolute bottom-6 right-6 text-right">
+                          <div className="absolute bottom-6 right-6 text-right z-10">
                             <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-lg border border-white/20 inline-block">
                               <span className="text-white font-bold text-sm">Tech-Fit™ Series</span>
                             </div>
@@ -479,7 +490,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                               className="group/acc relative h-[280px] rounded-xl overflow-hidden shadow-sm hover:shadow-sharp-lg transition-all duration-300"
                               onClick={() => setIsAccessoriesDropdownOpen(false)}
                             >
-                              <img
+                              <Image
                                 src={
                                   idx === 0
                                     ? '/assets/images/gym-bag-featured.png'
@@ -488,7 +499,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                                       : '/assets/images/supplements-featured.png'
                                 }
                                 alt={subcat?.name}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover/acc:scale-110"
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover/acc:scale-110"
+                                sizes="(max-width: 768px) 100vw, 200px"
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-5">
                                 <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mb-3 group-hover/acc:bg-primary transition-colors duration-300">
@@ -660,7 +673,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                           Wishlist
                         </Link>
                         <Link
-                          href="/gift-cards"
+                          href="/gift-card"
                           className="block px-6 py-2.5 text-sm text-text-secondary hover:text-foreground hover:bg-muted font-bold transition-all"
                         >
                           Gift Cards
@@ -783,11 +796,13 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                               key={item?.id}
                               className="flex gap-4 p-5 border-b border-border last:border-b-0 hover:bg-surface/30 transition-colors"
                             >
-                              <div className="w-16 h-20 bg-muted rounded-md overflow-hidden flex-shrink-0 border border-border/50">
-                                <img
+                              <div className="w-16 h-20 bg-muted rounded-md overflow-hidden flex-shrink-0 border border-border/50 relative">
+                                <Image
                                   src={item?.image}
                                   alt={item?.name}
-                                  className="w-full h-full object-cover"
+                                  fill
+                                  className="object-cover"
+                                  sizes="64px"
                                 />
                               </div>
                               <div className="flex-1 min-w-0">
