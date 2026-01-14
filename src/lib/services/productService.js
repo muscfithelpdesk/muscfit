@@ -549,6 +549,8 @@ const BASIC_CATALOG = [
 
 // Discontinued products to filter out from all views
 const DENIED_IDS = ['compression-1', 'veld-track-compression-suit'];
+const DENIED_NAMES = ['VELD-TRACK', 'MuscFIT Signature Leggings']; // Add any others if needed, sticking to VELD-TRACK for now
+
 
 export const productService = {
   // Get all products with optional filters
@@ -821,7 +823,7 @@ export const productService = {
           mergedProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       }
 
-      return mergedProducts.filter(p => !DENIED_IDS.includes(p.id));
+      return mergedProducts.filter(p => !DENIED_IDS.includes(p.id) && !DENIED_NAMES.some(n => p.name.toUpperCase().includes(n)));
     } catch (error) {
       console.error('Error processing basic catalog:', error);
       return [];
@@ -1108,7 +1110,7 @@ export const productService = {
       if (error) throw error;
 
       return (data?.map((product) => this.convertToCamelCase(product)) || [])
-        .filter(p => !DENIED_IDS.includes(p.id));
+        .filter(p => !DENIED_IDS.includes(p.id) && !DENIED_NAMES.some(n => p.name.toUpperCase().includes(n)));
     } catch (error) {
       console.error('Error searching products:', error);
       throw error;
