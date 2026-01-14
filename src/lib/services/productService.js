@@ -1107,7 +1107,8 @@ export const productService = {
 
       if (error) throw error;
 
-      return data?.map((product) => this.convertToCamelCase(product)) || [];
+      return (data?.map((product) => this.convertToCamelCase(product)) || [])
+        .filter(p => !DENIED_IDS.includes(p.id));
     } catch (error) {
       console.error('Error searching products:', error);
       throw error;
