@@ -15,7 +15,7 @@ export default function AuthInteractive({ initialMode }) {
 
   const [activeTab, setActiveTab] = useState(initialMode); // login or register
   const [step, setStep] = useState(1); // 1: Number/Email, 2: OTP/Password/Details
-  const [authMethod, setAuthMethod] = useState('phone'); // 'phone' or 'email'
+  const [authMethod, setAuthMethod] = useState('phone'); // 'phone', 'whatsapp', or 'email'
   const [identifier, setIdentifier] = useState(''); // phone or email
   const [isLoading, setIsLoading] = useState(false);
   const [notification, setNotification] = useState(null);
@@ -40,8 +40,9 @@ export default function AuthInteractive({ initialMode }) {
     if (!identifier) return;
 
     setIsLoading(true);
-    if (authMethod === 'phone') {
-      const result = await signInWithPhone(identifier);
+    if (authMethod === 'phone' || authMethod === 'whatsapp') {
+      const channel = authMethod === 'whatsapp' ? 'whatsapp' : 'sms';
+      const result = await signInWithPhone(identifier, channel);
       if (result.success) {
         setStep(2);
         showNotification('success', 'OTP sent successfully!');
@@ -102,15 +103,25 @@ export default function AuthInteractive({ initialMode }) {
             <form onSubmit={handleIdentifierSubmit} className="space-y-6">
               <div className="relative group">
                 <input
-                  type={authMethod === 'phone' ? 'tel' : 'email'}
+                  type={authMethod === 'email' ? 'email' : 'tel'}
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
                   className="w-full px-0 py-3 bg-transparent border-b-2 border-gray-200 focus:border-black outline-none transition-all duration-300 text-lg font-medium peer placeholder-transparent"
-                  placeholder={authMethod === 'phone' ? 'Enter Mobile Number' : 'Enter Email Address'}
+                  placeholder={
+                    authMethod === 'email'
+                      ? 'Enter Email Address'
+                      : authMethod === 'whatsapp'
+                        ? 'Enter WhatsApp Number'
+                        : 'Enter Mobile Number'
+                  }
                   required
                 />
                 <label className="absolute left-0 -top-3.5 text-gray-500 text-xs transition-all peer-placeholder-shown:text-lg peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-black peer-focus:text-xs pointer-events-none">
-                  {authMethod === 'phone' ? 'Enter Mobile Number' : 'Enter Email Address'}
+                  {authMethod === 'email'
+                    ? 'Enter Email Address'
+                    : authMethod === 'whatsapp'
+                      ? 'Enter WhatsApp Number'
+                      : 'Enter Mobile Number'}
                 </label>
               </div>
 
@@ -130,12 +141,25 @@ export default function AuthInteractive({ initialMode }) {
               </button>
             </form>
 
-            <div className="mt-8">
+            <div className="mt-8 space-y-3">
+              {authMethod !== 'whatsapp' && (
+                <button
+                  onClick={() => setAuthMethod('whatsapp')}
+                  className="w-full py-4 border border-green-500 text-green-600 font-bold text-xs tracking-widest uppercase hover:bg-green-50 transition-all rounded-sm flex items-center justify-center gap-2"
+                >
+                  <Icon name="ChatBubbleLeftRightIcon" size={16} />
+                  Login via WhatsApp
+                </button>
+              )}
+
               <button
-                onClick={() => setAuthMethod(authMethod === 'phone' ? 'email' : 'phone')}
+                onClick={() => {
+                  if (authMethod === 'email') setAuthMethod('phone');
+                  else setAuthMethod('email');
+                }}
                 className="w-full py-4 border border-gray-200 text-gray-600 font-bold text-xs tracking-widest uppercase hover:bg-gray-50 transition-all rounded-sm"
               >
-                {authMethod === 'phone' ? 'Use Email instead' : 'Use Phone Number instead'}
+                {authMethod === 'email' ? 'Use Phone Number instead' : 'Use Email instead'}
               </button>
             </div>
 

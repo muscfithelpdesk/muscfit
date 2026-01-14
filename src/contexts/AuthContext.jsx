@@ -134,7 +134,7 @@ export function AuthProvider({ children }) {
   };
 
   // Sign in with Phone (OTP)
-  const signInWithPhone = async (phone) => {
+  const signInWithPhone = async (phone, channel = 'sms') => {
     try {
       if (!supabase) throw new Error('Supabase client not initialized');
       setError(null);
@@ -144,6 +144,7 @@ export function AuthProvider({ children }) {
 
       const { data, error: otpError } = await supabase.auth.signInWithOtp({
         phone: formattedPhone,
+        options: { channel },
       });
 
       if (otpError) throw otpError;

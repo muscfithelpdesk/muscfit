@@ -18,6 +18,7 @@ import Newsletter from './Newsletter';
 import Footer from './Footer';
 import CollectionSection from './CollectionSection';
 import QuickViewModal from './QuickViewModal';
+import NewArrivalsCarousel from './NewArrivalsCarousel';
 import { productService } from '@/lib/services/productService';
 
 export default function HomepageInteractive({ pageData }) {
@@ -107,6 +108,12 @@ export default function HomepageInteractive({ pageData }) {
           ]}
           ctaPrimary={pageData?.hero?.ctaPrimary}
           ctaSecondary={pageData?.hero?.ctaSecondary}
+        />
+
+        <NewArrivalsCarousel
+          products={dbProducts
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            .slice(0, 8)}
         />
 
         <CollectionSection
@@ -202,13 +209,7 @@ export default function HomepageInteractive({ pageData }) {
 
         <FeaturesGrid features={pageData?.features} />
 
-        <FeaturedProducts
-          title="New Arrivals"
-          subtitle="Fresh drops designed to elevate your performance"
-          products={dbProducts
-            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-            .slice(0, 8)}
-        />
+
 
         <PerformanceVisuals
           title={pageData?.experience?.title}

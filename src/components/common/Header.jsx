@@ -639,6 +639,14 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       </div>
 
                       <div className="py-2">
+                        {(user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin') && (
+                          <Link
+                            href="/admin-dashboard"
+                            className="block px-6 py-2.5 text-sm text-primary hover:text-primary/80 hover:bg-muted font-black border-b border-border/50 uppercase tracking-widest transition-all"
+                          >
+                            Admin Dashboard
+                          </Link>
+                        )}
                         <Link
                           href="/user-profile?tab=orders"
                           className="block px-6 py-2.5 text-sm text-text-secondary hover:text-foreground hover:bg-muted font-bold transition-all"
