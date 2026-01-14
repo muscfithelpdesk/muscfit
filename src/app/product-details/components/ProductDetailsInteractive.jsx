@@ -7,17 +7,26 @@ import ProductInfo from './ProductInfo';
 import CustomerReviews from './CustomerReviews';
 import RelatedProducts from './RelatedProducts';
 
+import { useCart } from '@/contexts/CartContext';
+
 export default function ProductDetailsInteractive({
   productData,
   reviewsData,
   relatedProductsData,
 }) {
   const [wishlist, setWishlist] = useState([]);
+  const { addToCart } = useCart();
 
   const handleAddToCart = (productDetails) => {
-    alert(
-      `Added to cart:\n${productDetails?.name}\nSize: ${productDetails?.selectedSize}\nColor: ${productDetails?.selectedColor?.name}\nQuantity: ${productDetails?.quantity}`
-    );
+    addToCart({
+      id: productData.id,
+      name: productData.name,
+      price: productData.price,
+      image: productData.images[0]?.url,
+      color: productDetails.selectedColor,
+      size: productDetails.selectedSize,
+      quantity: productDetails.quantity,
+    });
   };
 
   const handleToggleWishlist = () => {
