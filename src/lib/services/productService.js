@@ -594,8 +594,8 @@ const BASIC_CATALOG = [
 ];
 
 // Discontinued products to filter out from all views
-const DENIED_IDS = ['compression-1', 'veld-track-compression-suit', 'full-body-compression'];
-const DENIED_NAMES = ['VELD', 'TRACK', 'COMPRESSION FULL SUIT', 'FULL BODY']; // Aggressive filtering
+const DENIED_IDS = ['compression-1', 'veld-track-compression-suit', 'full-body-compression', 'calf-sleeves', 'full-length-tights'];
+const DENIED_NAMES = ['VELD', 'TRACK', 'COMPRESSION FULL SUIT', 'FULL BODY', 'CALF SLEEVES', 'FULL LENGTH', 'TIGHTS']; // Aggressive filtering
 
 
 export const productService = {
