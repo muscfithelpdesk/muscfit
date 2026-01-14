@@ -109,7 +109,7 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
     };
 
     return (
-        <section className="py-8 bg-background relative overflow-hidden select-none">
+        <section className="pt-24 pb-12 bg-background relative overflow-hidden select-none">
             <div className="max-w-[1400px] mx-auto px-4">
 
                 {/* Carousel Container */}
