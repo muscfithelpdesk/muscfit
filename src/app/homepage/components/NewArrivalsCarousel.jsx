@@ -121,22 +121,18 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
 
                                     {/* Info Overlay (Only visible on active item) */}
                                     {isInteractable && (
-                                        <div className="absolute top-0 left-0 p-6 md:p-8 z-20 flex flex-col justify-between h-full pointer-events-none">
-                                            <div className="bg-black/5 backdrop-blur-sm px-3 per-1 rounded-md inline-flex self-start">
-                                                <span className="text-[10px] font-bold tracking-widest uppercase text-black">
-                                                    {product.tag || 'New'}
-                                                </span>
-                                            </div>
-
-                                            <div className="pointer-events-auto">
+                                        <div className="absolute inset-0 p-6 md:p-8 z-20 flex flex-col justify-end pointer-events-none">
+                                            <div className="pointer-events-auto transform translate-y-2 group-hover/card:translate-y-0 transition-transform duration-500">
                                                 <Link
                                                     href={`/product-details?id=${product.id}`}
                                                     className="group/link block"
                                                 >
-                                                    <h3 className="font-heading font-black text-xl md:text-4xl text-black uppercase tracking-tighter mb-2 leading-none group-hover/link:text-primary transition-colors">
+                                                    <h3 className="font-heading font-black text-2xl md:text-5xl text-black uppercase tracking-wide mb-1 leading-none">
                                                         {product.name}
                                                     </h3>
-                                                    <div className="h-[2px] w-12 bg-black group-hover/link:w-full transition-all duration-300"></div>
+                                                    <p className="text-sm md:text-lg text-gray-700 font-medium tracking-wide">
+                                                        {product.tag || 'Just Dropped'} &middot; View Details
+                                                    </p>
                                                 </Link>
                                             </div>
                                         </div>
