@@ -126,16 +126,16 @@ export default function Footer({ columns, socialLinks, paymentMethods }) {
         <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-zinc-500">
           <p>© {currentYear} | Muscfit Limited | All Rights Reserved. | We Do Gym.</p>
           <div className="flex items-center gap-6">
-            <Link href="#" className="hover:text-black">
+            <Link href="/info/terms-and-conditions" className="hover:text-black">
               Terms and Conditions
             </Link>
-            <Link href="#" className="hover:text-black">
+            <Link href="/info/terms-of-use" className="hover:text-black">
               Terms of Use
             </Link>
-            <Link href="#" className="hover:text-black">
+            <Link href="/info/privacy-policy" className="hover:text-black">
               Privacy Notice
             </Link>
-            <Link href="#" className="hover:text-black">
+            <Link href="/info/cookie-policy" className="hover:text-black">
               Cookie Policy
             </Link>
           </div>

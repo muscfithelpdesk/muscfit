@@ -136,6 +136,63 @@ export default function InfoPage({ params }) {
           </table>
         </div>
       </>
+    ),
+    'terms-and-conditions': (
+      <>
+        <p className="mb-4">Welcome to Muscfit. These Terms and Conditions govern your use of our website and purchase of our products.</p>
+        <h3 className="font-bold text-lg mt-8 mb-4">1. Acceptance of Terms</h3>
+        <p className="mb-4">By accessing our website, you agree to be bound by these terms. If you do not agree, please do not use our services.</p>
+        <h3 className="font-bold text-lg mt-8 mb-4">2. Product Information</h3>
+        <p className="mb-4">We strive to ensure all product descriptions and images are accurate. However, we do not warrant that product descriptions or other content is error-free.</p>
+        <h3 className="font-bold text-lg mt-8 mb-4">3. Pricing and Availability</h3>
+        <p className="mb-4">Prices are subject to change without notice. We reserve the right to limit quantities or cancel orders at our discretion.</p>
+        <h3 className="font-bold text-lg mt-8 mb-4">4. Governing Law</h3>
+        <p className="mb-4">These terms shall be governed by and construed in accordance with the laws of India.</p>
+      </>
+    ),
+    'terms-of-use': (
+      <>
+        <p className="mb-6">Please read these Terms of Use carefully before using our website.</p>
+        <ul className="list-disc pl-5 space-y-4">
+          <li>You agree to use this site only for lawful purposes.</li>
+          <li>You must not use this site to transmit any malicious code or harvest user data.</li>
+          <li>All content on this site, including text, graphics, and logos, is the property of Muscfit.</li>
+          <li>We reserve the right to terminate or suspend access to our service immediately, without prior notice, for any breach of these Terms.</li>
+        </ul>
+      </>
+    ),
+    'privacy-policy': (
+      <>
+        <p className="mb-6">Your privacy is important to us. This Privacy Notice explains how we collect, use, and protect your personal information.</p>
+        <div className="space-y-6">
+          <div className="bg-zinc-50 p-6 border border-zinc-100">
+            <h3 className="font-bold uppercase text-sm mb-2">Information We Collect</h3>
+            <p className="text-sm">We collect information you provide directly to us, such as when you create an account, make a purchase, or sign up for our newsletter.</p>
+          </div>
+          <div className="bg-zinc-50 p-6 border border-zinc-100">
+            <h3 className="font-bold uppercase text-sm mb-2">How We Use Your Info</h3>
+            <p className="text-sm">We use your information to process transactions, send order updates, and improve our services. We do not sell your data to third parties.</p>
+          </div>
+          <div className="bg-zinc-50 p-6 border border-zinc-100">
+            <h3 className="font-bold uppercase text-sm mb-2">Data Security</h3>
+            <p className="text-sm">We implement industry-standard security measures to protect your personal information during transmission and storage.</p>
+          </div>
+        </div>
+      </>
+    ),
+    'cookie-policy': (
+      <>
+        <p className="mb-6">We use cookies to enhance your browsing experience and analyze site traffic.</p>
+        <h3 className="font-bold text-lg mb-2">What are cookies?</h3>
+        <p className="mb-4">Cookies are small text files stored on your device when you visit a website.</p>
+        <h3 className="font-bold text-lg mb-2">How we use them</h3>
+        <ul className="list-disc pl-5 space-y-2 mb-6">
+          <li><strong>Essential Cookies:</strong> Necessary for the website to function (e.g., shopping cart).</li>
+          <li><strong>Analytics Cookies:</strong> Help us understand how visitors use our site.</li>
+          <li><strong>Marketing Cookies:</strong> Used to deliver relevant advertisements.</li>
+        </ul>
+        <p>You can control or delete cookies through your browser settings.</p>
+      </>
     )
   };
 
