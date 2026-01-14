@@ -6,10 +6,10 @@ export default function FeaturedProducts({ title, subtitle, products }) {
     <section className="py-6 md:py-10 lg:py-14 bg-white overflow-hidden">
       <div className="max-w-full mx-auto">
         <div className="text-center mb-8 md:mb-12 px-4 md:px-6 lg:px-8">
-          <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
+          <h2 className="font-heading text-4xl md:text-6xl font-black text-black uppercase tracking-tighter mb-4 italic">
             {title}
           </h2>
-          <p className="text-sm md:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="font-sans text-base md:text-xl text-gray-600 font-medium tracking-wide max-w-3xl mx-auto">
             {subtitle}
           </p>
         </div>
