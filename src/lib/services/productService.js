@@ -549,7 +549,7 @@ const BASIC_CATALOG = [
 
 // Discontinued products to filter out from all views
 const DENIED_IDS = ['compression-1', 'veld-track-compression-suit'];
-const DENIED_NAMES = ['VELD-TRACK']; // Only hide Veld-Track
+const DENIED_NAMES = ['VELD-TRACK', 'COMPRESSION FULL SUIT']; // Combined filters
 
 
 export const productService = {
