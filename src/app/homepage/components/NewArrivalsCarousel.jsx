@@ -96,10 +96,12 @@ export default function NewArrivalsCarousel({ products }) {
                 <div className="relative group min-h-[350px]">
                     <div
                         ref={scrollRef}
-                        className="flex items-center gap-0 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide -mx-4 px-[50%] md:px-[35%] py-8 scroll-smooth"
+                        className="flex items-center gap-0 overflow-x-auto snap-x snap-mandatory scrollbar-hide [&::-webkit-scrollbar]:hidden -mx-4 px-[50%] md:px-[35%] py-8 scroll-smooth"
                         style={{
                             scrollPaddingInline: '35%',
-                            perspective: '1000px'
+                            perspective: '1000px',
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none'
                         }}
                     >
                         {products.map((product, index) => {
