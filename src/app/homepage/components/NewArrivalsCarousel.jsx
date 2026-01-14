@@ -82,11 +82,6 @@ export default function NewArrivalsCarousel({ products }) {
                         </Link>
                     ))}
                 </div>
-
-                {/* Progress Bar (Custom) */}
-                <div className="w-full h-1 bg-gray-200 rounded-full mt-4 overflow-hidden max-w-sm mx-auto">
-                    <div className="h-full bg-black w-1/4 rounded-full"></div>
-                </div>
             </div>
         </section>
     );
