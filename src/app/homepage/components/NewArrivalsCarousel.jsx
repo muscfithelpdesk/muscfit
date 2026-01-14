@@ -139,20 +139,37 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
                                 style={style}
                                 onClick={!isDragging ? onClick : undefined}
                             >
-                                <div className="relative w-full h-full bg-[#f2f2f2] rounded-2xl overflow-hidden shadow-2xl border border-white/50 group/card">
+                                <div className="relative w-full h-full bg-[#f2f2f2] rounded-2xl overflow-hidden shadow-2xl border border-white/50 group/card flex flex-row items-center">
 
-                                    {/* Large Background Text */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none z-0 opacity-10 group-hover/card:opacity-20 transition-opacity">
-                                        <span className="font-heading font-black text-6xl md:text-9xl text-black uppercase tracking-tighter whitespace-nowrap">
-                                            {product.category || 'NEW'}
-                                        </span>
+                                    {/* Left Side: Text Content */}
+                                    <div className="w-[40%] h-full flex flex-col justify-center pl-6 md:pl-10 pr-2 z-20">
+                                        <div className={`transition-all duration-500 ${isInteractable ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                                            <h3 className="font-heading font-black text-xl md:text-3xl lg:text-4xl text-black uppercase tracking-wide leading-tight mb-2">
+                                                {product.name}
+                                            </h3>
+                                            <p className="font-sans text-xs md:text-sm text-gray-600 font-medium tracking-wider mb-4 uppercase">
+                                                {product.tag || 'New Arrival'}
+                                            </p>
+
+                                            {/* CTA Button Implementation */}
+                                            <Link
+                                                href={isDragging ? '#' : `/product-details?id=${product.id}`}
+                                                onClick={(e) => {
+                                                    if (isDragging) e.preventDefault();
+                                                    else e.stopPropagation(); // Stop propagation to prevent Quick View on button click if we want navigation
+                                                }}
+                                                className={`inline-block px-4 py-2 md:px-6 md:py-3 bg-black text-white text-[10px] md:text-xs font-bold uppercase tracking-widest rounded-sm hover:bg-zinc-800 transition-colors ${isDragging ? 'pointer-events-none' : ''}`}
+                                            >
+                                                Shop Now
+                                            </Link>
+                                        </div>
                                     </div>
 
-                                    {/* Product Image - Centered and Large */}
+                                    {/* Right Side: Product Image */}
                                     <div
-                                        className="absolute inset-0 z-10 flex items-center justify-center p-6"
+                                        className="w-[60%] h-full relative"
                                         onClick={(e) => {
-                                            if (isDragging) return; // Prevent click if dragging
+                                            if (isDragging) return;
                                             if (isInteractable && onQuickView) {
                                                 e.preventDefault();
                                                 e.stopPropagation();
@@ -160,37 +177,17 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
                                             }
                                         }}
                                     >
-                                        <div className="relative w-full h-full transition-transform duration-500 group-hover/card:scale-110">
+                                        <div className="absolute inset-0 flex items-center justify-center p-4 md:p-6 transition-transform duration-500 group-hover/card:scale-105">
                                             <Image
                                                 src={product.productImages?.[0]?.imageUrl || product.imageUrl || '/assets/images/no_image.png'}
                                                 alt={product.name}
                                                 fill
-                                                className="object-contain drop-shadow-2xl pointer-events-none" // prevent image drag
-                                                sizes="(max-width: 768px) 300px, 600px"
+                                                className="object-contain drop-shadow-xl pointer-events-none"
+                                                sizes="(max-width: 768px) 200px, 400px"
                                                 priority={index === activeIndex}
                                             />
                                         </div>
                                     </div>
-
-                                    {/* Info Overlay (Only visible on active item) */}
-                                    {isInteractable && (
-                                        <div className="absolute inset-0 p-6 md:p-8 z-20 flex flex-col justify-end pointer-events-none">
-                                            <div className="pointer-events-auto transform translate-y-2 group-hover/card:translate-y-0 transition-transform duration-500">
-                                                <Link
-                                                    href={isDragging ? '#' : `/product-details?id=${product.id}`}
-                                                    onClick={(e) => isDragging && e.preventDefault()} // Prevent link click if dragging
-                                                    className={`group/link block ${isDragging ? 'pointer-events-none' : ''}`}
-                                                >
-                                                    <h3 className="font-heading font-black text-2xl md:text-5xl text-black uppercase tracking-wide mb-1 leading-none">
-                                                        {product.name}
-                                                    </h3>
-                                                    <p className="text-sm md:text-lg text-gray-700 font-medium tracking-wide">
-                                                        {product.tag || 'Just Dropped'} &middot; View Details
-                                                    </p>
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         );
