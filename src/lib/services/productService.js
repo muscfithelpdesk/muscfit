@@ -549,7 +549,7 @@ const BASIC_CATALOG = [
 
 // Discontinued products to filter out from all views
 const DENIED_IDS = ['compression-1', 'veld-track-compression-suit'];
-const DENIED_NAMES = ['VELD-TRACK', 'MuscFIT Signature Leggings']; // Add any others if needed, sticking to VELD-TRACK for now
+const DENIED_NAMES = ['VELD-TRACK']; // Only hide Veld-Track
 
 
 export const productService = {
