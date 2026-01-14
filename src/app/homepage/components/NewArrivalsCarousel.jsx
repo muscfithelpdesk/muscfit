@@ -1,201 +1,179 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@/components/ui/AppIcon';
-
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function NewArrivalsCarousel({ products, onQuickView }) {
-    const scrollRef = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
-    const [canScrollLeft, setCanScrollLeft] = useState(false);
-    const [canScrollRight, setCanScrollRight] = useState(true);
+    const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-    // Scroll to center on mount/products change
-    useEffect(() => {
-        if (scrollRef.current && products.length > 0) {
-            // Center index
-            const centerIndex = Math.floor(products.length / 2);
-            const cardWidth = 240; // Reduced width
-            const gap = 0; // -mx margin compensates
+    const nextSlide = useCallback(() => {
+        setActiveIndex((current) => (current + 1) % products.length);
+    }, [products.length]);
 
-            // Calculate position to center the middle card
-            // But simpler: just scroll to a known center point
-            // Or better: Use the same logic as the scroll snap
-            // Let's just create a synthetic scroll event to the middle
-
-            const { clientWidth } = scrollRef.current;
-            // Approximate center position: (totalWidth / 2) - (viewportWidth / 2)
-            // But we have padding-inline.
-            // The best way is to scroll to the card element
-
-            // Note: Since we render children, we can try to find the middle child and scroll it into view
-            const children = scrollRef.current.children;
-            if (children[centerIndex]) {
-                children[centerIndex].scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
-            }
-
-            // Update state
-            setActiveIndex(centerIndex);
-        }
-    }, [products]);
-
-    const handleScroll = () => {
-        if (scrollRef.current) {
-            const { scrollLeft, scrollWidth, clientWidth, children } = scrollRef.current;
-
-            // Update nav buttons
-            setCanScrollLeft(scrollLeft > 0);
-            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-
-            // Calculate active index based on center position
-            const containerCenter = scrollLeft + clientWidth / 2;
-            let closestIndex = 0;
-            let minDistance = Infinity;
-
-            // Iterate through child nodes (cards)
-            Array.from(children).forEach((child, index) => {
-                const childCenter = child.offsetLeft + child.offsetWidth / 2;
-                const distance = Math.abs(containerCenter - childCenter);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestIndex = index;
-                }
-            });
-
-            setActiveIndex(closestIndex);
-        }
+    const prevSlide = () => {
+        setActiveIndex((current) => (current - 1 + products.length) % products.length);
     };
 
+    // Auto-play functionality
     useEffect(() => {
-        const scrollElement = scrollRef.current;
-        if (scrollElement) {
-            scrollElement.addEventListener('scroll', handleScroll);
-            // Wait for layout to be stable before initial scroll check/centering
-            setTimeout(() => handleScroll(), 200);
-        }
-        return () => scrollElement?.removeEventListener('scroll', handleScroll);
-    }, [products]);
-
-    const scroll = (direction) => {
-        if (scrollRef.current) {
-            const scrollAmount = direction === 'left' ? -260 : 260;
-            scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-    };
+        if (!isAutoPlaying || products.length <= 1) return;
+        const timer = setInterval(nextSlide, 4000);
+        return () => clearInterval(timer);
+    }, [isAutoPlaying, nextSlide, products.length]);
 
     if (!products || products.length === 0) return null;
 
+    // Helper to determine visual position
+    const getSlideStyles = (index) => {
+        const total = products.length;
+        // Calculate relative position accounting for wrap-around
+        let relativePos = (index - activeIndex + total) % total;
+
+        // Adjust for negative wrapping (e.g. if active is 0, index total-1 should be -1)
+        if (relativePos > total / 2) relativePos -= total;
+
+        // Active Center Item
+        if (relativePos === 0) {
+            return {
+                className: 'z-30 opacity-100 scale-100 translate-x-0 cursor-default',
+                isInteractable: true
+            };
+        }
+        // Immediate Left
+        if (relativePos === -1) {
+            return {
+                className: 'z-20 opacity-60 scale-90 -translate-x-[60%] blur-[1px] cursor-pointer hover:opacity-80',
+                onClick: prevSlide
+            };
+        }
+        // Immediate Right
+        if (relativePos === 1) {
+            return {
+                className: 'z-20 opacity-60 scale-90 translate-x-[60%] blur-[1px] cursor-pointer hover:opacity-80',
+                onClick: nextSlide
+            };
+        }
+        // Hidden items
+        return {
+            className: 'z-0 opacity-0 scale-50 translate-x-0 hidden',
+            isDisabled: true
+        };
+    };
+
     return (
-        <section className="py-10 bg-background relative overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="font-heading text-2xl md:text-3xl font-black text-foreground uppercase tracking-tight mb-8 text-center">
-                    New Arrivals
+        <section className="py-16 bg-background relative overflow-hidden">
+            <div className="max-w-[1400px] mx-auto px-4">
+                <h2 className="font-heading text-3xl md:text-5xl font-black text-foreground uppercase tracking-tighter mb-12 text-center italic">
+                    Fresh Drops
                 </h2>
 
-                <div className="relative group min-h-[350px]">
-                    <div
-                        ref={scrollRef}
-                        className="flex items-center gap-0 overflow-x-auto snap-x snap-mandatory scrollbar-hide [&::-webkit-scrollbar]:hidden -mx-4 px-[50%] md:px-[35%] py-8 scroll-smooth"
-                        style={{
-                            scrollPaddingInline: '35%',
-                            perspective: '1000px',
-                            scrollbarWidth: 'none',
-                            msOverflowStyle: 'none'
-                        }}
-                    >
-                        {products.map((product, index) => {
-                            const isActive = index === activeIndex;
-                            const isPrev = index === activeIndex - 1;
-                            const isNext = index === activeIndex + 1;
+                {/* Carousel Container */}
+                <div
+                    className="relative h-[300px] md:h-[450px] w-full max-w-5xl mx-auto flex items-center justify-center perspective-[1000px]"
+                    onMouseEnter={() => setIsAutoPlaying(false)}
+                    onMouseLeave={() => setIsAutoPlaying(true)}
+                >
+                    {products.map((product, index) => {
+                        const { className, onClick, isInteractable, isDisabled } = getSlideStyles(index);
+                        if (isDisabled) return null;
 
-                            // Dynamic styles for depth effect
-                            let transformClass = 'scale-90 opacity-70 blur-[1px] grayscale-[0.5] z-0';
-                            if (isActive) transformClass = 'scale-110 opacity-100 z-30 shadow-2xl';
-                            else if (isPrev || isNext) transformClass = 'scale-95 opacity-85 z-10';
+                        return (
+                            <div
+                                key={product.id}
+                                className={`absolute top-0 w-[280px] md:w-[600px] h-[200px] md:h-[350px] transition-all duration-700 ease-in-out origin-center ${className}`}
+                                onClick={onClick}
+                            >
+                                <div className="relative w-full h-full bg-[#f2f2f2] rounded-2xl overflow-hidden shadow-2xl border border-white/50 group/card">
 
-                            return (
-                                <div
-                                    key={product.id}
-                                    className={`flex-shrink-0 w-[220px] md:w-[260px] snap-center transition-all duration-500 ease-out relative bg-[#F5F5F7] rounded-xl overflow-hidden h-[320px] mx-[-12px] md:mx-[-18px] ${transformClass} group/card`}
-                                >
-                                    {/* Background Text */}
-                                    <div className="absolute top-6 left-0 right-0 text-center pointer-events-none z-0">
-                                        <span className="font-heading font-black text-5xl text-gray-200/80 uppercase tracking-tighter truncate w-full block">
+                                    {/* Large Background Text */}
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none z-0 opacity-10 group-hover/card:opacity-20 transition-opacity">
+                                        <span className="font-heading font-black text-6xl md:text-9xl text-black uppercase tracking-tighter whitespace-nowrap">
                                             {product.category || 'NEW'}
                                         </span>
                                     </div>
 
-                                    {/* Product Image - Triggers Quick View */}
+                                    {/* Product Image - Centered and Large */}
                                     <div
-                                        className="absolute inset-0 z-10 flex items-end justify-center pb-0 cursor-pointer"
+                                        className={`absolute inset-0 z-10 flex items-center justify-center p-6 ${isInteractable ? 'cursor-pointer' : ''}`}
                                         onClick={(e) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                            if (onQuickView) onQuickView(product);
+                                            if (isInteractable && onQuickView) {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                onQuickView(product);
+                                            }
                                         }}
                                     >
-                                        <div className="relative w-full h-[80%]">
+                                        <div className="relative w-full h-full transition-transform duration-500 group-hover/card:scale-110">
                                             <Image
                                                 src={product.productImages?.[0]?.imageUrl || product.imageUrl || '/assets/images/no_image.png'}
                                                 alt={product.name}
                                                 fill
-                                                className="object-contain drop-shadow-xl transition-transform duration-500 group-hover/card:scale-105"
-                                                sizes="(max-width: 768px) 220px, 260px"
-                                                priority={index < 4}
+                                                className="object-contain drop-shadow-2xl"
+                                                sizes="(max-width: 768px) 300px, 600px"
+                                                priority={index === activeIndex}
                                             />
                                         </div>
                                     </div>
 
-                                    {/* Content Overlay - Navigates to Details */}
-                                    <Link
-                                        href={`/product-details?id=${product.id}`}
-                                        className={`absolute bottom-0 left-0 right-0 p-4 z-20 bg-gradient-to-t from-black/80 to-transparent pt-16 transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-0'} hover:opacity-100`}
-                                        onClick={(e) => e.stopPropagation()}
-                                    >
-                                        <h3 className="font-heading font-bold text-lg text-white uppercase tracking-wide mb-0.5 leading-none">
-                                            {product.name}
-                                        </h3>
-                                        <p className="text-gray-200 text-[10px] font-medium uppercase tracking-widest mb-0">
-                                            {product.tag || 'Just Launched'}
-                                        </p>
-                                    </Link>
+                                    {/* Info Overlay (Only visible on active item) */}
+                                    {isInteractable && (
+                                        <div className="absolute top-0 left-0 p-6 md:p-8 z-20 flex flex-col justify-between h-full pointer-events-none">
+                                            <div className="bg-black/5 backdrop-blur-sm px-3 per-1 rounded-md inline-flex self-start">
+                                                <span className="text-[10px] font-bold tracking-widest uppercase text-black">
+                                                    {product.tag || 'New'}
+                                                </span>
+                                            </div>
+
+                                            <div className="pointer-events-auto">
+                                                <Link
+                                                    href={`/product-details?id=${product.id}`}
+                                                    className="group/link block"
+                                                >
+                                                    <h3 className="font-heading font-black text-xl md:text-4xl text-black uppercase tracking-tighter mb-2 leading-none group-hover/link:text-primary transition-colors">
+                                                        {product.name}
+                                                    </h3>
+                                                    <div className="h-[2px] w-12 bg-black group-hover/link:w-full transition-all duration-300"></div>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
-                            );
-                        })}
-                    </div>
+                            </div>
+                        );
+                    })}
 
-                    {/* Navigation Arrows */}
+                    {/* Navigation Buttons - Absolute positioned relative to container */}
                     <button
-                        onClick={() => scroll('left')}
-                        disabled={!canScrollLeft}
-                        className={`absolute left-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white/90 backdrop-blur shadow-xl rounded-full flex items-center justify-center transition-all ${!canScrollLeft ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110 active:scale-95'}`}
-                        aria-label="Scroll left"
+                        onClick={prevSlide}
+                        className="absolute left-0 md:-left-12 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-14 md:h-14 bg-white shadow-sharp-md border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 disabled:opacity-50"
+                        aria-label="Previous slide"
                     >
-                        <Icon name="ChevronLeftIcon" size={20} className="text-black" />
+                        <Icon name="ChevronLeftIcon" size={24} />
                     </button>
-
                     <button
-                        onClick={() => scroll('right')}
-                        disabled={!canScrollRight}
-                        className={`absolute right-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white/90 backdrop-blur shadow-xl rounded-full flex items-center justify-center transition-all ${!canScrollRight ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110 active:scale-95'}`}
-                        aria-label="Scroll right"
+                        onClick={nextSlide}
+                        className="absolute right-0 md:-right-12 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-14 md:h-14 bg-white shadow-sharp-md border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 disabled:opacity-50"
+                        aria-label="Next slide"
                     >
-                        <Icon name="ChevronRightIcon" size={20} className="text-black" />
+                        <Icon name="ChevronRightIcon" size={24} />
                     </button>
                 </div>
 
-                {/* Progress Bar (Thin) */}
-                <div className="w-full h-[2px] bg-gray-200 mt-2 overflow-hidden max-w-sm mx-auto rounded-full">
-                    <div
-                        className="h-full bg-black transition-all duration-300 ease-out rounded-full"
-                        style={{
-                            width: `${(100 / products.length)}%`,
-                            transform: `translateX(${activeIndex * 100}%)`
-                        }}
-                    ></div>
+                {/* Slide Indicators */}
+                <div className="flex justify-center gap-3 mt-12">
+                    {products.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setActiveIndex(index)}
+                            className={`h-1.5 transition-all duration-300 rounded-full ${index === activeIndex ? 'w-12 bg-black' : 'w-2 bg-gray-300 hover:bg-gray-400'
+                                }`}
+                            aria-label={`Go to slide ${index + 1}`}
+                        />
+                    ))}
                 </div>
             </div>
         </section>
