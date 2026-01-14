@@ -9,7 +9,7 @@ export default function FeaturedProducts({ title, subtitle, products }) {
           <h2 className="font-heading text-4xl md:text-6xl font-black text-black uppercase tracking-widest mb-4 italic" style={{ wordSpacing: '0.3em' }}>
             {title}
           </h2>
-          <p className="font-sans text-base md:text-xl text-gray-600 font-medium tracking-wide max-w-3xl mx-auto">
+          <p className="font-heading text-xs md:text-sm text-gray-500 font-light uppercase tracking-[0.2em] max-w-3xl mx-auto">
             {subtitle}
           </p>
         </div>
