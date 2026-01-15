@@ -111,9 +111,22 @@ export default function HomepageInteractive({ pageData }) {
         />
 
         <NewArrivalsCarousel
-          products={dbProducts
-            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-            .slice(0, 8)}
+          products={[
+            {
+              id: 'video-1',
+              type: 'video',
+              name: 'TRAIN INSANE',
+              videoSrc: '/assets/videos/vid_1.mp4',
+            },
+            {
+              id: 'video-2',
+              type: 'video',
+              name: 'LIMITLESS',
+              videoSrc: '/assets/videos/vid_2.mp4',
+            },
+            ...dbProducts
+              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+          ].slice(0, 8)}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 

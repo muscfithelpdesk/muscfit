@@ -137,6 +137,34 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
                         const { className, style, onClick, isInteractable, isDisabled } = getSlideStyles(index);
                         if (isDisabled) return null;
 
+                        if (product.type === 'video') {
+                            return (
+                                <div
+                                    key={product.id}
+                                    className={`absolute top-0 w-[280px] md:w-[600px] h-[200px] md:h-[350px] transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] origin-center ${className}`}
+                                    style={style}
+                                    onClick={!isDragging ? onClick : undefined}
+                                >
+                                    <div className="relative w-full h-full bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/20 group/card">
+                                        <video
+                                            src={product.videoSrc}
+                                            className="w-full h-full object-cover"
+                                            autoPlay
+                                            loop
+                                            muted
+                                            playsInline
+                                        />
+                                        {/* Optional Overlay for Title if needed, keeping it minimal as requested */}
+                                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                            <h3 className="font-heading font-black text-white text-lg md:text-2xl uppercase tracking-wider">
+                                                {product.name}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        }
+
                         return (
                             <div
                                 key={product.id}
