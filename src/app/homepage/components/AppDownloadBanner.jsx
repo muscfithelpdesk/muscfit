@@ -23,12 +23,12 @@ export default function AppDownloadBanner() {
             {/* Reduced decorative elements for cleaner look */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-orange-100/20 to-transparent rounded-full blur-[100px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
 
-            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24 relative z-10">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-24">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-10 md:py-16 relative z-10">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
 
                     {/* Left Side: Mockup with floating effect */}
                     <div className="w-full md:w-1/2 flex justify-center md:justify-end relative group">
-                        <div className="relative w-64 md:w-80 lg:w-[360px] h-[500px] md:h-[600px] flex items-center justify-center">
+                        <div className="relative w-64 md:w-80 lg:w-[320px] h-[400px] md:h-[500px] flex items-center justify-center">
 
                             {/* Phone Frame Glow */}
                             <div className="absolute inset-0 bg-orange-500/5 rounded-[3rem] blur-3xl transform scale-90"></div>
