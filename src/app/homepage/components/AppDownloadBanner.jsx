@@ -26,9 +26,9 @@ export default function AppDownloadBanner() {
             <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6 relative z-10">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
 
-                    {/* Left Side: Mockup with floating effect */}
-                    <div className="w-full md:w-1/2 flex justify-center md:justify-start relative group pl-4 md:pl-8">
-                        <div className="relative w-36 md:w-52 lg:w-[240px] h-36 md:h-52 lg:h-[260px] flex items-center justify-center">
+                    {/* Left Side: Mockup */}
+                    <div className="w-full md:w-auto flex justify-center md:justify-start relative group pl-4 md:pl-8">
+                        <div className="relative w-64 md:w-80 lg:w-[380px] h-64 md:h-80 lg:h-[420px] flex items-center justify-center">
 
                             {/* Phone Frame Glow */}
                             <div className="absolute inset-0 bg-orange-500/5 rounded-[3rem] blur-3xl transform scale-90"></div>
@@ -44,55 +44,55 @@ export default function AppDownloadBanner() {
                         </div>
                     </div>
 
-                    {/* Right Side: Content */}
-                    <div className="w-full md:flex-1 text-center md:text-left space-y-3">
+                    {/* Center: Text Content */}
+                    <div className="flex-1 text-center px-4">
                         <div className="space-y-4">
                             <div className="inline-block px-4 py-1.5 rounded-full bg-orange-50 border border-orange-100 text-orange-600 font-bold text-xs tracking-wider uppercase mb-2">
                                 Level Up Your Training
                             </div>
-                            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black italic tracking-widest text-gray-900 leading-[0.9] drop-shadow-sm overflow-visible pb-2">
+                            <h2 className="text-3xl md:text-5xl lg:text-7xl font-black italic tracking-widest text-gray-900 leading-[0.9] drop-shadow-sm overflow-visible pb-2">
                                 MORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500 pb-2 pr-2">KNOCKOUT</span> OFFERS WAITING!
                             </h2>
-                            <div className="flex items-center justify-center md:justify-start gap-3">
+                            <div className="flex items-center justify-center gap-3">
                                 <p className="text-xl md:text-3xl font-bold text-gray-800 tracking-wider">
                                     Only On The <span className="text-orange-600 font-extrabold italic relative inline-block">
                                         MUSCFIT
                                     </span> App
                                 </p>
                             </div>
+                            <p className="text-sm text-gray-500 font-medium pt-2">
+                                Download now and get <span className="font-bold text-gray-800">10% OFF</span> your first in-app order.
+                            </p>
                         </div>
+                    </div>
 
-                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-4">
-                            <Link
-                                href="#"
-                                className="flex items-center gap-3 bg-black text-white px-6 py-3.5 rounded-xl hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 group min-w-[170px] justify-center"
-                            >
-                                <div className="shrink-0 transition-transform group-hover:scale-110 duration-300">
-                                    <GooglePlayLogo />
-                                </div>
-                                <div className="flex flex-col items-start leading-none space-y-1">
-                                    <span className="text-[10px] font-bold uppercase text-gray-400 tracking-wider">Get it on</span>
-                                    <span className="text-base font-bold text-white">Google Play</span>
-                                </div>
-                            </Link>
+                    {/* Right Side: Buttons */}
+                    <div className="w-full md:w-auto flex flex-col items-end justify-center gap-4 pr-4 md:pr-8">
+                        <Link
+                            href="#"
+                            className="flex items-center gap-3 bg-black text-white px-6 py-3.5 rounded-xl hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 group min-w-[170px] justify-center"
+                        >
+                            <div className="shrink-0 transition-transform group-hover:scale-110 duration-300">
+                                <GooglePlayLogo />
+                            </div>
+                            <div className="flex flex-col items-start leading-none space-y-1">
+                                <span className="text-[10px] font-bold uppercase text-gray-400 tracking-wider">Get it on</span>
+                                <span className="text-base font-bold text-white">Google Play</span>
+                            </div>
+                        </Link>
 
-                            <Link
-                                href="#"
-                                className="flex items-center gap-3 bg-black text-white px-6 py-3.5 rounded-xl hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 group min-w-[170px] justify-center"
-                            >
-                                <div className="shrink-0 transition-transform group-hover:scale-110 duration-300">
-                                    <AppleLogo />
-                                </div>
-                                <div className="flex flex-col items-start leading-none space-y-1">
-                                    <span className="text-[10px] font-bold uppercase text-gray-400 tracking-wider">Download on the</span>
-                                    <span className="text-base font-bold text-white">App Store</span>
-                                </div>
-                            </Link>
-                        </div>
-
-                        <p className="text-sm text-gray-500 font-medium max-w-md mx-auto md:mx-0 pt-2">
-                            Download now and get <span className="font-bold text-gray-800">10% OFF</span> your first in-app order.
-                        </p>
+                        <Link
+                            href="#"
+                            className="flex items-center gap-3 bg-black text-white px-6 py-3.5 rounded-xl hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 group min-w-[170px] justify-center"
+                        >
+                            <div className="shrink-0 transition-transform group-hover:scale-110 duration-300">
+                                <AppleLogo />
+                            </div>
+                            <div className="flex flex-col items-start leading-none space-y-1">
+                                <span className="text-[10px] font-bold uppercase text-gray-400 tracking-wider">Download on the</span>
+                                <span className="text-base font-bold text-white">App Store</span>
+                            </div>
+                        </Link>
                     </div>
 
                 </div>
@@ -104,6 +104,6 @@ export default function AppDownloadBanner() {
           50% { transform: translateY(-12px); }
         }
       `}</style>
-        </section>
+        </section >
     );
 }
