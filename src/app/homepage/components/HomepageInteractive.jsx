@@ -130,6 +130,12 @@ export default function HomepageInteractive({ pageData }) {
               name: 'POWER SURGE',
               videoSrc: '/assets/videos/vid_3.mp4',
             },
+            {
+              id: 'video-4',
+              type: 'video',
+              name: 'UNLEASHED',
+              videoSrc: '/assets/videos/vid_4.mp4',
+            },
             ...dbProducts
               .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
           ].slice(0, 8)}
