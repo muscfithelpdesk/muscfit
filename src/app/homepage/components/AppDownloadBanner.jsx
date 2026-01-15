@@ -50,8 +50,8 @@ export default function AppDownloadBanner() {
                             <div className="inline-block px-4 py-1.5 rounded-full bg-orange-50 border border-orange-100 text-orange-600 font-bold text-xs tracking-wider uppercase mb-2">
                                 Level Up Your Training
                             </div>
-                            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black italic tracking-tighter text-gray-900 leading-[0.9] drop-shadow-sm">
-                                MORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500">KNOCKOUT</span> OFFERS WAITING!
+                            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black italic tracking-tighter text-gray-900 leading-[0.9] drop-shadow-sm overflow-visible pb-2">
+                                MORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500 pb-2 pr-2">KNOCKOUT</span> OFFERS WAITING!
                             </h2>
                             <div className="flex items-center justify-center md:justify-start gap-3">
                                 <p className="text-xl md:text-3xl font-bold text-gray-800 tracking-tight">
