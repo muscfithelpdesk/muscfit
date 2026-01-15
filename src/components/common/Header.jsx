@@ -590,7 +590,8 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 onMouseLeave={() => setIsProfileOpen(false)}
               >
                 <Link
-                  href={user ? '/user-profile' : '/user-authentication'}
+                  href={user ? '/user-profile' : '#'}
+                  onClick={(e) => !user && e.preventDefault()}
                   className="flex flex-col items-center gap-1 group/btn px-3 transition-all duration-300 relative py-1"
                 >
                   <div className="relative">
