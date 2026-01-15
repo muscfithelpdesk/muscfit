@@ -69,7 +69,7 @@ export default function AppDownloadBanner() {
                     {/* Right Side: Buttons */}
                     <div className="w-full md:w-auto flex flex-col items-end justify-center gap-4 pr-4 md:pr-8">
                         <Link
-                            href="#"
+                            href="/app-coming-soon"
                             className="flex items-center gap-3 bg-black text-white px-6 py-3.5 rounded-xl hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 group min-w-[170px] justify-center"
                         >
                             <div className="shrink-0 transition-transform group-hover:scale-110 duration-300">
@@ -82,7 +82,7 @@ export default function AppDownloadBanner() {
                         </Link>
 
                         <Link
-                            href="#"
+                            href="/app-coming-soon"
                             className="flex items-center gap-3 bg-black text-white px-6 py-3.5 rounded-xl hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 group min-w-[170px] justify-center"
                         >
                             <div className="shrink-0 transition-transform group-hover:scale-110 duration-300">
