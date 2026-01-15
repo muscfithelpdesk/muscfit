@@ -23,12 +23,12 @@ export default function AppDownloadBanner() {
             {/* Reduced decorative elements for cleaner look */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-orange-100/20 to-transparent rounded-full blur-[100px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
 
-            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-10 md:py-16 relative z-10">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
+            <div className="max-w-5xl mx-auto px-4 md:px-6 lg:px-8 py-10 md:py-16 relative z-10">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20">
 
                     {/* Left Side: Mockup with floating effect */}
                     <div className="w-full md:w-1/2 flex justify-center md:justify-end relative group">
-                        <div className="relative w-64 md:w-80 lg:w-[320px] h-[400px] md:h-[500px] flex items-center justify-center">
+                        <div className="relative w-64 md:w-80 lg:w-[340px] h-[400px] md:h-[500px] flex items-center justify-center">
 
                             {/* Phone Frame Glow */}
                             <div className="absolute inset-0 bg-orange-500/5 rounded-[3rem] blur-3xl transform scale-90"></div>
@@ -45,7 +45,7 @@ export default function AppDownloadBanner() {
                     </div>
 
                     {/* Right Side: Content */}
-                    <div className="w-full md:w-1/2 text-center md:text-left space-y-8">
+                    <div className="w-full md:flex-1 text-center md:text-left space-y-8">
                         <div className="space-y-4">
                             <div className="inline-block px-4 py-1.5 rounded-full bg-orange-50 border border-orange-100 text-orange-600 font-bold text-xs tracking-wider uppercase mb-2">
                                 Level Up Your Training
