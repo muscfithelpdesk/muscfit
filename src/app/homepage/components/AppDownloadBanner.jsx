@@ -23,12 +23,12 @@ export default function AppDownloadBanner() {
             {/* Reduced decorative elements for cleaner look */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-orange-100/20 to-transparent rounded-full blur-[100px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
 
-            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8 relative z-10">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6 relative z-10">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
 
                     {/* Left Side: Mockup with floating effect */}
                     <div className="w-full md:w-1/2 flex justify-center md:justify-end relative group">
-                        <div className="relative w-48 md:w-64 lg:w-[280px] h-48 md:h-64 lg:h-[300px] flex items-center justify-center">
+                        <div className="relative w-36 md:w-52 lg:w-[240px] h-36 md:h-52 lg:h-[260px] flex items-center justify-center">
 
                             {/* Phone Frame Glow */}
                             <div className="absolute inset-0 bg-orange-500/5 rounded-[3rem] blur-3xl transform scale-90"></div>
@@ -45,12 +45,12 @@ export default function AppDownloadBanner() {
                     </div>
 
                     {/* Right Side: Content */}
-                    <div className="w-full md:flex-1 text-center md:text-left space-y-4">
+                    <div className="w-full md:flex-1 text-center md:text-left space-y-3">
                         <div className="space-y-4">
                             <div className="inline-block px-4 py-1.5 rounded-full bg-orange-50 border border-orange-100 text-orange-600 font-bold text-xs tracking-wider uppercase mb-2">
                                 Level Up Your Training
                             </div>
-                            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black italic tracking-tighter text-gray-900 leading-[0.9] drop-shadow-sm overflow-visible pb-2">
+                            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black italic tracking-tighter text-gray-900 leading-[0.9] drop-shadow-sm overflow-visible pb-2">
                                 MORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500 pb-2 pr-2">KNOCKOUT</span> OFFERS WAITING!
                             </h2>
                             <div className="flex items-center justify-center md:justify-start gap-3">
