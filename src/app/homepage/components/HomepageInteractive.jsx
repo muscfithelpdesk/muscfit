@@ -8,7 +8,7 @@ import HeroSection from './HeroSection';
 import FeaturesGrid from './FeaturesGrid';
 import FeaturedProducts from './FeaturedProducts';
 import StatsCounter from './StatsCounter';
-import ParallaxBanner from './ParallaxBanner';
+import AppDownloadBanner from './AppDownloadBanner';
 import PerformanceVisuals from './PerformanceVisuals';
 import BrandStory from './BrandStory';
 import Testimonials from './Testimonials';
@@ -202,14 +202,7 @@ export default function HomepageInteractive({ pageData }) {
 
         <StatsCounter stats={pageData?.stats} />
 
-        <ParallaxBanner
-          title={pageData?.parallaxBanner?.title}
-          subtitle={pageData?.parallaxBanner?.subtitle}
-          ctaText={pageData?.parallaxBanner?.ctaText}
-          ctaHref={pageData?.parallaxBanner?.ctaHref}
-          backgroundImage={pageData?.parallaxBanner?.backgroundImage}
-          backgroundAlt={pageData?.parallaxBanner?.backgroundAlt}
-        />
+        <AppDownloadBanner />
 
         <FeaturesGrid features={pageData?.features} />
 
@@ -266,7 +259,7 @@ HomepageInteractive.propTypes = {
     categories: PropTypes.array.isRequired,
     featuredProducts: PropTypes.object.isRequired,
     stats: PropTypes.array.isRequired,
-    parallaxBanner: PropTypes.object.isRequired,
+
     newArrivals: PropTypes.object.isRequired,
     video: PropTypes.object.isRequired,
     brandStory: PropTypes.object.isRequired,

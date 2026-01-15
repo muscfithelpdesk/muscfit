@@ -117,12 +117,17 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
                     ref={containerRef}
                     className="relative h-[300px] md:h-[450px] w-full max-w-5xl mx-auto flex items-center justify-center perspective-[1000px] touch-pan-y"
                     onMouseEnter={() => !isDragging && setIsAutoPlaying(false)}
-                    onMouseLeave={() => !isDragging && setIsAutoPlaying(true)}
+                    onMouseLeave={() => {
+                        if (isDragging) {
+                            handleDragEnd();
+                        } else {
+                            setIsAutoPlaying(true);
+                        }
+                    }}
                     // Mouse Events
                     onMouseDown={handleDragStart}
                     onMouseMove={handleDragMove}
                     onMouseUp={handleDragEnd}
-                    onMouseLeave={isDragging ? handleDragEnd : undefined}
                     // Touch Events
                     onTouchStart={handleDragStart}
                     onTouchMove={handleDragMove}

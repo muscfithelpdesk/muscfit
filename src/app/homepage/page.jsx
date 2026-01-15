@@ -128,15 +128,7 @@ export default function Homepage() {
       },
     ],
 
-    parallaxBanner: {
-      title: 'Train Like a Champion',
-      subtitle:
-        'Join thousands of athletes who trust MUSCFIT for their training journey. Premium quality meets unbeatable performance.',
-      ctaText: 'Start Your Journey',
-      ctaHref: '/men-catalog',
-      backgroundImage: 'https://images.unsplash.com/photo-1639511204381-09b09eddcf64',
-      backgroundAlt: 'Determined athlete lifting heavy barbell in dramatic gym lighting',
-    },
+
 
     newArrivals: {
       title: 'New Arrivals',
