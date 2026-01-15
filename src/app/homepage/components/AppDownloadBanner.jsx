@@ -15,61 +15,57 @@ const GooglePlayLogo = () => (
 
 export default function AppDownloadBanner() {
     return (
-        <section className="w-full relative overflow-hidden bg-white border-y border-orange-200">
+        <section className="w-full relative overflow-hidden bg-background">
 
-            {/* Dynamic Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-yellow-50 via-orange-50 to-white opacity-80"></div>
+            {/* Subtle Ambient Background - Seamless blend */}
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 via-transparent to-transparent opacity-50"></div>
 
-            {/* Decorative Orbs/Glows */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-yellow-300/30 to-orange-400/30 rounded-full blur-[100px] animate-pulse pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-orange-300/20 to-pink-300/20 rounded-full blur-[80px] pointer-events-none -translate-x-1/4 translate-y-1/4"></div>
+            {/* Reduced decorative elements for cleaner look */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-orange-100/20 to-transparent rounded-full blur-[100px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
 
-            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-20 relative z-10">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-10 md:gap-20">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24 relative z-10">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-24">
 
                     {/* Left Side: Mockup with floating effect */}
                     <div className="w-full md:w-1/2 flex justify-center md:justify-end relative group">
-                        <div className="relative w-72 md:w-96 lg:w-[480px] h-72 md:h-96 lg:h-[480px]">
-                            {/* Glow behind phone */}
-                            <div className="absolute inset-0 bg-orange-500/10 rounded-full blur-2xl transform scale-90 group-hover:scale-100 transition-transform duration-700"></div>
+                        <div className="relative w-64 md:w-80 lg:w-[360px] h-[500px] md:h-[600px] flex items-center justify-center">
+
+                            {/* Phone Frame Glow */}
+                            <div className="absolute inset-0 bg-orange-500/5 rounded-[3rem] blur-3xl transform scale-90"></div>
 
                             <div className="relative w-full h-full animate-[float_6s_ease-in-out_infinite]">
+                                {/* Using the custom MuscFit app mockup */}
                                 <AppImage
-                                    src="https://images.unsplash.com/photo-1622782914767-404fb9ab3f57?q=80&w=1000&auto=format&fit=crop"
-                                    alt="MuscFit App Interface"
-                                    className="w-full h-full object-contain drop-shadow-2xl transition-transform duration-500 hover:rotate-2 hover:scale-105"
+                                    src="/assets/images/muscfit-app-mockup.png"
+                                    alt="MuscFit Mobile App Profile Screen"
+                                    className="w-full h-full object-contain drop-shadow-2xl transition-transform duration-500 hover:rotate-1 hover:scale-105"
                                 />
                             </div>
                         </div>
-
-                        {/* Floating badges/elements could go here for extra 'wow' */}
                     </div>
 
                     {/* Right Side: Content */}
                     <div className="w-full md:w-1/2 text-center md:text-left space-y-8">
                         <div className="space-y-4">
-                            <div className="inline-block px-4 py-1.5 rounded-full bg-orange-100 border border-orange-200 text-orange-700 font-bold text-xs tracking-wider uppercase mb-2 animate-fade-in-up">
-                                Available Now
+                            <div className="inline-block px-4 py-1.5 rounded-full bg-orange-50 border border-orange-100 text-orange-600 font-bold text-xs tracking-wider uppercase mb-2">
+                                Level Up Your Training
                             </div>
                             <h2 className="text-4xl md:text-6xl lg:text-7xl font-black italic tracking-tighter text-gray-900 leading-[0.9] drop-shadow-sm">
-                                MORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-yellow-500">KNOCKOUT</span> OFFERS WAITING!
+                                MORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500">KNOCKOUT</span> OFFERS WAITING!
                             </h2>
                             <div className="flex items-center justify-center md:justify-start gap-3">
                                 <p className="text-xl md:text-3xl font-bold text-gray-800 tracking-tight">
                                     Only On The <span className="text-orange-600 font-extrabold italic relative inline-block">
                                         MUSCFIT
-                                        <svg className="absolute -bottom-1 left-0 w-full h-2 text-yellow-400 opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
-                                        </svg>
                                     </span> App
                                 </p>
                             </div>
                         </div>
 
-                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-4">
                             <Link
                                 href="#"
-                                className="flex items-center gap-3 bg-gray-900 text-white px-6 py-3.5 rounded-2xl hover:bg-black transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 group min-w-[180px] justify-center border border-gray-800"
+                                className="flex items-center gap-3 bg-black text-white px-6 py-3.5 rounded-xl hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 group min-w-[170px] justify-center"
                             >
                                 <div className="shrink-0 transition-transform group-hover:scale-110 duration-300">
                                     <GooglePlayLogo />
@@ -82,7 +78,7 @@ export default function AppDownloadBanner() {
 
                             <Link
                                 href="#"
-                                className="flex items-center gap-3 bg-gray-900 text-white px-6 py-3.5 rounded-2xl hover:bg-black transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 group min-w-[180px] justify-center border border-gray-800"
+                                className="flex items-center gap-3 bg-black text-white px-6 py-3.5 rounded-xl hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 group min-w-[170px] justify-center"
                             >
                                 <div className="shrink-0 transition-transform group-hover:scale-110 duration-300">
                                     <AppleLogo />
@@ -93,6 +89,10 @@ export default function AppDownloadBanner() {
                                 </div>
                             </Link>
                         </div>
+
+                        <p className="text-sm text-gray-500 font-medium max-w-md mx-auto md:mx-0 pt-2">
+                            Download now and get <span className="font-bold text-gray-800">10% OFF</span> your first in-app order.
+                        </p>
                     </div>
 
                 </div>
@@ -101,7 +101,7 @@ export default function AppDownloadBanner() {
             <style jsx>{`
         @keyframes float {
           0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-15px); }
+          50% { transform: translateY(-12px); }
         }
       `}</style>
         </section>
