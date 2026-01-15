@@ -67,7 +67,7 @@ export default function AppDownloadBanner() {
                     </div>
 
                     {/* Right Side: Buttons */}
-                    <div className="w-full md:w-auto flex flex-col items-end justify-center gap-4 pr-4 md:pr-8">
+                    <div className="w-full md:w-auto flex flex-col items-center md:items-end justify-center gap-4 pr-0 md:pr-8">
                         <Link
                             href="/app-coming-soon"
                             className="flex items-center gap-3 bg-black text-white px-6 py-3.5 rounded-xl hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 group min-w-[170px] justify-center"
