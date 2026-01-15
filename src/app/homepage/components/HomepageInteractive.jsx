@@ -124,6 +124,12 @@ export default function HomepageInteractive({ pageData }) {
               name: 'LIMITLESS',
               videoSrc: '/assets/videos/vid_2.mp4',
             },
+            {
+              id: 'video-3',
+              type: 'video',
+              name: 'POWER SURGE',
+              videoSrc: '/assets/videos/vid_3.mp4',
+            },
             ...dbProducts
               .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
           ].slice(0, 8)}
