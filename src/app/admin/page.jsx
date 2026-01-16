@@ -148,6 +148,7 @@ export default function UnifiedAdminPage() {
         description: '',
         brand: 'MUSCFIT',
         tag: 'NEW',
+        remarks: '',
         imageUrl: ''
     });
 
@@ -222,6 +223,7 @@ export default function UnifiedAdminPage() {
                 description: '',
                 brand: 'MUSCFIT',
                 tag: 'NEW',
+                remarks: '',
                 imageUrl: ''
             });
         } catch (err) {
@@ -257,6 +259,20 @@ export default function UnifiedAdminPage() {
             setShowCreatePromoModal(false);
         } catch (err) {
             alert('Failed to create promo: ' + err.message);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    const handleSyncCatalog = async () => {
+        if (!confirm('This will move all hardcoded "Collection" items into the live database to make them fully editable. Proceed?')) return;
+        try {
+            setIsSaving(true);
+            await productService.syncBasicCatalog();
+            await loadInitialData();
+            alert('Catalog Synchronization Successful. All items are now live and manageable.');
+        } catch (err) {
+            alert('Migration Error: ' + err.message);
         } finally {
             setIsSaving(false);
         }
@@ -408,13 +424,23 @@ export default function UnifiedAdminPage() {
                             <div className="space-y-8">
                                 <div className="flex justify-between items-center">
                                     <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter">Product Inventory</h2>
-                                    <button
-                                        onClick={() => setShowAddProductForm(!showAddProductForm)}
-                                        className="bg-white text-black px-8 py-3 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-zinc-200 transition-all flex items-center gap-2"
-                                    >
-                                        <Icon name="PlusIcon" size={18} />
-                                        Add New Product
-                                    </button>
+                                    <div className="flex gap-4">
+                                        <button
+                                            onClick={handleSyncCatalog}
+                                            disabled={isSaving}
+                                            className="bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 px-6 py-3 rounded-lg font-black uppercase text-[10px] tracking-widest hover:bg-yellow-500/20 transition-all flex items-center gap-2"
+                                        >
+                                            <Icon name="ArrowPathRoundedSquareIcon" size={16} />
+                                            Sync Hardcoded Catalog
+                                        </button>
+                                        <button
+                                            onClick={() => setShowAddProductForm(!showAddProductForm)}
+                                            className="bg-white text-black px-8 py-3 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-zinc-200 transition-all flex items-center gap-2"
+                                        >
+                                            <Icon name="PlusIcon" size={18} />
+                                            Add New Product
+                                        </button>
+                                    </div>
                                 </div>
 
                                 {showAddProductForm && (
@@ -477,6 +503,10 @@ export default function UnifiedAdminPage() {
                                                 <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Image URL</label>
                                                 <input value={newProduct.imageUrl} onChange={e => setNewProduct({ ...newProduct, imageUrl: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" placeholder="https://..." />
                                             </div>
+                                            <div className="md:col-span-3">
+                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Remarks / Internal Notes</label>
+                                                <input value={newProduct.remarks} onChange={e => setNewProduct({ ...newProduct, remarks: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" placeholder="e.g. Special edition, Warehouse B..." />
+                                            </div>
                                             <div>
                                                 <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Status</label>
                                                 <div className="flex items-center gap-4 p-4 bg-black/40 border border-white/10 rounded-xl">
@@ -501,6 +531,7 @@ export default function UnifiedAdminPage() {
                                                 <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Category</th>
                                                 <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Price</th>
                                                 <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Stock</th>
+                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Remarks</th>
                                                 <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Actions</th>
                                             </tr>
                                         </thead>
@@ -512,6 +543,7 @@ export default function UnifiedAdminPage() {
                                                     <td className="px-6 py-4"><span className="text-[10px] font-black uppercase tracking-widest bg-white/5 px-2 py-1 rounded border border-white/10">{p.category}</span></td>
                                                     <td className="px-6 py-4 font-data text-sm font-bold text-white">₹{p.price}</td>
                                                     <td className="px-6 py-4"><span className={`text-sm font-bold ${p.stockQuantity < 10 ? 'text-red-500' : 'text-white/60'}`}>{p.stockQuantity}</span></td>
+                                                    <td className="px-6 py-4 text-xs text-white/40 italic font-medium">{p.remarks || '-'}</td>
                                                     <td className="px-6 py-4">
                                                         <div className="flex gap-4">
                                                             <button onClick={() => setSelectedProduct(p)} className="text-white/40 hover:text-white transition-colors"><Icon name="PencilSquareIcon" size={18} /></button>
@@ -686,6 +718,10 @@ export default function UnifiedAdminPage() {
                                     <input type="checkbox" checked={selectedProduct.isActive} onChange={e => setSelectedProduct({ ...selectedProduct, isActive: e.target.checked })} className="w-5 h-5 rounded border-white/10 bg-black/40" />
                                     <span className="text-white font-bold text-sm">Active & Visible</span>
                                 </div>
+                            </div>
+                            <div className="md:col-span-2 border-t border-white/5 pt-6">
+                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Remarks / Internal Notes</label>
+                                <input value={selectedProduct.remarks || ''} onChange={e => setSelectedProduct({ ...selectedProduct, remarks: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" placeholder="Edit remarks..." />
                             </div>
                             <div className="md:col-span-2 flex gap-4 pt-4 border-t border-white/5">
                                 <button type="submit" disabled={isSaving} className="flex-1 bg-white text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-zinc-200 transition-all active:scale-95">{isSaving ? 'Updating...' : 'SAVE CHANGES'}</button>

@@ -1214,6 +1214,7 @@ export const productService = {
       reviewCount: product?.review_count,
       tag: product?.tag,
       isActive: product?.is_active,
+      remarks: product?.remarks,
       stockQuantity: product?.stock_quantity,
       createdAt: product?.created_at,
       updatedAt: product?.updated_at,
@@ -1266,6 +1267,7 @@ export const productService = {
           tag: productData?.tag,
           is_active: productData?.isActive ?? true,
           stock_quantity: productData?.stockQuantity,
+          remarks: productData?.remarks,
           rating: 0,
           review_count: 0,
         })
@@ -1314,6 +1316,7 @@ export const productService = {
       if (updates.gender !== undefined) dbUpdates.gender = updates.gender;
       if (updates.brand !== undefined) dbUpdates.brand = updates.brand;
       if (updates.tag !== undefined) dbUpdates.tag = updates.tag;
+      if (updates.remarks !== undefined) dbUpdates.remarks = updates.remarks;
 
       console.log('💾 Database updates (snake_case):', dbUpdates);
 
@@ -1411,6 +1414,50 @@ export const productService = {
       throw error;
     }
   },
+
+  // Sync basic catalog with database
+  async syncBasicCatalog() {
+    try {
+      if (!supabase) throw new Error('Supabase not initialized');
+
+      const productsToSync = BASIC_CATALOG.map(item => ({
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        price: item.price,
+        original_price: item.original_price,
+        gender: item.gender,
+        category: item.category,
+        brand: item.brand,
+        tag: item.tag,
+        is_active: true,
+        stock_quantity: 100, // Default stock for sync
+        rating: item.rating || 0,
+        review_count: item.review_count || 0
+      }));
+
+      for (const product of productsToSync) {
+        const { error } = await supabase.from('products').upsert(product, { onConflict: 'id' });
+        if (error) console.warn(`Error syncing product ${product.id}:`, error.message);
+
+        // Also sync primary image
+        const basicItem = BASIC_CATALOG.find(i => i.id === product.id);
+        if (basicItem && basicItem.image_url) {
+          await supabase.from('product_images').upsert({
+            product_id: product.id,
+            image_url: basicItem.image_url,
+            alt_text: product.name,
+            is_primary: true,
+            display_order: 1
+          }, { onConflict: 'product_id, image_url' });
+        }
+      }
+      return true;
+    } catch (error) {
+      console.error('Error in syncBasicCatalog:', error);
+      throw error;
+    }
+  }
 };
 
 export const wishlistService = {
