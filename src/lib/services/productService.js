@@ -1420,6 +1420,9 @@ export const productService = {
     try {
       if (!supabase) throw new Error('Supabase not initialized');
 
+      console.log('🔄 Starting Catalog Sync...');
+      let syncCount = 0;
+
       const productsToSync = BASIC_CATALOG.map(item => ({
         id: item.id,
         name: item.name,
@@ -1437,10 +1440,15 @@ export const productService = {
       }));
 
       for (const product of productsToSync) {
-        const { error } = await supabase.from('products').upsert(product, { onConflict: 'id' });
-        if (error) console.warn(`Error syncing product ${product.id}:`, error.message);
+        const { error: pError } = await supabase.from('products').upsert(product, { onConflict: 'id' });
+        if (pError) {
+          console.error(`❌ Error syncing product ${product.id}:`, pError.message);
+          continue;
+        }
 
-        // Also sync primary image
+        syncCount++;
+
+        // Sync primary image
         const basicItem = BASIC_CATALOG.find(i => i.id === product.id);
         if (basicItem && basicItem.image_url) {
           await supabase.from('product_images').upsert({
@@ -1449,13 +1457,15 @@ export const productService = {
             alt_text: product.name,
             is_primary: true,
             display_order: 1
-          }, { onConflict: 'product_id, image_url' });
+          }, { onConflict: 'product_id' });
         }
       }
-      return true;
+
+      console.log(`✅ Sync Complete. ${syncCount} items processed.`);
+      return { success: true, count: syncCount };
     } catch (error) {
       console.error('Error in syncBasicCatalog:', error);
-      throw error;
+      return { success: false, error: error.message };
     }
   }
 };

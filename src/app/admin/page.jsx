@@ -176,7 +176,7 @@ export default function UnifiedAdminPage() {
         try {
             const [orderData, productData, promoData] = await Promise.all([
                 orderService.getAllOrders(),
-                productService.getAll(),
+                productService.getAllForAdmin(),
                 supabase.from('promo_codes').select('*').order('created_at', { ascending: false })
             ]);
             setOrders(orderData || []);
@@ -209,8 +209,7 @@ export default function UnifiedAdminPage() {
         try {
             setIsSaving(true);
             await productService.createProduct(newProduct);
-            const updated = await productService.getAll();
-            setProducts(updated);
+            await loadInitialData();
             setShowAddProductForm(false);
             setNewProduct({
                 name: '',
@@ -238,8 +237,7 @@ export default function UnifiedAdminPage() {
         try {
             setIsSaving(true);
             await productService.updateProduct(selectedProduct.id, selectedProduct);
-            const updated = await productService.getAll();
-            setProducts(updated);
+            await loadInitialData();
             setSelectedProduct(null);
         } catch (err) {
             alert('Sync failed: ' + err.message);
@@ -265,14 +263,19 @@ export default function UnifiedAdminPage() {
     };
 
     const handleSyncCatalog = async () => {
-        if (!confirm('This will move all hardcoded "Collection" items into the live database to make them fully editable. Proceed?')) return;
+        if (!confirm('This will migrate all hardcoded collection items into the live database. Items with duplicate IDs will be updated. Proceed?')) return;
         try {
             setIsSaving(true);
-            await productService.syncBasicCatalog();
-            await loadInitialData();
-            alert('Catalog Synchronization Successful. All items are now live and manageable.');
+            const result = await productService.syncBasicCatalog();
+            if (result.success) {
+                await loadInitialData();
+                alert(`Catalog Sync Successful! Migrated ${result.count} items.`);
+            } else {
+                alert('Sync partially failed: ' + result.error);
+            }
         } catch (err) {
-            alert('Migration Error: ' + err.message);
+            console.error('Migration crash:', err);
+            alert('CRITICAL SYNC ERROR: ' + err.message + '\n\nPlease check if "remarks" column exists in your products table.');
         } finally {
             setIsSaving(false);
         }
