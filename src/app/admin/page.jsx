@@ -270,7 +270,7 @@ export default function UnifiedAdminPage() {
                         </h1>
                         <p className="text-white/40 mt-2 font-medium tracking-widest uppercase text-xs">Unified Management Platform • Secure Node</p>
                     </div>
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 items-center">
                         <div className="bg-white/5 border border-white/10 p-4 rounded-xl min-w-[150px]">
                             <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Total Revenue</p>
                             <p className="text-xl font-black text-white italic">₹{totalRevenue.toLocaleString()}</p>
@@ -279,6 +279,13 @@ export default function UnifiedAdminPage() {
                             <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Pending Orders</p>
                             <p className="text-xl font-black text-yellow-500 italic">{pendingOrders}</p>
                         </div>
+                        <button
+                            onClick={() => supabase.auth.signOut().then(() => window.location.reload())}
+                            className="bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-500 p-4 rounded-xl transition-all group"
+                            title="Sign Out"
+                        >
+                            <Icon name="PowerIcon" size={24} className="group-hover:scale-110 transition-transform" />
+                        </button>
                     </div>
                 </div>
             </div>
