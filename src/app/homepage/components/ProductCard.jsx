@@ -72,16 +72,25 @@ export default function ProductCard({ product }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
+      <div className={`relative aspect-[3/4] overflow-hidden bg-gray-100 ${['BESTSELLER', 'HOT'].includes(product?.tag) ? 'ring-4 ring-black ring-inset shadow-2xl' : ''}`}>
         <AppImage
           src={product?.image}
           alt={product?.imageAlt}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-250"
         />
 
+        {['BESTSELLER', 'HOT'].includes(product?.tag) && (
+          <div className="absolute inset-0 border-8 border-black pointer-events-none z-10 opacity-100">
+            <div className="absolute inset-0 border border-white/10" />
+            <div className="absolute bottom-1.5 right-2 text-[8px] text-white/40 font-black uppercase tracking-widest italic">
+              Elite Series
+            </div>
+          </div>
+        )}
+
         {product?.tag && (
           <span
-            className={`absolute top-3 left-3 px-3 py-1 ${product?.tag === 'SALE' ? 'bg-[#9B1C1C]' : 'bg-primary'} text-primary-foreground text-[10px] md:text-xs font-caption font-black rounded-sm tracking-wider uppercase`}
+            className={`absolute top-4 left-4 px-3 py-1 ${product?.tag === 'SALE' ? 'bg-[#9B1C1C]' : 'bg-black'} text-white text-[10px] md:text-xs font-caption font-black rounded-sm tracking-widest uppercase z-20 border border-white/20 shadow-lg`}
           >
             {product?.tag}
           </span>
@@ -89,7 +98,7 @@ export default function ProductCard({ product }) {
 
         <button
           onClick={handleWishlistToggle}
-          className="absolute top-3 right-3 w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors duration-250 shadow-sm"
+          className="absolute top-4 right-4 w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors duration-250 shadow-sm z-20"
           aria-label="Add to wishlist"
         >
           <Icon
@@ -101,7 +110,7 @@ export default function ProductCard({ product }) {
         </button>
 
         <div
-          className={`absolute bottom-0 left-0 right-0 p-2 md:p-3 bg-gradient-to-t from-black/80 to-transparent transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-0 md:translate-y-full opacity-100 md:opacity-0'}`}
+          className={`absolute bottom-0 left-0 right-0 p-2 md:p-3 bg-gradient-to-t from-black/80 to-transparent transition-all duration-300 z-20 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-0 md:translate-y-full opacity-100 md:opacity-0'}`}
         >
           <button
             onClick={handleQuickAdd}
