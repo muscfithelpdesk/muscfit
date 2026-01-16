@@ -132,18 +132,18 @@ export default function ProductCarousel({ products }) {
       {/* Navigation Buttons */}
       <button
         onClick={() => scroll('left')}
-        className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-xl rounded-full p-3 flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 md:opacity-0 md:group-hover:opacity-100"
+        className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-xl rounded-full p-2 flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 md:opacity-0 md:group-hover:opacity-100"
         aria-label="Scroll left"
       >
-        <Icon name="ChevronLeftIcon" size={24} />
+        <Icon name="ChevronLeftIcon" size={18} />
       </button>
 
       <button
         onClick={() => scroll('right')}
-        className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-xl rounded-full p-3 flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 md:opacity-0 md:group-hover:opacity-100"
+        className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-xl rounded-full p-2 flex items-center justify-center border border-gray-100 hover:bg-black hover:text-white transition-all duration-300 md:opacity-0 md:group-hover:opacity-100"
         aria-label="Scroll right"
       >
-        <Icon name="ChevronRightIcon" size={24} />
+        <Icon name="ChevronRightIcon" size={18} />
       </button>
 
       {/* Mobile Gradients */}
