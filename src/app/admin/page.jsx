@@ -138,7 +138,17 @@ export default function UnifiedAdminPage() {
     const [showAddProductForm, setShowAddProductForm] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [newProduct, setNewProduct] = useState({
-        name: '', category: 'Men', price: 0, stockQuantity: 0, isActive: true, description: '', brand: '', imageUrl: ''
+        name: '',
+        category: 'Men',
+        gender: 'men',
+        price: 0,
+        originalPrice: 0,
+        stockQuantity: 0,
+        isActive: true,
+        description: '',
+        brand: 'MUSCFIT',
+        tag: 'NEW',
+        imageUrl: ''
     });
 
     // Promos State
@@ -201,7 +211,19 @@ export default function UnifiedAdminPage() {
             const updated = await productService.getAll();
             setProducts(updated);
             setShowAddProductForm(false);
-            setNewProduct({ name: '', category: 'Men', price: 0, stockQuantity: 0, isActive: true, description: '', brand: '', imageUrl: '' });
+            setNewProduct({
+                name: '',
+                category: 'Men',
+                gender: 'men',
+                price: 0,
+                originalPrice: 0,
+                stockQuantity: 0,
+                isActive: true,
+                description: '',
+                brand: 'MUSCFIT',
+                tag: 'NEW',
+                imageUrl: ''
+            });
         } catch (err) {
             alert('Failed to save to Supabase: ' + err.message);
         } finally {
@@ -400,11 +422,27 @@ export default function UnifiedAdminPage() {
                                         <form onSubmit={handleAddProduct} className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                             <div className="md:col-span-2">
                                                 <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Product Name</label>
-                                                <input required value={newProduct.name} onChange={e => setNewProduct({ ...newProduct, name: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none focus:border-white/30" />
+                                                <input required value={newProduct.name} onChange={e => setNewProduct({ ...newProduct, name: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none focus:border-white/30" placeholder="e.g. Oversized Pump Cover" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Brand</label>
+                                                <input required value={newProduct.brand} onChange={e => setNewProduct({ ...newProduct, brand: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" placeholder="MUSCFIT" />
+                                            </div>
+                                            <div className="md:col-span-3">
+                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Description</label>
+                                                <textarea value={newProduct.description} onChange={e => setNewProduct({ ...newProduct, description: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none min-h-[100px]" placeholder="Product storytelling..." />
                                             </div>
                                             <div>
                                                 <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Price (₹)</label>
                                                 <input type="number" required value={newProduct.price} onChange={e => setNewProduct({ ...newProduct, price: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Original Price (₹)</label>
+                                                <input type="number" value={newProduct.originalPrice} onChange={e => setNewProduct({ ...newProduct, originalPrice: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Stock</label>
+                                                <input type="number" required value={newProduct.stockQuantity} onChange={e => setNewProduct({ ...newProduct, stockQuantity: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
                                             </div>
                                             <div>
                                                 <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Category</label>
@@ -412,19 +450,43 @@ export default function UnifiedAdminPage() {
                                                     <option value="Men">Men</option>
                                                     <option value="Women">Women</option>
                                                     <option value="Compression">Compression</option>
+                                                    <option value="Accessories">Accessories</option>
+                                                    <option value="Winter-Arc">Winter Arc</option>
                                                 </select>
                                             </div>
                                             <div>
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Stock</label>
-                                                <input type="number" required value={newProduct.stockQuantity} onChange={e => setNewProduct({ ...newProduct, stockQuantity: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
+                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Gender</label>
+                                                <select value={newProduct.gender} onChange={e => setNewProduct({ ...newProduct, gender: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none">
+                                                    <option value="men">Men</option>
+                                                    <option value="women">Women</option>
+                                                    <option value="compression">Compression</option>
+                                                    <option value="unisex">Unisex</option>
+                                                </select>
                                             </div>
                                             <div>
+                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Tag</label>
+                                                <select value={newProduct.tag} onChange={e => setNewProduct({ ...newProduct, tag: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none">
+                                                    <option value="NEW">NEW</option>
+                                                    <option value="TRENDING">TRENDING</option>
+                                                    <option value="BESTSELLER">BESTSELLER</option>
+                                                    <option value="LIMITED">LIMITED</option>
+                                                    <option value="PRO">PRO</option>
+                                                </select>
+                                            </div>
+                                            <div className="md:col-span-2">
                                                 <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Image URL</label>
                                                 <input value={newProduct.imageUrl} onChange={e => setNewProduct({ ...newProduct, imageUrl: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" placeholder="https://..." />
                                             </div>
-                                            <div className="md:col-span-3 flex gap-4 pt-4">
-                                                <button type="submit" disabled={isSaving} className="bg-white text-black px-12 py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em]">{isSaving ? 'SAVING...' : 'REGISTER PRODUCT'}</button>
-                                                <button type="button" onClick={() => setShowAddProductForm(false)} className="bg-white/5 text-white/60 px-8 py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em]">Cancel</button>
+                                            <div>
+                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Status</label>
+                                                <div className="flex items-center gap-4 p-4 bg-black/40 border border-white/10 rounded-xl">
+                                                    <input type="checkbox" checked={newProduct.isActive} onChange={e => setNewProduct({ ...newProduct, isActive: e.target.checked })} className="w-5 h-5 rounded border-white/10 bg-black/40" />
+                                                    <span className="text-white font-bold text-sm">Active & Visible</span>
+                                                </div>
+                                            </div>
+                                            <div className="md:col-span-3 flex gap-4 pt-4 border-t border-white/5">
+                                                <button type="submit" disabled={isSaving} className="bg-white text-black px-12 py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-zinc-200 transition-all active:scale-95">{isSaving ? 'REGISTERING...' : 'CONFIRM LISTING'}</button>
+                                                <button type="button" onClick={() => setShowAddProductForm(false)} className="bg-white/5 text-white/60 px-8 py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-white/10 transition-all">Discard</button>
                                             </div>
                                         </form>
                                     </div>
@@ -583,17 +645,51 @@ export default function UnifiedAdminPage() {
                                 <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Product Name</label>
                                 <input required value={selectedProduct.name} onChange={e => setSelectedProduct({ ...selectedProduct, name: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
                             </div>
+                            <div className="md:col-span-2">
+                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Description</label>
+                                <textarea value={selectedProduct.description} onChange={e => setSelectedProduct({ ...selectedProduct, description: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none min-h-[100px]" />
+                            </div>
                             <div>
                                 <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Price (₹)</label>
                                 <input type="number" required value={selectedProduct.price} onChange={e => setSelectedProduct({ ...selectedProduct, price: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
                             </div>
                             <div>
+                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Original Price (₹)</label>
+                                <input type="number" value={selectedProduct.originalPrice} onChange={e => setSelectedProduct({ ...selectedProduct, originalPrice: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
+                            </div>
+                            <div>
                                 <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Stock</label>
                                 <input type="number" required value={selectedProduct.stockQuantity} onChange={e => setSelectedProduct({ ...selectedProduct, stockQuantity: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
                             </div>
-                            <div className="md:col-span-2 flex gap-4 pt-4">
-                                <button type="submit" disabled={isSaving} className="flex-1 bg-white text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest">{isSaving ? 'Updating...' : 'SAVE CHANGES'}</button>
-                                <button type="button" onClick={() => setSelectedProduct(null)} className="flex-1 bg-white/5 text-white/40 py-4 rounded-xl font-black uppercase text-xs tracking-widest">Cancel</button>
+                            <div>
+                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Category</label>
+                                <select value={selectedProduct.category} onChange={e => setSelectedProduct({ ...selectedProduct, category: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none">
+                                    <option value="Men">Men</option>
+                                    <option value="Women">Women</option>
+                                    <option value="Compression">Compression</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="Winter-Arc">Winter Arc</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Gender</label>
+                                <select value={selectedProduct.gender} onChange={e => setSelectedProduct({ ...selectedProduct, gender: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none">
+                                    <option value="men">Men</option>
+                                    <option value="women">Women</option>
+                                    <option value="compression">Compression</option>
+                                    <option value="unisex">Unisex</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Status</label>
+                                <div className="flex items-center gap-4 p-4 bg-black/40 border border-white/10 rounded-xl">
+                                    <input type="checkbox" checked={selectedProduct.isActive} onChange={e => setSelectedProduct({ ...selectedProduct, isActive: e.target.checked })} className="w-5 h-5 rounded border-white/10 bg-black/40" />
+                                    <span className="text-white font-bold text-sm">Active & Visible</span>
+                                </div>
+                            </div>
+                            <div className="md:col-span-2 flex gap-4 pt-4 border-t border-white/5">
+                                <button type="submit" disabled={isSaving} className="flex-1 bg-white text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-zinc-200 transition-all active:scale-95">{isSaving ? 'Updating...' : 'SAVE CHANGES'}</button>
+                                <button type="button" onClick={() => setSelectedProduct(null)} className="flex-1 bg-white/5 text-white/40 py-4 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-white/10 transition-all">Cancel</button>
                             </div>
                         </form>
                     </div>
