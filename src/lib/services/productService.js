@@ -3,7 +3,7 @@ import { supabase } from '../supabase';
 const BASIC_CATALOG = [
   // Men's Collection (4 Items)
   {
-    id: 'm-bb-t-1',
+    id: 'e0d7c0e5-7b5a-4f9e-8c3d-2a1b0f6e9d4a',
     name: "Oversized Pump Cover - Pitch Black",
     description: 'The ultimate gym essential. Heavyweight cotton, dropped shoulders, and a boxy fit for that perfect pump cover verification.',
     price: 999,
@@ -18,7 +18,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/mens_black_tshirt_basic.png',
   },
   {
-    id: 'm-gb-t-2',
+    id: 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d',
     name: "Acid Wash Oversized Tee - Graphite",
     description: 'Vintage-inspired acid wash finish. Premium heavy blend cotton for superior comfort and durability during heavy lifts.',
     price: 999,
@@ -33,7 +33,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/mens_grey_tshirt_basic.png',
   },
   {
-    id: 'm-wb-t-3',
+    id: 'b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e',
     name: "Men's Elite T-Shirt (White)",
     description: 'Aura white performance tee. Crisp, clean, and unbranded.',
     price: 999,
@@ -48,7 +48,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png',
   },
   {
-    id: 'm-bb-j-4',
+    id: 'c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f',
     name: "Tech-Fleece Tapered Joggers - Black",
     description: 'Engineered for mobility. Tapered fit with thermal tech-fleece lining to keep muscles warm during rest periods.',
     price: 1899,
@@ -65,7 +65,7 @@ const BASIC_CATALOG = [
 
   // Women's Collection (4 Items)
   {
-    id: 'w-bb-l-1',
+    id: 'd4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a',
     name: "MuscFIT Signature Leggings - Black",
     description: 'The icon. High-waisted seamless leggings featuring our signature bold branding. Squat-proof, sculpting, and engineered for performance.',
     price: 1599,
@@ -80,7 +80,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/muscfit_branded_leggings.png',
   },
   {
-    id: 'w-gb-l-2',
+    id: 'e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b',
     name: "Women's Performance Leggings (Grey)",
     description: 'Heather grey performance leggings. Sleek design, zero branding.',
     price: 1599,
@@ -95,7 +95,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/womens_grey_leggings_basic.png',
   },
   {
-    id: 'w-wb-l-3',
+    id: 'f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c',
     name: "Women's Performance Leggings (White)",
     description: 'Aura white performance leggings. Crisp, clean, and unbranded.',
     price: 1599,
@@ -110,7 +110,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png', // Placeholder (unbranded tee for white)
   },
   {
-    id: 'w-bb-l-4',
+    id: 'a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d',
     name: "Women's Core Shorts (Black)",
     description: 'Solid black training shorts. High-waist, high-performance.',
     price: 1299,
@@ -127,7 +127,7 @@ const BASIC_CATALOG = [
 
   // Compression Series (4 Items)
   {
-    id: 'c-bb-s-1',
+    id: 'b8c9d0e1-f2a3-4b4c-5d6e-7f8a9b0c1d2e',
     name: 'Pro-Grade Thermal Compression Top - Black',
     description: 'Second-skin fit that increases blood flow and reduces recovery time. Essential base layer for high-performance athletes.',
     price: 1299,
@@ -142,7 +142,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png',
   },
   {
-    id: 'c-wb-s-2',
+    id: 'c9d0e1f2-a3b4-4c5d-6e7f-8a9b0c1d2e3f',
     name: 'Elite Compression Shirt (White)',
     description: 'Advanced white compression base layer. Thermal regulation technology.',
     price: 1299,
@@ -157,7 +157,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/plain_white_tshirt_flat_lay_1767417660339.png',
   },
   {
-    id: 'c-gb-s-3',
+    id: 'd0e1f2a3-b4c5-4d6e-7f8a-9b0c1d2e3f4a',
     name: 'Elite Compression Shirt (Grey)',
     description: 'Technical grey compression top. Unbranded, professional fit.',
     price: 1299,
@@ -172,7 +172,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/mens_grey_tshirt_basic.png',
   },
   {
-    id: 'c-bb-s-4',
+    id: 'e1f2a3b4-c5d6-4e7f-8a9b-0c1d2e3f4a5b',
     name: 'Aero-Tech Compression Tee (Black)',
     description: 'Breathable black compression tee for high-intensity training.',
     price: 1399,
@@ -188,7 +188,7 @@ const BASIC_CATALOG = [
   },
   // GEMINI GENERATED COMPRESSION PRODUCTS
   {
-    id: 'gen-c-ls-1',
+    id: 'f2a3b4c5-d6e7-4f8a-9b0c-1d2e3f4a5b6c',
     name: "Hyper-Flex Compression Long Sleeve - Midnight",
     description: "Advanced moisture-wicking compression top with targeted support zones for upper body stability. Features 4-way stretch Hydro-Cool fabric.",
     price: 1499,
@@ -203,7 +203,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/plain_black_tshirt_flat_lay_2_1767417716871.png', // Placeholder
   },
   {
-    id: 'gen-c-lg-2',
+    id: 'a3b4c5d6-e7f8-4a9b-0c1d-2e3f4a5b6c7d',
     name: "Recovery Pro Gradient Tights - Onyx",
     description: "Medical-grade gradient compression engineered to accelerate muscle recovery and reduce lactic acid buildup post-workout.",
     price: 1899,
@@ -218,7 +218,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/mens_black_joggers_basic.png', // Placeholder
   },
   {
-    id: 'gen-c-tk-3',
+    id: 'b4c5d6e7-f8a9-4b0c-1d2e-3f4a5b6c7d8e',
     name: "Core Stabilizer Tank - Graphite",
     description: "Sleeveless compression baselayer designed for maximum core engagement and breathability during heavy compound lifts.",
     price: 999,
@@ -233,7 +233,7 @@ const BASIC_CATALOG = [
     image_url: '/assets/images/products/mens_grey_tshirt_basic.png', // Placeholder
   },
   {
-    id: 'gen-c-st-4',
+    id: 'c5d6e7f8-a9b0-4c1d-2e3f-4a5b6c7d8e9f',
     name: "Sculpt-X Compression Set - Mocha",
     description: "Premium full-coverage compression set featuring high-waisted shorts and long-sleeve crop top. Engineered for contouring and maximum flexibility.",
     price: 3499,
