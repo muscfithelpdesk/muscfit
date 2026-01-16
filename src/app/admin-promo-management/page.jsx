@@ -42,7 +42,9 @@ export default function AdminPromoManagement() {
       }
 
       const isUserAdmin =
-        user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin';
+        user?.user_metadata?.role === 'admin' ||
+        user?.app_metadata?.role === 'admin' ||
+        user?.email === 'admin@muscfit.com';
 
       setIsAdmin(isUserAdmin);
 

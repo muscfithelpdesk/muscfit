@@ -16,7 +16,9 @@ export default function AdminAuthGuard({ children }) {
     useEffect(() => {
         if (!authLoading) {
             const role = user?.user_metadata?.role || user?.app_metadata?.role;
-            if (user && role === 'admin') {
+            const isEmailAdmin = user?.email === 'admin@muscfit.com';
+
+            if (user && (role === 'admin' || isEmailAdmin)) {
                 setIsAuthorized(true);
             } else {
                 setIsAuthorized(false);
@@ -32,8 +34,11 @@ export default function AdminAuthGuard({ children }) {
         try {
             const result = await signIn(email, password);
             if (result.success) {
-                const role = result.data.user?.user_metadata?.role || result.data.user?.app_metadata?.role;
-                if (role !== 'admin') {
+                const loggedInUser = result.data.user;
+                const role = loggedInUser?.user_metadata?.role || loggedInUser?.app_metadata?.role;
+                const isEmailAdmin = loggedInUser?.email === 'admin@muscfit.com';
+
+                if (role !== 'admin' && !isEmailAdmin) {
                     setError('Access denied. Admin privileges required.');
                 }
             } else {
