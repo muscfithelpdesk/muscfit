@@ -305,11 +305,11 @@ export default function UnifiedAdminPage() {
     // --- Filtering & Analytics Logic ---
     const filteredOrders = orders.filter(o =>
         (o.id.toLowerCase().includes(orderSearchQuery.toLowerCase()) || o.customer?.name?.toLowerCase().includes(orderSearchQuery.toLowerCase())) &&
-        (filterStatus === 'All' || o.orderStatus === filterStatus)
+        (filterStatus === 'All' || o.orderStatus?.toLowerCase() === filterStatus.toLowerCase())
     );
 
-    const totalRevenue = orders.reduce((sum, o) => o.paymentStatus === 'Paid' ? sum + o.totalAmount : sum, 0);
-    const pendingOrders = orders.filter(o => o.orderStatus === 'Pending').length;
+    const totalRevenue = orders.reduce((sum, o) => (o.paymentStatus?.toLowerCase() === 'completed' || o.paymentStatus?.toLowerCase() === 'paid') ? sum + o.totalAmount : sum, 0);
+    const pendingOrders = orders.filter(o => o.orderStatus?.toLowerCase() === 'pending').length;
 
     const tabs = [
         { id: 'orders', label: 'Orders', icon: 'ClipboardDocumentListIcon' },

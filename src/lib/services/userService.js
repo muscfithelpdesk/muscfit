@@ -93,8 +93,7 @@ export const userService = {
     if (!supabase) return [];
     const { data, error } = await supabase
       .from('profiles')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .select('*');
 
     if (error) {
       console.error('Error fetching all users:', error);

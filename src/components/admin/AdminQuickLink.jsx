@@ -26,10 +26,10 @@ export default function AdminQuickLink() {
                     className="flex items-center gap-3 bg-black text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all border border-white/20 active:scale-95 group"
                 >
                     <div className="w-6 h-6 flex items-center justify-center">
-                        <Icon name="UsersIcon" size={20} className="group-hover:rotate-12 transition-transform" />
+                        <Icon name="ShieldCheckIcon" size={20} className="group-hover:rotate-12 transition-transform" />
                     </div>
                     <span className="max-w-0 overflow-hidden group-hover:max-w-[150px] transition-all duration-500 font-bold whitespace-nowrap text-sm tracking-widest uppercase">
-                        Admin Console
+                        Command Center
                     </span>
                 </Link>
                 <button

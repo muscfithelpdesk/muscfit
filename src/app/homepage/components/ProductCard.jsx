@@ -162,6 +162,7 @@ ProductCard.propTypes = {
     imageAlt: PropTypes.string.isRequired,
     tag: PropTypes.string,
     rating: PropTypes.number.isRequired,
-    reviews: PropTypes.number.isRequired,
+    reviews: PropTypes.number,
+    reviewCount: PropTypes.number,
   }).isRequired,
 };
