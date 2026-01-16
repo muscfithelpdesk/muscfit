@@ -33,7 +33,7 @@ export const metadata = {
 
 import AdminQuickLink from '@/components/admin/AdminQuickLink';
 
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/next"
 
 export default function RootLayout({ children }) {
   return (
