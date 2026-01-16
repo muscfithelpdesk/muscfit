@@ -79,6 +79,10 @@ export const orderService = {
       .select(
         `
         *,
+        user:profiles (
+          full_name,
+          email
+        ),
         order_items (
           *,
             product:products (
@@ -115,14 +119,8 @@ export const orderService = {
         createdAt: order?.created_at,
         updatedAt: order?.updated_at,
         customer: {
-          // Assuming Supabase auth user metadata or a profiles table link, 
-          // but here we might relying on what's available or join with profiles
-          // customized based on your schema. For now, let's try to get profile info if available
-          // If orders table has user_id, we might need to join 'profiles' or 'users'.
-          // Given the current select, we don't have user details. 
-          // I'll add a profile join to the select above.
-          name: 'Customer', // Placeholder until I add profile join
-          email: 'email@example.com' // Placeholder
+          name: order?.user?.full_name || 'Anonymous Customer',
+          email: order?.user?.email || order?.notes?.match(/Email: ([\w.@+-]+)/)?.[1] || 'Guest'
         },
         items:
           order?.order_items?.map((item) => ({
@@ -137,8 +135,8 @@ export const orderService = {
             size: item?.size,
             color: item?.color,
             product: item?.product,
-            name: item?.product_name, // Map for UI consistency
-            price: item?.unit_price, // Map for UI consistency
+            name: item?.product_name,
+            price: item?.unit_price,
           })) || [],
       })) || []
     );

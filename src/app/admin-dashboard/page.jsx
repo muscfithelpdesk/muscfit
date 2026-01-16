@@ -23,6 +23,7 @@ import { supabase } from '@/lib/supabase';
 import { productService } from '@/lib/services/productService';
 import { uploadService } from '@/lib/services/uploadService';
 import { orderService } from '@/lib/services/orderService';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 
 // Mock data for products removed - using real data via productService
 
@@ -714,407 +715,164 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-background pt-[80px]">
-      {/* Header */}
-      <div className="bg-surface border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="font-heading text-3xl font-bold text-foreground flex items-center gap-3">
-            <Icon name="Cog6ToothIcon" size={32} />
-            Admin Dashboard
-          </h1>
-          <p className="text-text-secondary mt-2">
-            Comprehensive admin control center for orders, inventory, and promotions
-          </p>
-        </div>
-      </div>
-
-      {/* Tabs */}
-      <div className="bg-surface border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-1">
-            {tabs?.map((tab) => (
-              <button
-                key={tab?.id}
-                onClick={() => setActiveTab(tab?.id)}
-                className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all ${activeTab === tab?.id
-                    ? 'text-primary border-b-2 border-primary'
-                    : 'text-text-secondary hover:text-foreground'
-                  }`}
-              >
-                <Icon name={tab?.icon} size={20} />
-                {tab?.label}
-              </button>
-            ))}
+    <AdminAuthGuard>
+      <div className="min-h-screen bg-background pt-[80px]">
+        {/* Header */}
+        <div className="bg-surface border-b border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <h1 className="font-heading text-3xl font-bold text-foreground flex items-center gap-3">
+              <Icon name="Cog6ToothIcon" size={32} />
+              Admin Dashboard
+            </h1>
+            <p className="text-text-secondary mt-2">
+              Comprehensive admin control center for orders, inventory, and promotions
+            </p>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Orders Tab */}
-        {activeTab === 'orders' && (
-          <>
-            {/* Revenue Analytics */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-surface border border-border rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-text-secondary text-sm">Total Revenue</p>
-                    <p className="font-data text-2xl font-bold text-primary mt-1">
-                      ₹{totalRevenue?.toLocaleString('en-IN')}
-                    </p>
-                  </div>
-                  <Icon name="CurrencyRupeeIcon" size={32} className="text-primary" />
-                </div>
-              </div>
-              <div className="bg-surface border border-border rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-text-secondary text-sm">Total Orders</p>
-                    <p className="font-data text-2xl font-bold text-foreground mt-1">
-                      {orders?.length}
-                    </p>
-                  </div>
-                  <Icon name="ShoppingBagIcon" size={32} className="text-blue-400" />
-                </div>
-              </div>
-              <div className="bg-surface border border-border rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-text-secondary text-sm">Pending Orders</p>
-                    <p className="font-data text-2xl font-bold text-yellow-400 mt-1">
-                      {orders?.filter((o) => o?.orderStatus === 'Pending')?.length}
-                    </p>
-                  </div>
-                  <Icon name="ClockIcon" size={32} className="text-yellow-400" />
-                </div>
-              </div>
-              <div className="bg-surface border border-border rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-text-secondary text-sm">Delivered</p>
-                    <p className="font-data text-2xl font-bold text-green-400 mt-1">
-                      {orders?.filter((o) => o?.orderStatus === 'Delivered')?.length}
-                    </p>
-                  </div>
-                  <Icon name="CheckCircleIcon" size={32} className="text-green-400" />
-                </div>
-              </div>
+        {/* Tabs */}
+        <div className="bg-surface border-b border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex gap-1">
+              {tabs?.map((tab) => (
+                <button
+                  key={tab?.id}
+                  onClick={() => setActiveTab(tab?.id)}
+                  className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all ${activeTab === tab?.id
+                    ? 'text-primary border-b-2 border-primary'
+                    : 'text-text-secondary hover:text-foreground'
+                    }`}
+                >
+                  <Icon name={tab?.icon} size={20} />
+                  {tab?.label}
+                </button>
+              ))}
             </div>
+          </div>
+        </div>
 
-            {/* Revenue Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-              <div className="bg-surface border border-border rounded-lg p-6">
-                <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <Icon name="ChartBarIcon" size={20} />
-                  Revenue Trend
-                </h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={revenueByDate}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                    <XAxis dataKey="date" stroke="#888" />
-                    <YAxis stroke="#888" />
-                    <Tooltip
-                      contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
-                      formatter={(value) => [`₹${value?.toLocaleString('en-IN')}`, 'Revenue']}
-                    />
-
-                    <Legend />
-                    <Line
-                      type="monotone"
-                      dataKey="revenue"
-                      stroke="#8b5cf6"
-                      strokeWidth={2}
-                      name="Daily Revenue"
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-
-              <div className="bg-surface border border-border rounded-lg p-6">
-                <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <Icon name="ChartPieIcon" size={20} />
-                  Order Status Distribution
-                </h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie
-                      data={statusDistribution}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, percent }) => `${name} ${(percent * 100)?.toFixed(0)}%`}
-                      outerRadius={100}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {statusDistribution?.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS?.[index % COLORS?.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip
-                      contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            {/* Payment Method Performance */}
-            <div className="bg-surface border border-border rounded-lg p-6 mb-8">
-              <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                <Icon name="CreditCardIcon" size={20} />
-                Payment Method Performance
-              </h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={paymentMethodChartData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                  <XAxis dataKey="method" stroke="#888" />
-                  <YAxis yAxisId="left" orientation="left" stroke="#888" />
-                  <YAxis yAxisId="right" orientation="right" stroke="#888" />
-                  <Tooltip
-                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
-                    formatter={(value, name) => {
-                      if (name === 'Revenue') return [`₹${value?.toLocaleString('en-IN')}`, name];
-                      return [value, name];
-                    }}
-                  />
-
-                  <Legend />
-                  <Bar yAxisId="left" dataKey="count" fill="#8b5cf6" name="Order Count" />
-                  <Bar yAxisId="right" dataKey="revenue" fill="#06b6d4" name="Revenue" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-
-            {/* Top Customers */}
-            <div className="bg-surface border border-border rounded-lg p-6 mb-8">
-              <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                <Icon name="UserGroupIcon" size={20} />
-                Top Customers
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="border-b border-border">
-                    <tr>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
-                        Rank
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
-                        Customer
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
-                        Total Orders
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
-                        Total Spent
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {topCustomers?.map((customer, index) => (
-                      <tr
-                        key={customer?.email}
-                        className="border-b border-border hover:bg-muted/30"
-                      >
-                        <td className="px-4 py-3">
-                          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary font-bold">
-                            {index + 1}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3">
-                          <div className="text-sm font-semibold text-foreground">
-                            {customer?.name}
-                          </div>
-                          <div className="text-xs text-text-secondary">{customer?.email}</div>
-                        </td>
-                        <td className="px-4 py-3 text-sm text-foreground">{customer?.orders}</td>
-                        <td className="px-4 py-3">
-                          <span className="font-data text-sm font-bold text-primary">
-                            ₹{customer?.totalSpent?.toLocaleString('en-IN')}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* Filters */}
-            <div className="bg-surface border border-border rounded-lg p-6 mb-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Search Orders
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={orderSearchQuery}
-                      onChange={(e) => setOrderSearchQuery(e?.target?.value)}
-                      placeholder="Order ID, Customer name, Email..."
-                      className="w-full h-10 pl-10 pr-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                    />
-
-                    <Icon
-                      name="MagnifyingGlassIcon"
-                      size={20}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary"
-                    />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Orders Tab */}
+          {activeTab === 'orders' && (
+            <>
+              {/* Revenue Analytics */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-text-secondary text-sm">Total Revenue</p>
+                      <p className="font-data text-2xl font-bold text-primary mt-1">
+                        ₹{totalRevenue?.toLocaleString('en-IN')}
+                      </p>
+                    </div>
+                    <Icon name="CurrencyRupeeIcon" size={32} className="text-primary" />
                   </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Order Status
-                  </label>
-                  <select
-                    value={filterStatus}
-                    onChange={(e) => setFilterStatus(e?.target?.value)}
-                    className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                  >
-                    <option value="All">All Status</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Processing">Processing</option>
-                    <option value="Shipped">Shipped</option>
-                    <option value="Delivered">Delivered</option>
-                    <option value="Cancelled">Cancelled</option>
-                  </select>
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-text-secondary text-sm">Total Orders</p>
+                      <p className="font-data text-2xl font-bold text-foreground mt-1">
+                        {orders?.length}
+                      </p>
+                    </div>
+                    <Icon name="ShoppingBagIcon" size={32} className="text-blue-400" />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Payment Method
-                  </label>
-                  <select
-                    value={filterPaymentMethod}
-                    onChange={(e) => setFilterPaymentMethod(e?.target?.value)}
-                    className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                  >
-                    <option value="All">All Methods</option>
-                    <option value="Credit Card">Credit Card</option>
-                    <option value="UPI">UPI</option>
-                    <option value="Net Banking">Net Banking</option>
-                    <option value="COD">COD</option>
-                  </select>
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-text-secondary text-sm">Pending Orders</p>
+                      <p className="font-data text-2xl font-bold text-yellow-400 mt-1">
+                        {orders?.filter((o) => o?.orderStatus === 'Pending')?.length}
+                      </p>
+                    </div>
+                    <Icon name="ClockIcon" size={32} className="text-yellow-400" />
+                  </div>
+                </div>
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-text-secondary text-sm">Delivered</p>
+                      <p className="font-data text-2xl font-bold text-green-400 mt-1">
+                        {orders?.filter((o) => o?.orderStatus === 'Delivered')?.length}
+                      </p>
+                    </div>
+                    <Icon name="CheckCircleIcon" size={32} className="text-green-400" />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Orders Table */}
-            <div className="bg-surface border border-border rounded-lg overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-muted/50 border-b border-border">
-                    <tr>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider"></th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                        Order ID
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                        Customer
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                        Date
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                        Amount
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                        Payment
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                        Status
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredOrders?.map((order) => (
-                      <OrderRow
-                        key={order?.id}
-                        order={order}
-                        onStatusChange={handleStatusChange}
-                        onToggleExpand={toggleExpand}
-                        isExpanded={expandedOrders?.has(order?.id)}
+              {/* Revenue Charts */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <Icon name="ChartBarIcon" size={20} />
+                    Revenue Trend
+                  </h3>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <LineChart data={revenueByDate}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                      <XAxis dataKey="date" stroke="#888" />
+                      <YAxis stroke="#888" />
+                      <Tooltip
+                        contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
+                        formatter={(value) => [`₹${value?.toLocaleString('en-IN')}`, 'Revenue']}
                       />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              {filteredOrders?.length === 0 && (
-                <div className="text-center py-12">
-                  <Icon name="InboxIcon" size={48} className="mx-auto text-text-secondary mb-4" />
-                  <p className="text-text-secondary">No orders found matching your filters</p>
-                </div>
-              )}
-            </div>
-          </>
-        )}
 
-        {/* Products Tab */}
-        {activeTab === 'products' && (
-          <>
-            {/* Product Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-surface border border-border rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-text-secondary text-sm">Total Products</p>
-                    <p className="font-data text-2xl font-bold text-foreground mt-1">
-                      {loading ? '...' : totalProducts}
-                    </p>
-                  </div>
-                  <Icon name="CubeIcon" size={32} className="text-primary" />
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="revenue"
+                        stroke="#8b5cf6"
+                        strokeWidth={2}
+                        name="Daily Revenue"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
                 </div>
-              </div>
-              <div className="bg-surface border border-border rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-text-secondary text-sm">Active Products</p>
-                    <p className="font-data text-2xl font-bold text-green-400 mt-1">
-                      {loading ? '...' : activeProducts}
-                    </p>
-                  </div>
-                  <Icon name="CheckCircleIcon" size={32} className="text-green-400" />
-                </div>
-              </div>
-              <div className="bg-surface border border-border rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-text-secondary text-sm">Low Stock</p>
-                    <p className="font-data text-2xl font-bold text-yellow-400 mt-1">
-                      {loading ? '...' : lowStock}
-                    </p>
-                  </div>
-                  <Icon name="ExclamationTriangleIcon" size={32} className="text-yellow-400" />
-                </div>
-              </div>
-              <div className="bg-surface border border-border rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-text-secondary text-sm">Out of Stock</p>
-                    <p className="font-data text-2xl font-bold text-red-400 mt-1">
-                      {loading ? '...' : outOfStock}
-                    </p>
-                  </div>
-                  <Icon name="XCircleIcon" size={32} className="text-red-400" />
-                </div>
-              </div>
-            </div>
 
-            {/* Product Performance Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-              <div className="bg-surface border border-border rounded-lg p-6">
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <Icon name="ChartPieIcon" size={20} />
+                    Order Status Distribution
+                  </h3>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <PieChart>
+                      <Pie
+                        data={statusDistribution}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        label={({ name, percent }) => `${name} ${(percent * 100)?.toFixed(0)}%`}
+                        outerRadius={100}
+                        fill="#8884d8"
+                        dataKey="value"
+                      >
+                        {statusDistribution?.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={COLORS?.[index % COLORS?.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              {/* Payment Method Performance */}
+              <div className="bg-surface border border-border rounded-lg p-6 mb-8">
                 <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <Icon name="ChartBarIcon" size={20} />
-                  Category Performance
+                  <Icon name="CreditCardIcon" size={20} />
+                  Payment Method Performance
                 </h3>
                 <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={categoryPerformance}>
+                  <BarChart data={paymentMethodChartData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                    <XAxis dataKey="category" stroke="#888" />
-                    <YAxis stroke="#888" />
+                    <XAxis dataKey="method" stroke="#888" />
+                    <YAxis yAxisId="left" orientation="left" stroke="#888" />
+                    <YAxis yAxisId="right" orientation="right" stroke="#888" />
                     <Tooltip
                       contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
                       formatter={(value, name) => {
@@ -1122,69 +880,44 @@ export default function AdminDashboard() {
                         return [value, name];
                       }}
                     />
+
                     <Legend />
-                    <Bar dataKey="sales" fill="#8b5cf6" name="Sales" />
-                    <Bar dataKey="views" fill="#06b6d4" name="Views" />
+                    <Bar yAxisId="left" dataKey="count" fill="#8b5cf6" name="Order Count" />
+                    <Bar yAxisId="right" dataKey="revenue" fill="#06b6d4" name="Revenue" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
 
-              <div className="bg-surface border border-border rounded-lg p-6">
+              {/* Top Customers */}
+              <div className="bg-surface border border-border rounded-lg p-6 mb-8">
                 <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <Icon name="CurrencyRupeeIcon" size={20} />
-                  Revenue by Category
+                  <Icon name="UserGroupIcon" size={20} />
+                  Top Customers
                 </h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={categoryPerformance}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                    <XAxis dataKey="category" stroke="#888" />
-                    <YAxis stroke="#888" />
-                    <Tooltip
-                      contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
-                      formatter={(value) => [`₹${value?.toLocaleString('en-IN')}`, 'Revenue']}
-                    />
-                    <Legend />
-                    <Bar dataKey="revenue" fill="#f59e0b" name="Revenue" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            {/* Top Products */}
-            <div className="bg-surface border border-border rounded-lg p-6 mb-8">
-              <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                <Icon name="TrophyIcon" size={20} />
-                Top Performing Products
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="border-b border-border">
-                    <tr>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
-                        Rank
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
-                        Product
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
-                        Category
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
-                        Sales
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
-                        Views
-                      </th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
-                        Revenue
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {topProducts?.map((product, index) => {
-                      const revenue = (product?.sales || 0) * product?.price;
-                      return (
-                        <tr key={product?.id} className="border-b border-border hover:bg-muted/30">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="border-b border-border">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
+                          Rank
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
+                          Customer
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
+                          Total Orders
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
+                          Total Spent
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {topCustomers?.map((customer, index) => (
+                        <tr
+                          key={customer?.email}
+                          className="border-b border-border hover:bg-muted/30"
+                        >
                           <td className="px-4 py-3">
                             <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary font-bold">
                               {index + 1}
@@ -1192,124 +925,804 @@ export default function AdminDashboard() {
                           </td>
                           <td className="px-4 py-3">
                             <div className="text-sm font-semibold text-foreground">
-                              {product?.name}
+                              {customer?.name}
                             </div>
-                            <div className="text-xs text-text-secondary">{product?.id}</div>
+                            <div className="text-xs text-text-secondary">{customer?.email}</div>
                           </td>
-                          <td className="px-4 py-3 text-sm text-text-secondary">
-                            {product?.category}
-                          </td>
-                          <td className="px-4 py-3 text-sm text-foreground">
-                            {product?.sales || 0}
-                          </td>
-                          <td className="px-4 py-3 text-sm text-text-secondary">
-                            {product?.views || 0}
-                          </td>
+                          <td className="px-4 py-3 text-sm text-foreground">{customer?.orders}</td>
                           <td className="px-4 py-3">
                             <span className="font-data text-sm font-bold text-primary">
-                              ₹{revenue?.toLocaleString('en-IN')}
+                              ₹{customer?.totalSpent?.toLocaleString('en-IN')}
                             </span>
                           </td>
                         </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* Filters and Add Button */}
-            <div className="bg-surface border border-border rounded-lg p-6 mb-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="font-heading text-lg font-semibold text-foreground">
-                  Product Inventory
-                </h3>
-                <button
-                  onClick={() => setShowAddProductForm(!showAddProductForm)}
-                  className="px-6 py-3 bg-primary text-primary-foreground rounded-md font-semibold hover:bg-primary/90 transition-all flex items-center gap-2"
-                >
-                  <Icon name="PlusIcon" size={20} />
-                  Add Product
-                </button>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Search Products
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={productSearchQuery}
-                      onChange={(e) => setProductSearchQuery(e?.target?.value)}
-                      placeholder="Product name or ID..."
-                      className="w-full h-10 pl-10 pr-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                    />
-
-                    <Icon
-                      name="MagnifyingGlassIcon"
-                      size={20}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Category</label>
-                  <select
-                    value={filterCategory}
-                    onChange={(e) => setFilterCategory(e?.target?.value)}
-                    className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                  >
-                    <option value="All">All Categories</option>
-                    <option value="Men">Men</option>
-                    <option value="Women">Women</option>
-                    <option value="Compression">Compression</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Status</label>
-                  <select
-                    value={filterProductStatus}
-                    onChange={(e) => setFilterProductStatus(e?.target?.value)}
-                    className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                  >
-                    <option value="All">All Status</option>
-                    <option value="Active">Active</option>
-                    <option value="Draft">Draft</option>
-                    <option value="Out of Stock">Out of Stock</option>
-                  </select>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
-            </div>
 
-            {/* Add Product Form */}
-            {showAddProductForm && (
-              <div className="bg-surface border border-border rounded-lg p-6 mb-8">
-                <h3 className="font-heading text-xl font-semibold text-foreground mb-4">
-                  Add New Product
-                </h3>
-                <form onSubmit={handleAddProduct} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Filters */}
+              <div className="bg-surface border border-border rounded-lg p-6 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Product Name
+                      Search Orders
                     </label>
-                    <input
-                      type="text"
-                      value={newProduct?.name}
-                      onChange={(e) => setNewProduct({ ...newProduct, name: e?.target?.value })}
-                      required
-                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="Enter product name"
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={orderSearchQuery}
+                        onChange={(e) => setOrderSearchQuery(e?.target?.value)}
+                        placeholder="Order ID, Customer name, Email..."
+                        className="w-full h-10 pl-10 pr-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                      />
+
+                      <Icon
+                        name="MagnifyingGlassIcon"
+                        size={20}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary"
+                      />
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Category
+                      Order Status
                     </label>
                     <select
-                      value={newProduct?.category}
-                      onChange={(e) => setNewProduct({ ...newProduct, category: e?.target?.value })}
-                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      value={filterStatus}
+                      onChange={(e) => setFilterStatus(e?.target?.value)}
+                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                    >
+                      <option value="All">All Status</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Shipped">Shipped</option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Cancelled">Cancelled</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Payment Method
+                    </label>
+                    <select
+                      value={filterPaymentMethod}
+                      onChange={(e) => setFilterPaymentMethod(e?.target?.value)}
+                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                    >
+                      <option value="All">All Methods</option>
+                      <option value="Credit Card">Credit Card</option>
+                      <option value="UPI">UPI</option>
+                      <option value="Net Banking">Net Banking</option>
+                      <option value="COD">COD</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Orders Table */}
+              <div className="bg-surface border border-border rounded-lg overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-muted/50 border-b border-border">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider"></th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                          Order ID
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                          Customer
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                          Date
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                          Amount
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                          Payment
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                          Status
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredOrders?.map((order) => (
+                        <OrderRow
+                          key={order?.id}
+                          order={order}
+                          onStatusChange={handleStatusChange}
+                          onToggleExpand={toggleExpand}
+                          isExpanded={expandedOrders?.has(order?.id)}
+                        />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {filteredOrders?.length === 0 && (
+                  <div className="text-center py-12">
+                    <Icon name="InboxIcon" size={48} className="mx-auto text-text-secondary mb-4" />
+                    <p className="text-text-secondary">No orders found matching your filters</p>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Products Tab */}
+          {activeTab === 'products' && (
+            <>
+              {/* Product Stats */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-text-secondary text-sm">Total Products</p>
+                      <p className="font-data text-2xl font-bold text-foreground mt-1">
+                        {loading ? '...' : totalProducts}
+                      </p>
+                    </div>
+                    <Icon name="CubeIcon" size={32} className="text-primary" />
+                  </div>
+                </div>
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-text-secondary text-sm">Active Products</p>
+                      <p className="font-data text-2xl font-bold text-green-400 mt-1">
+                        {loading ? '...' : activeProducts}
+                      </p>
+                    </div>
+                    <Icon name="CheckCircleIcon" size={32} className="text-green-400" />
+                  </div>
+                </div>
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-text-secondary text-sm">Low Stock</p>
+                      <p className="font-data text-2xl font-bold text-yellow-400 mt-1">
+                        {loading ? '...' : lowStock}
+                      </p>
+                    </div>
+                    <Icon name="ExclamationTriangleIcon" size={32} className="text-yellow-400" />
+                  </div>
+                </div>
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-text-secondary text-sm">Out of Stock</p>
+                      <p className="font-data text-2xl font-bold text-red-400 mt-1">
+                        {loading ? '...' : outOfStock}
+                      </p>
+                    </div>
+                    <Icon name="XCircleIcon" size={32} className="text-red-400" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Product Performance Charts */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <Icon name="ChartBarIcon" size={20} />
+                    Category Performance
+                  </h3>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={categoryPerformance}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                      <XAxis dataKey="category" stroke="#888" />
+                      <YAxis stroke="#888" />
+                      <Tooltip
+                        contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
+                        formatter={(value, name) => {
+                          if (name === 'Revenue') return [`₹${value?.toLocaleString('en-IN')}`, name];
+                          return [value, name];
+                        }}
+                      />
+                      <Legend />
+                      <Bar dataKey="sales" fill="#8b5cf6" name="Sales" />
+                      <Bar dataKey="views" fill="#06b6d4" name="Views" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+
+                <div className="bg-surface border border-border rounded-lg p-6">
+                  <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <Icon name="CurrencyRupeeIcon" size={20} />
+                    Revenue by Category
+                  </h3>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={categoryPerformance}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                      <XAxis dataKey="category" stroke="#888" />
+                      <YAxis stroke="#888" />
+                      <Tooltip
+                        contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
+                        formatter={(value) => [`₹${value?.toLocaleString('en-IN')}`, 'Revenue']}
+                      />
+                      <Legend />
+                      <Bar dataKey="revenue" fill="#f59e0b" name="Revenue" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              {/* Top Products */}
+              <div className="bg-surface border border-border rounded-lg p-6 mb-8">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <Icon name="TrophyIcon" size={20} />
+                  Top Performing Products
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="border-b border-border">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
+                          Rank
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
+                          Product
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
+                          Category
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
+                          Sales
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
+                          Views
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase">
+                          Revenue
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {topProducts?.map((product, index) => {
+                        const revenue = (product?.sales || 0) * product?.price;
+                        return (
+                          <tr key={product?.id} className="border-b border-border hover:bg-muted/30">
+                            <td className="px-4 py-3">
+                              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary font-bold">
+                                {index + 1}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3">
+                              <div className="text-sm font-semibold text-foreground">
+                                {product?.name}
+                              </div>
+                              <div className="text-xs text-text-secondary">{product?.id}</div>
+                            </td>
+                            <td className="px-4 py-3 text-sm text-text-secondary">
+                              {product?.category}
+                            </td>
+                            <td className="px-4 py-3 text-sm text-foreground">
+                              {product?.sales || 0}
+                            </td>
+                            <td className="px-4 py-3 text-sm text-text-secondary">
+                              {product?.views || 0}
+                            </td>
+                            <td className="px-4 py-3">
+                              <span className="font-data text-sm font-bold text-primary">
+                                ₹{revenue?.toLocaleString('en-IN')}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Filters and Add Button */}
+              <div className="bg-surface border border-border rounded-lg p-6 mb-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-heading text-lg font-semibold text-foreground">
+                    Product Inventory
+                  </h3>
+                  <button
+                    onClick={() => setShowAddProductForm(!showAddProductForm)}
+                    className="px-6 py-3 bg-primary text-primary-foreground rounded-md font-semibold hover:bg-primary/90 transition-all flex items-center gap-2"
+                  >
+                    <Icon name="PlusIcon" size={20} />
+                    Add Product
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Search Products
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={productSearchQuery}
+                        onChange={(e) => setProductSearchQuery(e?.target?.value)}
+                        placeholder="Product name or ID..."
+                        className="w-full h-10 pl-10 pr-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                      />
+
+                      <Icon
+                        name="MagnifyingGlassIcon"
+                        size={20}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">Category</label>
+                    <select
+                      value={filterCategory}
+                      onChange={(e) => setFilterCategory(e?.target?.value)}
+                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                    >
+                      <option value="All">All Categories</option>
+                      <option value="Men">Men</option>
+                      <option value="Women">Women</option>
+                      <option value="Compression">Compression</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">Status</label>
+                    <select
+                      value={filterProductStatus}
+                      onChange={(e) => setFilterProductStatus(e?.target?.value)}
+                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                    >
+                      <option value="All">All Status</option>
+                      <option value="Active">Active</option>
+                      <option value="Draft">Draft</option>
+                      <option value="Out of Stock">Out of Stock</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Add Product Form */}
+              {showAddProductForm && (
+                <div className="bg-surface border border-border rounded-lg p-6 mb-8">
+                  <h3 className="font-heading text-xl font-semibold text-foreground mb-4">
+                    Add New Product
+                  </h3>
+                  <form onSubmit={handleAddProduct} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Product Name
+                      </label>
+                      <input
+                        type="text"
+                        value={newProduct?.name}
+                        onChange={(e) => setNewProduct({ ...newProduct, name: e?.target?.value })}
+                        required
+                        className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="Enter product name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Category
+                      </label>
+                      <select
+                        value={newProduct?.category}
+                        onChange={(e) => setNewProduct({ ...newProduct, category: e?.target?.value })}
+                        className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      >
+                        <option value="Men">Men</option>
+                        <option value="Women">Women</option>
+                        <option value="Compression">Compression</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Price (₹)
+                      </label>
+                      <input
+                        type="number"
+                        value={newProduct?.price}
+                        onChange={(e) =>
+                          setNewProduct({ ...newProduct, price: Number(e?.target?.value) })
+                        }
+                        required
+                        min="0"
+                        className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="0"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Stock Quantity
+                      </label>
+                      <input
+                        type="number"
+                        value={newProduct?.stockQuantity}
+                        onChange={(e) =>
+                          setNewProduct({ ...newProduct, stockQuantity: Number(e?.target?.value) })
+                        }
+                        required
+                        min="0"
+                        className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="0"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Status</label>
+                      <select
+                        value={newProduct?.isActive}
+                        onChange={(e) =>
+                          setNewProduct({ ...newProduct, isActive: e?.target?.value === 'true' })
+                        }
+                        className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      >
+                        <option value="false">Draft</option>
+                        <option value="true">Active</option>
+                      </select>
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Product Image
+                      </label>
+                      <div className="flex gap-4 items-start">
+                        {newProduct?.imageUrl && (
+                          <div className="w-24 h-24 relative rounded-lg overflow-hidden border border-border">
+                            <img
+                              src={newProduct.imageUrl}
+                              alt="Preview"
+                              className="w-full h-full object-cover"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setNewProduct({ ...newProduct, imageUrl: '' })}
+                              className="absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white rounded-full p-1 transition-colors"
+                            >
+                              <Icon name="XMarkIcon" size={12} />
+                            </button>
+                          </div>
+                        )}
+                        <div className="flex-1">
+                          <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-border rounded-lg cursor-pointer bg-muted hover:bg-muted/80 transition-color">
+                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                              <Icon
+                                name="CloudArrowUpIcon"
+                                size={24}
+                                className="text-text-secondary mb-2"
+                              />
+                              <p className="text-xs text-text-secondary">
+                                Click to upload or drag and drop
+                              </p>
+                              <p className="text-[10px] text-text-secondary mt-1">
+                                SVG, PNG, JPG or GIF (MAX. 5MB)
+                              </p>
+                            </div>
+                            <input
+                              type="file"
+                              className="hidden"
+                              accept="image/*"
+                              onChange={async (e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                  try {
+                                    // Show temporary loading state if needed
+                                    const url = await uploadService.uploadFile(file);
+                                    setNewProduct({ ...newProduct, imageUrl: url });
+                                  } catch (error) {
+                                    alert(error.message);
+                                  }
+                                }
+                              }}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Description
+                      </label>
+                      <textarea
+                        value={newProduct?.description}
+                        onChange={(e) =>
+                          setNewProduct({ ...newProduct, description: e?.target?.value })
+                        }
+                        className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        rows={3}
+                        placeholder="Product description"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-foreground mb-2">Brand</label>
+                      <input
+                        type="text"
+                        value={newProduct?.brand}
+                        onChange={(e) => setNewProduct({ ...newProduct, brand: e?.target?.value })}
+                        className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="Brand Name"
+                      />
+                    </div>
+                    <div className="flex items-end gap-2 md:col-span-2">
+                      <button
+                        type="submit"
+                        className="flex-1 h-10 bg-primary text-primary-foreground rounded-md font-semibold hover:bg-primary/90 transition-colors"
+                      >
+                        Save Product
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setShowAddProductForm(false)}
+                        className="flex-1 h-10 bg-muted text-foreground rounded-md font-semibold hover:bg-muted/80 transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
+              {/* Products Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {loading ? (
+                  <div className="col-span-3 text-center py-20">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                    <p className="mt-4 text-text-secondary">Loading products...</p>
+                  </div>
+                ) : (
+                  filteredProducts?.map((product) => (
+                    <ProductCard
+                      key={product?.id}
+                      product={product}
+                      onEdit={handleEditProduct}
+                      onDelete={handleDeleteProduct}
+                      onImageClick={handleImageClick}
+                    />
+                  ))
+                )}
+              </div>
+
+              {!loading && filteredProducts?.length === 0 && (
+                <div className="text-center py-12 bg-surface border border-border rounded-lg">
+                  <Icon name="InboxIcon" size={48} className="mx-auto text-text-secondary mb-4" />
+                  <p className="text-text-secondary">No products found matching your filters</p>
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Promo Codes Tab */}
+          {activeTab === 'promos' && (
+            <>
+              <div className="flex justify-between items-center mb-8">
+                <div>
+                  <h2 className="font-heading text-2xl font-bold text-foreground mb-2">
+                    Promo Code Management
+                  </h2>
+                  <p className="text-text-secondary">Create and manage promotional discount codes</p>
+                </div>
+                <button
+                  onClick={() => setShowCreatePromoModal(true)}
+                  className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold"
+                >
+                  <Icon name="PlusIcon" size={20} />
+                  Create Promo Code
+                </button>
+              </div>
+
+              {promoError && (
+                <div className="bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded mb-6">
+                  {promoError}
+                </div>
+              )}
+
+              <div className="grid gap-4">
+                {promoCodes?.map((code) => (
+                  <div key={code?.id} className="bg-surface border border-border rounded-lg p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="font-heading text-xl font-bold text-foreground">
+                            {code?.code}
+                          </h3>
+                          <span className={`text-sm font-semibold ${getStatusColor(code?.status)}`}>
+                            {code?.status?.toUpperCase()}
+                          </span>
+                        </div>
+                        <p className="text-text-secondary mb-3">
+                          {code?.discount_percentage}% discount
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                          <div>
+                            <p className="text-text-secondary">Valid From</p>
+                            <p className="text-foreground font-data">
+                              {new Date(code?.valid_from)?.toLocaleDateString()}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-text-secondary">Valid Until</p>
+                            <p className="text-foreground font-data">
+                              {new Date(code?.valid_until)?.toLocaleDateString()}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-text-secondary">Usage</p>
+                            <div className="flex items-center gap-2">
+                              <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                                <div
+                                  className="bg-primary h-full transition-all duration-300"
+                                  style={{
+                                    width: `${getUsagePercentage(code?.current_uses, code?.max_uses)}%`,
+                                  }}
+                                />
+                              </div>
+                              <span className="text-foreground font-data whitespace-nowrap">
+                                {code?.current_uses} / {code?.max_uses}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 ml-4">
+                        {code?.status === 'active' && (
+                          <button
+                            onClick={() => updatePromoCodeStatus(code?.id, 'disabled')}
+                            className="p-2 text-yellow-400 hover:bg-yellow-400/10 rounded transition-colors"
+                            title="Disable"
+                          >
+                            <Icon name="PauseIcon" size={20} />
+                          </button>
+                        )}
+                        {code?.status === 'disabled' && (
+                          <button
+                            onClick={() => updatePromoCodeStatus(code?.id, 'active')}
+                            className="p-2 text-green-400 hover:bg-green-400/10 rounded transition-colors"
+                            title="Enable"
+                          >
+                            <Icon name="PlayIcon" size={20} />
+                          </button>
+                        )}
+                        <button
+                          onClick={() => deletePromoCode(code?.id)}
+                          className="p-2 text-red-400 hover:bg-red-400/10 rounded transition-colors"
+                          title="Delete"
+                        >
+                          <Icon name="TrashIcon" size={20} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {promoCodes?.length === 0 && !promoLoading && (
+                <div className="text-center py-12 bg-surface border border-border rounded-lg">
+                  <Icon name="TicketIcon" size={64} className="text-text-secondary mx-auto mb-4" />
+                  <h3 className="font-heading text-xl font-semibold text-foreground mb-2">
+                    No Promo Codes Yet
+                  </h3>
+                  <p className="text-text-secondary mb-4">
+                    Create your first promo code to get started
+                  </p>
+                  <button
+                    onClick={() => setShowCreatePromoModal(true)}
+                    className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold"
+                  >
+                    Create Promo Code
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        {/* Image Preview Modal */}
+        {showImageModal && selectedProduct && (
+          <div
+            className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowImageModal(false)}
+          >
+            <div
+              className="bg-surface border border-border rounded-lg max-w-4xl w-full p-6"
+              onClick={(e) => e?.stopPropagation()}
+            >
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="font-heading text-2xl font-bold text-foreground">
+                  {selectedProduct?.name}
+                </h2>
+                <button
+                  onClick={() => setShowImageModal(false)}
+                  className="p-1 hover:bg-muted rounded transition-colors"
+                >
+                  <Icon name="XMarkIcon" size={24} />
+                </button>
+              </div>
+              <div className="aspect-video bg-muted rounded-lg overflow-hidden mb-4">
+                <AppImage
+                  src={selectedProduct?.image}
+                  alt={selectedProduct?.name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-text-secondary">Product ID</p>
+                  <p className="text-foreground font-data">{selectedProduct?.id}</p>
+                </div>
+                <div>
+                  <p className="text-text-secondary">Category</p>
+                  <p className="text-foreground">{selectedProduct?.category}</p>
+                </div>
+                <div>
+                  <p className="text-text-secondary">Price</p>
+                  <p className="text-primary font-data text-xl font-bold">
+                    ₹{selectedProduct?.price?.toLocaleString('en-IN')}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-text-secondary">Stock</p>
+                  <p className="text-foreground font-data">{selectedProduct?.stock} units</p>
+                </div>
+              </div>
+              {selectedProduct?.description && (
+                <div className="mt-4">
+                  <p className="text-text-secondary text-sm mb-1">Description</p>
+                  <p className="text-foreground">{selectedProduct?.description}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Edit Product Modal */}
+        {showEditModal && selectedProduct && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-surface border border-border rounded-lg max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="font-heading text-2xl font-bold text-foreground">Edit Product</h2>
+                <button
+                  onClick={() => {
+                    setShowEditModal(false);
+                    setSelectedProduct(null);
+                  }}
+                  className="p-1 hover:bg-muted rounded transition-colors"
+                >
+                  <Icon name="XMarkIcon" size={24} />
+                </button>
+              </div>
+
+              <form
+                onSubmit={(e) => {
+                  e?.preventDefault();
+                  handleUpdateProduct();
+                }}
+                className="space-y-4"
+              >
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Product Name
+                  </label>
+                  <input
+                    type="text"
+                    value={selectedProduct?.name}
+                    onChange={(e) =>
+                      setSelectedProduct({ ...selectedProduct, name: e?.target?.value })
+                    }
+                    className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">Category</label>
+                    <select
+                      value={selectedProduct?.category}
+                      onChange={(e) =>
+                        setSelectedProduct({ ...selectedProduct, category: e?.target?.value })
+                      }
+                      className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     >
                       <option value="Men">Men</option>
                       <option value="Women">Women</option>
@@ -1317,683 +1730,273 @@ export default function AdminDashboard() {
                     </select>
                   </div>
                   <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">Status</label>
+                    <select
+                      value={selectedProduct?.status}
+                      onChange={(e) =>
+                        setSelectedProduct({ ...selectedProduct, status: e?.target?.value })
+                      }
+                      className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="Active">Active</option>
+                      <option value="Draft">Draft</option>
+                      <option value="Out of Stock">Out of Stock</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
                       Price (₹)
                     </label>
                     <input
                       type="number"
-                      value={newProduct?.price}
+                      value={selectedProduct?.price}
                       onChange={(e) =>
-                        setNewProduct({ ...newProduct, price: Number(e?.target?.value) })
-                      }
-                      required
-                      min="0"
-                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="0"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Stock Quantity
-                    </label>
-                    <input
-                      type="number"
-                      value={newProduct?.stockQuantity}
-                      onChange={(e) =>
-                        setNewProduct({ ...newProduct, stockQuantity: Number(e?.target?.value) })
-                      }
-                      required
-                      min="0"
-                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="0"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Status</label>
-                    <select
-                      value={newProduct?.isActive}
-                      onChange={(e) =>
-                        setNewProduct({ ...newProduct, isActive: e?.target?.value === 'true' })
-                      }
-                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    >
-                      <option value="false">Draft</option>
-                      <option value="true">Active</option>
-                    </select>
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Product Image
-                    </label>
-                    <div className="flex gap-4 items-start">
-                      {newProduct?.imageUrl && (
-                        <div className="w-24 h-24 relative rounded-lg overflow-hidden border border-border">
-                          <img
-                            src={newProduct.imageUrl}
-                            alt="Preview"
-                            className="w-full h-full object-cover"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => setNewProduct({ ...newProduct, imageUrl: '' })}
-                            className="absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white rounded-full p-1 transition-colors"
-                          >
-                            <Icon name="XMarkIcon" size={12} />
-                          </button>
-                        </div>
-                      )}
-                      <div className="flex-1">
-                        <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-border rounded-lg cursor-pointer bg-muted hover:bg-muted/80 transition-color">
-                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <Icon
-                              name="CloudArrowUpIcon"
-                              size={24}
-                              className="text-text-secondary mb-2"
-                            />
-                            <p className="text-xs text-text-secondary">
-                              Click to upload or drag and drop
-                            </p>
-                            <p className="text-[10px] text-text-secondary mt-1">
-                              SVG, PNG, JPG or GIF (MAX. 5MB)
-                            </p>
-                          </div>
-                          <input
-                            type="file"
-                            className="hidden"
-                            accept="image/*"
-                            onChange={async (e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                try {
-                                  // Show temporary loading state if needed
-                                  const url = await uploadService.uploadFile(file);
-                                  setNewProduct({ ...newProduct, imageUrl: url });
-                                } catch (error) {
-                                  alert(error.message);
-                                }
-                              }
-                            }}
-                          />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Description
-                    </label>
-                    <textarea
-                      value={newProduct?.description}
-                      onChange={(e) =>
-                        setNewProduct({ ...newProduct, description: e?.target?.value })
+                        setSelectedProduct({ ...selectedProduct, price: Number(e?.target?.value) })
                       }
                       className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      rows={3}
-                      placeholder="Product description"
+                      min="0"
+                      required
                     />
                   </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-foreground mb-2">Brand</label>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">Stock</label>
                     <input
-                      type="text"
-                      value={newProduct?.brand}
-                      onChange={(e) => setNewProduct({ ...newProduct, brand: e?.target?.value })}
-                      className="w-full h-10 px-4 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="Brand Name"
+                      type="number"
+                      value={selectedProduct?.stock}
+                      onChange={(e) =>
+                        setSelectedProduct({ ...selectedProduct, stock: Number(e?.target?.value) })
+                      }
+                      className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      min="0"
+                      required
                     />
                   </div>
-                  <div className="flex items-end gap-2 md:col-span-2">
-                    <button
-                      type="submit"
-                      className="flex-1 h-10 bg-primary text-primary-foreground rounded-md font-semibold hover:bg-primary/90 transition-colors"
-                    >
-                      Save Product
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setShowAddProductForm(false)}
-                      className="flex-1 h-10 bg-muted text-foreground rounded-md font-semibold hover:bg-muted/80 transition-colors"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
-
-            {/* Products Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {loading ? (
-                <div className="col-span-3 text-center py-20">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-                  <p className="mt-4 text-text-secondary">Loading products...</p>
                 </div>
-              ) : (
-                filteredProducts?.map((product) => (
-                  <ProductCard
-                    key={product?.id}
-                    product={product}
-                    onEdit={handleEditProduct}
-                    onDelete={handleDeleteProduct}
-                    onImageClick={handleImageClick}
-                  />
-                ))
-              )}
-            </div>
 
-            {!loading && filteredProducts?.length === 0 && (
-              <div className="text-center py-12 bg-surface border border-border rounded-lg">
-                <Icon name="InboxIcon" size={48} className="mx-auto text-text-secondary mb-4" />
-                <p className="text-text-secondary">No products found matching your filters</p>
-              </div>
-            )}
-          </>
-        )}
-
-        {/* Promo Codes Tab */}
-        {activeTab === 'promos' && (
-          <>
-            <div className="flex justify-between items-center mb-8">
-              <div>
-                <h2 className="font-heading text-2xl font-bold text-foreground mb-2">
-                  Promo Code Management
-                </h2>
-                <p className="text-text-secondary">Create and manage promotional discount codes</p>
-              </div>
-              <button
-                onClick={() => setShowCreatePromoModal(true)}
-                className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold"
-              >
-                <Icon name="PlusIcon" size={20} />
-                Create Promo Code
-              </button>
-            </div>
-
-            {promoError && (
-              <div className="bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded mb-6">
-                {promoError}
-              </div>
-            )}
-
-            <div className="grid gap-4">
-              {promoCodes?.map((code) => (
-                <div key={code?.id} className="bg-surface border border-border rounded-lg p-6">
-                  <div className="flex justify-between items-start mb-4">
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Product Image
+                  </label>
+                  <div className="flex gap-4 items-start">
+                    {selectedProduct?.image && (
+                      <div className="w-24 h-24 relative rounded-lg overflow-hidden border border-border">
+                        <img
+                          src={selectedProduct.image}
+                          alt="Preview"
+                          className="w-full h-full object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setSelectedProduct({ ...selectedProduct, image: '' })}
+                          className="absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white rounded-full p-1 transition-colors"
+                        >
+                          <Icon name="XMarkIcon" size={12} />
+                        </button>
+                      </div>
+                    )}
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="font-heading text-xl font-bold text-foreground">
-                          {code?.code}
-                        </h3>
-                        <span className={`text-sm font-semibold ${getStatusColor(code?.status)}`}>
-                          {code?.status?.toUpperCase()}
-                        </span>
-                      </div>
-                      <p className="text-text-secondary mb-3">
-                        {code?.discount_percentage}% discount
-                      </p>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                        <div>
-                          <p className="text-text-secondary">Valid From</p>
-                          <p className="text-foreground font-data">
-                            {new Date(code?.valid_from)?.toLocaleDateString()}
+                      <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-border rounded-lg cursor-pointer bg-muted hover:bg-muted/80 transition-color">
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                          <Icon
+                            name="CloudArrowUpIcon"
+                            size={24}
+                            className="text-text-secondary mb-2"
+                          />
+                          <p className="text-xs text-text-secondary">
+                            Click to upload or drag and drop
+                          </p>
+                          <p className="text-[10px] text-text-secondary mt-1">
+                            SVG, PNG, JPG or GIF (MAX. 5MB)
                           </p>
                         </div>
-                        <div>
-                          <p className="text-text-secondary">Valid Until</p>
-                          <p className="text-foreground font-data">
-                            {new Date(code?.valid_until)?.toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-text-secondary">Usage</p>
-                          <div className="flex items-center gap-2">
-                            <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                              <div
-                                className="bg-primary h-full transition-all duration-300"
-                                style={{
-                                  width: `${getUsagePercentage(code?.current_uses, code?.max_uses)}%`,
-                                }}
-                              />
-                            </div>
-                            <span className="text-foreground font-data whitespace-nowrap">
-                              {code?.current_uses} / {code?.max_uses}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex gap-2 ml-4">
-                      {code?.status === 'active' && (
-                        <button
-                          onClick={() => updatePromoCodeStatus(code?.id, 'disabled')}
-                          className="p-2 text-yellow-400 hover:bg-yellow-400/10 rounded transition-colors"
-                          title="Disable"
-                        >
-                          <Icon name="PauseIcon" size={20} />
-                        </button>
-                      )}
-                      {code?.status === 'disabled' && (
-                        <button
-                          onClick={() => updatePromoCodeStatus(code?.id, 'active')}
-                          className="p-2 text-green-400 hover:bg-green-400/10 rounded transition-colors"
-                          title="Enable"
-                        >
-                          <Icon name="PlayIcon" size={20} />
-                        </button>
-                      )}
-                      <button
-                        onClick={() => deletePromoCode(code?.id)}
-                        className="p-2 text-red-400 hover:bg-red-400/10 rounded transition-colors"
-                        title="Delete"
-                      >
-                        <Icon name="TrashIcon" size={20} />
-                      </button>
+                        <input
+                          type="file"
+                          className="hidden"
+                          accept="image/*"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              try {
+                                const url = await uploadService.uploadFile(file);
+                                setSelectedProduct({ ...selectedProduct, image: url });
+                              } catch (error) {
+                                alert(error.message);
+                              }
+                            }
+                          }}
+                        />
+                      </label>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
 
-            {promoCodes?.length === 0 && !promoLoading && (
-              <div className="text-center py-12 bg-surface border border-border rounded-lg">
-                <Icon name="TicketIcon" size={64} className="text-text-secondary mx-auto mb-4" />
-                <h3 className="font-heading text-xl font-semibold text-foreground mb-2">
-                  No Promo Codes Yet
-                </h3>
-                <p className="text-text-secondary mb-4">
-                  Create your first promo code to get started
-                </p>
-                <button
-                  onClick={() => setShowCreatePromoModal(true)}
-                  className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold"
-                >
-                  Create Promo Code
-                </button>
-              </div>
-            )}
-          </>
-        )}
-      </div>
-
-      {/* Image Preview Modal */}
-      {showImageModal && selectedProduct && (
-        <div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
-          onClick={() => setShowImageModal(false)}
-        >
-          <div
-            className="bg-surface border border-border rounded-lg max-w-4xl w-full p-6"
-            onClick={(e) => e?.stopPropagation()}
-          >
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="font-heading text-2xl font-bold text-foreground">
-                {selectedProduct?.name}
-              </h2>
-              <button
-                onClick={() => setShowImageModal(false)}
-                className="p-1 hover:bg-muted rounded transition-colors"
-              >
-                <Icon name="XMarkIcon" size={24} />
-              </button>
-            </div>
-            <div className="aspect-video bg-muted rounded-lg overflow-hidden mb-4">
-              <AppImage
-                src={selectedProduct?.image}
-                alt={selectedProduct?.name}
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <p className="text-text-secondary">Product ID</p>
-                <p className="text-foreground font-data">{selectedProduct?.id}</p>
-              </div>
-              <div>
-                <p className="text-text-secondary">Category</p>
-                <p className="text-foreground">{selectedProduct?.category}</p>
-              </div>
-              <div>
-                <p className="text-text-secondary">Price</p>
-                <p className="text-primary font-data text-xl font-bold">
-                  ₹{selectedProduct?.price?.toLocaleString('en-IN')}
-                </p>
-              </div>
-              <div>
-                <p className="text-text-secondary">Stock</p>
-                <p className="text-foreground font-data">{selectedProduct?.stock} units</p>
-              </div>
-            </div>
-            {selectedProduct?.description && (
-              <div className="mt-4">
-                <p className="text-text-secondary text-sm mb-1">Description</p>
-                <p className="text-foreground">{selectedProduct?.description}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Edit Product Modal */}
-      {showEditModal && selectedProduct && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-surface border border-border rounded-lg max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="font-heading text-2xl font-bold text-foreground">Edit Product</h2>
-              <button
-                onClick={() => {
-                  setShowEditModal(false);
-                  setSelectedProduct(null);
-                }}
-                className="p-1 hover:bg-muted rounded transition-colors"
-              >
-                <Icon name="XMarkIcon" size={24} />
-              </button>
-            </div>
-
-            <form
-              onSubmit={(e) => {
-                e?.preventDefault();
-                handleUpdateProduct();
-              }}
-              className="space-y-4"
-            >
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Product Name
-                </label>
-                <input
-                  type="text"
-                  value={selectedProduct?.name}
-                  onChange={(e) =>
-                    setSelectedProduct({ ...selectedProduct, name: e?.target?.value })
-                  }
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Category</label>
-                  <select
-                    value={selectedProduct?.category}
-                    onChange={(e) =>
-                      setSelectedProduct({ ...selectedProduct, category: e?.target?.value })
-                    }
-                    className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  >
-                    <option value="Men">Men</option>
-                    <option value="Women">Women</option>
-                    <option value="Compression">Compression</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Status</label>
-                  <select
-                    value={selectedProduct?.status}
-                    onChange={(e) =>
-                      setSelectedProduct({ ...selectedProduct, status: e?.target?.value })
-                    }
-                    className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Draft">Draft</option>
-                    <option value="Out of Stock">Out of Stock</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Price (₹)
+                    Description
+                  </label>
+                  <textarea
+                    value={selectedProduct?.description}
+                    onChange={(e) =>
+                      setSelectedProduct({ ...selectedProduct, description: e?.target?.value })
+                    }
+                    className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    rows={3}
+                  />
+                </div>
+
+                {selectedProduct?.image && (
+                  <div>
+                    <p className="text-sm font-medium text-foreground mb-2">Preview</p>
+                    <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+                      <AppImage
+                        src={selectedProduct?.image}
+                        alt={selectedProduct?.name}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex gap-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowEditModal(false);
+                      setSelectedProduct(null);
+                    }}
+                    className="flex-1 px-4 py-2 bg-muted text-foreground rounded-md hover:bg-muted/80 transition-colors font-semibold"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Create Promo Code Modal */}
+        {showCreatePromoModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-surface border border-border rounded-lg max-w-md w-full p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="font-heading text-xl font-bold text-foreground">Create Promo Code</h2>
+                <button
+                  onClick={() => setShowCreatePromoModal(false)}
+                  className="p-1 hover:bg-muted rounded transition-colors"
+                >
+                  <Icon name="XMarkIcon" size={24} />
+                </button>
+              </div>
+
+              <form onSubmit={createPromoCode} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Code</label>
+                  <input
+                    type="text"
+                    value={newPromoCode?.code}
+                    onChange={(e) =>
+                      setNewPromoCode({ ...newPromoCode, code: e?.target?.value?.toUpperCase() })
+                    }
+                    className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="SUMMER2024"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Discount Percentage (%)
                   </label>
                   <input
                     type="number"
-                    value={selectedProduct?.price}
+                    min="1"
+                    max="100"
+                    value={newPromoCode?.discount_percentage}
                     onChange={(e) =>
-                      setSelectedProduct({ ...selectedProduct, price: Number(e?.target?.value) })
+                      setNewPromoCode({
+                        ...newPromoCode,
+                        discount_percentage: parseInt(e?.target?.value),
+                      })
                     }
                     className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    min="0"
                     required
                   />
                 </div>
+
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Stock</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Maximum Uses
+                  </label>
                   <input
                     type="number"
-                    value={selectedProduct?.stock}
+                    min="1"
+                    value={newPromoCode?.max_uses}
                     onChange={(e) =>
-                      setSelectedProduct({ ...selectedProduct, stock: Number(e?.target?.value) })
+                      setNewPromoCode({ ...newPromoCode, max_uses: parseInt(e?.target?.value) })
                     }
                     className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    min="0"
                     required
                   />
                 </div>
-              </div>
 
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Product Image
-                </label>
-                <div className="flex gap-4 items-start">
-                  {selectedProduct?.image && (
-                    <div className="w-24 h-24 relative rounded-lg overflow-hidden border border-border">
-                      <img
-                        src={selectedProduct.image}
-                        alt="Preview"
-                        className="w-full h-full object-cover"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setSelectedProduct({ ...selectedProduct, image: '' })}
-                        className="absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white rounded-full p-1 transition-colors"
-                      >
-                        <Icon name="XMarkIcon" size={12} />
-                      </button>
-                    </div>
-                  )}
-                  <div className="flex-1">
-                    <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-border rounded-lg cursor-pointer bg-muted hover:bg-muted/80 transition-color">
-                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <Icon
-                          name="CloudArrowUpIcon"
-                          size={24}
-                          className="text-text-secondary mb-2"
-                        />
-                        <p className="text-xs text-text-secondary">
-                          Click to upload or drag and drop
-                        </p>
-                        <p className="text-[10px] text-text-secondary mt-1">
-                          SVG, PNG, JPG or GIF (MAX. 5MB)
-                        </p>
-                      </div>
-                      <input
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files?.[0];
-                          if (file) {
-                            try {
-                              const url = await uploadService.uploadFile(file);
-                              setSelectedProduct({ ...selectedProduct, image: url });
-                            } catch (error) {
-                              alert(error.message);
-                            }
-                          }
-                        }}
-                      />
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Description
-                </label>
-                <textarea
-                  value={selectedProduct?.description}
-                  onChange={(e) =>
-                    setSelectedProduct({ ...selectedProduct, description: e?.target?.value })
-                  }
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  rows={3}
-                />
-              </div>
-
-              {selectedProduct?.image && (
                 <div>
-                  <p className="text-sm font-medium text-foreground mb-2">Preview</p>
-                  <div className="aspect-video bg-muted rounded-lg overflow-hidden">
-                    <AppImage
-                      src={selectedProduct?.image}
-                      alt={selectedProduct?.name}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Valid From</label>
+                  <input
+                    type="datetime-local"
+                    value={newPromoCode?.valid_from}
+                    onChange={(e) =>
+                      setNewPromoCode({ ...newPromoCode, valid_from: e?.target?.value })
+                    }
+                    className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
+                  />
                 </div>
-              )}
 
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowEditModal(false);
-                    setSelectedProduct(null);
-                  }}
-                  className="flex-1 px-4 py-2 bg-muted text-foreground rounded-md hover:bg-muted/80 transition-colors font-semibold"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-semibold"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Valid Until
+                  </label>
+                  <input
+                    type="datetime-local"
+                    value={newPromoCode?.valid_until}
+                    onChange={(e) =>
+                      setNewPromoCode({ ...newPromoCode, valid_until: e?.target?.value })
+                    }
+                    className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
+                  />
+                </div>
 
-      {/* Create Promo Code Modal */}
-      {showCreatePromoModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-surface border border-border rounded-lg max-w-md w-full p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="font-heading text-xl font-bold text-foreground">Create Promo Code</h2>
-              <button
-                onClick={() => setShowCreatePromoModal(false)}
-                className="p-1 hover:bg-muted rounded transition-colors"
-              >
-                <Icon name="XMarkIcon" size={24} />
-              </button>
+                <div className="flex gap-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowCreatePromoModal(false)}
+                    className="flex-1 px-4 py-2 bg-muted text-foreground rounded-md hover:bg-muted/80 transition-colors font-semibold"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={promoLoading}
+                    className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 font-semibold"
+                  >
+                    {promoLoading ? 'Creating...' : 'Create'}
+                  </button>
+                </div>
+              </form>
             </div>
-
-            <form onSubmit={createPromoCode} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Code</label>
-                <input
-                  type="text"
-                  value={newPromoCode?.code}
-                  onChange={(e) =>
-                    setNewPromoCode({ ...newPromoCode, code: e?.target?.value?.toUpperCase() })
-                  }
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="SUMMER2024"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Discount Percentage (%)
-                </label>
-                <input
-                  type="number"
-                  min="1"
-                  max="100"
-                  value={newPromoCode?.discount_percentage}
-                  onChange={(e) =>
-                    setNewPromoCode({
-                      ...newPromoCode,
-                      discount_percentage: parseInt(e?.target?.value),
-                    })
-                  }
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Maximum Uses
-                </label>
-                <input
-                  type="number"
-                  min="1"
-                  value={newPromoCode?.max_uses}
-                  onChange={(e) =>
-                    setNewPromoCode({ ...newPromoCode, max_uses: parseInt(e?.target?.value) })
-                  }
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Valid From</label>
-                <input
-                  type="datetime-local"
-                  value={newPromoCode?.valid_from}
-                  onChange={(e) =>
-                    setNewPromoCode({ ...newPromoCode, valid_from: e?.target?.value })
-                  }
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Valid Until
-                </label>
-                <input
-                  type="datetime-local"
-                  value={newPromoCode?.valid_until}
-                  onChange={(e) =>
-                    setNewPromoCode({ ...newPromoCode, valid_until: e?.target?.value })
-                  }
-                  className="w-full px-4 py-2 bg-input text-foreground border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
-
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={() => setShowCreatePromoModal(false)}
-                  className="flex-1 px-4 py-2 bg-muted text-foreground rounded-md hover:bg-muted/80 transition-colors font-semibold"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={promoLoading}
-                  className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 font-semibold"
-                >
-                  {promoLoading ? 'Creating...' : 'Create'}
-                </button>
-              </div>
-            </form>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </AdminAuthGuard>
   );
 }

@@ -31,12 +31,15 @@ export const metadata = {
   },
 };
 
+import AdminQuickLink from '@/components/admin/AdminQuickLink';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} ${anton.variable}`}>
       <body className="font-body">
         <ClientProviders>
           {children}
+          <AdminQuickLink />
           <ChatbotPopup />
         </ClientProviders>
       </body>

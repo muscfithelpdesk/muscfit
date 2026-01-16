@@ -48,38 +48,48 @@ function ProductDetailsContent() {
     }
   };
 
-  // Fallback/demo data structure
+  // Data structure from DB or Fallback
   const productData = product
     ? {
-        id: product.id,
-        name: product.name,
-        category: product.category || "Men's Training Apparel",
-        price: product.price,
-        originalPrice: product.originalPrice,
-        discount: product.originalPrice
-          ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-          : 0,
-        rating: product.rating || 4.8,
-        reviewCount: product.reviewCount || 0,
-        badge: product.tag,
-        images: product.productImages?.map((img) => ({
-          url: img.imageUrl,
-          alt: img.altText || product.name,
-        })) || [
+      id: product.id,
+      name: product.name,
+      category: product.category || "Men's Training Apparel",
+      price: product.price,
+      originalPrice: product.originalPrice,
+      discount: product.originalPrice
+        ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+        : 0,
+      rating: product.rating || 4.8,
+      reviewCount: product.reviewCount || 0,
+      badge: product.tag,
+      images: product.productImages?.map((img) => ({
+        url: img.imageUrl,
+        alt: img.altText || product.name,
+      })) || [
           {
             url: product.image,
             alt: product.name,
           },
         ],
-        colors: [
+      // Use real colors from variants if available
+      colors: product.productVariants?.length > 0
+        ? [...new Set(product.productVariants.map(v => v.color))].map(c => ({ name: c, hex: '#000' }))
+        : [
           { name: 'Midnight Black', hex: '#1A1A1A' },
           { name: 'Steel Gray', hex: '#6B7280' },
           { name: 'Navy Blue', hex: '#1E3A8A' },
           { name: 'Forest Green', hex: '#065F46' },
         ],
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        features: [
+      // Use real sizes from variants if available
+      sizes: product.productVariants?.length > 0
+        ? [...new Set(product.productVariants.map(v => v.size))]
+        : ['S', 'M', 'L', 'XL', 'XXL'],
+      availableSizes: product.productVariants?.length > 0
+        ? product.productVariants.filter(v => (v.stockQuantity || 0) > 0).map(v => v.size)
+        : ['S', 'M', 'L', 'XL', 'XXL'],
+      features: product.productAttributes?.length > 0
+        ? product.productAttributes.map(attr => `${attr.attributeName}: ${attr.attributeValue}`)
+        : [
           'Advanced moisture-wicking fabric technology keeps you dry during intense workouts',
           '4-way stretch material provides unrestricted movement and flexibility',
           'Compression fit supports muscle recovery and reduces fatigue',
@@ -87,14 +97,10 @@ function ProductDetailsContent() {
           'Flatlock seams eliminate chafing and irritation during movement',
           'Quick-dry technology ensures rapid moisture evaporation',
         ],
-        description:
-          product.description ||
-          `Experience peak performance with ${product.name}, engineered for serious athletes who demand the best from their training gear.
-
-Crafted from premium compression fabric, this product combines cutting-edge technology with superior comfort. The advanced moisture-wicking system pulls sweat away from your skin, keeping you cool and dry even during the most intense training sessions.
-
-Perfect for training, competition, or everyday athletic wear.`,
-      }
+      description:
+        product.description ||
+        `Experience peak performance with ${product.name}, engineered for serious athletes who demand the best from their training gear.`,
+    }
     : null;
 
   const reviewsData = {
