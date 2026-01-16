@@ -11,13 +11,9 @@ export default function AdminQuickLink() {
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
-        // Simple check for admin role
         const role = user?.user_metadata?.role || user?.app_metadata?.role;
-        if (role === 'admin') {
-            setIsAdmin(true);
-        } else {
-            setIsAdmin(false);
-        }
+        const isEmailAdmin = user?.email === 'admin@muscfit.com';
+        setIsAdmin(role === 'admin' || isEmailAdmin);
     }, [user]);
 
     if (!isAdmin) return null;
@@ -26,7 +22,7 @@ export default function AdminQuickLink() {
         <div className={`fixed bottom-8 left-8 z-[9999] transition-all duration-500 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-20 opacity-0'}`}>
             <div className="relative group">
                 <Link
-                    href="/admin-dashboard"
+                    href="/admin"
                     className="flex items-center gap-3 bg-black text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all border border-white/20 active:scale-95 group"
                 >
                     <div className="w-6 h-6 flex items-center justify-center">
