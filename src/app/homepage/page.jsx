@@ -95,11 +95,7 @@ export default function Homepage() {
       },
     ],
 
-    featuredProducts: {
-      title: 'Bestselling Essentials',
-      subtitle: 'Discover our most-loved pieces trusted by athletes worldwide',
-      products: [],
-    },
+
 
     stats: [
       {

@@ -6,7 +6,7 @@ import Header from '@/components/common/Header';
 import PromoBar from './PromoBar';
 import HeroSection from './HeroSection';
 import FeaturesGrid from './FeaturesGrid';
-import FeaturedProducts from './FeaturedProducts';
+
 import StatsCounter from './StatsCounter';
 import AppDownloadBanner from './AppDownloadBanner';
 import PerformanceVisuals from './PerformanceVisuals';
@@ -219,11 +219,7 @@ export default function HomepageInteractive({ pageData }) {
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
-        <FeaturedProducts
-          title="Bestselling Essentials"
-          subtitle="Discover our most-loved pieces trusted by athletes worldwide"
-          products={dbProducts.filter((p) => p.tag === 'BESTSELLER' || p.tag === 'HOT')}
-        />
+
 
         <StatsCounter stats={pageData?.stats} />
 
@@ -282,7 +278,7 @@ HomepageInteractive.propTypes = {
     }).isRequired,
     features: PropTypes.array.isRequired,
     categories: PropTypes.array.isRequired,
-    featuredProducts: PropTypes.object.isRequired,
+
     stats: PropTypes.array.isRequired,
 
     newArrivals: PropTypes.object.isRequired,
