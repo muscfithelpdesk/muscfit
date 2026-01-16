@@ -145,7 +145,7 @@ export default function ProductCard({ product }) {
               className={index < Math.floor(product?.rating) ? 'text-yellow-500' : 'text-gray-300'}
             />
           ))}
-          <span className="text-[10px] text-gray-400 ml-1">({product?.reviews})</span>
+          <span className="text-[10px] text-gray-400 ml-1">({product?.reviews || product?.reviewCount || 0})</span>
         </div>
       </div>
     </Link>

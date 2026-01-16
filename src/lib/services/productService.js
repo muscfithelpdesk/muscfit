@@ -702,7 +702,7 @@ export const productService = {
           .select(
             `
             *,
-            product_images!inner(
+            product_images(
               id,
               image_url,
               alt_text,
@@ -721,8 +721,7 @@ export const productService = {
             )
           `
           )
-          .eq('is_active', true)
-          .eq('product_images.is_primary', true);
+          .eq('is_active', true);
 
         // Apply filters
         if (activeFilters?.gender) {
@@ -1212,6 +1211,7 @@ export const productService = {
       brand: product?.brand,
       rating: product?.rating,
       reviewCount: product?.review_count,
+      reviews: product?.review_count, // Added for UI compatibility
       tag: product?.tag,
       isActive: product?.is_active,
       remarks: product?.remarks,

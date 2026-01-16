@@ -23,6 +23,7 @@ import { supabase } from '@/lib/supabase';
 import { productService } from '@/lib/services/productService';
 import { uploadService } from '@/lib/services/uploadService';
 import { orderService } from '@/lib/services/orderService';
+import { userService } from '@/lib/services/userService';
 
 // --- Shared Constants ---
 const statusColors = {
@@ -49,62 +50,73 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 function OrderRow({ order, onStatusChange, onToggleExpand, isExpanded }) {
     return (
         <>
-            <tr className="border-b border-border hover:bg-muted/30 transition-colors">
-                <td className="px-4 py-4">
+            <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td className="px-6 py-4">
                     <button
                         onClick={() => onToggleExpand(order?.id)}
-                        className="text-primary hover:text-primary/80 transition-colors"
+                        className="text-white/40 hover:text-white transition-colors"
                     >
                         <Icon name={isExpanded ? 'ChevronDownIcon' : 'ChevronRightIcon'} size={20} />
                     </button>
                 </td>
-                <td className="px-4 py-4 font-data text-sm font-semibold">{order?.id}</td>
-                <td className="px-4 py-4">
-                    <div className="text-sm font-semibold">{order?.customer?.name}</div>
-                    <div className="text-xs text-text-secondary">{order?.customer?.email}</div>
+                <td className="px-6 py-4 font-black text-[10px] tracking-widest text-white/40 uppercase">{order?.id.slice(0, 8)}...</td>
+                <td className="px-6 py-4">
+                    <div className="text-sm font-bold text-white">{order?.customer?.name}</div>
+                    <div className="text-[10px] text-white/30 font-black uppercase tracking-widest">{order?.customer?.email}</div>
                 </td>
-                <td className="px-4 py-4 text-sm text-text-secondary">{order?.orderDate}</td>
-                <td className="px-4 py-4 font-data text-sm font-bold text-primary">₹{order?.totalAmount?.toLocaleString('en-IN')}</td>
-                <td className="px-4 py-4 text-sm">
-                    {order?.paymentMethod}
-                    <div className={`text-xs font-semibold mt-1 ${paymentStatusColors[order?.paymentStatus]}`}>{order?.paymentStatus}</div>
+                <td className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-white/40">{new Date(order?.createdAt).toLocaleDateString()}</td>
+                <td className="px-6 py-4 font-black text-sm text-white italic">₹{order?.totalAmount?.toLocaleString('en-IN')}</td>
+                <td className="px-6 py-4">
+                    <div className="text-[10px] font-black uppercase tracking-widest text-white/40">{order?.paymentMethod}</div>
+                    <div className={`text-[10px] font-black uppercase tracking-widest mt-1 ${order?.paymentStatus === 'Paid' ? 'text-green-500' : 'text-yellow-500'}`}>{order?.paymentStatus}</div>
                 </td>
-                <td className="px-4 py-4">
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${statusColors[order?.orderStatus]}`}>
+                <td className="px-6 py-4">
+                    <span className={`inline-flex items-center px-3 py-1 rounded border text-[10px] font-black uppercase tracking-widest ${statusColors[order?.orderStatus]}`}>
                         {order?.orderStatus}
                     </span>
                 </td>
-                <td className="px-4 py-4">
+                <td className="px-6 py-4">
                     <select
                         value={order?.orderStatus}
                         onChange={(e) => onStatusChange(order?.id, e.target.value)}
-                        className="px-3 py-1.5 bg-input border border-border rounded-md text-sm"
+                        className="bg-black/40 border border-white/10 rounded-lg py-2 px-3 text-[10px] font-black uppercase tracking-widest text-white outline-none focus:border-white/30"
                     >
                         {['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'].map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
                 </td>
             </tr>
             {isExpanded && (
-                <tr className="bg-surface/50">
-                    <td colSpan="8" className="px-4 py-4">
-                        <div className="grid md:grid-cols-2 gap-6">
+                <tr className="bg-white/[0.02]">
+                    <td colSpan="8" className="px-10 py-8 border-b border-white/5">
+                        <div className="grid md:grid-cols-2 gap-12">
                             <div>
-                                <h4 className="text-sm font-semibold mb-3 flex items-center gap-2"><Icon name="ShoppingBagIcon" size={16} />Items</h4>
-                                <div className="space-y-2">
+                                <h4 className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                                    <Icon name="ShoppingBagIcon" size={14} />
+                                    Manifest
+                                </h4>
+                                <div className="space-y-3">
                                     {order?.items?.map((item, idx) => (
-                                        <div key={idx} className="flex justify-between items-center p-2 bg-background rounded border border-border">
-                                            <div className="text-sm">{item?.name} (x{item?.quantity})</div>
-                                            <div className="font-data text-sm font-semibold text-primary">₹{item?.price?.toLocaleString('en-IN')}</div>
+                                        <div key={idx} className="flex justify-between items-center p-4 bg-black/40 rounded-xl border border-white/5">
+                                            <div className="text-xs font-bold text-white uppercase tracking-tight">{item?.name} (x{item?.quantity})</div>
+                                            <div className="font-black text-xs text-white italic">₹{item?.price?.toLocaleString('en-IN')}</div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                             <div>
-                                <h4 className="text-sm font-semibold mb-3 flex items-center gap-2"><Icon name="MapPinIcon" size={16} />Shipping</h4>
-                                <div className="p-3 bg-background rounded border border-border">
-                                    <div className="text-sm font-bold">{order?.customer?.name}</div>
-                                    <div className="text-sm text-text-secondary">{order?.customer?.phone}</div>
-                                    <div className="text-sm text-text-secondary mt-1">{order?.shippingAddress}</div>
+                                <h4 className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                                    <Icon name="MapPinIcon" size={14} />
+                                    Deployment Intel
+                                </h4>
+                                <div className="p-6 bg-black/40 rounded-xl border border-white/5 space-y-4">
+                                    <div>
+                                        <p className="text-[10px] font-black text-white/20 uppercase tracking-widest mb-1">Recipient</p>
+                                        <p className="text-sm font-bold text-white uppercase">{order?.customer?.name}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-black text-white/20 uppercase tracking-widest mb-1">Coordinates</p>
+                                        <p className="text-sm font-medium text-white/60 leading-relaxed uppercase">{order?.shippingAddress}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -161,6 +173,11 @@ export default function UnifiedAdminPage() {
         valid_until: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16),
     });
 
+    // Users & Stats State
+    const [users, setUsers] = useState([]);
+    const [adminStats, setAdminStats] = useState(null);
+    const [userSearchQuery, setUserSearchQuery] = useState('');
+
     useEffect(() => {
         const checkAdmin = async () => {
             const { data: { user } } = await supabase.auth.getUser();
@@ -174,14 +191,18 @@ export default function UnifiedAdminPage() {
     const loadInitialData = async () => {
         setLoading(true);
         try {
-            const [orderData, productData, promoData] = await Promise.all([
+            const [orderData, productData, promoData, userData, statsData] = await Promise.all([
                 orderService.getAllOrders(),
                 productService.getAllForAdmin(),
-                supabase.from('promo_codes').select('*').order('created_at', { ascending: false })
+                supabase.from('promo_codes').select('*').order('created_at', { ascending: false }),
+                userService.getAllUsers(),
+                userService.getAdminStats()
             ]);
             setOrders(orderData || []);
             setProducts(productData || []);
             setPromoCodes(promoData.data || []);
+            setUsers(userData || []);
+            setAdminStats(statsData);
         } catch (err) {
             console.error(err);
         } finally {
@@ -293,6 +314,7 @@ export default function UnifiedAdminPage() {
     const tabs = [
         { id: 'orders', label: 'Orders', icon: 'ClipboardDocumentListIcon' },
         { id: 'products', label: 'Inventory', icon: 'CubeIcon' },
+        { id: 'users', label: 'Users', icon: 'UserGroupIcon' },
         { id: 'promos', label: 'Promo Codes', icon: 'TicketIcon' },
         { id: 'analytics', label: 'Analytics', icon: 'ChartBarIcon' },
     ];
@@ -317,7 +339,11 @@ export default function UnifiedAdminPage() {
                             <p className="text-xl font-black text-white italic">₹{totalRevenue.toLocaleString()}</p>
                         </div>
                         <div className="bg-white/5 border border-white/10 p-4 rounded-xl min-w-[150px]">
-                            <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Pending Orders</p>
+                            <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Active Users</p>
+                            <p className="text-xl font-black text-green-500 italic">{users.length}</p>
+                        </div>
+                        <div className="bg-white/5 border border-white/10 p-4 rounded-xl min-w-[150px]">
+                            <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Pending Tasks</p>
                             <p className="text-xl font-black text-yellow-500 italic">{pendingOrders}</p>
                         </div>
                         <button
@@ -561,6 +587,51 @@ export default function UnifiedAdminPage() {
                             </div>
                         )}
 
+                        {/* USERS TAB */}
+                        {activeTab === 'users' && (
+                            <div className="space-y-8">
+                                <div className="flex justify-between items-center">
+                                    <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter">Registered Athletes ({users.length})</h2>
+                                    <div className="relative w-72">
+                                        <Icon name="MagnifyingGlassIcon" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" />
+                                        <input
+                                            type="text"
+                                            placeholder="SEARCH USERS..."
+                                            className="w-full bg-black/40 border border-white/10 rounded-lg py-2 pl-10 pr-4 text-white uppercase text-[10px] font-black tracking-widest outline-none"
+                                            value={userSearchQuery}
+                                            onChange={(e) => setUserSearchQuery(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="bg-zinc-900/50 rounded-2xl border border-white/10 overflow-hidden">
+                                    <table className="w-full text-left">
+                                        <thead className="bg-white/5 border-b border-white/10">
+                                            <tr>
+                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Athlete</th>
+                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Email</th>
+                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Joined At</th>
+                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Role</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="text-white">
+                                            {users.filter(u => u.full_name?.toLowerCase().includes(userSearchQuery.toLowerCase()) || u.email?.toLowerCase().includes(userSearchQuery.toLowerCase())).map(u => (
+                                                <tr key={u.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                                    <td className="px-6 py-4 font-bold text-sm tracking-tight">{u.full_name || 'Incognito Athlete'}</td>
+                                                    <td className="px-6 py-4 text-sm text-white/60">{u.email}</td>
+                                                    <td className="px-6 py-4 text-[10px] font-black uppercase text-white/30">{new Date(u.created_at).toLocaleDateString()}</td>
+                                                    <td className="px-6 py-4">
+                                                        <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded border ${u.role === 'admin' ? 'border-red-500/50 text-red-500 bg-red-500/10' : 'border-white/10 text-white/40 bg-white/5'}`}>
+                                                            {u.role || 'user'}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        )}
+
                         {/* PROMOS TAB */}
                         {activeTab === 'promos' && (
                             <div className="space-y-8">
@@ -598,38 +669,80 @@ export default function UnifiedAdminPage() {
 
                         {/* ANALYTICS TAB */}
                         {activeTab === 'analytics' && (
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                <div className="bg-zinc-900 border border-white/10 p-8 rounded-2xl">
-                                    <h3 className="text-sm font-black text-white/30 uppercase tracking-[0.3em] mb-8">Revenue Performance</h3>
-                                    <div className="h-[400px]">
-                                        <ResponsiveContainer width="100%" height="100%">
-                                            <BarChart data={products.map(p => ({ name: p.name, revenue: p.price * (p.sales || 0) }))}>
-                                                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" />
-                                                <XAxis dataKey="name" hide />
-                                                <YAxis stroke="#ffffff20" fontSize={10} />
-                                                <Tooltip contentStyle={{ backgroundColor: '#000', border: '1px solid #ffffff10' }} />
-                                                <Bar dataKey="revenue" fill="#fff" radius={[4, 4, 0, 0]} />
-                                            </BarChart>
-                                        </ResponsiveContainer>
+                            <div className="space-y-8">
+                                {/* Leaderboard Stats */}
+                                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                    <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl">
+                                        <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Visitor Traffic</p>
+                                        <p className="text-3xl font-black text-white italic">{adminStats?.traffic?.dailyVisits}</p>
+                                        <p className="text-[10px] font-bold text-green-500 mt-1">+12% from yesterday</p>
+                                    </div>
+                                    <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl">
+                                        <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Conversion Rate</p>
+                                        <p className="text-3xl font-black text-white italic">{adminStats?.traffic?.conversionRate}%</p>
+                                        <p className="text-[10px] font-bold text-blue-500 mt-1">Goal: 5.0%</p>
+                                    </div>
+                                    <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl">
+                                        <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Total Users</p>
+                                        <p className="text-3xl font-black text-white italic">{adminStats?.totalUsers}</p>
+                                        <p className="text-[10px] font-bold text-white/20 mt-1">Verified Profiles</p>
+                                    </div>
+                                    <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl">
+                                        <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Inventory Health</p>
+                                        <p className="text-3xl font-black text-white italic">{products.length - adminStats?.lowStockCount}/{products.length}</p>
+                                        <p className="text-[10px] font-bold text-red-500 mt-1">{adminStats?.lowStockCount} Items Low Stock</p>
                                     </div>
                                 </div>
-                                <div className="bg-zinc-900 border border-white/10 p-8 rounded-2xl">
-                                    <h3 className="text-sm font-black text-white/30 uppercase tracking-[0.3em] mb-8">Inventory Distribution</h3>
-                                    <div className="h-[400px]">
-                                        <ResponsiveContainer width="100%" height="100%">
-                                            <PieChart>
-                                                <Pie
-                                                    data={products.map(p => ({ name: p.name, value: p.stockQuantity }))}
-                                                    innerRadius={60}
-                                                    outerRadius={100}
-                                                    paddingAngle={5}
-                                                    dataKey="value"
-                                                >
-                                                    {products.map((_, i) => <Cell key={i} fill={`hsl(${i * 137.5}, 50%, 50%)`} stroke="none" />)}
-                                                </Pie>
-                                                <Tooltip contentStyle={{ backgroundColor: '#000', border: '1px solid #ffffff10' }} />
-                                            </PieChart>
-                                        </ResponsiveContainer>
+
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                    <div className="bg-zinc-900 border border-white/10 p-8 rounded-2xl">
+                                        <h3 className="text-sm font-black text-white/30 uppercase tracking-[0.3em] mb-8">Revenue Performance</h3>
+                                        <div className="h-[400px]">
+                                            <ResponsiveContainer width="100%" height="100%">
+                                                <BarChart data={products.map(p => ({ name: p.name, revenue: p.price * (p.sales || 0) }))}>
+                                                    <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" />
+                                                    <XAxis dataKey="name" hide />
+                                                    <YAxis stroke="#ffffff20" fontSize={10} />
+                                                    <Tooltip contentStyle={{ backgroundColor: '#000', border: '1px solid #ffffff10' }} />
+                                                    <Bar dataKey="revenue" fill="#fff" radius={[4, 4, 0, 0]} />
+                                                </BarChart>
+                                            </ResponsiveContainer>
+                                        </div>
+                                    </div>
+                                    <div className="bg-zinc-900 border border-white/10 p-8 rounded-2xl">
+                                        <h3 className="text-sm font-black text-white/30 uppercase tracking-[0.3em] mb-8">Inventory Distribution</h3>
+                                        <div className="h-[400px]">
+                                            <ResponsiveContainer width="100%" height="100%">
+                                                <PieChart>
+                                                    <Pie
+                                                        data={products.map(p => ({ name: p.name, value: p.stockQuantity }))}
+                                                        innerRadius={60}
+                                                        outerRadius={100}
+                                                        paddingAngle={5}
+                                                        dataKey="value"
+                                                    >
+                                                        {products.map((_, i) => <Cell key={i} fill={`hsl(${i * 137.5}, 50%, 50%)`} stroke="none" />)}
+                                                    </Pie>
+                                                    <Tooltip contentStyle={{ backgroundColor: '#000', border: '1px solid #ffffff10' }} />
+                                                </PieChart>
+                                            </ResponsiveContainer>
+                                        </div>
+                                    </div>
+                                    <div className="bg-zinc-900 border border-white/10 p-8 rounded-2xl lg:col-span-2">
+                                        <h3 className="text-sm font-black text-white/30 uppercase tracking-[0.3em] mb-8">Growth Momentum (Past 7 Days)</h3>
+                                        <div className="h-[300px]">
+                                            <ResponsiveContainer width="100%" height="100%">
+                                                <LineChart data={adminStats?.traffic?.growthHistory}>
+                                                    <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" />
+                                                    <XAxis dataKey="day" stroke="#ffffff20" fontSize={10} />
+                                                    <YAxis stroke="#ffffff20" fontSize={10} />
+                                                    <Tooltip contentStyle={{ backgroundColor: '#000', border: '1px solid #ffffff10' }} />
+                                                    <Legend />
+                                                    <Line type="monotone" dataKey="users" stroke="#00C49F" strokeWidth={3} dot={{ fill: '#00C49F' }} />
+                                                    <Line type="monotone" dataKey="orders" stroke="#FFBB28" strokeWidth={3} dot={{ fill: '#FFBB28' }} />
+                                                </LineChart>
+                                            </ResponsiveContainer>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

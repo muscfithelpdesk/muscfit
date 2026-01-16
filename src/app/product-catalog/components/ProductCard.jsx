@@ -153,7 +153,7 @@ export default function ProductCard({ product }) {
         {/* Rating */}
         <div className="flex items-center gap-2 mb-3">
           <div className="flex items-center gap-1">{renderStars(product?.rating)}</div>
-          <span className="text-xs font-data text-text-secondary">({product?.reviewCount})</span>
+          <span className="text-xs font-data text-text-secondary">({product?.reviewCount || product?.reviews || 0})</span>
         </div>
 
         {/* Price */}
