@@ -148,6 +148,10 @@ module.exports = {
           '0%': { transform: 'scale(0.95)', opacity: '0', transformOrigin: 'top' },
           '100%': { transform: 'scale(1)', opacity: '1', transformOrigin: 'top' },
         },
+        "marquee": {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -159,6 +163,7 @@ module.exports = {
         "fade-in-up": "fade-in-up 250ms ease-out",
         "scale-in": "scale-in 250ms ease-out",
         "scale-in-origin-top": "scale-in-origin-top 250ms ease-out",
+        "marquee": "marquee 10s linear infinite",
       },
       zIndex: {
         '60': '60',

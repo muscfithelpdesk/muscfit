@@ -30,7 +30,7 @@ export default function PromoBar({ messages, isVisible = true, onDismiss }) {
 
     const timer = setInterval(() => {
       handleNext();
-    }, 5000);
+    }, 8000);
 
     return () => clearInterval(timer);
   }, [handleNext, isPaused, promoMessages.length]);
@@ -66,19 +66,18 @@ export default function PromoBar({ messages, isVisible = true, onDismiss }) {
           {promoMessages.map((msg, idx) => (
             <div
               key={idx}
-              className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1) ${
-                idx === currentIndex
-                  ? 'opacity-100 translate-x-0'
-                  : idx < currentIndex
-                    ? 'opacity-0 -translate-x-full'
-                    : 'opacity-0 translate-x-full'
-              }`}
+              className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1) ${idx === currentIndex
+                ? 'opacity-100 translate-x-0'
+                : idx < currentIndex
+                  ? 'opacity-0 -translate-x-full'
+                  : 'opacity-0 translate-x-full'
+                }`}
             >
-              <div className="flex items-center gap-2 md:gap-3">
-                <span className="hidden sm:inline-block px-2 py-0.5 bg-black text-white text-[9px] font-black tracking-tighter rounded-sm">
+              <div className="flex items-center gap-2 md:gap-3 overflow-hidden w-full justify-center">
+                <span className="hidden sm:inline-block px-2 py-0.5 bg-black text-white text-[9px] font-black tracking-tighter rounded-sm flex-shrink-0">
                   SALE
                 </span>
-                <p className="text-[10px] md:text-xs lg:text-sm font-heading font-black tracking-[0.12em] uppercase whitespace-nowrap text-black">
+                <p className="text-[10px] md:text-xs lg:text-sm font-heading font-black tracking-[0.12em] uppercase whitespace-nowrap text-black animate-marquee md:animate-none">
                   {msg}
                 </p>
               </div>
