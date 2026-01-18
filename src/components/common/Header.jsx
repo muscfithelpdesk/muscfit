@@ -749,7 +749,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 {/* Wishlist Button */}
                 <Link
                   href="/user-profile?tab=wishlist"
-                  className="flex flex-col items-center gap-1 group px-3 transition-all duration-300 relative py-1"
+                  className="hidden md:flex flex-col items-center gap-1 group px-3 transition-all duration-300 relative py-1"
                 >
                   <Icon
                     name="HeartIcon"
