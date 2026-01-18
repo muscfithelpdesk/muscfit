@@ -932,7 +932,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                           onClick={() =>
                             setActiveMobileCategory(activeMobileCategory === key ? null : key)
                           }
-                          className="w-full flex items-center justify-between px-4 py-4 text-foreground hover:bg-muted rounded-sm transition-colors duration-250 font-heading font-extrabold text-lg uppercase tracking-tight"
+                          className="w-full flex items-center justify-between px-4 py-4 text-foreground hover:bg-muted rounded-sm transition-colors duration-250 font-heading font-extrabold text-base uppercase tracking-tight whitespace-nowrap"
                         >
                           {category?.label}
                           <Icon
@@ -1021,168 +1021,171 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                 )}
               </div>
             </div>
-          </div>
+          </div >
         </>
-      )}
+      )
+      }
       {/* Mega Search Overlay */}
-      {isSearchOpen && (
-        <div className="fixed inset-0 z-[100] transition-all duration-300">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
-            onClick={() => setIsSearchOpen(false)}
-          />
+      {
+        isSearchOpen && (
+          <div className="fixed inset-0 z-[100] transition-all duration-300">
+            {/* Backdrop */}
+            <div
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+              onClick={() => setIsSearchOpen(false)}
+            />
 
-          {/* Search Container */}
-          <div
-            ref={overlayRef}
-            className="absolute top-0 inset-x-0 bg-background shadow-sharp-lg animate-fade-in border-b border-border"
-          >
-            <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8 md:py-12">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="flex-1 relative flex items-center group">
-                  <Icon
-                    name="MagnifyingGlassIcon"
-                    size={28}
-                    className="absolute left-4 text-text-secondary group-focus-within:text-primary transition-colors"
-                  />
-                  <form onSubmit={handleSearchSubmit} className="w-full">
-                    <input
-                      type="text"
-                      autoFocus
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e?.target.value)}
-                      className="w-full h-16 md:h-20 pl-16 pr-8 bg-surface border-none text-xl md:text-3xl font-heading font-black text-foreground focus:ring-0 transition-all uppercase tracking-tight"
+            {/* Search Container */}
+            <div
+              ref={overlayRef}
+              className="absolute top-0 inset-x-0 bg-background shadow-sharp-lg animate-fade-in border-b border-border"
+            >
+              <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8 md:py-12">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="flex-1 relative flex items-center group">
+                    <Icon
+                      name="MagnifyingGlassIcon"
+                      size={28}
+                      className="absolute left-4 text-text-secondary group-focus-within:text-primary transition-colors"
                     />
-                  </form>
-                </div>
-                <button
-                  onClick={() => setIsSearchOpen(false)}
-                  className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-surface text-text-secondary hover:text-primary hover:bg-muted transition-all duration-250"
-                  aria-label="Close search"
-                >
-                  <Icon name="XMarkIcon" size={32} />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 pt-8 border-t border-border/50">
-                {/* Popular Categories */}
-                <div>
-                  <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-6 border-l-4 border-primary pl-4">
-                    Top Categories
-                  </h3>
-                  <div className="grid grid-cols-1 gap-3">
-                    {Object.values(navigationCategories)?.map((cat) => (
-                      <Link
-                        key={cat?.path}
-                        href={cat?.path}
-                        className="group flex items-center justify-between p-4 bg-muted/20 hover:bg-primary/5 rounded-sm transition-all border border-transparent hover:border-primary/10"
-                        onClick={() => setIsSearchOpen(false)}
-                      >
-                        <span className="font-heading font-bold text-base md:text-lg text-foreground group-hover:text-primary">
-                          {cat?.label}
-                        </span>
-                        <Icon
-                          name="ArrowRightIcon"
-                          size={18}
-                          className="text-text-secondary group-hover:text-primary group-hover:translate-x-1 transition-all"
-                        />
-                      </Link>
-                    ))}
+                    <form onSubmit={handleSearchSubmit} className="w-full">
+                      <input
+                        type="text"
+                        autoFocus
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e?.target.value)}
+                        className="w-full h-16 md:h-20 pl-16 pr-8 bg-surface border-none text-xl md:text-3xl font-heading font-black text-foreground focus:ring-0 transition-all uppercase tracking-tight"
+                      />
+                    </form>
                   </div>
+                  <button
+                    onClick={() => setIsSearchOpen(false)}
+                    className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-surface text-text-secondary hover:text-primary hover:bg-muted transition-all duration-250"
+                    aria-label="Close search"
+                  >
+                    <Icon name="XMarkIcon" size={32} />
+                  </button>
                 </div>
 
-                {/* Trending Searches */}
-                <div>
-                  <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-6 border-l-4 border-primary pl-4">
-                    Trending Now
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    {[
-                      'Men\'s T-Shirts',
-                      'Women\'s Leggings',
-                      'Winter Arc',
-                      'Compression Layers',
-                      'Gym Bags',
-                      'Equipment',
-                      'Protein Supplements'
-                    ]?.map((term) => {
-                      return (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 pt-8 border-t border-border/50">
+                  {/* Popular Categories */}
+                  <div>
+                    <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-6 border-l-4 border-primary pl-4">
+                      Top Categories
+                    </h3>
+                    <div className="grid grid-cols-1 gap-3">
+                      {Object.values(navigationCategories)?.map((cat) => (
                         <Link
-                          key={term}
-                          href={`/search?q=${encodeURIComponent(term)}`}
-                          className="px-6 py-3 bg-surface hover:bg-primary text-text-secondary hover:text-white rounded-full text-sm font-bold transition-all border border-border/50 hover:border-primary uppercase tracking-tighter"
+                          key={cat?.path}
+                          href={cat?.path}
+                          className="group flex items-center justify-between p-4 bg-muted/20 hover:bg-primary/5 rounded-sm transition-all border border-transparent hover:border-primary/10"
                           onClick={() => setIsSearchOpen(false)}
                         >
-                          {term}
+                          <span className="font-heading font-bold text-base md:text-lg text-foreground group-hover:text-primary">
+                            {cat?.label}
+                          </span>
+                          <Icon
+                            name="ArrowRightIcon"
+                            size={18}
+                            className="text-text-secondary group-hover:text-primary group-hover:translate-x-1 transition-all"
+                          />
                         </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Autocomplete Suggestions */}
-                {suggestions.length > 0 && (
-                  <div className="absolute top-[80px] left-0 right-0 bg-background z-50 p-4 shadow-lg border-t border-border">
-                    <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-4 pl-4 border-l-4 border-primary">
-                      Suggestions
-                    </h3>
-                    <ul className="space-y-2">
-                      {suggestions.map((s, idx) => (
-                        <li key={idx}>
-                          <button
-                            className="flex items-center gap-3 w-full text-left p-2 hover:bg-muted/30 rounded-lg group transition-colors"
-                            onClick={() => {
-                              router.push(`/search?q=${encodeURIComponent(s.text)}`);
-                              setIsSearchOpen(false);
-                              setSuggestions([]);
-                            }}
-                          >
-                            <div className="w-10 h-10 rounded bg-muted overflow-hidden flex-shrink-0">
-                              {s.image && <img src={s.image} alt="" className="w-full h-full object-cover" />}
-                            </div>
-                            <span className="font-heading font-medium group-hover:text-primary transition-colors">
-                              {s.text}
-                            </span>
-                          </button>
-                        </li>
                       ))}
-                    </ul>
+                    </div>
                   </div>
-                )}
 
-                {/* Featured Products/Collections Preview */}
-                <div className="hidden lg:block">
-                  <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-6 border-l-4 border-primary pl-4">
-                    New Arrivals
-                  </h3>
-                  <div className="space-y-4">
-                    <Link
-                      href="/men-catalog?type=winter-arc"
-                      className="group block relative h-48 rounded-xl overflow-hidden"
-                      onClick={() => setIsSearchOpen(false)}
-                    >
-                      <img
-                        src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=600&auto=format&fit=crop"
-                        alt="Winter Arc"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
-                        <span className="text-white font-heading font-black text-2xl uppercase italic tracking-tighter">
-                          Winter Arc '24
-                        </span>
-                        <span className="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">
-                          Shop Now
-                        </span>
-                      </div>
-                    </Link>
+                  {/* Trending Searches */}
+                  <div>
+                    <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-6 border-l-4 border-primary pl-4">
+                      Trending Now
+                    </h3>
+                    <div className="flex flex-wrap gap-3">
+                      {[
+                        'Men\'s T-Shirts',
+                        'Women\'s Leggings',
+                        'Winter Arc',
+                        'Compression Layers',
+                        'Gym Bags',
+                        'Equipment',
+                        'Protein Supplements'
+                      ]?.map((term) => {
+                        return (
+                          <Link
+                            key={term}
+                            href={`/search?q=${encodeURIComponent(term)}`}
+                            className="px-6 py-3 bg-surface hover:bg-primary text-text-secondary hover:text-white rounded-full text-sm font-bold transition-all border border-border/50 hover:border-primary uppercase tracking-tighter"
+                            onClick={() => setIsSearchOpen(false)}
+                          >
+                            {term}
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
+
+                  {/* Autocomplete Suggestions */}
+                  {suggestions.length > 0 && (
+                    <div className="absolute top-[80px] left-0 right-0 bg-background z-50 p-4 shadow-lg border-t border-border">
+                      <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-4 pl-4 border-l-4 border-primary">
+                        Suggestions
+                      </h3>
+                      <ul className="space-y-2">
+                        {suggestions.map((s, idx) => (
+                          <li key={idx}>
+                            <button
+                              className="flex items-center gap-3 w-full text-left p-2 hover:bg-muted/30 rounded-lg group transition-colors"
+                              onClick={() => {
+                                router.push(`/search?q=${encodeURIComponent(s.text)}`);
+                                setIsSearchOpen(false);
+                                setSuggestions([]);
+                              }}
+                            >
+                              <div className="w-10 h-10 rounded bg-muted overflow-hidden flex-shrink-0">
+                                {s.image && <img src={s.image} alt="" className="w-full h-full object-cover" />}
+                              </div>
+                              <span className="font-heading font-medium group-hover:text-primary transition-colors">
+                                {s.text}
+                              </span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Featured Products/Collections Preview */}
+                  <div className="hidden lg:block">
+                    <h3 className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] mb-6 border-l-4 border-primary pl-4">
+                      New Arrivals
+                    </h3>
+                    <div className="space-y-4">
+                      <Link
+                        href="/men-catalog?type=winter-arc"
+                        className="group block relative h-48 rounded-xl overflow-hidden"
+                        onClick={() => setIsSearchOpen(false)}
+                      >
+                        <img
+                          src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=600&auto=format&fit=crop"
+                          alt="Winter Arc"
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                          <span className="text-white font-heading font-black text-2xl uppercase italic tracking-tighter">
+                            Winter Arc '24
+                          </span>
+                          <span className="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">
+                            Shop Now
+                          </span>
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                </div >
               </div >
             </div >
           </div >
-        </div >
-      )}
+        )
+      }
 
       {/* Recaptcha Container (invisible) */}
       <div id="recaptcha-container"></div>
