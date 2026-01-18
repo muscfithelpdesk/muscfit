@@ -229,14 +229,14 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
                     {/* Navigation Buttons - Absolute positioned relative to container */}
                     <button
                         onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-                        className="absolute left-2 md:-left-12 top-1/2 -translate-y-1/2 z-40 w-8 h-8 md:w-10 md:h-10 bg-white shadow-sharp-md border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 disabled:opacity-50"
+                        className="hidden md:flex absolute -left-12 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white shadow-sharp-md border border-black items-center justify-center hover:bg-black hover:text-white transition-all duration-300 disabled:opacity-50"
                         aria-label="Previous slide"
                     >
                         <Icon name="ChevronLeftIcon" size={18} />
                     </button>
                     <button
                         onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-                        className="absolute right-2 md:-right-12 top-1/2 -translate-y-1/2 z-40 w-8 h-8 md:w-10 md:h-10 bg-white shadow-sharp-md border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 disabled:opacity-50"
+                        className="hidden md:flex absolute -right-12 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white shadow-sharp-md border border-black items-center justify-center hover:bg-black hover:text-white transition-all duration-300 disabled:opacity-50"
                         aria-label="Next slide"
                     >
                         <Icon name="ChevronRightIcon" size={18} />
