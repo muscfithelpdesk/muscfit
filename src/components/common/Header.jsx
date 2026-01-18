@@ -885,7 +885,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           <div className="w-full md:hidden pb-4 px-1">
             <div
               className="relative w-full group cursor-text"
-              onClick={() => router.push('/search')}
+              onClick={() => setIsSearchOpen(true)}
             >
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <Icon name="MagnifyingGlassIcon" size={18} className="text-text-secondary" />
