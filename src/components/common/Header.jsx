@@ -226,7 +226,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
           className={`flex items-center justify-between transition-all duration-300 px-4 md:px-8 lg:px-12 ${scrolled ? 'h-[86px] md:h-[96px]' : 'h-[106px] md:h-[136px]'}`}
         >
           {/* Left Group: Logo and Nav */}
-          <div className="flex items-center gap-6 lg:gap-10 h-full flex-shrink-0">
+          <div className="flex items-center gap-2 md:gap-6 lg:gap-10 h-full flex-shrink-0">
             {!isAdminPage && (
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -241,7 +241,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
               href="/"
               className="z-50 flex items-center flex-shrink-0 relative"
             >
-              <div className={`relative transition-all duration-300 ${scrolled ? 'h-[50px] w-[150px] md:h-[60px] md:w-[180px]' : 'h-[70px] w-[210px] md:h-[80px] md:w-[240px]'}`}>
+              <div className={`relative transition-all duration-300 ${scrolled ? 'h-[50px] w-[120px] md:w-[180px] md:h-[60px]' : 'h-[60px] w-[140px] md:h-[80px] md:w-[240px]'}`}>
                 <Image
                   src="/assets/images/logo-v4.png"
                   alt="MUSCFIT Logo"
@@ -604,7 +604,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-green-500 rounded-full border border-background"></span>
                     )}
                   </div>
-                  <span className="text-[10px] md:text-[11px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
+                  <span className="hidden md:block text-[10px] md:text-[11px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
                     {isMounted && user ? 'Account' : 'Profile'}
                   </span>
                   <div className="absolute -bottom-1 left-3 right-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></div>
@@ -726,7 +726,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                     size={20}
                     className="text-text-secondary group-hover/btn:text-primary transition-colors"
                   />
-                  <span className="text-[10px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
+                  <span className="hidden md:block text-[10px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
                     Search
                   </span>
                 </button>
@@ -742,7 +742,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                   size={20}
                   className="text-text-secondary group-hover:text-primary transition-colors"
                 />
-                <span className="text-[10px] md:text-[11px] font-bold text-text-secondary group-hover:text-primary uppercase tracking-tighter">
+                <span className="hidden md:block text-[10px] md:text-[11px] font-bold text-text-secondary group-hover:text-primary uppercase tracking-tighter">
                   Wishlist
                 </span>
                 <div className="absolute -bottom-1 left-3 right-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></div>
@@ -771,7 +771,7 @@ export default function Header({ topOffset = 0, isFixed = true }) {
                       </span>
                     )}
                   </div>
-                  <span className="text-[10px] md:text-[11px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
+                  <span className="hidden md:block text-[10px] md:text-[11px] font-bold text-text-secondary group-hover/btn:text-primary uppercase tracking-tighter">
                     Bag
                   </span>
                   <div className="absolute -bottom-1 left-3 right-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full"></div>
