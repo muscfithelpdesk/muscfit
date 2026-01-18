@@ -163,7 +163,7 @@ module.exports = {
         "fade-in-up": "fade-in-up 250ms ease-out",
         "scale-in": "scale-in 250ms ease-out",
         "scale-in-origin-top": "scale-in-origin-top 250ms ease-out",
-        "marquee": "marquee 10s linear infinite",
+        "marquee": "marquee 7s linear infinite",
       },
       zIndex: {
         '60': '60',
