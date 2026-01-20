@@ -163,6 +163,7 @@ export default function HomepageInteractive({ pageData }) {
                 p.category === 'accessories')
           )}
           onQuickView={(p) => setQuickViewProduct(p)}
+          viewAllLink="/men-catalog"
         />
 
         <CollectionSection
@@ -181,6 +182,7 @@ export default function HomepageInteractive({ pageData }) {
                 !['winter-arc', 'supplements', 'equipment', 'gym-bags'].includes(p.category)))
           )}
           onQuickView={(p) => setQuickViewProduct(p)}
+          viewAllLink="/women-catalog"
         />
 
         <CollectionSection
@@ -196,6 +198,7 @@ export default function HomepageInteractive({ pageData }) {
             (p) => p.gender === 'compression' || (p.gender === 'unisex' && p.tag === 'PRO')
           )}
           onQuickView={(p) => setQuickViewProduct(p)}
+          viewAllLink="/compression-wear-catalog"
         />
 
         <CollectionSection
@@ -217,6 +220,7 @@ export default function HomepageInteractive({ pageData }) {
               p.tag === 'featured-acc'
           )}
           onQuickView={(p) => setQuickViewProduct(p)}
+          viewAllLink="/product-catalog?search=accessories"
         />
 
 

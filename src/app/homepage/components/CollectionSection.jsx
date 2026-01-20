@@ -8,7 +8,7 @@ import { wishlistService } from '@/lib/services/wishlistService';
 
 import PropTypes from 'prop-types';
 
-export default function CollectionSection({ title, subtitle, tabs, products, onQuickView, id }) {
+export default function CollectionSection({ title, subtitle, tabs, products, onQuickView, id, viewAllLink }) {
   const [activeTab, setActiveTab] = useState(tabs[0]?.name);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const scrollRef = useRef(null);
@@ -173,10 +173,18 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
                   (product.tag || '').toLowerCase() === currentTab.filter.toLowerCase()
                 );
               })
+              // Limit to 4 for mobile grid (applied via CSS hiding or logic here? Logic here is safer but affects desktop if not careful.
+              // We'll map ALL for desktop (hidden in mobile grid via CSS?) No, structure is separate.
+              // Actually, the structure IS separate: `grid grid-cols-2 ... md:flex ...`
+              // We need to slice ONLY for the mobile view logic. But it returns a single array.
+              // Let's rely on CSS or render two lists? Render two lists is duplicate DOM.
+              // CSS hiding > 4th-child?
+              // `className="w-full md:flex-none ... [&:nth-child(n+5)]:hidden md:[&:nth-child(n+5)]:block"`
+              // This is the cleanest Tailwind solution.
               .map((product) => (
                 <div
                   key={product.id}
-                  className="w-full md:flex-none md:px-2 md:sm:px-3 md:w-1/3 lg:w-1/4"
+                  className="w-full md:flex-none md:px-2 md:sm:px-3 md:w-1/3 lg:w-1/4 [&:nth-child(n+5)]:hidden md:[&:nth-child(n+5)]:block"
                 >
                   <ModernProductCard product={product} onQuickView={onQuickView} />
                 </div>
@@ -212,6 +220,18 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
             </button>
           )}
         </div>
+
+        {/* Mobile View All Button */}
+        {viewAllLink && (
+          <div className="md:hidden mt-8 flex justify-center">
+            <a
+              href={viewAllLink}
+              className="w-full max-w-xs py-3 border border-gray-300 rounded-full text-xs font-bold uppercase tracking-widest text-center hover:bg-black hover:text-white transition-colors"
+            >
+              View All Products
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -338,6 +358,7 @@ CollectionSection.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object).isRequired,
   onQuickView: PropTypes.func.isRequired,
   id: PropTypes.string,
+  viewAllLink: PropTypes.string,
 };
 
 ModernProductCard.propTypes = {
