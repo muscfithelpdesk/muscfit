@@ -69,7 +69,7 @@ export default function ProductCard({ product }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="bg-white rounded-xl shadow-sharp hover:premium-shadow transition-all duration-500 overflow-hidden border border-gray-100 preserve-3d tilt-3d">
+      <div className="md:bg-white md:rounded-xl md:shadow-sharp md:hover:premium-shadow transition-all duration-500 overflow-hidden md:border md:border-gray-100 preserve-3d tilt-3d">
         {/* Product Image */}
         <div className="relative aspect-[3/4] overflow-hidden bg-muted">
           <img
@@ -81,9 +81,9 @@ export default function ProductCard({ product }) {
           {/* Glass Overlay for interactive feel */}
           <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-          {/* Quick Add Overlay */}
+          {/* Quick Add Overlay - Desktop Only */}
           <div
-            className={`absolute bottom-0 left-0 right-0 p-2 md:p-4 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 md:translate-y-full opacity-100 md:opacity-0'} z-10`}
+            className={`hidden md:block absolute bottom-0 left-0 right-0 p-2 md:p-4 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 md:translate-y-full opacity-100 md:opacity-0'} z-10`}
           >
             <button
               onClick={(e) => {
@@ -142,11 +142,11 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Product Info */}
-        <div className="p-5">
+        <div className="p-2 md:p-5">
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
             {product?.brand || 'MUSCFIT PREMIUM'}
           </p>
-          <h3 className="text-base font-bold text-[#112D4E] mb-2 leading-tight group-hover:text-blue-700 transition-colors line-clamp-2">
+          <h3 className="text-sm md:text-base font-bold text-[#112D4E] mb-1 md:mb-2 leading-tight group-hover:text-blue-700 transition-colors line-clamp-2">
             {product?.name}
           </h3>
 
@@ -163,13 +163,12 @@ export default function ProductCard({ product }) {
             </span>
           </div>
 
-          {/* Price */}
           <div className="flex items-baseline gap-2 mt-auto">
-            <span className="text-lg font-black text-[#112D4E]">
+            <span className="text-sm md:text-lg font-black text-[#112D4E]">
               ₹{product?.price?.toLocaleString()}
             </span>
             {hasDiscount && (
-              <span className="text-sm text-gray-400 font-medium line-through">
+              <span className="text-xs md:text-sm text-gray-400 font-medium line-through">
                 ₹{product?.originalPrice?.toLocaleString()}
               </span>
             )}

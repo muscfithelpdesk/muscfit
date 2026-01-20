@@ -90,7 +90,7 @@ export default function ProductCard({ product }) {
 
   return (
     <div
-      className="group w-full min-w-0 bg-card border border-border rounded-md overflow-hidden hover:shadow-sharp-lg transition-all duration-250"
+      className="group w-full min-w-0 md:bg-card md:border md:border-border md:rounded-md md:overflow-hidden md:hover:shadow-sharp-lg transition-all duration-250"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -141,9 +141,9 @@ export default function ProductCard({ product }) {
         </div>
       </Link>
       {/* Product Info */}
-      <div className="p-4">
+      <div className="pt-2 pb-0 px-0 md:p-4">
         <Link href={`/product-details?id=${product?.id}`}>
-          <h3 className="font-heading text-base md:text-lg font-semibold text-foreground line-clamp-2 mb-2 hover:text-primary transition-colors duration-250">
+          <h3 className="font-heading text-sm md:text-lg font-semibold text-foreground line-clamp-2 mb-1 md:mb-2 hover:text-primary transition-colors duration-250">
             {product?.name}
           </h3>
         </Link>
@@ -157,8 +157,8 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Price */}
-        <div className="flex items-center gap-3 mb-4">
-          <span className="font-data text-xl md:text-2xl font-bold text-primary">
+        <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
+          <span className="font-data text-base md:text-2xl font-bold text-primary">
             ₹{product?.price?.toLocaleString('en-IN')}
           </span>
           {product?.originalPrice && (
@@ -168,10 +168,10 @@ export default function ProductCard({ product }) {
           )}
         </div>
 
-        {/* Mobile Quick Add Button */}
+        {/* Mobile Quick Add Button - Hidden to match clean look */}
         <button
           onClick={() => onQuickAdd(product?.id)}
-          className="md:hidden w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold rounded-sm flex items-center justify-center gap-2 transition-all duration-250 active:scale-95"
+          className="hidden md:hidden w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold rounded-sm flex items-center justify-center gap-2 transition-all duration-250 active:scale-95"
         >
           <Icon name="ShoppingCartIcon" size={20} />
           Add to Cart
