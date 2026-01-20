@@ -155,7 +155,7 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
         <div className="relative group" style={{ position: 'relative' }}>
           <div
             ref={scrollRef}
-            className={`flex overflow-x-auto no-scrollbar pb-8 scroll-smooth transition-opacity duration-150 ${isTransitioning ? 'opacity-50' : 'opacity-100'
+            className={`grid grid-cols-2 gap-x-2 gap-y-6 md:flex md:gap-0 md:overflow-x-auto no-scrollbar pb-8 scroll-smooth transition-opacity duration-150 ${isTransitioning ? 'opacity-50' : 'opacity-100'
               }`}
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
@@ -176,7 +176,7 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
               .map((product) => (
                 <div
                   key={product.id}
-                  className="flex-none px-2 sm:px-3 w-[200px] sm:w-1/2 md:w-1/3 lg:w-1/4"
+                  className="w-full md:flex-none md:px-2 md:sm:px-3 md:w-1/3 lg:w-1/4"
                 >
                   <ModernProductCard product={product} onQuickView={onQuickView} />
                 </div>
@@ -191,10 +191,10 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
                 e.stopPropagation();
                 scrollLeft();
               }}
-              className="absolute left-2 md:left-0 top-[40%] -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all opacity-100 md:-translate-x-1/2 cursor-pointer"
+              className="hidden md:flex absolute left-0 top-[40%] -translate-y-1/2 z-20 w-12 h-12 bg-white shadow-lg rounded-full items-center justify-center hover:bg-gray-50 transition-all opacity-100 -translate-x-1/2 cursor-pointer"
               aria-label="Scroll left"
             >
-              <Icon name="ChevronLeftIcon" size={20} className="md:w-6 md:h-6 text-gray-800" />
+              <Icon name="ChevronLeftIcon" size={20} className="w-6 h-6 text-gray-800" />
             </button>
           )}
 
@@ -205,10 +205,10 @@ export default function CollectionSection({ title, subtitle, tabs, products, onQ
                 e.stopPropagation();
                 scrollRight();
               }}
-              className="absolute right-2 md:right-0 top-[40%] -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all opacity-100 md:translate-x-1/2 cursor-pointer"
+              className="hidden md:flex absolute right-0 top-[40%] -translate-y-1/2 z-20 w-12 h-12 bg-white shadow-lg rounded-full items-center justify-center hover:bg-gray-50 transition-all opacity-100 translate-x-1/2 cursor-pointer"
               aria-label="Scroll right"
             >
-              <Icon name="ChevronRightIcon" size={20} className="md:w-6 md:h-6 text-gray-800" />
+              <Icon name="ChevronRightIcon" size={20} className="w-6 h-6 text-gray-800" />
             </button>
           )}
         </div>
