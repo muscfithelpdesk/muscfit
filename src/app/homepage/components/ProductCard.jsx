@@ -68,7 +68,7 @@ export default function ProductCard({ product }) {
   return (
     <Link
       href={`/product-details?id=${product?.id}`}
-      className="group w-full min-w-0 bg-white rounded-md shadow-sharp hover:shadow-sharp-lg transition-all duration-250 overflow-hidden"
+      className="group w-full min-w-0 md:bg-white md:rounded-md md:shadow-sharp md:hover:shadow-sharp-lg transition-all duration-250 overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -110,27 +110,27 @@ export default function ProductCard({ product }) {
         </button>
 
         <div
-          className={`absolute bottom-0 left-0 right-0 p-2 md:p-3 bg-gradient-to-t from-black/80 to-transparent transition-all duration-300 z-20 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-0 md:translate-y-full opacity-100 md:opacity-0'}`}
+          className={`hidden md:block absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent transition-all duration-300 z-20 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}
         >
           <button
             onClick={handleQuickAdd}
-            className="w-full h-8 md:h-10 bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold rounded-sm flex items-center justify-center gap-1 md:gap-2 transition-all duration-250 text-[10px] md:text-sm uppercase tracking-wider"
+            className="w-full h-10 bg-primary hover:bg-primary/90 text-primary-foreground font-heading font-semibold rounded-sm flex items-center justify-center gap-2 transition-all duration-250 text-sm uppercase tracking-wider"
           >
-            <Icon name="ShoppingBagIcon" size={14} className="md:w-[18px] md:h-[18px]" />
+            <Icon name="ShoppingBagIcon" size={14} className="w-[18px] h-[18px]" />
             Add to Bag
           </button>
         </div>
       </div>
-      <div className="p-3 md:p-4">
+      <div className="p-2 md:p-4">
         <h3 className="font-heading text-sm md:text-lg font-bold text-gray-900 mb-1 md:mb-2 line-clamp-1 md:line-clamp-2 uppercase tracking-tight">
           {product?.name}
         </h3>
         <div className="flex items-center gap-1 md:gap-2 mb-1 md:mb-2">
-          <span className="font-data text-base md:text-xl font-black text-primary whitespace-nowrap">
+          <span className="font-data text-sm md:text-xl font-black text-primary whitespace-nowrap">
             ₹{product?.price}
           </span>
           {product?.originalPrice && (
-            <span className="font-data text-[10px] md:text-sm text-gray-500 line-through whitespace-nowrap">
+            <span className="font-data text-xs md:text-sm text-gray-500 line-through whitespace-nowrap">
               ₹{product?.originalPrice}
             </span>
           )}

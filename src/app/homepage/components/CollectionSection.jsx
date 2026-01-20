@@ -267,7 +267,7 @@ function ModernProductCard({ product, onQuickView }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative aspect-[3/4] overflow-hidden bg-[#F2F2F2] mb-3 md:mb-4">
+      <div className="relative aspect-[3/4] overflow-hidden md:bg-[#F2F2F2] mb-2 md:mb-4">
         <AppImage
           src={product?.image}
           alt={product?.imageAlt || product?.name}
@@ -293,19 +293,19 @@ function ModernProductCard({ product, onQuickView }) {
           />
         </button>
 
-        {/* Quick View Button */}
+        {/* Quick View Button - Desktop Only */}
         <button
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             onQuickView(product);
           }}
-          className={`absolute bottom-0 left-0 right-0 h-8 md:h-10 bg-[#2C3E50]/90 flex items-center justify-center transition-all duration-300 z-20 ${isHovered
+          className={`hidden md:flex absolute bottom-0 left-0 right-0 h-10 bg-[#2C3E50]/90 items-center justify-center transition-all duration-300 z-20 ${isHovered
             ? 'translate-y-0 opacity-100'
-            : 'translate-y-2 md:translate-y-full opacity-100 md:opacity-0'
+            : 'translate-y-full opacity-0'
             }`}
         >
-          <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase">
+          <span className="text-white text-xs font-bold tracking-widest uppercase">
             Quick view
           </span>
         </button>
@@ -319,7 +319,7 @@ function ModernProductCard({ product, onQuickView }) {
           {product?.name}
         </h3>
         <p className="text-[9px] md:text-[10px] text-gray-400 font-medium">PREMIUM FIT</p>
-        <p className="text-sm md:text-base font-black text-gray-900 mt-1 md:mt-2">
+        <p className="text-sm md:text-base font-black text-gray-900 mt-0.5 md:mt-2">
           ₹{product?.price}
         </p>
       </div>
