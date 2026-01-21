@@ -142,6 +142,18 @@ export default function HomepageInteractive({ pageData }) {
               name: 'PREMIUM GYM BAG',
               videoSrc: '/assets/videos/gym-bag-ad.mp4',
             },
+            {
+              id: 'video-gym-clothing',
+              type: 'video',
+              name: 'ELITE WEAR',
+              videoSrc: '/assets/videos/gym-clothing-ad.mp4',
+            },
+            {
+              id: 'video-gym-equipment',
+              type: 'video',
+              name: 'PRO GEAR',
+              videoSrc: '/assets/videos/gym-equipment-ad.mp4',
+            },
           ]}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
