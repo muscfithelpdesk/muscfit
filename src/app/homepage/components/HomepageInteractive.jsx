@@ -136,9 +136,13 @@ export default function HomepageInteractive({ pageData }) {
               name: 'UNLEASHED',
               videoSrc: '/assets/videos/vid_4.mp4',
             },
-            ...dbProducts
-              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-          ].slice(0, 8)}
+            {
+              id: 'video-gym-bag',
+              type: 'video',
+              name: 'PREMIUM GYM BAG',
+              videoSrc: '/assets/videos/gym-bag-ad.mp4',
+            },
+          ]}
           onQuickView={(p) => setQuickViewProduct(p)}
         />
 
