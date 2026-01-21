@@ -242,9 +242,9 @@ export default function Header({ topOffset = 0, isFixed = true }) {
 
               <Link
                 href="/"
-                className="z-50 flex items-center flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"
+                className="z-50 flex items-center flex-shrink-0 md:static md:translate-x-0"
               >
-                <div className={`relative transition-all duration-300 ${scrolled ? 'h-[40px] w-[120px] md:w-[180px] md:h-[60px]' : 'h-[50px] w-[140px] md:h-[80px] md:w-[240px]'}`}>
+                <div className={`relative transition-all duration-300 ${scrolled ? 'h-[44px] w-[132px] md:w-[180px] md:h-[60px]' : 'h-[55px] w-[154px] md:h-[80px] md:w-[240px]'}`}>
                   <Image
                     src="/assets/images/logo-v4.png"
                     alt="MUSCFIT Logo"
