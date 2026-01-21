@@ -67,6 +67,30 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
 
     if (!products || products.length === 0) return null;
 
+    // Video Refs to control playback
+    const videoRefs = useRef([]);
+
+    // Handle Video Playback - Only play active slide
+    useEffect(() => {
+        videoRefs.current.forEach((video, index) => {
+            if (!video) return;
+
+            if (index === activeIndex && !isDragging) {
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log("Autoplay prevented:", error);
+                    });
+                }
+            } else {
+                video.pause();
+                // Optional: reset time if you want them to restart every time
+                // video.currentTime = 0; 
+            }
+        });
+    }, [activeIndex, isDragging]);
+
+
     // Helper to determine visual position
     const getSlideStyles = (index) => {
         const total = products.length;
@@ -147,12 +171,13 @@ export default function NewArrivalsCarousel({ products, onQuickView }) {
                                 >
                                     <div className="relative w-full h-full bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/20 group/card">
                                         <video
+                                            ref={el => videoRefs.current[index] = el}
                                             src={product.videoSrc}
                                             className="w-full h-full object-cover"
-                                            autoPlay
                                             loop
                                             muted
                                             playsInline
+                                            preload="metadata"
                                         />
                                         {/* Optional Overlay for Title if needed, keeping it minimal as requested */}
                                         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
