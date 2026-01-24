@@ -334,131 +334,204 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
             )
             }
 
-            {/* Embedded Header Stats (if embedded) */}
-            {
-                isEmbedded && (
-                    <div className="flex justify-between items-end mb-8">
-                        <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter">Live Inventory <span className="text-red-500 text-sm not-italic tracking-normal align-middle ml-2">v2.1</span></h2>
-                        <div className="flex gap-4">
-                            <div className="text-right">
-                                <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Asset Value</p>
-                                <p className="text-lg font-black text-white italic">₹{totalValue.toLocaleString()}</p>
-                            </div>
-                            <div className="text-right border-l border-white/10 pl-4">
-                                <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Low Stock</p>
-                                <p className={`text-lg font-black italic ${lowStockCount > 0 ? 'text-red-500' : 'text-green-500'}`}>{lowStockCount}</p>
+            {/* VISUAL ANALYTICS HEADER */}
+            {isEmbedded && (
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 text-white">
+                    <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 border border-white/10 p-5 rounded-2xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><Icon name="CubeIcon" size={60} /></div>
+                        <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-1">Total Assets</p>
+                        <h3 className="text-3xl font-black italic">{products.length}</h3>
+                        <p className="text-[10px] text-green-500 font-bold mt-2 flex items-center gap-1"><Icon name="ArrowUpRightIcon" size={10} /> Live Catalog</p>
+                    </div>
+                    <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 border border-white/10 p-5 rounded-2xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><Icon name="CurrencyRupeeIcon" size={60} /></div>
+                        <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-1">Inventory Value</p>
+                        <h3 className="text-3xl font-black italic">₹{(totalValue / 100000).toFixed(1)}L</h3>
+                        <p className="text-[10px] text-blue-500 font-bold mt-2">Estimated Revenue</p>
+                    </div>
+                    <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 border border-white/10 p-5 rounded-2xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><Icon name="ExclamationTriangleIcon" size={60} /></div>
+                        <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-1">Stock Health</p>
+                        <h3 className={`text-3xl font-black italic ${lowStockCount > 0 ? 'text-red-500' : 'text-white'}`}>{lowStockCount}</h3>
+                        <p className="text-[10px] text-red-500 font-bold mt-2">Items Low on Stock</p>
+                    </div>
+                    <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 border border-white/10 p-5 rounded-2xl flex items-center justify-between">
+                        <div>
+                            <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-2">Top Categories</p>
+                            <div className="flex gap-2">
+                                <span className="text-xs bg-white/5 px-2 py-1 rounded border border-white/5">Men</span>
+                                <span className="text-xs bg-white/5 px-2 py-1 rounded border border-white/5">Women</span>
                             </div>
                         </div>
+                        <div className="h-12 w-12 rounded-full border-4 border-white/10 border-t-green-500 flex items-center justify-center">
+                            <span className="text-[10px] font-bold">98%</span>
+                        </div>
                     </div>
-                )
-            }
+                </div>
+            )}
 
             {/* Main Content */}
             <div className={`${isEmbedded ? 'w-full' : 'max-w-7xl mx-auto px-6 py-12'} text-left`}>
 
-                {/* Actions Toolbar */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
-                    <div className="relative w-full md:w-96">
-                        <Icon name="MagnifyingGlassIcon" size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
-                        <input
-                            type="text"
-                            placeholder="SEARCH INVENTORY..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-zinc-900/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white uppercase text-xs font-bold tracking-widest outline-none focus:border-white/30 transition-all"
-                        />
+                {/* ADVANCED TOOLBAR */}
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8 bg-zinc-900/50 p-2 rounded-2xl border border-white/5">
+
+                    {/* Search & Filter Pill */}
+                    <div className="flex items-center gap-4 w-full md:w-auto flex-1">
+                        <div className="relative flex-1 max-w-md">
+                            <Icon name="MagnifyingGlassIcon" size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
+                            <input
+                                type="text"
+                                placeholder="SEARCH SKU, BRAND, NAME..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white uppercase text-[10px] font-bold tracking-widest outline-none focus:border-white/30 transition-all"
+                            />
+                        </div>
+
+                        {/* Status Filters */}
+                        <div className="hidden md:flex bg-black/40 rounded-xl p-1 border border-white/10">
+                            {['ALL', 'LOW STOCK', 'ACTIVE', 'DRAFTS'].map(tab => (
+                                <button
+                                    key={tab}
+                                    // Make these functional in next iteration or simple sort for now
+                                    className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${tab === 'ALL' ? 'bg-white text-black shadow-lg' : 'text-white/40 hover:text-white hover:bg-white/5'
+                                        }`}
+                                >
+                                    {tab}
+                                </button>
+                            ))}
+                        </div>
                     </div>
-                    <div className="flex gap-4 w-full md:w-auto">
+
+                    <div className="flex gap-2">
                         <button
                             onClick={handleSync}
                             disabled={isSaving}
-                            className="bg-zinc-800 text-white/60 hover:text-white hover:bg-zinc-700 px-6 py-4 rounded-xl font-black uppercase text-[10px] tracking-widest transition-all flex items-center gap-2 border border-white/5"
+                            className="bg-black hover:bg-zinc-900 text-white border border-white/10 text-white/80 px-4 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest transition-all flex items-center gap-2"
                         >
-                            <Icon name="ArrowPathRoundedSquareIcon" size={16} />
-                            Sync DB
+                            <Icon name="ArrowPathRoundedSquareIcon" size={14} />
                         </button>
                         <button
                             onClick={() => setShowAddForm(true)}
-                            className="flex-1 md:flex-none bg-white text-black px-8 py-4 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-zinc-200 transition-all flex items-center justify-center gap-2"
+                            className="bg-green-500 hover:bg-green-400 text-black px-6 py-3 rounded-xl font-black uppercase text-[10px] tracking-widest transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(34,197,94,0.3)]"
                         >
-                            <Icon name="PlusIcon" size={18} />
-                            Add Product
+                            <Icon name="PlusIcon" size={14} />
+                            Deploy Asset
                         </button>
                     </div>
                 </div>
 
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-40">
-                        <div className="w-12 h-12 border-4 border-white/10 border-t-white rounded-full animate-spin mb-4"></div>
-                        <p className="text-white/20 font-black uppercase tracking-[0.3em] text-xs">Loading Assets...</p>
+                        <div className="w-12 h-12 border-4 border-white/10 border-t-green-500 rounded-full animate-spin mb-4"></div>
+                        <p className="text-white/20 font-black uppercase tracking-[0.3em] text-xs">Scanning Inventory...</p>
                     </div>
                 ) : (
-                    <div className="bg-zinc-900/50 rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
+                    <div className="bg-zinc-900/50 rounded-3xl border border-white/10 overflow-hidden shadow-2xl backdrop-blur-sm">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left">
                                 <thead className="bg-white/5 border-b border-white/10">
                                     <tr>
-                                        <th className="px-6 py-5 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Image</th>
-                                        <th className="px-6 py-5 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Product Details</th>
-                                        <th className="px-6 py-5 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Category</th>
-                                        <th className="px-6 py-5 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Financials</th>
-                                        <th className="px-6 py-5 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Stock</th>
-                                        <th className="px-6 py-5 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Status</th>
-                                        <th className="px-6 py-5 text-[10px] font-black text-white/30 uppercase tracking-[0.3em] text-right">Actions</th>
+                                        {['Asset Profile', 'Specifications', 'Financials', 'Supply Chain', 'Status', 'Actions'].map(h => (
+                                            <th key={h} className="px-6 py-5 text-[9px] font-black text-white/30 uppercase tracking-[0.3em]">{h}</th>
+                                        ))}
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-white/5">
-                                    {filteredProducts.map(p => (
-                                        <tr key={p.id} className="hover:bg-white/5 transition-colors group">
-                                            <td className="px-6 py-4">
-                                                <div className="w-12 h-12 rounded-lg border border-white/10 overflow-hidden bg-white/5 relative">
-                                                    {p.imageUrl || p.productImages?.[0]?.imageUrl ? (
-                                                        <img src={p.imageUrl || p.productImages?.[0]?.imageUrl} alt={p.name} className="w-full h-full object-cover" />
-                                                    ) : (
-                                                        <div className="w-full h-full flex items-center justify-center text-white/10"><Icon name="PhotoIcon" size={20} /></div>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="font-bold text-sm text-white tracking-tight">{p.name}</div>
-                                                <div className="text-[10px] text-white/40 font-medium uppercase tracking-widest mt-1">{p.brand} • {p.gender}</div>
-                                                {(p.productVariants?.length > 0) && (
-                                                    <div className="flex gap-1 mt-2">
-                                                        {p.productVariants.slice(0, 3).map((v, i) => <span key={i} className="text-[8px] bg-white/10 px-1 rounded text-white/60">{v.size}</span>)}
-                                                        {p.productVariants.length > 3 && <span className="text-[8px] text-white/40">+{p.productVariants.length - 3}</span>}
+                                    {filteredProducts.map(p => {
+                                        // Calculate Discount
+                                        const discount = p.originalPrice > p.price ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100) : 0;
+                                        // Calculate Stock Health (Assume 100 is max healthy stock for bar)
+                                        const stockPercent = Math.min((p.stockQuantity / 100) * 100, 100);
+                                        const stockColor = p.stockQuantity < 10 ? 'bg-red-500' : p.stockQuantity < 40 ? 'bg-yellow-500' : 'bg-green-500';
+
+                                        return (
+                                            <tr key={p.id} className="hover:bg-white/5 transition-colors group">
+                                                {/* ASSET PROFILE */}
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="w-12 h-12 rounded-lg border border-white/10 overflow-hidden bg-white/5 relative shrink-0">
+                                                            {p.imageUrl || p.productImages?.[0]?.imageUrl ? (
+                                                                <img src={p.imageUrl || p.productImages?.[0]?.imageUrl} alt={p.name} className="w-full h-full object-cover" />
+                                                            ) : (
+                                                                <div className="w-full h-full flex items-center justify-center text-white/10"><Icon name="PhotoIcon" size={20} /></div>
+                                                            )}
+                                                            {discount > 0 && <div className="absolute top-0 right-0 bg-red-600 text-white text-[8px] font-black px-1">-{discount}%</div>}
+                                                        </div>
+                                                        <div>
+                                                            <div className="font-bold text-sm text-white tracking-tight line-clamp-1 w-40" title={p.name}>{p.name}</div>
+                                                            <div className="flex items-center gap-2 mt-1">
+                                                                <span className="text-[9px] bg-white/10 px-1.5 rounded text-white/60 font-mono uppercase">{p.brand}</span>
+                                                                {p.tag && <span className="text-[9px] bg-blue-500/20 text-blue-400 px-1.5 rounded font-black uppercase tracking-wider">{p.tag}</span>}
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                )}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <span className="inline-block bg-white/5 border border-white/10 px-3 py-1 rounded text-[10px] font-bold text-white uppercase tracking-wider">
-                                                    {p.category}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="font-data font-bold text-white">₹{p.price.toLocaleString()}</div>
-                                                {p.originalPrice > p.price && <div className="text-[10px] text-white/30 line-through">₹{p.originalPrice?.toLocaleString()}</div>}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className={`font-bold text-sm ${p.stockQuantity < 10 ? 'text-red-500' : 'text-green-500'}`}>
-                                                    {p.stockQuantity} UNITS
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <span className={`w-2 h-2 rounded-full inline-block mr-2 ${p.isActive ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                                                <span className="text-[10px] font-bold text-white/60 uppercase">{p.isActive ? 'Active' : 'Hidden'}</span>
-                                            </td>
-                                            <td className="px-6 py-4 text-right">
-                                                <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <button onClick={() => setSelectedProduct(p)} className="p-2 bg-white/5 hover:bg-white text-white/60 hover:text-black rounded-lg transition-colors">
-                                                        <Icon name="PencilSquareIcon" size={16} />
-                                                    </button>
-                                                    <button onClick={() => handleDelete(p.id)} className="p-2 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white rounded-lg transition-colors">
-                                                        <Icon name="TrashIcon" size={16} />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                                </td>
+
+                                                {/* SPECIFICATIONS */}
+                                                <td className="px-6 py-4">
+                                                    <div className="flex flex-col gap-1">
+                                                        <div className="text-[10px] text-white/60 uppercase tracking-wider font-bold">
+                                                            <span className="text-white/30">CAT:</span> {p.category}
+                                                        </div>
+                                                        <div className="text-[10px] text-white/60 uppercase tracking-wider font-bold">
+                                                            <span className="text-white/30">GEN:</span> {p.gender}
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                {/* FINANCIALS */}
+                                                <td className="px-6 py-4">
+                                                    <div className="font-mono font-bold text-white tracking-tighter">₹{p.price.toLocaleString()}</div>
+                                                    {p.originalPrice > p.price && <div className="text-[9px] text-white/30 line-through font-mono">₹{p.originalPrice?.toLocaleString()}</div>}
+                                                </td>
+
+                                                {/* SUPPLY CHAIN (STOCK) */}
+                                                <td className="px-6 py-4 w-40">
+                                                    <div className="flex justify-between text-[10px] font-bold text-white mb-1">
+                                                        <span>{p.stockQuantity} UNITS</span>
+                                                        <span className={p.stockQuantity < 10 ? 'text-red-500' : 'text-green-500'}>{p.stockQuantity < 10 ? 'CRITICAL' : 'GOOD'}</span>
+                                                    </div>
+                                                    <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                                                        <div className={`h-full ${stockColor}`} style={{ width: `${stockPercent}%` }}></div>
+                                                    </div>
+                                                    {(p.productVariants?.length > 0) && (
+                                                        <div className="mt-2 flex gap-1 flex-wrap">
+                                                            {p.productVariants.slice(0, 3).map((v, i) => (
+                                                                <div key={i} className="text-[8px] border border-white/10 px-1 rounded text-white/40 flex gap-1" title={`${v.size}: ${v.stockQuantity}`}>
+                                                                    <span className="text-white">{v.size}</span>
+                                                                    <span className={v.stockQuantity < 5 ? 'text-red-500' : 'text-white/50'}>{v.stockQuantity}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </td>
+
+                                                {/* STATUS */}
+                                                <td className="px-6 py-4">
+                                                    <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border ${p.isActive ? 'bg-green-500/10 border-green-500/20' : 'bg-red-500/10 border-red-500/20'}`}>
+                                                        <div className={`w-1.5 h-1.5 rounded-full ${p.isActive ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
+                                                        <span className={`text-[9px] font-black uppercase tracking-widest ${p.isActive ? 'text-green-500' : 'text-red-500'}`}>
+                                                            {p.isActive ? 'Active' : 'Offline'}
+                                                        </span>
+                                                    </div>
+                                                </td>
+
+                                                {/* ACTIONS */}
+                                                <td className="px-6 py-4 text-right">
+                                                    <div className="flex justify-end gap-2">
+                                                        <button onClick={() => setSelectedProduct(p)} className="p-2 bg-white/5 hover:bg-white text-white/60 hover:text-black rounded-lg transition-all hover:scale-105 active:scale-95">
+                                                            <Icon name="PencilSquareIcon" size={14} />
+                                                        </button>
+                                                        <button onClick={() => handleDelete(p.id)} className="p-2 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white rounded-lg transition-all hover:scale-105 active:scale-95">
+                                                            <Icon name="TrashIcon" size={14} />
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
                                 </tbody>
                             </table>
                         </div>
