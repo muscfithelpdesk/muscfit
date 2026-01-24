@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/AppIcon';
 import AppImage from '@/components/ui/AppImage';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import {
     BarChart,
@@ -24,6 +25,7 @@ import { productService } from '@/lib/services/productService';
 import { uploadService } from '@/lib/services/uploadService';
 import { orderService } from '@/lib/services/orderService';
 import { userService } from '@/lib/services/userService';
+import InventoryDashboard from '@/components/admin/InventoryDashboard';
 
 // --- Shared Constants ---
 const statusColors = {
@@ -225,47 +227,10 @@ export default function UnifiedAdminPage() {
         }
     };
 
-    const handleAddProduct = async (e) => {
-        e.preventDefault();
-        try {
-            setIsSaving(true);
-            await productService.createProduct(newProduct);
-            await loadInitialData();
-            setShowAddProductForm(false);
-            setNewProduct({
-                name: '',
-                category: 'Men',
-                gender: 'men',
-                price: 0,
-                originalPrice: 0,
-                stockQuantity: 0,
-                isActive: true,
-                description: '',
-                brand: 'MUSCFIT',
-                tag: 'NEW',
-                remarks: '',
-                imageUrl: ''
-            });
-        } catch (err) {
-            alert('Failed to save to Supabase: ' + err.message);
-        } finally {
-            setIsSaving(false);
-        }
-    };
 
-    const handleUpdateProduct = async (e) => {
-        e.preventDefault();
-        try {
-            setIsSaving(true);
-            await productService.updateProduct(selectedProduct.id, selectedProduct);
-            await loadInitialData();
-            setSelectedProduct(null);
-        } catch (err) {
-            alert('Sync failed: ' + err.message);
-        } finally {
-            setIsSaving(false);
-        }
-    };
+
+    // Product handlers moved to /admin/inventory
+
 
     const handleCreatePromo = async (e) => {
         e.preventDefault();
@@ -283,24 +248,8 @@ export default function UnifiedAdminPage() {
         }
     };
 
-    const handleSyncCatalog = async () => {
-        if (!confirm('This will migrate all hardcoded collection items into the live database. Items with duplicate IDs will be updated. Proceed?')) return;
-        try {
-            setIsSaving(true);
-            const result = await productService.syncBasicCatalog();
-            if (result.success) {
-                await loadInitialData();
-                alert(`Catalog Sync Successful! Migrated ${result.count} items.`);
-            } else {
-                alert('Sync partially failed: ' + result.error);
-            }
-        } catch (err) {
-            console.error('Migration crash:', err);
-            alert('CRITICAL SYNC ERROR: ' + err.message + '\n\nPlease check if "remarks" column exists in your products table.');
-        } finally {
-            setIsSaving(false);
-        }
-    };
+    // Catalog sync moved to /admin/inventory
+
 
     // --- Filtering & Analytics Logic ---
     const filteredOrders = orders.filter(o =>
@@ -450,140 +399,8 @@ export default function UnifiedAdminPage() {
 
                         {/* PRODUCTS TAB */}
                         {activeTab === 'products' && (
-                            <div className="space-y-8">
-                                <div className="flex justify-between items-center">
-                                    <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter">Product Inventory</h2>
-                                    <div className="flex gap-4">
-                                        <button
-                                            onClick={handleSyncCatalog}
-                                            disabled={isSaving}
-                                            className="bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 px-6 py-3 rounded-lg font-black uppercase text-[10px] tracking-widest hover:bg-yellow-500/20 transition-all flex items-center gap-2"
-                                        >
-                                            <Icon name="ArrowPathRoundedSquareIcon" size={16} />
-                                            Sync Hardcoded Catalog
-                                        </button>
-                                        <button
-                                            onClick={() => setShowAddProductForm(!showAddProductForm)}
-                                            className="bg-white text-black px-8 py-3 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-zinc-200 transition-all flex items-center gap-2"
-                                        >
-                                            <Icon name="PlusIcon" size={18} />
-                                            Add New Product
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {showAddProductForm && (
-                                    <div className="bg-zinc-900 border border-white/10 p-8 rounded-2xl animate-scale-in">
-                                        <form onSubmit={handleAddProduct} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                            <div className="md:col-span-2">
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Product Name</label>
-                                                <input required value={newProduct.name} onChange={e => setNewProduct({ ...newProduct, name: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none focus:border-white/30" placeholder="e.g. Oversized Pump Cover" />
-                                            </div>
-                                            <div>
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Brand</label>
-                                                <input required value={newProduct.brand} onChange={e => setNewProduct({ ...newProduct, brand: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" placeholder="MUSCFIT" />
-                                            </div>
-                                            <div className="md:col-span-3">
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Description</label>
-                                                <textarea value={newProduct.description} onChange={e => setNewProduct({ ...newProduct, description: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none min-h-[100px]" placeholder="Product storytelling..." />
-                                            </div>
-                                            <div>
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Price (₹)</label>
-                                                <input type="number" required value={newProduct.price} onChange={e => setNewProduct({ ...newProduct, price: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
-                                            </div>
-                                            <div>
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Original Price (₹)</label>
-                                                <input type="number" value={newProduct.originalPrice} onChange={e => setNewProduct({ ...newProduct, originalPrice: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
-                                            </div>
-                                            <div>
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Stock</label>
-                                                <input type="number" required value={newProduct.stockQuantity} onChange={e => setNewProduct({ ...newProduct, stockQuantity: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
-                                            </div>
-                                            <div>
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Category</label>
-                                                <select value={newProduct.category} onChange={e => setNewProduct({ ...newProduct, category: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none">
-                                                    <option value="Men">Men</option>
-                                                    <option value="Women">Women</option>
-                                                    <option value="Compression">Compression</option>
-                                                    <option value="Accessories">Accessories</option>
-                                                    <option value="Winter-Arc">Winter Arc</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Gender</label>
-                                                <select value={newProduct.gender} onChange={e => setNewProduct({ ...newProduct, gender: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none">
-                                                    <option value="men">Men</option>
-                                                    <option value="women">Women</option>
-                                                    <option value="compression">Compression</option>
-                                                    <option value="unisex">Unisex</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Tag</label>
-                                                <select value={newProduct.tag} onChange={e => setNewProduct({ ...newProduct, tag: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none">
-                                                    <option value="NEW">NEW</option>
-                                                    <option value="TRENDING">TRENDING</option>
-                                                    <option value="BESTSELLER">BESTSELLER</option>
-                                                    <option value="LIMITED">LIMITED</option>
-                                                    <option value="PRO">PRO</option>
-                                                </select>
-                                            </div>
-                                            <div className="md:col-span-2">
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Image URL</label>
-                                                <input value={newProduct.imageUrl} onChange={e => setNewProduct({ ...newProduct, imageUrl: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" placeholder="https://..." />
-                                            </div>
-                                            <div className="md:col-span-3">
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Remarks / Internal Notes</label>
-                                                <input value={newProduct.remarks} onChange={e => setNewProduct({ ...newProduct, remarks: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" placeholder="e.g. Special edition, Warehouse B..." />
-                                            </div>
-                                            <div>
-                                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Status</label>
-                                                <div className="flex items-center gap-4 p-4 bg-black/40 border border-white/10 rounded-xl">
-                                                    <input type="checkbox" checked={newProduct.isActive} onChange={e => setNewProduct({ ...newProduct, isActive: e.target.checked })} className="w-5 h-5 rounded border-white/10 bg-black/40" />
-                                                    <span className="text-white font-bold text-sm">Active & Visible</span>
-                                                </div>
-                                            </div>
-                                            <div className="md:col-span-3 flex gap-4 pt-4 border-t border-white/5">
-                                                <button type="submit" disabled={isSaving} className="bg-white text-black px-12 py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-zinc-200 transition-all active:scale-95">{isSaving ? 'REGISTERING...' : 'CONFIRM LISTING'}</button>
-                                                <button type="button" onClick={() => setShowAddProductForm(false)} className="bg-white/5 text-white/60 px-8 py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-white/10 transition-all">Discard</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                )}
-
-                                <div className="bg-zinc-900/50 rounded-2xl border border-white/10 overflow-hidden">
-                                    <table className="w-full text-left">
-                                        <thead className="bg-white/5 border-b border-white/10">
-                                            <tr>
-                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Img</th>
-                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Name</th>
-                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Category</th>
-                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Price</th>
-                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Stock</th>
-                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Remarks</th>
-                                                <th className="px-6 py-4 text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="text-white">
-                                            {products.map(p => (
-                                                <tr key={p.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                                                    <td className="px-6 py-4"><img src={p.imageUrl || p.productImages?.[0]?.imageUrl} className="w-12 h-12 object-cover rounded-lg border border-white/10" /></td>
-                                                    <td className="px-6 py-4 font-bold text-sm tracking-tight">{p.name}</td>
-                                                    <td className="px-6 py-4"><span className="text-[10px] font-black uppercase tracking-widest bg-white/5 px-2 py-1 rounded border border-white/10">{p.category}</span></td>
-                                                    <td className="px-6 py-4 font-data text-sm font-bold text-white">₹{p.price}</td>
-                                                    <td className="px-6 py-4"><span className={`text-sm font-bold ${p.stockQuantity < 10 ? 'text-red-500' : 'text-white/60'}`}>{p.stockQuantity}</span></td>
-                                                    <td className="px-6 py-4 text-xs text-white/40 italic font-medium">{p.remarks || '-'}</td>
-                                                    <td className="px-6 py-4">
-                                                        <div className="flex gap-4">
-                                                            <button onClick={() => setSelectedProduct(p)} className="text-white/40 hover:text-white transition-colors"><Icon name="PencilSquareIcon" size={18} /></button>
-                                                            <button onClick={() => { if (confirm('Delete product?')) productService.deleteProduct(p.id).then(loadInitialData) }} className="text-white/20 hover:text-red-500 transition-colors"><Icon name="TrashIcon" size={18} /></button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div className="w-full relative z-0">
+                                <InventoryDashboard isEmbedded={true} initialProducts={products} />
                             </div>
                         )}
 
@@ -752,101 +569,41 @@ export default function UnifiedAdminPage() {
             </div>
 
             {/* MODALS */}
-            {showCreatePromoModal && (
-                <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
-                    <div className="bg-zinc-900 border border-white/10 w-full max-w-md p-10 rounded-3xl animate-scale-in">
-                        <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">Generate Voucher</h2>
-                        <form onSubmit={handleCreatePromo} className="space-y-6">
-                            <div>
-                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Promo Code</label>
-                                <input required value={newPromoCode.code} onChange={e => setNewPromoCode({ ...newPromoCode, code: e.target.value.toUpperCase() })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none uppercase" placeholder="MUSC20" />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
+            {
+                showCreatePromoModal && (
+                    <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+                        <div className="bg-zinc-900 border border-white/10 w-full max-w-md p-10 rounded-3xl animate-scale-in">
+                            <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">Generate Voucher</h2>
+                            <form onSubmit={handleCreatePromo} className="space-y-6">
                                 <div>
-                                    <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Discount %</label>
-                                    <input type="number" required value={newPromoCode.discount_percentage} onChange={e => setNewPromoCode({ ...newPromoCode, discount_percentage: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold" />
+                                    <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Promo Code</label>
+                                    <input required value={newPromoCode.code} onChange={e => setNewPromoCode({ ...newPromoCode, code: e.target.value.toUpperCase() })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none uppercase" placeholder="MUSC20" />
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Discount %</label>
+                                        <input type="number" required value={newPromoCode.discount_percentage} onChange={e => setNewPromoCode({ ...newPromoCode, discount_percentage: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Max Uses</label>
+                                        <input type="number" required value={newPromoCode.max_uses} onChange={e => setNewPromoCode({ ...newPromoCode, max_uses: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold" />
+                                    </div>
                                 </div>
                                 <div>
-                                    <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Max Uses</label>
-                                    <input type="number" required value={newPromoCode.max_uses} onChange={e => setNewPromoCode({ ...newPromoCode, max_uses: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold" />
+                                    <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Expires On</label>
+                                    <input type="datetime-local" required value={newPromoCode.valid_until} onChange={e => setNewPromoCode({ ...newPromoCode, valid_until: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold" />
                                 </div>
-                            </div>
-                            <div>
-                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Expires On</label>
-                                <input type="datetime-local" required value={newPromoCode.valid_until} onChange={e => setNewPromoCode({ ...newPromoCode, valid_until: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold" />
-                            </div>
-                            <div className="flex gap-4 pt-4">
-                                <button type="submit" disabled={isSaving} className="flex-1 bg-white text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest">{isSaving ? 'Syncing...' : 'CREATE'}</button>
-                                <button type="button" onClick={() => setShowCreatePromoModal(false)} className="flex-1 bg-white/5 text-white/40 py-4 rounded-xl font-black uppercase text-xs tracking-widest">Cancel</button>
-                            </div>
-                        </form>
+                                <div className="flex gap-4 pt-4">
+                                    <button type="submit" disabled={isSaving} className="flex-1 bg-white text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest">{isSaving ? 'Syncing...' : 'CREATE'}</button>
+                                    <button type="button" onClick={() => setShowCreatePromoModal(false)} className="flex-1 bg-white/5 text-white/40 py-4 rounded-xl font-black uppercase text-xs tracking-widest">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
-            {selectedProduct && (
-                <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
-                    <div className="bg-zinc-900 border border-white/10 w-full max-w-2xl p-10 rounded-3xl animate-scale-in">
-                        <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">Edit Product</h2>
-                        <form onSubmit={handleUpdateProduct} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="md:col-span-2">
-                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Product Name</label>
-                                <input required value={selectedProduct.name} onChange={e => setSelectedProduct({ ...selectedProduct, name: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
-                            </div>
-                            <div className="md:col-span-2">
-                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Description</label>
-                                <textarea value={selectedProduct.description} onChange={e => setSelectedProduct({ ...selectedProduct, description: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none min-h-[100px]" />
-                            </div>
-                            <div>
-                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Price (₹)</label>
-                                <input type="number" required value={selectedProduct.price} onChange={e => setSelectedProduct({ ...selectedProduct, price: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
-                            </div>
-                            <div>
-                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Original Price (₹)</label>
-                                <input type="number" value={selectedProduct.originalPrice} onChange={e => setSelectedProduct({ ...selectedProduct, originalPrice: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
-                            </div>
-                            <div>
-                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Stock</label>
-                                <input type="number" required value={selectedProduct.stockQuantity} onChange={e => setSelectedProduct({ ...selectedProduct, stockQuantity: Number(e.target.value) })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" />
-                            </div>
-                            <div>
-                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Category</label>
-                                <select value={selectedProduct.category} onChange={e => setSelectedProduct({ ...selectedProduct, category: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none">
-                                    <option value="Men">Men</option>
-                                    <option value="Women">Women</option>
-                                    <option value="Compression">Compression</option>
-                                    <option value="Accessories">Accessories</option>
-                                    <option value="Winter-Arc">Winter Arc</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Gender</label>
-                                <select value={selectedProduct.gender} onChange={e => setSelectedProduct({ ...selectedProduct, gender: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none">
-                                    <option value="men">Men</option>
-                                    <option value="women">Women</option>
-                                    <option value="compression">Compression</option>
-                                    <option value="unisex">Unisex</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Status</label>
-                                <div className="flex items-center gap-4 p-4 bg-black/40 border border-white/10 rounded-xl">
-                                    <input type="checkbox" checked={selectedProduct.isActive} onChange={e => setSelectedProduct({ ...selectedProduct, isActive: e.target.checked })} className="w-5 h-5 rounded border-white/10 bg-black/40" />
-                                    <span className="text-white font-bold text-sm">Active & Visible</span>
-                                </div>
-                            </div>
-                            <div className="md:col-span-2 border-t border-white/5 pt-6">
-                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Remarks / Internal Notes</label>
-                                <input value={selectedProduct.remarks || ''} onChange={e => setSelectedProduct({ ...selectedProduct, remarks: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white font-bold outline-none" placeholder="Edit remarks..." />
-                            </div>
-                            <div className="md:col-span-2 flex gap-4 pt-4 border-t border-white/5">
-                                <button type="submit" disabled={isSaving} className="flex-1 bg-white text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-zinc-200 transition-all active:scale-95">{isSaving ? 'Updating...' : 'SAVE CHANGES'}</button>
-                                <button type="button" onClick={() => setSelectedProduct(null)} className="flex-1 bg-white/5 text-white/40 py-4 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-white/10 transition-all">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
-        </div>
+
+        </div >
     );
 }

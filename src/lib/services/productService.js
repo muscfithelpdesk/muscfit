@@ -1288,7 +1288,42 @@ export const productService = {
         if (imageError) throw imageError;
       }
 
-      return this.convertToCamelCase(product);
+      // 3. Insert Variants
+      if (productData?.productVariants?.length > 0) {
+        const variants = productData.productVariants.map(v => ({
+          product_id: product.id,
+          size: v.size,
+          color: v.color || 'Solid',
+          stock_quantity: v.stockQuantity || 0
+        }));
+        const { error: variantError } = await supabase.from('product_variants').insert(variants);
+        if (variantError) throw variantError;
+      }
+
+      // 4. Insert Attributes
+      if (productData?.productAttributes?.length > 0) {
+        const attrs = productData.productAttributes.map(a => ({
+          product_id: product.id,
+          attribute_name: a.attributeName,
+          attribute_value: a.attributeValue
+        }));
+        const { error: attrError } = await supabase.from('product_attributes').insert(attrs);
+        if (attrError) throw attrError;
+      }
+
+      // Fetch complete to return
+      const { data: completeProduct } = await supabase
+        .from('products')
+        .select(`
+          *,
+          product_images(*),
+          product_variants(*),
+          product_attributes(*)
+        `)
+        .eq('id', product.id)
+        .single();
+
+      return this.convertToCamelCase(completeProduct);
     } catch (error) {
       console.error('Error creating product:', error);
       throw error;
@@ -1358,6 +1393,74 @@ export const productService = {
             display_order: 1,
           });
           console.log('✅ Image inserted');
+        }
+      }
+
+      // Update Variants if provided
+      if (updates.productVariants) {
+        console.log('🔄 Syncing Variants...');
+        // 1. Get existing IDs
+        const { data: existingVariants } = await supabase
+          .from('product_variants')
+          .select('id')
+          .eq('product_id', id);
+
+        const existingIds = existingVariants?.map(v => v.id) || [];
+        const incomingIds = updates.productVariants.filter(v => v.id && !v.id.startsWith('temp-')).map(v => v.id);
+
+        // 2. Delete removed variants
+        const toDelete = existingIds.filter(eid => !incomingIds.includes(eid));
+        if (toDelete.length > 0) {
+          await supabase.from('product_variants').delete().in('id', toDelete);
+        }
+
+        // 3. Upsert incoming
+        for (const v of updates.productVariants) {
+          const variantData = {
+            product_id: id,
+            size: v.size,
+            color: v.color || 'Solid',
+            stock_quantity: v.stockQuantity || 0
+          };
+
+          if (v.id && !v.id.startsWith('temp-')) {
+            // Update
+            await supabase.from('product_variants').update(variantData).eq('id', v.id);
+          } else {
+            // Insert
+            await supabase.from('product_variants').insert(variantData);
+          }
+        }
+      }
+
+      // Update Attributes if provided
+      if (updates.productAttributes) {
+        console.log('🔄 Syncing Attributes...');
+        const { data: existingAttrs } = await supabase
+          .from('product_attributes')
+          .select('id')
+          .eq('product_id', id);
+
+        const existingIds = existingAttrs?.map(a => a.id) || [];
+        const incomingIds = updates.productAttributes.filter(a => a.id && !a.id.startsWith('temp-')).map(a => a.id);
+
+        const toDelete = existingIds.filter(eid => !incomingIds.includes(eid));
+        if (toDelete.length > 0) {
+          await supabase.from('product_attributes').delete().in('id', toDelete);
+        }
+
+        for (const a of updates.productAttributes) {
+          const attrData = {
+            product_id: id,
+            attribute_name: a.attributeName,
+            attribute_value: a.attributeValue
+          };
+
+          if (a.id && !a.id.startsWith('temp-')) {
+            await supabase.from('product_attributes').update(attrData).eq('id', a.id);
+          } else {
+            await supabase.from('product_attributes').insert(attrData);
+          }
         }
       }
 
