@@ -334,9 +334,13 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
             )
             }
 
-            {/* VISUAL ANALYTICS HEADER */}
             {isEmbedded && (
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 text-white">
+                    <div className="col-span-full mb-4">
+                        <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter flex items-center gap-3">
+                            Command Center <span className="text-purple-500 text-sm not-italic tracking-normal px-2 py-0.5 border border-purple-500/30 bg-purple-500/10 rounded">v3.0</span>
+                        </h2>
+                    </div>
                     <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 border border-white/10 p-5 rounded-2xl relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><Icon name="CubeIcon" size={60} /></div>
                         <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-1">Total Assets</p>
