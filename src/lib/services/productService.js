@@ -1361,10 +1361,36 @@ export const productService = {
         .eq('id', id)
         .select();
 
-      console.log('📡 Supabase response - error:', error);
       console.log('📡 Supabase response - data:', data);
 
       if (error) throw error;
+
+      // --- AUTO-MIGRATION FIX ---
+      // If data is empty, it means the ID doesn't exist in DB (it's a hardcoded JS item).
+      // We must INSERT it first to apply the updates.
+      if (!data || data.length === 0) {
+        console.log('⚠️ Product is hardcoded. Migrating to DB with ID:', id);
+        const insertPayload = {
+          id: id, // CRITICAL: Keep valid hardcoded ID
+          name: updates.name,
+          description: updates.description,
+          price: updates.price,
+          original_price: updates.originalPrice,
+          stock_quantity: updates.stockQuantity,
+          is_active: updates.isActive,
+          category: updates.category,
+          gender: updates.gender,
+          brand: updates.brand,
+          tag: updates.tag,
+          remarks: updates.remarks,
+          rating: updates.rating || 0,
+          review_count: updates.reviewCount || 0
+        };
+        const { error: insertError } = await supabase.from('products').insert(insertPayload);
+        if (insertError) throw insertError;
+        console.log('✅ Migration successful.');
+      }
+      // --------------------------
 
       // Update Image if provided
       if (updates.imageUrl) {
