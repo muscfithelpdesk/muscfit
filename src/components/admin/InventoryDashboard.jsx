@@ -585,6 +585,17 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
                 )
             }
 
+            {/* ADD PRODUCT MODAL */}
+            {showAddForm && (
+                <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[200] flex items-center justify-center p-6 lg:p-12 overflow-y-auto">
+                    <div className="bg-zinc-900 border border-white/10 w-full max-w-6xl p-8 rounded-3xl animate-scale-in relative max-h-full overflow-y-auto custom-scrollbar shadow-2xl">
+                        <button onClick={() => setShowAddForm(false)} className="absolute top-8 right-8 text-white/40 hover:text-white"><Icon name="XMarkIcon" size={24} /></button>
+                        <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">Deploy New Asset</h2>
+                        <ProductForm data={newProduct} setData={setNewProduct} onSubmit={handleCreate} title="Deploy Asset" close={() => setShowAddForm(false)} />
+                    </div>
+                </div>
+            )}
+
             {/* EDIT MODAL */}
             {
                 selectedProduct && (
