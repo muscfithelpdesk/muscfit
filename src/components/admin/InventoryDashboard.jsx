@@ -313,7 +313,7 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
                                 <Link href="/admin" className="text-white/40 hover:text-white transition-colors">
                                     <Icon name="ArrowLeftIcon" size={24} />
                                 </Link>
-                                <h1 className="text-4xl font-black text-white italic uppercase tracking-tighter">Inventory Control</h1>
+                                <h1 className="text-4xl font-black text-white italic uppercase tracking-tighter">Inventory Manager <span className="text-green-500 text-lg not-italic tracking-normal">v2.0</span></h1>
                             </div>
                             <p className="text-white/40 font-medium tracking-widest uppercase text-xs pl-10">
                                 Global Supply Chain • Asset Management
@@ -331,24 +331,27 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
                         </div>
                     </div>
                 </div>
-            )}
+            )
+            }
 
             {/* Embedded Header Stats (if embedded) */}
-            {isEmbedded && (
-                <div className="flex justify-between items-end mb-8">
-                    <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter">Live Inventory</h2>
-                    <div className="flex gap-4">
-                        <div className="text-right">
-                            <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Asset Value</p>
-                            <p className="text-lg font-black text-white italic">₹{totalValue.toLocaleString()}</p>
-                        </div>
-                        <div className="text-right border-l border-white/10 pl-4">
-                            <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Low Stock</p>
-                            <p className={`text-lg font-black italic ${lowStockCount > 0 ? 'text-red-500' : 'text-green-500'}`}>{lowStockCount}</p>
+            {
+                isEmbedded && (
+                    <div className="flex justify-between items-end mb-8">
+                        <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter">Live Inventory</h2>
+                        <div className="flex gap-4">
+                            <div className="text-right">
+                                <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Asset Value</p>
+                                <p className="text-lg font-black text-white italic">₹{totalValue.toLocaleString()}</p>
+                            </div>
+                            <div className="text-right border-l border-white/10 pl-4">
+                                <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Low Stock</p>
+                                <p className={`text-lg font-black italic ${lowStockCount > 0 ? 'text-red-500' : 'text-green-500'}`}>{lowStockCount}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
             {/* Main Content */}
             <div className={`${isEmbedded ? 'w-full' : 'max-w-7xl mx-auto px-6 py-12'} text-left`}>
@@ -464,57 +467,63 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
             </div>
 
             {/* CREATE MODAL */}
-            {showAddForm && (
-                <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[100] flex items-center justify-center p-6 lg:p-12 overflow-y-auto">
-                    <div className="bg-zinc-900 border border-white/10 w-full max-w-6xl p-8 rounded-3xl animate-scale-in relative max-h-full overflow-y-auto custom-scrollbar">
-                        <button onClick={() => setShowAddForm(false)} className="absolute top-8 right-8 text-white/40 hover:text-white"><Icon name="XMarkIcon" size={24} /></button>
-                        <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">Deploy New Asset</h2>
-                        <ProductForm data={newProduct} setData={setNewProduct} onSubmit={handleCreate} title="Create" close={() => setShowAddForm(false)} />
+            {
+                showAddForm && (
+                    <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[100] flex items-center justify-center p-6 lg:p-12 overflow-y-auto">
+                        <div className="bg-zinc-900 border border-white/10 w-full max-w-6xl p-8 rounded-3xl animate-scale-in relative max-h-full overflow-y-auto custom-scrollbar">
+                            <button onClick={() => setShowAddForm(false)} className="absolute top-8 right-8 text-white/40 hover:text-white"><Icon name="XMarkIcon" size={24} /></button>
+                            <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">Deploy New Asset</h2>
+                            <ProductForm data={newProduct} setData={setNewProduct} onSubmit={handleCreate} title="Create" close={() => setShowAddForm(false)} />
+                        </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
             {/* ERROR MONITOR */}
-            {error && (
-                <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[110] flex items-center justify-center p-6">
-                    <div className="bg-red-500/10 border border-red-500/50 w-full max-w-lg p-8 rounded-2xl relative shadow-[0_0_100px_rgba(239,68,68,0.2)]">
-                        <div className="flex items-start gap-4">
-                            <Icon name="ExclamationTriangleIcon" size={48} className="text-red-500 shrink-0" />
-                            <div>
-                                <h3 className="text-xl font-black text-white uppercase tracking-widest mb-2">Operation Failed</h3>
-                                <p className="text-red-200 text-sm font-medium leading-relaxed mb-6">
-                                    {error.replace('row-level security', 'PERMISSION DENIED: You do not have admin write access.')}
-                                </p>
-                                <div className="flex gap-4">
-                                    <button
-                                        onClick={() => setError(null)}
-                                        className="bg-white text-black px-6 py-3 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-zinc-200"
-                                    >
-                                        Dismiss
-                                    </button>
-                                    <button
-                                        onClick={() => window.location.reload()}
-                                        className="bg-red-500 text-white px-6 py-3 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-red-600"
-                                    >
-                                        Reload System
-                                    </button>
+            {
+                error && (
+                    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[110] flex items-center justify-center p-6">
+                        <div className="bg-red-500/10 border border-red-500/50 w-full max-w-lg p-8 rounded-2xl relative shadow-[0_0_100px_rgba(239,68,68,0.2)]">
+                            <div className="flex items-start gap-4">
+                                <Icon name="ExclamationTriangleIcon" size={48} className="text-red-500 shrink-0" />
+                                <div>
+                                    <h3 className="text-xl font-black text-white uppercase tracking-widest mb-2">Operation Failed</h3>
+                                    <p className="text-red-200 text-sm font-medium leading-relaxed mb-6">
+                                        {error.replace('row-level security', 'PERMISSION DENIED: You do not have admin write access.')}
+                                    </p>
+                                    <div className="flex gap-4">
+                                        <button
+                                            onClick={() => setError(null)}
+                                            className="bg-white text-black px-6 py-3 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-zinc-200"
+                                        >
+                                            Dismiss
+                                        </button>
+                                        <button
+                                            onClick={() => window.location.reload()}
+                                            className="bg-red-500 text-white px-6 py-3 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-red-600"
+                                        >
+                                            Reload System
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
             {/* EDIT MODAL */}
-            {selectedProduct && (
-                <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[100] flex items-center justify-center p-6 lg:p-12 overflow-y-auto">
-                    <div className="bg-zinc-900 border border-white/10 w-full max-w-6xl p-8 rounded-3xl animate-scale-in relative max-h-full overflow-y-auto custom-scrollbar">
-                        <button onClick={() => setSelectedProduct(null)} className="absolute top-8 right-8 text-white/40 hover:text-white"><Icon name="XMarkIcon" size={24} /></button>
-                        <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">Modify Asset</h2>
-                        <ProductForm data={selectedProduct} setData={setSelectedProduct} onSubmit={handleUpdate} title="Update" close={() => setSelectedProduct(null)} />
+            {
+                selectedProduct && (
+                    <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[100] flex items-center justify-center p-6 lg:p-12 overflow-y-auto">
+                        <div className="bg-zinc-900 border border-white/10 w-full max-w-6xl p-8 rounded-3xl animate-scale-in relative max-h-full overflow-y-auto custom-scrollbar">
+                            <button onClick={() => setSelectedProduct(null)} className="absolute top-8 right-8 text-white/40 hover:text-white"><Icon name="XMarkIcon" size={24} /></button>
+                            <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">Modify Asset</h2>
+                            <ProductForm data={selectedProduct} setData={setSelectedProduct} onSubmit={handleUpdate} title="Update" close={() => setSelectedProduct(null)} />
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 }
