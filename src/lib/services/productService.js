@@ -1458,7 +1458,15 @@ export const productService = {
 
         const { data: inserted, error: insertError } = await supabase.from('products').insert(insertPayload).select().single();
 
-        if (insertError) throw insertError;
+        if (insertError) {
+          // Check for RLS Policy violation
+          if (insertError.code === '42501' || insertError.message.includes('row-level security')) {
+            console.error('🚨 PERMISSION DENIED: Database is blocking writes.');
+            console.error('👉 PLEASE RUN THE CONTENT OF `supabase/fix_permissions.sql` IN YOUR SUPABASE SQL EDITOR.');
+            throw new Error('DATABASE LOCKED: Missing RLS Policies. Check Console for Fix.');
+          }
+          throw insertError;
+        }
 
         console.log('✅ Migration successful. New ID:', newId);
 
