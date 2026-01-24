@@ -338,7 +338,7 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
             {
                 isEmbedded && (
                     <div className="flex justify-between items-end mb-8">
-                        <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter">Live Inventory <span className="text-green-500 text-sm not-italic tracking-normal align-middle ml-2">v2.0</span></h2>
+                        <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter">Live Inventory <span className="text-red-500 text-sm not-italic tracking-normal align-middle ml-2">v2.1</span></h2>
                         <div className="flex gap-4">
                             <div className="text-right">
                                 <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Asset Value</p>
