@@ -333,9 +333,9 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
                 </div>
             )
             }
-
+            {/* VISUAL ANALYTICS HEADER */}
             {isEmbedded && (
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 text-white">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 text-white relative z-0">
                     <div className="col-span-full mb-4">
                         <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter flex items-center gap-3">
                             Command Center <span className="text-purple-500 text-sm not-italic tracking-normal px-2 py-0.5 border border-purple-500/30 bg-purple-500/10 rounded">v3.0</span>
