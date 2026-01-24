@@ -16,6 +16,7 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
     const [isSaving, setIsSaving] = useState(false);
     const [showAddForm, setShowAddForm] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [error, setError] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     // Form Initial State
@@ -43,6 +44,7 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
             setProducts(data || []);
         } catch (err) {
             console.error(err);
+            setError('Failed to load inventory: ' + err.message);
         } finally {
             setLoading(false);
         }
@@ -94,7 +96,7 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
             setShowAddForm(false);
             setNewProduct(initialProductState);
         } catch (err) {
-            alert('Error: ' + err.message);
+            setError('Create failed: ' + err.message);
         } finally {
             setIsSaving(false);
         }
@@ -107,8 +109,10 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
             await productService.updateProduct(selectedProduct.id, selectedProduct);
             await loadData();
             setSelectedProduct(null);
+            // Basic "Toast" via alert for now as requested by user to know it worked
+            // ideally we use a toast component but alert is reliable for "nhi ho rha" debug
         } catch (err) {
-            alert('Update failed: ' + err.message);
+            setError('Update failed: ' + err.message);
         } finally {
             setIsSaving(false);
         }
@@ -120,7 +124,7 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
             await productService.deleteProduct(id);
             await loadData();
         } catch (err) {
-            alert('Delete failed: ' + err.message);
+            setError('Delete failed: ' + err.message);
         }
     };
 
@@ -133,10 +137,10 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
                 await loadData();
                 alert(`Sync Complete! Processed ${result.count} items.`);
             } else {
-                alert('Sync Error: ' + result.error);
+                setError('Sync Error: ' + result.error);
             }
         } catch (err) {
-            alert('Critical Error: ' + err.message);
+            setError('Critical Error: ' + err.message);
         } finally {
             setIsSaving(false);
         }
@@ -466,6 +470,37 @@ export default function InventoryDashboard({ isEmbedded = false, initialProducts
                         <button onClick={() => setShowAddForm(false)} className="absolute top-8 right-8 text-white/40 hover:text-white"><Icon name="XMarkIcon" size={24} /></button>
                         <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">Deploy New Asset</h2>
                         <ProductForm data={newProduct} setData={setNewProduct} onSubmit={handleCreate} title="Create" close={() => setShowAddForm(false)} />
+                    </div>
+                </div>
+            )}
+
+            {/* ERROR MONITOR */}
+            {error && (
+                <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[110] flex items-center justify-center p-6">
+                    <div className="bg-red-500/10 border border-red-500/50 w-full max-w-lg p-8 rounded-2xl relative shadow-[0_0_100px_rgba(239,68,68,0.2)]">
+                        <div className="flex items-start gap-4">
+                            <Icon name="ExclamationTriangleIcon" size={48} className="text-red-500 shrink-0" />
+                            <div>
+                                <h3 className="text-xl font-black text-white uppercase tracking-widest mb-2">Operation Failed</h3>
+                                <p className="text-red-200 text-sm font-medium leading-relaxed mb-6">
+                                    {error.replace('row-level security', 'PERMISSION DENIED: You do not have admin write access.')}
+                                </p>
+                                <div className="flex gap-4">
+                                    <button
+                                        onClick={() => setError(null)}
+                                        className="bg-white text-black px-6 py-3 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-zinc-200"
+                                    >
+                                        Dismiss
+                                    </button>
+                                    <button
+                                        onClick={() => window.location.reload()}
+                                        className="bg-red-500 text-white px-6 py-3 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-red-600"
+                                    >
+                                        Reload System
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

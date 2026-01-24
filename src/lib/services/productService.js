@@ -1008,8 +1008,60 @@ export const productService = {
 
       if (error) throw error;
 
-      // Convert to camelCase
-      return data?.map((product) => this.convertToCamelCase(product)) || [];
+      const dbProducts = data?.map((product) => this.convertToCamelCase(product)) || [];
+
+      // --- MERGE LOGIC ---
+      // We want to show hardcoded items too, but DB items take precedence.
+      const mergedProducts = [...dbProducts];
+
+      BASIC_CATALOG.forEach(basic => {
+        // 1. Check ID Match (Standard)
+        const idExists = mergedProducts.some(p => p.id === basic.id);
+
+        // 2. Check Name Match (Legacy Migration Handling)
+        // If we migrated 'Men-Shop-1' -> 'uuid-123', the ID won't match, but Name will.
+        // We should treat the DB version as the 'real' one and skip the basic one.
+        const nameExists = mergedProducts.some(p =>
+          p.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase() ===
+          basic.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()
+        );
+
+        if (!idExists && !nameExists) {
+          // Format Basic to App Structure
+          const formatted = {
+            id: basic.id,
+            name: basic.name,
+            description: basic.description,
+            price: basic.price,
+            originalPrice: basic.original_price,
+            gender: basic.gender,
+            category: basic.category,
+            brand: basic.brand,
+            rating: basic.rating,
+            reviewCount: basic.review_count,
+            tag: basic.tag,
+            isActive: basic.is_active,
+            image: basic.image_url,
+            stockQuantity: 100, // Default stock for static items
+            productImages: [{
+              id: 'basic-img-' + basic.id,
+              imageUrl: basic.image_url,
+              altText: basic.name,
+              isPrimary: true
+            }],
+            productVariants: [
+              { id: 'v-s', size: 'S', color: 'Solid', stockQuantity: 50 },
+              { id: 'v-m', size: 'M', color: 'Solid', stockQuantity: 50 },
+              { id: 'v-l', size: 'L', color: 'Solid', stockQuantity: 50 },
+              { id: 'v-xl', size: 'XL', color: 'Solid', stockQuantity: 50 }
+            ],
+            productAttributes: []
+          };
+          mergedProducts.push(formatted);
+        }
+      });
+
+      return mergedProducts;
     } catch (error) {
       console.error('Error fetching products:', error);
       throw error;
@@ -1365,13 +1417,22 @@ export const productService = {
 
       if (error) throw error;
 
-      // --- AUTO-MIGRATION FIX ---
-      // If data is empty, it means the ID doesn't exist in DB (it's a hardcoded JS item).
-      // We must INSERT it first to apply the updates.
+      // --- AUTO-MIGRATION FIX FOR LEGACY IDS ---
+      // If data is empty, it means the ID doesn't exist in DB.
+      // 1. If it's a Text ID (Legacy), we MUST generate a new UUID.
       if (!data || data.length === 0) {
-        console.log('⚠️ Product is hardcoded. Migrating to DB with ID:', id);
+        console.log('⚠️ Product is missing/legacy. performing migration...');
+
+        let newId = id;
+        const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+
+        if (!isUuid) {
+          console.log('🔄 Detected Legacy ID. Generating new UUID...');
+          newId = crypto.randomUUID(); // Browser native UUID
+        }
+
         const insertPayload = {
-          id: id, // CRITICAL: Keep valid hardcoded ID
+          id: newId,
           name: updates.name,
           description: updates.description,
           price: updates.price,
@@ -1386,9 +1447,15 @@ export const productService = {
           rating: updates.rating || 0,
           review_count: updates.reviewCount || 0
         };
-        const { error: insertError } = await supabase.from('products').insert(insertPayload);
+
+        const { data: inserted, error: insertError } = await supabase.from('products').insert(insertPayload).select().single();
+
         if (insertError) throw insertError;
-        console.log('✅ Migration successful.');
+
+        console.log('✅ Migration successful. New ID:', newId);
+
+        // Return the NEW object (camelCased) so UI can update ID
+        return this.convertToCamelCase(inserted);
       }
       // --------------------------
 
