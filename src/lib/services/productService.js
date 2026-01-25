@@ -1407,24 +1407,38 @@ export const productService = {
 
       console.log('💾 Database updates (snake_case):', dbUpdates);
 
-      const { data, error } = await supabase
-        .from('products')
-        .update(dbUpdates)
-        .eq('id', id)
-        .select();
+      console.log('💾 Database updates (snake_case):', dbUpdates);
+
+      // Check format BEFORE sending to DB to prevent "invalid input syntax for type uuid" error
+      const isLegacyId = !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+      let data = [];
+      let error = null;
+
+      if (!isLegacyId) {
+        // Standard Update for Valid UUIDs
+        const response = await supabase
+          .from('products')
+          .update(dbUpdates)
+          .eq('id', id)
+          .select();
+
+        data = response.data;
+        error = response.error;
+      } else {
+        console.log('⚠️ Legacy ID detected (' + id + '). Skipping direct update to avoid DB crash.');
+      }
 
       console.log('📡 Supabase response - data:', data);
 
       if (error) throw error;
 
       // --- AUTO-MIGRATION FIX FOR LEGACY IDS ---
-      // If data is empty, it means the ID doesn't exist in DB.
-      // 1. If it's a Text ID (Legacy), we MUST generate a new UUID.
+      // If data is empty (or we skipped update), it means we need to migrate.
       if (!data || data.length === 0) {
-        console.log('⚠️ Product is missing/legacy. performing migration...');
+        console.log('⚠️ Product is missing orLegacy. performing migration...');
 
         let newId = id;
-        const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+        const isUuid = !isLegacyId; // Re-use our check from above
 
         if (!isUuid) {
           console.log('🔄 Detected Legacy ID. Generating new UUID...');
