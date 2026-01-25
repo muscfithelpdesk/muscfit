@@ -1617,6 +1617,14 @@ export const productService = {
     try {
       if (!supabase) throw new Error('Supabase client not initialized');
 
+      // Check if ID is a valid UUID
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+
+      if (!isUuid) {
+        console.warn('⚠️ Attempted to delete legacy/static product:', id);
+        throw new Error('PROTECTED ASSET: This is a built-in demo product and cannot be deleted from the database. \n\nTo hide it, please Edit -> Set Status to Offline.');
+      }
+
       const { error } = await supabase.from('products').delete().eq('id', id);
 
       if (error) throw error;
