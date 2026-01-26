@@ -29,14 +29,14 @@ export default function PromoBar({ messages, isVisible = true, onDismiss }) {
   }, [promoMessages.length]);
 
   useEffect(() => {
-    if (isPaused || promoMessages.length <= 1) return;
+    if (promoMessages.length <= 1) return;
 
     const timer = setInterval(() => {
       handleNext();
-    }, 8000);
+    }, 3000); // 3 Seconds Interval
 
     return () => clearInterval(timer);
-  }, [handleNext, isPaused, promoMessages.length]);
+  }, [handleNext, currentIndex, promoMessages.length]); // creating a dependency on currentIndex resets the timer on manual interaction
 
   useEffect(() => {
     setShow(isVisible);
@@ -47,8 +47,6 @@ export default function PromoBar({ messages, isVisible = true, onDismiss }) {
   return (
     <div
       className="relative z-[100] bg-[#F5F5F7] text-black h-11 flex items-center justify-center overflow-hidden border-b border-gray-200 active:cursor-grabbing"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
     >
       <div className="max-w-[1400px] w-full px-4 md:px-8 flex items-center justify-between h-full">
         {/* Left Side: Navigation / Icon */}
@@ -82,7 +80,7 @@ export default function PromoBar({ messages, isVisible = true, onDismiss }) {
                 </span>
 
                 {/* Responsive Text Logic */}
-                <p className="text-[10px] md:text-xs lg:text-sm font-heading font-black tracking-[0.12em] uppercase whitespace-nowrap text-black">
+                <p className="text-xs md:text-sm lg:text-base font-heading font-black tracking-[0.12em] uppercase whitespace-nowrap text-black">
                   {/* Mobile Version */}
                   <span className="md:hidden">
                     {typeof msg === 'object' ? msg.mobile : msg}
