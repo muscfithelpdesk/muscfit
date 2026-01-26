@@ -73,12 +73,22 @@ export default function PromoBar({ messages, isVisible = true, onDismiss }) {
                   : 'opacity-0 translate-x-full'
                 }`}
             >
-              <div className="flex items-center gap-2 md:gap-3 overflow-hidden w-full justify-center">
+              <div className="flex items-center gap-2 md:gap-3 overflow-hidden w-full justify-center px-4">
                 <span className="hidden sm:inline-block px-2 py-0.5 bg-black text-white text-[9px] font-black tracking-tighter rounded-sm flex-shrink-0">
                   SALE
                 </span>
-                <p className="text-[10px] md:text-xs lg:text-sm font-heading font-black tracking-[0.12em] uppercase whitespace-nowrap text-black animate-marquee md:animate-none">
-                  {msg}
+
+                {/* Responsive Text Logic */}
+                <p className="text-[10px] md:text-xs lg:text-sm font-heading font-black tracking-[0.12em] uppercase whitespace-nowrap text-black">
+                  {/* Mobile Version */}
+                  <span className="md:hidden">
+                    {typeof msg === 'object' ? msg.mobile : msg}
+                  </span>
+
+                  {/* Desktop Version */}
+                  <span className="hidden md:inline">
+                    {typeof msg === 'object' ? msg.desktop : msg}
+                  </span>
                 </p>
               </div>
             </div>

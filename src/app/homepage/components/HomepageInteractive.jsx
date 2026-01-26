@@ -56,11 +56,11 @@ export default function HomepageInteractive({ pageData }) {
       <div className="fixed top-0 left-0 right-0 z-50">
         <PromoBar
           messages={[
-            '🔥 NEW YEAR SALE: Get 30% Off On All Compression Wear',
-            '🚚 Free Shipping On All Orders Above ₹2,999',
-            '⚡ Buy 2 Get 1 Free On All Training Essentials',
-            '🎁 Extra 10% Off On Your First Order | Use Code: MUSCFIT10',
-            '❄️ Winter Collection Now Live: Up to 40% Off',
+            { desktop: '🔥 NEW YEAR SALE: Get 30% Off On All Compression Wear', mobile: '🔥 SALE: 30% OFF COMPRESSION WEAR' },
+            { desktop: '🚚 Free Shipping On All Orders Above ₹2,999', mobile: '🚚 FREE SHIPPING OVER ₹2,999' },
+            { desktop: '⚡ Buy 2 Get 1 Free On All Training Essentials', mobile: '⚡ BUY 2 GET 1 FREE (ESSENTIALS)' },
+            { desktop: '🎁 Extra 10% Off On Your First Order | Use Code: MUSCFIT10', mobile: '🎁 10% OFF | CODE: MUSCFIT10' },
+            { desktop: '❄️ Winter Collection Now Live: Up to 40% Off', mobile: '❄️ WINTER SALE: 40% OFF' },
           ]}
           isVisible={isPromoVisible}
           onDismiss={pageData?.promoBar?.dismissible ? handleDismissPromo : undefined}
