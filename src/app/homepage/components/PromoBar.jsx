@@ -10,7 +10,10 @@ export default function PromoBar({ messages, isVisible = true, onDismiss }) {
   const [show, setShow] = useState(isVisible);
 
   const promoMessages = Array.isArray(messages)
-    ? messages.filter((msg) => msg && msg.trim() !== '')
+    ? messages.filter((msg) => {
+      if (typeof msg === 'string') return msg.trim() !== '';
+      return !!msg;
+    })
     : messages
       ? [messages]
       : [];
