@@ -8,8 +8,8 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function createAdmin() {
-    const email = 'admin@muscfit.com';
-    const password = 'AdminMuscfit2026!'; // Strong password
+    const email = 'kakupro009@gmail.com';
+    const password = 'Kaku@009'; // Strong password
 
     console.log(`Attempting to create admin user: ${email}`);
 

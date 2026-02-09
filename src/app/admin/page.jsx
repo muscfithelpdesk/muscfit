@@ -183,7 +183,7 @@ export default function UnifiedAdminPage() {
     useEffect(() => {
         const checkAdmin = async () => {
             const { data: { user } } = await supabase.auth.getUser();
-            const isUserAdmin = user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin' || user?.email === 'admin@muscfit.com';
+            const isUserAdmin = user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin' || user?.email === 'kakupro009@gmail.com';
             setIsAdmin(isUserAdmin);
             if (isUserAdmin) loadInitialData();
         };
