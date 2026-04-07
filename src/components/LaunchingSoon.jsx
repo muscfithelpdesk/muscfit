@@ -76,11 +76,11 @@ export default function LaunchingSoon() {
       <div className="w-full relative z-20 flex justify-between items-center p-8 md:p-12">
         {/* Logo NF MUSCFIT */}
         <div className={`flex items-center gap-4 group transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="relative w-64 md:w-80 h-24">
+          <div className="relative w-48 md:w-64 h-16 md:h-20">
             <AppImage 
-              src="/muscfit-exact-logo-v2.png" 
+              src="/muscfit-exact-logo.png" 
               alt="MUSCFIT Logo"
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain mix-blend-screen transition-opacity group-hover:opacity-80"
             />
           </div>
         </div>
