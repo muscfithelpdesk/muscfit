@@ -38,127 +38,127 @@ export default function LaunchingSoon() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Registration successful! ${email} will get early access.`);
+    alert(`Thank you! ${email} has been subscribed.`);
     setEmail('');
   };
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center justify-center bg-[#050505] text-white overflow-hidden select-none">
+    <div className="relative min-h-screen w-full flex flex-col items-center justify-between bg-[#080808] text-white overflow-hidden py-10 md:py-20 select-none">
       
-      {/* Cinematic Background Layer */}
+      {/* Refined Cinematic Background Layer */}
       <div className="absolute inset-0 z-0">
-        <AppImage 
-          src="/muscfit-premium-bg.png" 
-          alt="Cinematic background"
-          className="w-full h-full object-cover grayscale opacity-30 scale-110 blur-[2px]"
-        />
-        {/* Amber Glow/Light Leak Effects */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#E07B2A]/5 via-transparent to-[#E07B2A]/10 mix-blend-screen pointer-events-none"></div>
-        <div className="absolute top-0 right-0 w-[800px] h-full bg-gradient-to-l from-[#E07B2A]/5 to-transparent blur-[150px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[800px] h-full bg-gradient-to-r from-[#E07B2A]/5 to-transparent blur-[150px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[#080808] z-10 opacity-80"></div>
+        {/* Soft Amber Light Leaks / Heat Blurs */}
+        <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-[40vw] h-[80vh] bg-[#E07B2A]/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-[40vw] h-[80vh] bg-[#E07B2A]/10 rounded-full blur-[120px] pointer-events-none"></div>
         
-        {/* Grain/Noise Texture Overlay */}
-        <div className="absolute inset-0 bg-repeat opacity-[0.03] pointer-events-none mix-blend-overlay animate-grain" 
+        {/* Subtle Noise / Grain Overlay */}
+        <div className="absolute inset-0 bg-repeat opacity-[0.04] pointer-events-none mix-blend-overlay animate-grain" 
              style={{ backgroundImage: `url('https://www.transparenttextures.com/patterns/p6-dark.png')` }}></div>
       </div>
 
-      {/* Top Left Logo - NF MUSCFIT */}
-      <div className="absolute top-10 left-10 z-50">
-        <div className="flex items-center gap-3 cursor-default">
-          <span className="font-bebas-neue text-4xl font-black italic tracking-tighter text-white">NF</span>
-          <span className="font-outfit text-2xl font-black uppercase tracking-widest text-white">MUSCFIT</span>
+      {/* Top Left Logo - Using actual logo from /muscfit-logo.png */}
+      <div className="absolute top-8 left-8 md:top-12 md:left-12 z-50">
+        <div className="relative w-40 md:w-56 h-12">
+          <AppImage 
+            src="/muscfit-logo.png" 
+            alt="MUSCFIT Logo"
+            className="w-full h-full object-contain brightness-200"
+          />
         </div>
       </div>
 
-      {/* Main Hero Content */}
-      <main className="relative z-20 flex flex-col items-center text-center px-4 w-full max-w-[1400px]">
-        {/* Massive Headline */}
-        <div className="flex flex-col mb-10 w-full group">
-          <h1 
-            className="text-[12vw] md:text-[180px] font-black uppercase leading-[0.8] tracking-tighter drop-shadow-2xl font-bebas-neue"
-            style={{ 
-              background: 'linear-gradient(to bottom, #ffffff 0%, #ffffff 60%, #999999 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}
-          >
+      {/* Main Content Area */}
+      <main className="relative z-20 flex flex-col items-center text-center px-4 w-full flex-grow justify-center space-y-12 md:space-y-20">
+        
+        {/* Headline Section - Reduced Font Size to Fit Cleanly */}
+        <div className="flex flex-col w-full max-w-7xl mx-auto space-y-2">
+          <h1 className="text-[10vw] md:text-[110px] lg:text-[130px] font-black uppercase leading-[0.9] tracking-tighter transition-all font-bebas-neue drop-shadow-2xl">
             SOMETHING BIG
-          </h1>
-          <h1 
-            className="text-[12vw] md:text-[180px] font-black uppercase leading-[0.8] tracking-tighter drop-shadow-2xl font-bebas-neue"
-            style={{ 
-              background: 'linear-gradient(to bottom, #ffffff 0%, #ffffff 60%, #999999 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}
-          >
+            <br />
             IS COMING
           </h1>
         </div>
 
-        {/* Sub-headlines */}
-        <div className="flex flex-col gap-6 mb-16">
-          <p className="text-xl md:text-3xl font-extralight tracking-wide text-white/90 font-outfit">
+        {/* Sub-headlines - Improved Vertical Hierarchy */}
+        <div className="flex flex-col space-y-4">
+          <p className="text-lg md:text-2xl font-light tracking-wide text-white/80 font-outfit">
             Built for the ones who train different.
           </p>
-          <p className="text-xs md:text-sm font-black tracking-[0.8em] text-[#E07B2A] uppercase font-inter">
+          <p className="text-[10px] md:text-sm font-bold tracking-[0.9em] text-[#E07B2A] uppercase font-inter pl-[0.9em]">
             WEAR THE GRIND. OWN THE GAME.
           </p>
         </div>
 
-        {/* Global Countdown Timer */}
-        <div className="flex gap-4 md:gap-8 mb-20 px-8 py-10">
-          {[
-            { label: 'DAYS', value: timeLeft.days },
-            { label: 'HOURS', value: timeLeft.hours },
-            { label: 'MINUTES', value: timeLeft.minutes },
-            { label: 'SECONDS', value: timeLeft.seconds }
-          ].map((item, i) => (
-            <div key={i} className="flex flex-col items-center relative group">
-              {/* Glass Card */}
-              <div className="w-20 h-24 md:w-32 md:h-40 bg-white/[0.03] border border-white/10 rounded-lg flex items-center justify-center relative overflow-hidden group-hover:border-white/20 transition-all duration-500">
-                <span className="text-4xl md:text-7xl font-black font-bebas-neue py-2">{String(item.value).padStart(2, '0')}</span>
-                {/* Glow under each block */}
-                <div className="absolute bottom-0 inset-x-0 h-1 bg-[#E07B2A] blur-lg animate-pulse" style={{ opacity: 0.3 }}></div>
+        {/* Minimalist Borderless Countdown Timer */}
+        <div className="w-full max-w-4xl px-4 flex flex-col items-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-0 w-full relative">
+            {[
+              { label: 'DAYS', value: timeLeft.days },
+              { label: 'HOURS', value: timeLeft.hours },
+              { label: 'MINUTES', value: timeLeft.minutes },
+              { label: 'SECONDS', value: timeLeft.seconds }
+            ].map((item, i) => (
+              <div key={i} className="flex relative group">
+                <div className="flex flex-col items-center flex-1 py-4 md:py-8">
+                  <div className="relative flex flex-col items-center">
+                    <span className="text-5xl md:text-7xl font-black font-bebas-neue mb-2 tracking-tighter">
+                      {String(item.value).padStart(2, '0')}
+                    </span>
+                    <span className="text-[10px] md:text-[11px] font-bold text-white/50 tracking-widest">{item.label}</span>
+                    {/* Subtle Amber Pulse Glow Under Each Number */}
+                    <div className="absolute -bottom-4 md:-bottom-6 w-12 h-2 bg-[#E07B2A] blur-xl opacity-30 group-hover:opacity-60 transition-opacity animate-pulse"></div>
+                  </div>
+                </div>
+                {/* Thin Vertical White Divider (Visible on screens with more than 1 col) */}
+                {i < 3 && (
+                  <div className={`absolute top-1/2 -translate-y-1/2 right-0 w-[0.5px] h-12 md:h-16 bg-white/20 hidden md:block border-r border-white/10`} />
+                )}
               </div>
-              <span className="mt-4 text-[10px] md:text-xs font-bold text-gray-400 tracking-widest">{item.label}</span>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* Sleek One-line Email Capture */}
-        <form onSubmit={handleSubmit} className="w-full max-w-2xl flex flex-col md:flex-row items-stretch gap-0 bg-white/[0.03] border border-white/10 p-0 rounded-none focus-within:border-white/30 transition-all overflow-hidden">
-          <input
-            type="email"
-            required
-            placeholder="ENTER YOUR EMAIL"
-            className="flex-1 bg-transparent px-8 py-5 text-sm font-bold tracking-widest outline-none border-none placeholder:text-white/20 capitalize rounded-none"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="bg-white text-black font-black px-12 py-5 text-sm tracking-widest uppercase transition-all duration-300 hover:bg-[#E07B2A] hover:text-white rounded-none border-none"
-          >
-            Get Early Access
-          </button>
-        </form>
+        {/* Sleek One-line Email Capture (Max Width 600px) */}
+        <div className="w-full max-w-[600px] flex flex-col space-y-4">
+          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-stretch gap-0 bg-white/[0.03] border border-white/20 p-0 rounded-none focus-within:border-white/40 transition-all shadow-2xl backdrop-blur-md">
+            <input
+              type="email"
+              required
+              placeholder="Enter your email address"
+              className="flex-1 bg-transparent px-6 py-4 text-xs font-bold tracking-widest outline-none border-none placeholder:text-white/30 uppercase rounded-none"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="bg-white text-black font-black px-10 py-5 text-xs tracking-widest uppercase transition-all duration-500 hover:bg-[#E07B2A] hover:text-white rounded-none border-none"
+            >
+              GET EARLY ACCESS
+            </button>
+          </form>
+        </div>
       </main>
 
-      {/* Social Icons - Bottom */}
-      <div className="absolute bottom-12 flex gap-10 z-20">
-        {['INSTAGRAM', 'WHATSAPP', 'YOUTUBE'].map((social) => (
-          <a
-            key={social}
-            href="#"
-            className="text-[10px] font-black tracking-widest text-white/40 hover:text-white transition-all cursor-pointer"
-          >
-            {social}
-          </a>
-        ))}
+      {/* Social Icons - Bottom Center */}
+      <div className="relative z-20 flex flex-col items-center space-y-12 w-full pt-12">
+        <div className="flex items-center gap-10">
+          {/* Using simple SVG placeholders or icons if available in font */}
+          {['Instagram', 'Youtube', 'Whatsapp'].map((social) => (
+            <a
+              key={social}
+              href="#"
+              className="text-white hover:text-[#E07B2A] transition-all opacity-80 hover:opacity-100 transform hover:scale-110 active:scale-95"
+              aria-label={social}
+            >
+              <div className="w-6 h-6 border-2 border-current flex items-center justify-center rounded-sm text-[8px] font-black uppercase">
+                {social.charAt(0)}
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
 
-      {/* Particle Effect Styles */}
       <style jsx global>{`
         @keyframes grain {
           0%, 100% { transform:translate(0, 0); }
@@ -177,7 +177,7 @@ export default function LaunchingSoon() {
         }
         .font-bebas-neue { font-family: var(--font-bebas-neue); }
         .font-outfit { font-family: var(--font-outfit); }
-        .font-anton { font-family: var(--font-anton); }
+        .font-inter { font-family: var(--font-inter); }
       `}</style>
     </div>
   );
