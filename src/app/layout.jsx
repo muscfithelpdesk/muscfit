@@ -37,18 +37,12 @@ export const metadata = {
   },
 };
 
-import AdminQuickLink from '@/components/admin/AdminQuickLink';
-
-import { Analytics } from "@vercel/analytics/react"
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} ${anton.variable} ${bebasNeue.variable}`}>
-      <body className="font-body">
+      <body className="font-body bg-black">
         <ClientProviders>
           {children}
-          <AdminQuickLink />
-          <ChatbotPopup />
           <Analytics />
         </ClientProviders>
       </body>
