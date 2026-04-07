@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import AppImage from './ui/AppImage';
 
 export default function LaunchingSoon() {
   const [email, setEmail] = useState('');
@@ -75,13 +76,13 @@ export default function LaunchingSoon() {
       <div className="w-full relative z-20 flex justify-between items-center p-8 md:p-12">
         {/* Logo NF MUSCFIT */}
         <div className={`flex items-center gap-4 group transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <svg width="40" height="40" viewBox="0 0 100 100" className="stroke-white stroke-[8] fill-none">
-            {/* Letter N: strokes connected by diagonal */}
-            <path d="M20 80 V20 L80 80 V20" />
-            {/* Letter F: vertical stroke with two horizontal bars */}
-            <path d="M40 80 V20 H80 M40 50 H70" className="translate-x-1" />
-          </svg>
-          <span className="font-barlow-condensed text-3xl font-black uppercase tracking-widest pl-2">MUSCFIT</span>
+          <div className="relative w-40 md:w-56 h-12">
+            <AppImage 
+              src="/muscfit-exact-logo.png" 
+              alt="MUSCFIT Logo"
+              className="w-full h-full object-contain invert brightness-200"
+            />
+          </div>
         </div>
 
         {/* Top Right Stay Tuned Signal */}
