@@ -86,14 +86,14 @@ export default function LaunchingSoon() {
 
       {/* 🧭 TOP BAR Overlay (Logo Restored) */}
       <header className="w-full relative z-20 flex justify-between items-center px-8 py-6 md:px-12 md:py-8 max-w-[1600px]">
-        {/* 🏹 OFFICIAL BRAND LOGO - Responsive & Vibrant */}
+        {/* 🏹 OFFICIAL BRAND LOGO - Extreme Contrast Mastery (No Artifacts) */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="relative w-36 md:w-72 h-14 md:h-20 select-none">
+          <div className="relative w-32 md:w-64 h-12 md:h-18 select-none">
             <AppImage 
               src="/official-brand-logo-final.png" 
               alt="MUSCFIT Logo"
-              className="w-full h-full object-contain mix-blend-lighten contrast-[1.8] brightness-[1.3]"
-              style={{ clipPath: 'inset(0 3% 3% 0)' }}
+              className="w-full h-full object-contain mix-blend-screen brightness-[2.5] contrast-[2.5]"
+              style={{ clipPath: 'inset(0 4% 4% 0)' }}
             />
           </div>
         </div>
@@ -109,13 +109,13 @@ export default function LaunchingSoon() {
       {/* 🌪️ MAIN HERO (Centered, Responsive) */}
       <main className="relative z-20 w-full flex-grow flex flex-col items-center justify-center text-center px-4 -mt-6 md:-mt-10">
         
-        {/* 🚀 High-Impact Attention Danger Sign - Mobile Optimized */}
-        <div className={`mb-3 md:mb-4 flex flex-col items-center transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="text-4xl md:text-5xl mb-1 md:mb-2 animate-alert-pulse filter drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+        {/* 🚀 High-Impact Ultra-Hype Danger Sign */}
+        <div className={`mb-4 flex flex-col items-center transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className="text-4xl md:text-5xl mb-4 animate-alert-pulse filter drop-shadow-[0_0_35px_rgba(239,68,68,0.8)] scale-110">
             ⚠️
           </div>
-          <div className="bg-red-500/10 border border-red-500/50 px-3 md:px-4 py-1 rounded-full shadow-[0_0_15px_rgba(239,68,68,0.2)] flex items-center">
-            <span className="text-[8px] md:text-[10px] font-black tracking-[0.15em] md:tracking-[0.2em] text-[#E07B2A] uppercase">
+          <div className="bg-red-600/20 border-2 border-red-500/80 px-6 py-2 rounded-full shadow-[0_0_30px_rgba(239,68,68,0.4)] animate-bounce-slow flex items-center">
+            <span className="text-[10px] md:text-[12px] font-black tracking-[0.4em] text-white uppercase">
               DROP INCOMING
             </span>
           </div>
@@ -252,6 +252,13 @@ export default function LaunchingSoon() {
         }
         .animate-alert-pulse {
           animation: alert-pulse 2s ease-in-out infinite;
+        }
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 3s ease-in-out infinite;
         }
         @keyframes pulse-slow {
           0%, 100% { opacity: 0.6; transform: scale(1); }
