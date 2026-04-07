@@ -107,32 +107,32 @@ export default function LaunchingSoon() {
       </header>
 
       {/* 🌪️ MAIN HERO (Centered, One Viewport) */}
-      <main className="relative z-20 w-full flex-grow flex flex-col items-center justify-center text-center px-4 -mt-4">
+      <main className="relative z-20 w-full flex-grow flex flex-col items-center justify-center text-center px-4 -mt-10">
         
-        {/* 🚀 High-Impact Attention Danger Sign */}
-        <div className={`mb-4 flex flex-col items-center transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="text-4xl md:text-5xl mb-4 animate-alert-pulse filter drop-shadow-[0_0_20px_rgba(239,68,68,0.5)]">
+        {/* 🚀 High-Impact Attention Danger Sign - Repositioned Higher */}
+        <div className={`mb-2 flex flex-col items-center transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className="text-4xl md:text-5xl mb-2 animate-alert-pulse filter drop-shadow-[0_0_20px_rgba(239,68,68,0.5)]">
             ⚠️
           </div>
-          <div className="bg-red-500/10 border border-red-500/50 px-5 py-1.5 rounded-full shadow-[0_0_15px_rgba(239,68,68,0.2)] flex items-center">
-            <span className="text-[10px] md:text-[12px] font-black tracking-[0.3em] text-[#E07B2A] uppercase">
+          <div className="bg-red-500/10 border border-red-500/50 px-4 py-1 rounded-full shadow-[0_0_15px_rgba(239,68,68,0.2)] flex items-center">
+            <span className="text-[9px] md:text-[10px] font-black tracking-[0.2em] text-[#E07B2A] uppercase">
               DROP INCOMING
             </span>
           </div>
         </div>
 
-        {/* Massive Headline - Scaled with clamp() to prevent cropping */}
-        <div className={`flex flex-col mb-6 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        {/* Massive Headline - Compacted scaling */}
+        <div className={`flex flex-col mb-4 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h1 
             className="font-barlow-condensed font-black uppercase tracking-tight leading-[0.95]"
-            style={{ fontSize: 'clamp(52px, 8.5vw, 110px)', color: 'white' }}
+            style={{ fontSize: 'clamp(48px, 8vw, 95px)', color: 'white' }}
           >
             SOMETHING BIG
           </h1>
           <h1 
             className="font-barlow-condensed font-black uppercase tracking-tight leading-[0.95]"
             style={{ 
-              fontSize: 'clamp(52px, 8.5vw, 110px)',
+              fontSize: 'clamp(48px, 8vw, 95px)',
               background: 'linear-gradient(to bottom, #ffffff 0%, #888888 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
@@ -142,11 +142,11 @@ export default function LaunchingSoon() {
           </h1>
         </div>
 
-        {/* Infinite Amber Marquee Ticker */}
-        <div className={`w-full overflow-hidden mb-8 transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100' : 'opacity-0 scale-x-0'}`}>
+        {/* Infinite Amber Marquee Ticker - Slimmed */}
+        <div className={`w-full overflow-hidden mb-4 transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100' : 'opacity-0 scale-x-0'}`}>
           <div className="flex animate-marquee whitespace-nowrap gap-12">
             {[...Array(8)].map((_, i) => (
-              <span key={i} className="text-[10px] md:text-xs font-black tracking-[0.4em] text-[#E07B2A] uppercase">
+              <span key={i} className="text-[9px] md:text-xs font-black tracking-[0.3em] text-[#E07B2A] uppercase">
                 WEAR THE GRIND · OWN THE GAME · MUSCFIT · TRAIN DIFFERENT · NEW DROP ·
               </span>
             ))}
@@ -154,14 +154,14 @@ export default function LaunchingSoon() {
         </div>
 
         {/* Subtitle - Italic Subline */}
-        <div className={`mb-10 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <p className="font-barlow text-base md:text-xl font-light text-white/50 italic tracking-tight">
+        <div className={`mb-6 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <p className="font-barlow text-sm md:text-lg font-light text-white/40 italic tracking-tight">
             Built for the ones who train different.
           </p>
         </div>
 
-        {/* ⏳ RAW Precision Countdown */}
-        <div className={`flex gap-6 md:gap-14 mb-12 transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+        {/* ⏳ RAW Precision Countdown - Compacted */}
+        <div className={`flex gap-6 md:gap-14 mb-8 transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           {[
             { label: 'DAYS', value: timeLeft.days },
             { label: 'HOURS', value: timeLeft.hours },
@@ -171,35 +171,35 @@ export default function LaunchingSoon() {
             <div key={i} className="flex relative items-center">
               <div className="flex flex-col items-center">
                 <span 
-                  className={`font-barlow-condensed text-5xl md:text-7xl font-black transition-all duration-300 ${tick % 2 === 0 ? 'scale-[1.03]' : 'scale-100'}`}
+                  className={`font-barlow-condensed text-4xl md:text-6xl font-black transition-all duration-300 ${tick % 2 === 0 ? 'scale-[1.02]' : 'scale-100'}`}
                   style={{ textShadow: '0 0 20px rgba(224,100,20,0.5)' }}
                 >
                   {String(item.value).padStart(2, '0')}
                 </span>
-                <span className="text-[8px] md:text-[9px] font-black text-white/20 tracking-widest mt-2">{item.label}</span>
+                <span className="text-[7px] md:text-[8px] font-black text-white/20 tracking-widest mt-1">{item.label}</span>
               </div>
-              {i < 3 && <div className="ml-6 md:ml-14 w-[1px] h-12 bg-[#E07B2A]/30 self-center"></div>}
+              {i < 3 && <div className="ml-6 md:ml-14 w-[1px] h-10 bg-[#E07B2A]/30 self-center"></div>}
             </div>
           ))}
         </div>
 
-        {/* 📧 Sleek Notification Form Section */}
-        <div className={`w-full max-w-[500px] transition-all duration-1000 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <h3 className="text-sm font-bold uppercase tracking-widest text-white/80 mb-6 font-barlow-condensed">
+        {/* 📧 Sleek Notification Form Section - Compacted */}
+        <div className={`w-full max-w-[450px] transition-all duration-1000 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <h3 className="text-xs font-bold uppercase tracking-widest text-white/70 mb-4 font-barlow-condensed">
             Be First. Get Early Access.
           </h3>
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-1 flex flex-row items-stretch focus-within:border-white/30 transition-all rounded-sm">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-0.5 flex flex-row items-stretch focus-within:border-white/30 transition-all rounded-sm">
             <input
               type="email"
               required
               placeholder="your@email.com"
-              className="flex-grow bg-transparent px-6 py-4 text-xs font-bold tracking-widest outline-none border-none placeholder:text-white/20 text-white"
+              className="flex-grow bg-transparent px-4 py-3 text-[10px] md:text-xs font-bold tracking-widest outline-none border-none placeholder:text-white/20 text-white"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <button
               onClick={handleSubmit}
-              className="bg-white text-black font-barlow-condensed font-black px-10 py-5 text-xs tracking-widest uppercase transition-all duration-500 hover:bg-[#E07B2A] hover:text-white shadow-xl"
+              className="bg-white text-black font-barlow-condensed font-black px-6 md:px-10 py-3 md:py-4 text-[10px] md:text-xs tracking-widest uppercase transition-all duration-500 hover:bg-[#E07B2A] hover:text-white"
             >
               NOTIFY ME →
             </button>
@@ -208,7 +208,7 @@ export default function LaunchingSoon() {
       </main>
 
       {/* 📱 FOOTER Overlay (Instagram Exclusive) */}
-      <footer className={`w-full relative z-20 flex flex-col items-center pb-10 transition-all duration-1000 delay-800 ${isLoaded ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+      <footer className={`w-full relative z-20 flex flex-col items-center pb-4 transition-all duration-1000 delay-800 ${isLoaded ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
         
         {/* Instagram Row only */}
         <a 
@@ -217,17 +217,17 @@ export default function LaunchingSoon() {
           rel="noopener noreferrer"
           className="flex flex-col items-center group cursor-pointer"
         >
-          <div className="text-white/40 group-hover:text-[#E07B2A] group-hover:-translate-y-1 transition-all duration-300 transform">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" className="drop-shadow-[0_0_10px_rgba(224,123,42,0.1)]">
+          <div className="text-white/30 group-hover:text-[#E07B2A] group-hover:-translate-y-1 transition-all duration-300 transform">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
             </svg>
           </div>
-          <span className="text-[10px] font-black tracking-widest mt-2 text-[#E07B2A]/60 group-hover:text-[#E07B2A]">@muscfitofficial</span>
+          <span className="text-[9px] font-black tracking-widest mt-1 text-[#E07B2A]/50 group-hover:text-[#E07B2A]">@muscfitofficial</span>
         </a>
         
         {/* Footer Legal */}
-        <p className="text-[10px] uppercase font-bold tracking-[0.6em] text-white/10 mt-10">
-          © 2025 MuscFIT · Wear The Grind. Own the Game.
+        <p className="text-[8px] uppercase font-bold tracking-[0.5em] text-white/5 mt-4">
+          © 2025 MuscFIT · Wear The Grind.
         </p>
       </footer>
 
