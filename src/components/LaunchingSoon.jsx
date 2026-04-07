@@ -90,7 +90,7 @@ export default function LaunchingSoon() {
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <div className="relative w-52 md:w-72 h-14 md:h-18 select-none">
             <AppImage 
-              src="/muscfit-final-logo.png" 
+              src="/muscfit-official-v3.png" 
               alt="MUSCFIT Logo"
               className="w-full h-full object-contain mix-blend-screen contrast-150 brightness-110"
               style={{ clipPath: 'inset(0 2% 2% 0)' }}
@@ -109,11 +109,12 @@ export default function LaunchingSoon() {
       {/* 🌪️ MAIN HERO (Centered, One Viewport) */}
       <main className="relative z-20 w-full flex-grow flex flex-col items-center justify-center text-center px-4 -mt-4">
         
-        {/* 🔥 Drop Incoming Badge */}
+        {/* 🚀 Attention-Grabbing Danger Badge */}
         <div className={`mb-6 flex transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="bg-[rgba(224,100,20,0.2)] border border-[#E07B2A]/40 px-4 py-1 rounded-full shadow-[0_0_15px_rgba(224,123,42,0.2)] animate-pulse">
-            <span className="text-[9px] md:text-[11px] font-black tracking-widest text-[#E07B2A] uppercase">
-              🔥 DROP INCOMING
+          <div className="bg-red-500/10 border border-red-500/50 px-4 py-1.5 rounded-full shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-alert-pulse group flex items-center gap-2">
+            <span className="text-red-500 animate-pulse text-xs md:text-sm">⚠️</span>
+            <span className="text-[9px] md:text-[11px] font-black tracking-[0.2em] text-[#E07B2A] uppercase">
+              DROP INCOMING
             </span>
           </div>
         </div>
@@ -121,13 +122,13 @@ export default function LaunchingSoon() {
         {/* Massive Headline - Scaled with clamp() to prevent cropping */}
         <div className={`flex flex-col mb-6 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h1 
-            className="font-barlow-condensed font-black uppercase tracking-tight leading-[0.9]"
+            className="font-barlow-condensed font-black uppercase tracking-tight leading-[0.95]"
             style={{ fontSize: 'clamp(52px, 8.5vw, 110px)', color: 'white' }}
           >
             SOMETHING BIG
           </h1>
           <h1 
-            className="font-barlow-condensed font-black uppercase tracking-tight leading-[0.9]"
+            className="font-barlow-condensed font-black uppercase tracking-tight leading-[0.95]"
             style={{ 
               fontSize: 'clamp(52px, 8.5vw, 110px)',
               background: 'linear-gradient(to bottom, #ffffff 0%, #888888 100%)',
@@ -242,6 +243,13 @@ export default function LaunchingSoon() {
         }
         .animate-breathe-glow {
           animation: breathe-glow 6s ease-in-out infinite alternate;
+        }
+        @keyframes alert-pulse {
+          0%, 100% { border-color: rgba(239, 68, 68, 0.5); box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+          50% { border-color: rgba(239, 68, 68, 1); box-shadow: 0 0 25px rgba(239, 68, 68, 0.5); }
+        }
+        .animate-alert-pulse {
+          animation: alert-pulse 2s ease-in-out infinite;
         }
         @keyframes pulse-slow {
           0%, 100% { opacity: 0.6; transform: scale(1); }
