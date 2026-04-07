@@ -47,6 +47,9 @@ export default function LaunchingSoon() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email || !email.includes('@')) {
+      return; // Handled by browser 'required' and 'type="email"' mostly, but safe to have
+    }
     alert(`Registration Successful: Early access for ${email}!`);
     setEmail('');
   };
@@ -188,7 +191,10 @@ export default function LaunchingSoon() {
           <h3 className="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] text-white/60 mb-3 md:mb-4 font-barlow-condensed text-center">
             BE FIRST. SECURE THE DROP.
           </h3>
-          <div className="bg-[#111111] border-2 border-white/10 p-1 flex flex-col md:flex-row items-stretch focus-within:border-[#e63946]/50 transition-all rounded-sm gap-1 md:gap-0">
+          <form 
+            onSubmit={handleSubmit}
+            className="bg-[#111111] border-2 border-white/10 p-1 flex flex-col md:flex-row items-stretch focus-within:border-[#e63946]/50 transition-all rounded-sm gap-1 md:gap-0"
+          >
             <input
               type="email"
               required
@@ -198,12 +204,12 @@ export default function LaunchingSoon() {
               onChange={(e) => setEmail(e.target.value)}
             />
             <button
-              onClick={handleSubmit}
+              type="submit"
               className="bg-[#e63946] text-white font-barlow-condensed font-black px-6 md:px-10 py-3 md:py-4 text-[10px] md:text-xs tracking-[0.3em] uppercase transition-all duration-500 hover:bg-white hover:text-black shadow-xl"
             >
               NOTIFY ME →
             </button>
-          </div>
+          </form>
         </div>
       </main>
 
