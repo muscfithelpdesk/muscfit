@@ -1,28 +1,22 @@
-import { Inter, Outfit, Anton, Bebas_Neue } from 'next/font/google';
+import { Inter, Barlow, Barlow_Condensed } from 'next/font/google';
 import '@/styles/index.css';
 import ClientProviders from '@/components/ClientProviders';
-import ChatbotPopup from '@/components/common/ChatbotPopup';
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
 });
 
-const outfit = Outfit({
+const barlow = Barlow({
+  weight: ['300', '400'],
   subsets: ['latin'],
-  variable: '--font-outfit',
+  variable: '--font-barlow',
 });
 
-const anton = Anton({
-  weight: '400',
+const barlowCondensed = Barlow_Condensed({
+  weight: ['900'],
   subsets: ['latin'],
-  variable: '--font-anton',
-});
-
-const bebasNeue = Bebas_Neue({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-bebas-neue',
+  variable: '--font-barlow-condensed',
 });
 
 export const metadata = {
@@ -41,7 +35,7 @@ import { Analytics } from "@vercel/analytics/react"
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} ${anton.variable} ${bebasNeue.variable}`}>
+    <html lang="en" className={`${inter.variable} ${barlow.variable} ${barlowCondensed.variable}`}>
       <body className="font-body bg-black">
         <ClientProviders>
           {children}
