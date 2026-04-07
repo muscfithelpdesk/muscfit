@@ -86,14 +86,14 @@ export default function LaunchingSoon() {
 
       {/* 🧭 TOP BAR Overlay (Logo Restored) */}
       <header className="w-full relative z-20 flex justify-between items-center px-8 py-6 md:px-12 md:py-8 max-w-[1600px]">
-        {/* 🏹 NF MUSCFIT - Final Official Logo (v4) */}
+        {/* 🏹 OFFICIAL BRAND LOGO - Final high-res signature */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="relative w-52 md:w-72 h-14 md:h-18 select-none">
+          <div className="relative w-52 md:w-72 h-16 md:h-20 select-none">
             <AppImage 
-              src="/muscfit-final-official-v4.png" 
+              src="/official-brand-logo-final.png" 
               alt="MUSCFIT Logo"
-              className="w-full h-full object-contain mix-blend-screen contrast-150 brightness-110"
-              style={{ clipPath: 'inset(0 2% 2% 0)' }}
+              className="w-full h-full object-contain mix-blend-screen contrast-125 brightness-110"
+              style={{ clipPath: 'inset(0 3% 3% 0)' }}
             />
           </div>
         </div>
