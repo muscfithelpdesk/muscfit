@@ -84,19 +84,10 @@ export default function LaunchingSoon() {
         <div className="absolute inset-0 z-10 pointer-events-none mix-blend-overlay" style={{ filter: 'url(#noiseFilterLayer)' }}></div>
       </div>
 
-      {/* 🏁 TOP NAVIGATION (No background box) */}
+      {/* 🧭 TOP BAR Overlay (Logo Removed) */}
       <header className="w-full relative z-20 flex justify-between items-center px-8 py-6 md:px-12 md:py-8 max-w-[1600px]">
-        {/* 🏹 NF MUSCFIT - Final Official Logo (Watermark Erased) */}
-        <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="relative w-52 md:w-72 h-14 md:h-18 select-none">
-            <AppImage 
-              src="/muscfit-official-v3.png" 
-              alt="MUSCFIT Logo"
-              className="w-full h-full object-contain mix-blend-screen contrast-150 brightness-110"
-              style={{ clipPath: 'inset(0 2% 2% 0)' }}
-            />
-          </div>
-        </div>
+        {/* Placeholder for balance, or just empty */}
+        <div className="w-52 md:w-72 h-14 md:h-18"></div>
 
         {/* Stay Tuned Signal */}
         <div className={`transition-all duration-1000 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
