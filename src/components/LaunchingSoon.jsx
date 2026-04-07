@@ -88,11 +88,11 @@ export default function LaunchingSoon() {
       <header className="w-full relative z-20 flex justify-between items-center px-8 py-6 md:px-12 md:py-8 max-w-[1600px]">
         {/* Clean NF Logo - Transparent integration */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="relative w-36 md:w-48 h-12">
+          <div className="relative w-1/2 max-w-[200px] h-14 md:h-16">
             <AppImage 
               src="/muscfit-exact-logo.png" 
               alt="MUSCFIT Logo"
-              className="w-full h-full object-contain mix-blend-screen"
+              className="w-full h-full object-contain mix-blend-lighten contrast-150 brightness-110"
             />
           </div>
         </div>
