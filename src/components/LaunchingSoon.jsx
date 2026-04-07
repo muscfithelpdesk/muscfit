@@ -86,11 +86,11 @@ export default function LaunchingSoon() {
 
       {/* 🏁 TOP NAVIGATION (No background box) */}
       <header className="w-full relative z-20 flex justify-between items-center px-8 py-6 md:px-12 md:py-8 max-w-[1600px]">
-        {/* 🏹 NF MUSCFIT - Brand Signature Integration */}
+        {/* 🏹 NF MUSCFIT - Final Official Logo */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="relative w-48 md:w-64 h-16 md:h-20 select-none">
+          <div className="relative w-52 md:w-72 h-20 md:h-24 select-none">
             <AppImage 
-              src="/muscfit-exact-logo.png" 
+              src="/muscfit-final-logo.png" 
               alt="MUSCFIT Logo"
               className="w-full h-full object-contain mix-blend-screen contrast-150 brightness-110"
             />
