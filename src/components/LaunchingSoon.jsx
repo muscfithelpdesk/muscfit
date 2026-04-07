@@ -90,10 +90,10 @@ export default function LaunchingSoon() {
 
       {/* 🧭 TOP BAR Overlay */}
       <header className="w-full relative z-20 flex flex-col items-center">
-        <div className="w-full flex justify-between items-center p-8 md:px-12 md:py-10 max-w-[1600px]">
+        <div className="w-full flex justify-between items-center p-4 md:px-10 md:py-4 max-w-[1600px]">
           {/* Logo - Existing Brand Signature */}
           <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-            <div className="relative w-40 md:w-52 h-14 md:h-18">
+            <div className="relative w-32 md:w-48 h-10 md:h-14">
               <AppImage 
                 src="/muscfit-exact-logo.png" 
                 alt="MUSCFIT Logo"
@@ -101,20 +101,18 @@ export default function LaunchingSoon() {
               />
             </div>
           </div>
-
           {/* Top Right SIGNAL */}
           <div className={`transition-all duration-1000 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-            <span className="text-[10px] md:text-xs font-black text-orange-500/80 tracking-[0.6em] uppercase cursor-default select-none">
+            <span className="text-[9px] md:text-xs font-black text-orange-500/80 tracking-[0.4em] uppercase cursor-default select-none">
               » STAY TUNED «
             </span>
           </div>
         </div>
-        {/* Sharp Blade Line Divider */}
         <div className="w-full h-[1px] bg-amber-500 opacity-20"></div>
       </header>
 
       {/* 🚀 MAIN VIBE SECTION (CENTERED) */}
-      <main className="relative z-20 w-screen h-full flex flex-col items-center justify-center text-center px-4 -mt-10 overflow-hidden">
+      <main className="relative z-20 w-screen flex-grow flex flex-col items-center justify-center text-center px-4 overflow-hidden">
         
         {/* Hype Pill Badge */}
         <div className={`mb-8 flex transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
@@ -126,22 +124,22 @@ export default function LaunchingSoon() {
         </div>
 
         {/* Giant Bebas/Barlow Headline */}
-        <div className={`flex flex-col mb-10 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div className={`flex flex-col mb-4 md:mb-8 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="relative group">
             {/* 3D Depth Shadow Text Layer */}
             <h1 className="absolute inset-0 font-barlow-condensed font-black uppercase text-white/5 blur-[2px] translate-x-1 translate-y-1 pointer-events-none select-none"
-                style={{ fontSize: 'clamp(4rem, 15vw, 12rem)', lineHeight: '0.85' }}>
+                style={{ fontSize: 'clamp(3rem, 11vw, 8.5rem)', lineHeight: '0.9' }}>
               SOMETHING BIG
             </h1>
-            <h1 className="relative font-barlow-condensed font-black uppercase leading-[0.85] tracking-tight transition-all duration-500 group-hover:tracking-normal"
-                style={{ fontSize: 'clamp(4rem, 15vw, 12rem)', color: 'white' }}>
+            <h1 className="relative font-barlow-condensed font-black uppercase leading-[0.9] tracking-tight transition-all duration-500 group-hover:tracking-normal"
+                style={{ fontSize: 'clamp(3rem, 11vw, 8.5rem)', color: 'white' }}>
               SOMETHING BIG
             </h1>
           </div>
           <h1 
-            className="font-barlow-condensed font-black uppercase leading-[0.85] tracking-tight"
+            className="font-barlow-condensed font-black uppercase leading-[1] tracking-tight"
             style={{ 
-              fontSize: 'clamp(4rem, 15vw, 12rem)',
+              fontSize: 'clamp(3rem, 11vw, 8.5rem)',
               background: 'linear-gradient(to bottom, #ffffff 0%, #888888 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
