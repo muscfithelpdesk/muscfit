@@ -1,4 +1,5 @@
-import Homepage, { metadata as homeMetadata } from './homepage/page';
+import LaunchingSoon from '@/components/LaunchingSoon';
 
-export const metadata = homeMetadata;
-export default Homepage;
+export default function Page() {
+  return <LaunchingSoon />;
+}
