@@ -109,11 +109,13 @@ export default function LaunchingSoon() {
       {/* 🌪️ MAIN HERO (Centered, One Viewport) */}
       <main className="relative z-20 w-full flex-grow flex flex-col items-center justify-center text-center px-4 -mt-4">
         
-        {/* 🚀 Attention-Grabbing Danger Badge */}
-        <div className={`mb-6 flex transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="bg-red-500/10 border border-red-500/50 px-4 py-1.5 rounded-full shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-alert-pulse group flex items-center gap-2">
-            <span className="text-red-500 animate-pulse text-xs md:text-sm">⚠️</span>
-            <span className="text-[9px] md:text-[11px] font-black tracking-[0.2em] text-[#E07B2A] uppercase">
+        {/* 🚀 High-Impact Attention Danger Sign */}
+        <div className={`mb-4 flex flex-col items-center transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className="text-4xl md:text-5xl mb-4 animate-alert-pulse filter drop-shadow-[0_0_20px_rgba(239,68,68,0.5)]">
+            ⚠️
+          </div>
+          <div className="bg-red-500/10 border border-red-500/50 px-5 py-1.5 rounded-full shadow-[0_0_15px_rgba(239,68,68,0.2)] flex items-center">
+            <span className="text-[10px] md:text-[12px] font-black tracking-[0.3em] text-[#E07B2A] uppercase">
               DROP INCOMING
             </span>
           </div>
