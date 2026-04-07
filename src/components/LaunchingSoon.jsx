@@ -67,11 +67,11 @@ export default function LaunchingSoon() {
 
       {/* 🌌 Cinematic Background layers */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Main Amber Blob - Breathing Animation */}
-        <div className="absolute top-[35%] left-[25%] -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[rgba(224,100,20,0.22)] rounded-full blur-[80px] animate-breathe-glow opacity-80 shadow-[0_0_100px_rgba(224,100,20,0.1)]"></div>
+        {/* Main Amber Blob - Vibrant Breathing Atmosphere */}
+        <div className="absolute top-[35%] left-[25%] -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[rgba(251,146,60,0.35)] rounded-full blur-[100px] animate-breathe-glow opacity-90 shadow-[0_0_120px_rgba(251,146,60,0.2)]"></div>
 
-        {/* Secondary Deep Red Glow - Pulse Animation */}
-        <div className="absolute bottom-[-5%] right-[-5%] w-[400px] h-[400px] bg-[rgba(180,30,10,0.14)] rounded-full blur-[60px] animate-pulse-slow"></div>
+        {/* Secondary Deep Red Glow - Vibrancy Shift */}
+        <div className="absolute bottom-[-5%] right-[-5%] w-[450px] h-[450px] bg-[rgba(239,68,68,0.2)] rounded-full blur-[80px] animate-pulse-slow"></div>
 
         {/* Refracted Glass Texture - Diagonal Streaks */}
         <div className="absolute inset-0 opacity-[0.025]"
@@ -86,13 +86,13 @@ export default function LaunchingSoon() {
 
       {/* 🧭 TOP BAR Overlay (Logo Restored) */}
       <header className="w-full relative z-20 flex justify-between items-center px-8 py-6 md:px-12 md:py-8 max-w-[1600px]">
-        {/* 🏹 OFFICIAL BRAND LOGO - Final high-res signature */}
+        {/* 🏹 OFFICIAL BRAND LOGO - Responsive & Vibrant */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="relative w-52 md:w-72 h-16 md:h-20 select-none">
-            <AppImage
-              src="/official-brand-logo-final.png"
+          <div className="relative w-36 md:w-72 h-14 md:h-20 select-none">
+            <AppImage 
+              src="/official-brand-logo-final.png" 
               alt="MUSCFIT Logo"
-              className="w-full h-full object-contain mix-blend-screen contrast-125 brightness-110"
+              className="w-full h-full object-contain mix-blend-lighten contrast-[1.8] brightness-[1.3]"
               style={{ clipPath: 'inset(0 3% 3% 0)' }}
             />
           </div>
