@@ -86,31 +86,14 @@ export default function LaunchingSoon() {
 
       {/* 🏁 TOP NAVIGATION (No background box) */}
       <header className="w-full relative z-20 flex justify-between items-center px-8 py-6 md:px-12 md:py-8 max-w-[1600px]">
-        {/* 🏹 NF MUSCFIT - Pure SVG (Guaranteed Transparency) */}
+        {/* 🏹 NF MUSCFIT - Brand Signature Integration */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="flex items-center gap-3 md:gap-4 select-none group">
-            {/* NF Mark - Hand Crafted SVG */}
-            <svg width="45" height="45" viewBox="0 0 100 100" className="drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-transform group-hover:scale-105">
-              <path 
-                d="M15 85 L15 15 L85 85 L85 15" 
-                fill="none" 
-                stroke="white" 
-                strokeWidth="12" 
-                strokeLinecap="square" 
-              />
-              <path 
-                d="M45 85 L45 15 L85 15 M45 50 L75 50" 
-                fill="none" 
-                stroke="white" 
-                strokeWidth="12" 
-                strokeLinecap="square" 
-                className="translate-x-2" 
-              />
-            </svg>
-            {/* WORDMARK - Barlow Condensed 900 */}
-            <span className="font-barlow-condensed font-black text-3xl md:text-5xl tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-              MUSCFIT
-            </span>
+          <div className="relative w-48 md:w-64 h-16 md:h-20 select-none">
+            <AppImage 
+              src="/muscfit-exact-logo.png" 
+              alt="MUSCFIT Logo"
+              className="w-full h-full object-contain mix-blend-screen contrast-150 brightness-110"
+            />
           </div>
         </div>
 
