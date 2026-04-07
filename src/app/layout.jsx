@@ -37,6 +37,8 @@ export const metadata = {
   },
 };
 
+import { Analytics } from "@vercel/analytics/react"
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} ${anton.variable} ${bebasNeue.variable}`}>
