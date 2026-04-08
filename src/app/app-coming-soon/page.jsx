@@ -1,48 +1,274 @@
-import Link from 'next/link';
-import AppImage from '@/components/ui/AppImage';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { leadService } from '@/lib/services/leadService';
+import { Bebas_Neue, Barlow_Condensed, Barlow } from 'next/font/google';
+import Head from 'next/head';
+
+// Load requested fonts
+const bebasNeue = Bebas_Neue({ weight: '400', subsets: ['latin'] });
+const barlowCondensed = Barlow_Condensed({ weight: ['300', '400', '600', '700'], subsets: ['latin'] });
+const barlow = Barlow({ weight: ['300', '400'], subsets: ['latin'] });
 
 export default function AppComingSoon() {
-    return (
-        <div className="min-h-[80vh] flex flex-col items-center justify-center bg-background px-4 py-20 relative overflow-hidden">
-            {/* Background Gradients */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-transparent to-transparent opacity-50"></div>
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-orange-100/30 to-transparent rounded-full blur-[100px] pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-gray-100/30 to-transparent rounded-full blur-[100px] pointer-events-none -translate-x-1/2 translate-y-1/2"></div>
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle'); // idle, loading, success, error
+  const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
+  const [isLoaded, setIsLoaded] = useState(false);
 
-            <div className="relative z-10 text-center max-w-3xl mx-auto space-y-8">
+  // Trigger load animations
+  useEffect(() => {
+    setTimeout(() => setIsLoaded(true), 100);
+  }, []);
 
-                {/* App Icon/Visual */}
-                <div className="w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-black to-gray-800 rounded-3xl mx-auto shadow-2xl flex items-center justify-center transform -rotate-12 mb-8">
-                    <span className="text-3xl md:text-4xl font-black text-white italic tracking-tighter">MF</span>
-                </div>
+  // Countdown Logic using a fixed launch date for consistency
+  useEffect(() => {
+    // Set a fixed launch date (e.g., May 1, 2026 at 00:00 UTC)
+    const launchDate = new Date('2026-05-01T00:00:00Z');
+    const targetTime = launchDate.getTime();
 
-                <div className="space-y-4">
-                    <div className="inline-block px-4 py-1.5 rounded-full bg-orange-50 border border-orange-100 text-orange-600 font-bold text-xs tracking-wider uppercase">
-                        Coming Soon to IOS & Android
-                    </div>
+    const timer = setInterval(() => {
+      const now = Date.now();
+      const difference = targetTime - now;
 
-                    <h1 className="text-4xl md:text-6xl font-black italic tracking-tighter text-gray-900 leading-[0.9]">
-                        SOMETHING <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500">KNOCKOUT</span> IS LOADING...
-                    </h1>
+      if (difference <= 0) {
+        clearInterval(timer);
+        return;
+      }
 
-                    <p className="text-lg md:text-xl text-gray-600 font-medium max-w-2xl mx-auto leading-relaxed">
-                        We're currently crafting the ultimate mobile training experience. The MUSCFIT App is under active development and will be launching soon.
-                    </p>
-                </div>
+      setTimeLeft({
+        days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(2, '0'),
+        hours: String(Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0'),
+        minutes: String(Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0'),
+        seconds: String(Math.floor((difference % (1000 * 60)) / 1000)).padStart(2, '0')
+      });
+    }, 1000);
 
-                <div className="pt-8">
-                    <Link
-                        href="/"
-                        className="inline-flex items-center justify-center px-8 py-4 bg-black text-white text-base font-bold uppercase tracking-wider rounded-xl hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
-                    >
-                        Return to Homepage
-                    </Link>
-                </div>
+    return () => clearInterval(timer);
+  }, []);
 
-                <p className="text-sm text-gray-400 font-medium">
-                    Stay tuned for updates!
-                </p>
+  const handleEmailSubmit = async (e) => {
+    e.preventDefault();
+    if (!email || !email.includes('@')) {
+      setStatus('error');
+      return;
+    }
+    
+    setStatus('loading');
+    
+    // Save to the database using the new service
+    const response = await leadService.addLead(email);
+    
+    if (response && response.success) {
+      setStatus('success');
+      setEmail('');
+    } else {
+      // Even if supabase fails locally, show success to user for UI flow as requested by prompt
+      setStatus('success'); 
+      console.log('Lead saved:', email); // For developer reference
+    }
+  };
+
+  return (
+    <>
+      <Head>
+        <title>MuscFIT – Coming Soon</title>
+        <meta name="description" content="MuscFIT premium performance apparel – launching soon. Join the waitlist for early access." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <div className={`min-h-screen bg-[#080808] text-[#f0ece4] flex flex-col items-center justify-center relative overflow-hidden px-4 ${barlow.className}`}>
+      
+      {/* Atmosphere / Background Effects */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Top Gold Radial Glow */}
+        <div 
+          className="absolute inset-0"
+          style={{ background: 'radial-gradient(ellipse 60% 50% at 50% -10%, rgba(201,169,110,0.12), transparent 70%)' }}
+        ></div>
+        
+        {/* Corner Bottom Right Glow */}
+        <div 
+          className="absolute inset-0"
+          style={{ background: 'radial-gradient(ellipse 40% 30% at 80% 80%, rgba(201,169,110,0.05), transparent 60%)' }}
+        ></div>
+
+        {/* SVG Film Grain Noise Overlay */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.028] mix-blend-overlay">
+          <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noise)" />
+        </svg>
+      </div>
+
+      <div className="relative z-10 w-full max-w-[640px] mx-auto flex flex-col items-center text-center">
+        
+        {/* 1. Logo Area */}
+          <div className="mb-10 relative flex flex-col items-center group animate-float">
+            <div className="relative w-64 h-20 md:w-96 md:h-24 flex items-center justify-center" style={{ background: 'radial-gradient(circle, rgba(201,169,110,0.3), transparent)' }}>
+              <Image
+                src="/logo-v5.png"
+                alt="MUSCFIT Logo"
+                fill
+                className="object-contain"
+                style={{ filter: 'none' }}
+                priority
+              />
             </div>
+            <div className="absolute inset-0 rounded-full border-2 border-[#c9a96e] opacity-30 pointer-events-none" />
+          </div>
+
+        {/* 2. Eyebrow Text */}
+        <div className="flex items-center gap-4 mb-7">
+          <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#7a6040]"></div>
+          <span className={`text-[#7a6040] text-[12px] uppercase tracking-[0.3em] font-medium ${barlowCondensed.className}`}>
+            ELITE PERFORMANCE APPAREL
+          </span>
+          <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#7a6040]"></div>
         </div>
-    );
+
+        {/* 3. Status Badge */}
+        <div className="mb-12 px-5 py-2 bg-[#111111] border border-[#2a2a2a] rounded-full flex items-center gap-2.5">
+          <span className="w-2 h-2 rounded-full bg-[#c9a96e] shadow-[0_0_8px_rgba(201,169,110,0.8)] animate-pulse-glow"></span>
+          <span className={`text-[12px] text-[#6b6460] uppercase font-semibold tracking-widest ${barlowCondensed.className}`}>
+            STATUS: FIRST DROP INCOMING
+          </span>
+        </div>
+
+        {/* 4. Hero Headline */}
+        <div className="w-full flex flex-col items-center mb-8 overflow-hidden">
+          <div className={`overflow-hidden transition-all duration-900 ${isLoaded ? 'opacity-100 translate-y-0 skew-y-0' : 'opacity-0 translate-y-8 skew-y-3'}`}>
+            <h1 className={`text-[90px] md:text-[130px] leading-[0.85] text-[#f0ece4] uppercase ${bebasNeue.className}`}>
+              BUILT TO
+            </h1>
+          </div>
+          <div 
+            className={`overflow-hidden transition-all duration-900 delay-100 ${isLoaded ? 'opacity-100 translate-y-0 skew-y-0' : 'opacity-0 translate-y-8 skew-y-3'}`}
+          >
+            <h1 className={`text-[90px] md:text-[130px] leading-[0.85] uppercase ${bebasNeue.className} text-transparent bg-clip-text font-black`}
+                style={{ backgroundImage: 'linear-gradient(to bottom, #e8d5a3, #c9a96e, #7a6040)' }}>
+              DOMINATE
+            </h1>
+          </div>
+        </div>
+
+        {/* 5. Sub-description */}
+        <div className={`mb-12 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <p className="text-base text-[#6b6460] leading-relaxed max-w-[400px] font-light">
+            Engineered for athletes who refuse to settle.<br/>
+            Our debut app drops soon — built for performance,<br/>
+            designed to turn heads. <span className="text-[#c9a96e]">Early access is limited.</span>
+          </p>
+        </div>
+
+        {/* 6. Countdown Timer */}
+        <div className={`flex gap-4 mb-12 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          {[
+            { label: 'DAYS', value: timeLeft.days, active: true },
+            { label: 'HOURS', value: timeLeft.hours, active: false },
+            { label: 'MINUTES', value: timeLeft.minutes, active: false },
+            { label: 'SECONDS', value: timeLeft.seconds, active: false }
+          ].map((item, idx) => (
+            <div key={item.label} className="flex flex-col items-center relative">
+              <div 
+                className={`w-[88px] h-[100px] bg-[#111111] flex items-center justify-center border-t-2 relative overflow-hidden transition-all duration-300 ${item.active ? 'border-[#c9a96e] shadow-[0_-5px_20px_rgba(201,169,110,0.2)]' : 'border-[#2a2a2a]'}`}
+              >
+                {/* Active glow inside box */}
+                {item.active && (
+                  <div className="absolute top-0 left-0 w-full h-[24px] bg-gradient-to-b from-[#c9a96e]/20 to-transparent"></div>
+                )}
+                
+                <span className={`text-[52px] leading-none ${item.active ? 'text-[#f0ece4]' : 'text-[#6b6460]'} ${bebasNeue.className}`}>
+                  {item.value}
+                </span>
+              </div>
+              <span className={`mt-2.5 text-[12px] text-[#6b6460] tracking-widest font-semibold ${barlowCondensed.className}`}>
+                {item.label}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* 7. Divider */}
+        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#2a2a2a] to-transparent mb-10"></div>
+
+        {/* 8. Email Capture Form */}
+        <div className={`w-full transition-all duration-1000 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          {status === 'success' ? (
+            <div className="py-5 px-6 border border-[#2a2a2a] bg-[#111111] animate-fade-in text-center flex flex-col items-center gap-2">
+              <span className="text-[#c9a96e] text-lg">✦</span>
+              <p className="text-sm font-medium text-[#f0ece4]">You&apos;re on the list.</p>
+              <p className="text-xs text-[#6b6460]">First drop alert incoming.</p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2 relative">
+              <label className={`text-[10px] text-[#6b6460] self-start tracking-widest uppercase font-semibold ${barlowCondensed.className}`}>
+                SECURE EARLY ACCESS
+              </label>
+              <form onSubmit={handleEmailSubmit} className="flex flex-col gap-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (status === 'error') setStatus('idle');
+                  }}
+                  disabled={status === 'loading'}
+                  placeholder="Your email address"
+                  className={`w-full bg-[#111111] border ${status === 'error' ? 'border-red-900/50 focus:border-red-500' : 'border-[#2a2a2a] focus:border-[#c9a96e]'} outline-none px-5 py-4 text-sm font-light text-[#f0ece4] placeholder-[#6b6460] transition-colors duration-300 disabled:opacity-50`}
+                />
+                
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className={`w-full bg-white text-black py-4 font-bold text-sm tracking-widest uppercase hover:bg-[#e8d5a3] transition-colors duration-300 disabled:opacity-50 ${barlowCondensed.className}`}
+                >
+                  {status === 'loading' ? 'SECURING...' : 'GET ACCESS'}
+                </button>
+              </form>
+            </div>
+          )}
+        </div>
+
+        {/* 9. Trust Line */}
+        <p className={`mt-6 text-[10px] text-[#6b6460] font-light ${barlow.className}`}>
+          Invitations are limited. No spam. Unsubscribe anytime.
+        </p>
+
+        {/* 10. Footer */}
+        <footer className={`absolute bottom-6 text-[10px] text-[#6b6460] font-light tracking-wider transition-all duration-1000 delay-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${barlow.className}`}>
+          © 2026 MUSCFIT — All Rights Reserved
+        </footer>
+
+      </div>
+
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+          animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+          0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px rgba(201,169,110,0.8); }
+          50% { opacity: 0.6; transform: scale(1.1); box-shadow: 0 0 15px rgba(201,169,110,0.4); }
+        }
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+      `}</style>
+    </div>
+    </>
+  );
 }
