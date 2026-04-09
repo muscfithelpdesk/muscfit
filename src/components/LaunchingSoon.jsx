@@ -114,9 +114,6 @@ export default function LaunchingSoon() {
         
         {/* 🚀 High-Impact Ultra-Hype Danger Sign */}
         <div className={`mb-4 flex flex-col items-center transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="text-4xl md:text-5xl mb-4 animate-alert-pulse filter drop-shadow-[0_0_35px_rgba(230,57,70,0.6)] scale-110">
-            ⚠️
-          </div>
           <div className="bg-[#e63946]/10 border-2 border-[#e63946] px-6 py-2 rounded-full shadow-[0_0_30px_rgba(230,57,70,0.3)] animate-bounce-slow flex items-center">
             <span className="text-[10px] md:text-[12px] font-black tracking-[0.4em] text-white uppercase">
               DROP INCOMING
