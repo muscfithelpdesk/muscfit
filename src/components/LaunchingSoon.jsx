@@ -294,8 +294,8 @@ export default function LaunchingSoon() {
 
         .logo-img {
           object-fit: contain;
+          filter: invert(1);
           mix-blend-mode: screen;
-          filter: brightness(1.2);
         }
       `}</style>
     </div>
