@@ -100,18 +100,18 @@ export default function LaunchingSoon() {
       <header className="w-full relative z-20 flex justify-between items-center px-4 py-6 md:px-12 md:py-8 max-w-[1600px]">
         {/* 🏹 OFFICIAL BRAND LOGO - Refined High-Performance Identity */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="flex items-center gap-3 md:gap-5 select-none">
+          <div className="flex items-center gap-2 md:gap-3 select-none">
             {/* 🛸 User Provided Symbol Asset */}
             <img 
               src="/muscfit-symbol-new.png" 
               alt="MUSCFIT Symbol"
-              className="w-14 h-7 md:w-24 md:h-12 object-contain"
+              className="w-10 h-5 md:w-16 md:h-8 object-contain"
               style={{ filter: 'url(#remove-checkerboard) brightness(1.2)' }}
             />
             
             {/* 🖋️ MUSCFIT Custom Typography (Serif Contrast) */}
             <span 
-              className="text-[20px] md:text-[34px] font-bold tracking-[0.1em] text-white"
+              className="text-[14px] md:text-[20px] font-bold tracking-[0.1em] text-white"
               style={{ fontFamily: '"Times New Roman", Times, serif' }}
             >
               MUSCFIT
