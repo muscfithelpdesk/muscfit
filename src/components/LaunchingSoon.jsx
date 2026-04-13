@@ -299,19 +299,14 @@ export default function LaunchingSoon() {
           mask-image: radial-gradient(ellipse 90% 80% at center, black 60%, transparent 100%);
         }
         .logo-img {
-          filter: brightness(2) contrast(1.5);
-          -webkit-mask-image: url("/official-brand-logo-final.png");
-          mask-image: url("/official-brand-logo-final.png");
-          -webkit-mask-size: contain;
-          mask-size: contain;
-          -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-          mask-mode: luminance;
-          -webkit-mask-mode: luminance;
+          mix-blend-mode: screen;
+          filter: brightness(1.3) contrast(1.4);
+          image-rendering: -webkit-optimize-contrast;
+          image-rendering: crisp-edges;
         }
         @media (min-width: 768px) {
           .logo-img {
-            filter: brightness(1.4) contrast(1.1) !important;
+            filter: brightness(1.1) contrast(1.2) !important;
           }
         }
       `}</style>
