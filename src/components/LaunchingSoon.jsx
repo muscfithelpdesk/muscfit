@@ -111,32 +111,6 @@ export default function LaunchingSoon() {
           </div>
         </div>
 
-        <style jsx>{`
-          .logo-container {
-            -webkit-mask-image: radial-gradient(ellipse 90% 80% at center, black 60%, transparent 100%);
-            mask-image: radial-gradient(ellipse 90% 80% at center, black 60%, transparent 100%);
-          }
-          .logo-img {
-            filter: brightness(2) contrast(1.5);
-            -webkit-mask-image: url("/official-brand-logo-final.png");
-            mask-image: url("/official-brand-logo-final.png");
-            -webkit-mask-size: contain;
-            mask-size: contain;
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-            mask-mode: luminance;
-            -webkit-mask-mode: luminance;
-          }
-
-          /* Responsive fixes for desktop readability */
-          @media (min-width: 768px) {
-            .logo-img {
-              filter: brightness(1.4) contrast(1.1) !important;
-              /* On desktop, we avoid extreme contrast to keep the high-res font smooth */
-            }
-          }
-        `}</style>
-
         {/* Status Signal */}
         <div className={`transition-all duration-1000 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <span className="text-[10px] md:text-sm font-black text-[#e63946] tracking-[0.4em] uppercase">
@@ -319,6 +293,27 @@ export default function LaunchingSoon() {
         
         ::-webkit-scrollbar { display: none; }
         * { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .logo-container {
+          -webkit-mask-image: radial-gradient(ellipse 90% 80% at center, black 60%, transparent 100%);
+          mask-image: radial-gradient(ellipse 90% 80% at center, black 60%, transparent 100%);
+        }
+        .logo-img {
+          filter: brightness(2) contrast(1.5);
+          -webkit-mask-image: url("/official-brand-logo-final.png");
+          mask-image: url("/official-brand-logo-final.png");
+          -webkit-mask-size: contain;
+          mask-size: contain;
+          -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+          mask-mode: luminance;
+          -webkit-mask-mode: luminance;
+        }
+        @media (min-width: 768px) {
+          .logo-img {
+            filter: brightness(1.4) contrast(1.1) !important;
+          }
+        }
       `}</style>
     </div>
   );
