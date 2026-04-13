@@ -98,11 +98,11 @@ export default function LaunchingSoon() {
 
       {/* 🧭 TOP BAR Overlay (Seamless Logo) */}
       <header className="w-full relative z-20 flex justify-between items-center px-4 py-6 md:px-12 md:py-8 max-w-[1600px]">
-        {/* 🏹 OFFICIAL BRAND LOGO - New Transparent Asset */}
+        {/* 🏹 OFFICIAL BRAND LOGO - Corrected Spelling (MUSCFIT) */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <div className="relative w-32 md:w-72 h-10 md:h-20">
             <img 
-              src="/muscfit-logo-white.png" 
+              src="/official-brand-logo-final.png" 
               alt="MUSCFIT Logo"
               className="w-full h-full object-contain logo-img"
             />
