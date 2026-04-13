@@ -98,10 +98,10 @@ export default function LaunchingSoon() {
 
       {/* 🧭 TOP BAR Overlay (Seamless Logo) */}
       <header className="w-full relative z-20 flex justify-between items-center px-4 py-6 md:px-12 md:py-8 max-w-[1600px]">
-        {/* 🏹 OFFICIAL BRAND LOGO - Custom Vector Implementation */}
+        {/* 🏹 OFFICIAL BRAND LOGO - Refined High-Performance Identity */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <div className="flex items-center gap-3 md:gap-5 select-none">
-            {/* 🛸 Custom NF Vector Symbol (Slanted & Interconnected) */}
+            {/* 🛸 Custom NF Vector Symbol (Thick, Rounded, Performance) */}
             <svg 
               viewBox="0 0 100 45" 
               fill="none" 
@@ -109,16 +109,19 @@ export default function LaunchingSoon() {
               className="w-12 h-6 md:w-20 md:h-10"
             >
               <path 
-                d="M5 40L22 5H38L55 40M22 5H95M22 23H80" 
+                d="M8 40L25 5H41L58 40M25 5H92M25 24H80" 
                 stroke="white" 
-                strokeWidth="10" 
+                strokeWidth="12" 
                 strokeLinejoin="round" 
                 strokeLinecap="round"
               />
             </svg>
             
-            {/* 🖋️ MUSCFIT Custom Typography (Straight, Wide, Bold) */}
-            <span className="text-[17px] md:text-[26px] font-black tracking-[0.2em] text-white font-barlow">
+            {/* 🖋️ MUSCFIT Custom Typography (Serif Contrast) */}
+            <span 
+              className="text-[20px] md:text-[34px] font-bold tracking-[0.1em] text-white"
+              style={{ fontFamily: '"Times New Roman", Times, serif' }}
+            >
               MUSCFIT
             </span>
           </div>
