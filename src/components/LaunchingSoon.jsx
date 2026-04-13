@@ -293,9 +293,23 @@ export default function LaunchingSoon() {
         * { -ms-overflow-style: none; scrollbar-width: none; }
 
         .logo-img {
-          object-contain: contain;
+          object-fit: contain;
+          filter: url(#remove-checkerboard) brightness(1.1);
         }
       `}</style>
+
+      {/* 🎭 SVG Chroma-Key Filter for Background Removal */}
+      <svg className="absolute w-0 h-0 invisible">
+        <filter id="remove-checkerboard">
+          {/* Isolation: (R+G+B) * 20 - 58 => Only pixels very close to pure white stay opaque */}
+          <feColorMatrix type="matrix" values="
+            0 0 0 0 1
+            0 0 0 0 1
+            0 0 0 0 1
+            20 20 20 0 -59
+          " />
+        </filter>
+      </svg>
     </div>
   );
 }
