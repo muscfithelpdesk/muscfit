@@ -101,20 +101,16 @@ export default function LaunchingSoon() {
         {/* 🏹 OFFICIAL BRAND LOGO - Refined High-Performance Identity */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <div className="flex items-center gap-3 md:gap-5 select-none">
-            {/* 🛸 Custom NF Vector Symbol (Thick, Rounded, Performance) */}
+            {/* 🛸 Custom NF Vector Symbol (High-Fidelity "Speed" Profile) */}
             <svg 
-              viewBox="0 0 100 45" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="w-12 h-6 md:w-20 md:h-10"
+              viewBox="0 0 110 45" 
+              fill="white" 
+              className="w-14 h-7 md:w-24 md:h-12"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <path 
-                d="M8 40L25 5H41L58 40M25 5H92M25 24H80" 
-                stroke="white" 
-                strokeWidth="12" 
-                strokeLinejoin="round" 
-                strokeLinecap="round"
-              />
+              <path d="M2 40C2 42.5 4 44 7 44H18C21 44 23 42 24 40L36 12H44L31 40C30 42.5 32 44 35 44H46C49 44 51 42 52 40L68 5C69 2 67 0 64 0H28C25 0 23 2 22 5L2 40Z" />
+              <path d="M42 0H100C104 0 105 2 105 5C105 8 104 10 100 10H46L42 0Z" />
+              <path d="M35 18H90C94 18 95 20 95 23C95 26 94 28 90 28H39L35 18Z" />
             </svg>
             
             {/* 🖋️ MUSCFIT Custom Typography (Serif Contrast) */}
