@@ -101,14 +101,20 @@ export default function LaunchingSoon() {
         {/* 🏹 OFFICIAL BRAND LOGO - Blended Perfectly */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <div className="relative w-28 md:w-64 h-10 md:h-18">
-            <AppImage 
+            <img 
               src="/official-brand-logo-final.png" 
               alt="MUSCFIT Logo"
               className="w-full h-full object-contain mix-blend-screen"
               style={{ 
-                filter: 'brightness(2.2) contrast(3)',
-                WebkitMaskImage: 'radial-gradient(ellipse at center, black 75%, transparent 100%)',
-                maskImage: 'radial-gradient(ellipse at center, black 75%, transparent 100%)'
+                filter: 'brightness(2) contrast(1.2)',
+                WebkitMaskImage: 'url("/official-brand-logo-final.png")',
+                maskImage: 'url("/official-brand-logo-final.png")',
+                WebkitMaskSize: 'contain',
+                maskSize: 'contain',
+                WebkitMaskRepeat: 'no-repeat',
+                maskRepeat: 'no-repeat',
+                maskMode: 'luminance',
+                WebkitMaskMode: 'luminance'
               }}
             />
           </div>
