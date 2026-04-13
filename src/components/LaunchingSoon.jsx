@@ -101,17 +101,13 @@ export default function LaunchingSoon() {
         {/* 🏹 OFFICIAL BRAND LOGO - Refined High-Performance Identity */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <div className="flex items-center gap-3 md:gap-5 select-none">
-            {/* 🛸 Custom NF Vector Symbol (High-Fidelity "Speed" Profile) */}
-            <svg 
-              viewBox="0 0 110 45" 
-              fill="white" 
-              className="w-14 h-7 md:w-24 md:h-12"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M2 40C2 42.5 4 44 7 44H18C21 44 23 42 24 40L36 12H44L31 40C30 42.5 32 44 35 44H46C49 44 51 42 52 40L68 5C69 2 67 0 64 0H28C25 0 23 2 22 5L2 40Z" />
-              <path d="M42 0H100C104 0 105 2 105 5C105 8 104 10 100 10H46L42 0Z" />
-              <path d="M35 18H90C94 18 95 20 95 23C95 26 94 28 90 28H39L35 18Z" />
-            </svg>
+            {/* 🛸 User Provided Symbol Asset */}
+            <img 
+              src="/muscfit-symbol-new.png" 
+              alt="MUSCFIT Symbol"
+              className="w-14 h-7 md:w-24 md:h-12 object-contain"
+              style={{ filter: 'url(#remove-checkerboard) brightness(1.2)' }}
+            />
             
             {/* 🖋️ MUSCFIT Custom Typography (Serif Contrast) */}
             <span 
@@ -310,8 +306,19 @@ export default function LaunchingSoon() {
           object-fit: contain;
           filter: invert(1);
           mix-blend-mode: screen;
-        }
       `}</style>
+      
+      {/* 🎭 SVG Chroma-Key Filter for Background Removal */}
+      <svg className="absolute w-0 h-0 invisible">
+        <filter id="remove-checkerboard">
+          <feColorMatrix type="matrix" values="
+            0 0 0 0 1
+            0 0 0 0 1
+            0 0 0 0 1
+            20 20 20 0 -59
+          " />
+        </filter>
+      </svg>
     </div>
   );
 }
