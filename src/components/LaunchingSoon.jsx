@@ -98,11 +98,29 @@ export default function LaunchingSoon() {
 
       {/* 🧭 TOP BAR Overlay (Seamless Logo) */}
       <header className="w-full relative z-20 flex justify-between items-center px-4 py-6 md:px-12 md:py-8 max-w-[1600px]">
-        {/* 🏹 OFFICIAL BRAND LOGO - Pure Text Version */}
+        {/* 🏹 OFFICIAL BRAND LOGO - Custom Vector Implementation */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="flex items-center font-barlow-condensed italic select-none">
-            <span className="text-[24px] md:text-[38px] font-black tracking-[-0.08em] text-white">NF</span>
-            <span className="text-[24px] md:text-[38px] font-black tracking-tighter text-white ml-3 md:ml-4">MUSCFIT</span>
+          <div className="flex items-center gap-3 md:gap-5 select-none">
+            {/* 🛸 Custom NF Vector Symbol (Slanted & Interconnected) */}
+            <svg 
+              viewBox="0 0 100 45" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="w-12 h-6 md:w-20 md:h-10"
+            >
+              <path 
+                d="M5 40L22 5H38L55 40M22 5H95M22 23H80" 
+                stroke="white" 
+                strokeWidth="10" 
+                strokeLinejoin="round" 
+                strokeLinecap="round"
+              />
+            </svg>
+            
+            {/* 🖋️ MUSCFIT Custom Typography (Straight, Wide, Bold) */}
+            <span className="text-[17px] md:text-[26px] font-black tracking-[0.2em] text-white font-barlow">
+              MUSCFIT
+            </span>
           </div>
         </div>
 
