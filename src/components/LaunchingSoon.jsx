@@ -102,7 +102,7 @@ export default function LaunchingSoon() {
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <div className="relative w-32 md:w-72 h-10 md:h-20">
             <img 
-              src="/official-brand-logo-final.png" 
+              src="/muscfit-logo.png" 
               alt="MUSCFIT Logo"
               className="w-full h-full object-contain logo-img"
             />
@@ -294,22 +294,10 @@ export default function LaunchingSoon() {
 
         .logo-img {
           object-fit: contain;
-          filter: url(#remove-checkerboard) brightness(1.1);
+          mix-blend-mode: screen;
+          filter: brightness(1.2);
         }
       `}</style>
-
-      {/* 🎭 SVG Chroma-Key Filter for Background Removal */}
-      <svg className="absolute w-0 h-0 invisible">
-        <filter id="remove-checkerboard">
-          {/* Isolation: (R+G+B) * 20 - 58 => Only pixels very close to pure white stay opaque */}
-          <feColorMatrix type="matrix" values="
-            0 0 0 0 1
-            0 0 0 0 1
-            0 0 0 0 1
-            20 20 20 0 -59
-          " />
-        </filter>
-      </svg>
     </div>
   );
 }
