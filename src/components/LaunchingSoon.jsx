@@ -28,9 +28,9 @@ export default function LaunchingSoon() {
     setTimeout(() => setIsLoaded(true), 100);
   }, []);
 
-  // Target Date: May 1, 2026
+  // Target Date: May 13, 2026 (30 Days Out)
   useEffect(() => {
-    const launchDate = new Date('2026-05-01T00:00:00').getTime();
+    const launchDate = new Date('2026-05-13T17:00:00').getTime();
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
