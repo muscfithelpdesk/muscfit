@@ -101,22 +101,41 @@ export default function LaunchingSoon() {
         {/* 🏹 OFFICIAL BRAND LOGO - Blended Perfectly */}
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <div 
-            className="relative w-28 md:w-64 h-10 md:h-18"
-            style={{ 
-              WebkitMaskImage: 'radial-gradient(ellipse at center, black 65%, transparent 100%)',
-              maskImage: 'radial-gradient(ellipse at center, black 65%, transparent 100%)'
-            }}
+            className="relative w-28 md:w-64 h-10 md:h-18 logo-container"
           >
             <img 
               src="/official-brand-logo-final.png" 
               alt="MUSCFIT Logo"
-              className="w-full h-full object-contain mix-blend-screen"
-              style={{ 
-                filter: 'brightness(1.8) contrast(3.5) saturate(0.5)',
-              }}
+              className="w-full h-full object-contain mix-blend-screen logo-img"
             />
           </div>
         </div>
+
+        <style jsx>{`
+          .logo-container {
+            -webkit-mask-image: radial-gradient(ellipse 90% 80% at center, black 60%, transparent 100%);
+            mask-image: radial-gradient(ellipse 90% 80% at center, black 60%, transparent 100%);
+          }
+          .logo-img {
+            filter: brightness(2) contrast(1.5);
+            -webkit-mask-image: url("/official-brand-logo-final.png");
+            mask-image: url("/official-brand-logo-final.png");
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            mask-mode: luminance;
+            -webkit-mask-mode: luminance;
+          }
+
+          /* Responsive fixes for desktop readability */
+          @media (min-width: 768px) {
+            .logo-img {
+              filter: brightness(1.4) contrast(1.1) !important;
+              /* On desktop, we avoid extreme contrast to keep the high-res font smooth */
+            }
+          }
+        `}</style>
 
         {/* Status Signal */}
         <div className={`transition-all duration-1000 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
