@@ -1,35 +1,40 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { leadService } from '@/lib/services/leadService';
-import { Bebas_Neue, Barlow_Condensed, Barlow } from 'next/font/google';
-
-// Load requested fonts
-const bebasNeue = Bebas_Neue({ weight: '400', subsets: ['latin'] });
-const barlowCondensed = Barlow_Condensed({ weight: ['300', '400', '600', '700'], subsets: ['latin'] });
-const barlow = Barlow({ weight: ['300', '400'], subsets: ['latin'] });
+import AppImage from './ui/AppImage';
 
 export default function LaunchingSoon() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // idle, loading, success, error
-  const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [tick, setTick] = useState(0);
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+  const [activeMessageIndex, setActiveMessageIndex] = useState(0);
+  const messages = ["DROP INCOMING", "FOLLOW ON INSTAGRAM TO STAY TUNED"];
 
-  // Trigger load animations
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveMessageIndex((prev) => (prev + 1) % messages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Fade-in trigger
   useEffect(() => {
     setTimeout(() => setIsLoaded(true), 100);
   }, []);
 
-  // Countdown Logic
+  // Target Date: May 1, 2026
   useEffect(() => {
-    const launchDate = new Date();
-    launchDate.setDate(launchDate.getDate() + 22);
-    const targetTime = launchDate.getTime();
+    const launchDate = new Date('2026-05-01T00:00:00').getTime();
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
-      const difference = targetTime - now;
+      const difference = launchDate - now;
 
       if (difference <= 0) {
         clearInterval(timer);
@@ -37,227 +42,260 @@ export default function LaunchingSoon() {
       }
 
       setTimeLeft({
-        days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(2, '0'),
-        hours: String(Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0'),
-        minutes: String(Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0'),
-        seconds: String(Math.floor((difference % (1000 * 60)) / 1000)).padStart(2, '0')
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((difference % (1000 * 60)) / 1000)
       });
+      // Trigger a "tick" state for animation
+      setTick(prev => prev + 1);
     }, 1000);
 
     return () => clearInterval(timer);
   }, []);
 
-  const handleEmailSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !email.includes('@')) {
-      setStatus('error');
-      return;
+      return; // Handled by browser 'required' and 'type="email"' mostly, but safe to have
     }
-    
-    setStatus('loading');
-    
-    // Save to the database using the new service
-    const response = await leadService.addLead(email);
-    
-    if (response && response.success) {
-      setStatus('success');
-      setEmail('');
-    } else {
-      // Show success anyway for UI flow even if DB is not fully provisioned
-      setStatus('success'); 
-      console.log('Lead saved:', email);
-    }
+    alert(`Registration Successful: Early access for ${email}!`);
+    setEmail('');
   };
 
   return (
-    <div className={`min-h-screen bg-[#080808] text-[#f0ece4] flex flex-col items-center justify-center relative overflow-hidden px-4 ${barlow.className}`}>
+    <div className="relative h-screen w-full flex flex-col items-center justify-between text-white overflow-hidden bg-[#0a0a0a] font-barlow select-none">
       
-      {/* Atmosphere / Background Effects */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Top Gold Radial Glow */}
-        <div 
-          className="absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse 60% 50% at 50% -10%, rgba(201,169,110,0.12), transparent 70%)' }}
-        ></div>
-        
-        {/* Corner Bottom Right Glow */}
-        <div 
-          className="absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse 40% 30% at 80% 80%, rgba(201,169,110,0.05), transparent 60%)' }}
-        ></div>
+      {/* 🌫️ Premium SVG Noise Filter Overlay */}
+      <svg className="absolute w-0 h-0 invisible pointer-events-none">
+        <filter id="noiseFilterLayer">
+          <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+          <feComponentTransfer>
+            <feFuncA type="linear" slope="0.03" />
+          </feComponentTransfer>
+        </filter>
+      </svg>
 
-        {/* SVG Film Grain Noise Overlay */}
-        <svg className="absolute inset-0 w-full h-full opacity-[0.028] mix-blend-overlay">
-          <filter id="noise">
-            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#noise)" />
-        </svg>
+      {/* 🌌 Cinematic Background layers (Crimson Refinement) */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        {/* Main Crimson Glow - Sharp Breathing Atmosphere */}
+        <div className="absolute top-[35%] left-[25%] -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[rgba(230,57,70,0.12)] rounded-full blur-[120px] animate-breathe-glow opacity-60"></div>
+        
+        {/* Secondary Gray Accents */}
+        <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#1a1a1a] rounded-full blur-[100px] opacity-40 animate-pulse-slow"></div>
+
+        {/* Refracted Glass Texture - Diagonal Streaks */}
+        <div className="absolute inset-0 opacity-[0.015]" 
+          style={{ 
+            background: 'repeating-linear-gradient(45deg, transparent, transparent 100px, #ffffff 101px, transparent 102px)',
+            backgroundSize: '100% 100%'
+          }}></div>
+
+        {/* Global Cinema Grain Overlay */}
+        <div className="absolute inset-0 z-30 pointer-events-none mix-blend-overlay" style={{ filter: 'url(#noiseFilterLayer)' }}></div>
       </div>
 
-      <div className="relative z-10 w-full max-w-[480px] mx-auto flex flex-col items-center text-center">
-        
-        {/* 1. Logo Area */}
-        <div className="mb-8 relative flex flex-col items-center group animate-float shadow-[0_0_40px_rgba(201,169,110,0.18)] rounded-xl">
-          <div className="relative w-48 h-12 md:w-60 md:h-16">
-            <Image 
-              src="/logo-v5.png" 
-              alt="MUSCFIT Logo" 
-              fill
-              className="object-contain"
-              priority
+      {/* 🧭 TOP BAR Overlay (Seamless Logo) */}
+      <header className="w-full relative z-20 flex justify-between items-center px-4 py-6 md:px-12 md:py-8 max-w-[1600px]">
+        {/* 🏹 OFFICIAL BRAND LOGO - Blended Perfectly */}
+        <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+          <div className="relative w-28 md:w-64 h-10 md:h-18">
+            <AppImage 
+              src="/official-brand-logo-final.png" 
+              alt="MUSCFIT Logo"
+              className="w-full h-full object-contain mix-blend-screen"
+              style={{ 
+                filter: 'brightness(2.2) contrast(3)',
+                WebkitMaskImage: 'radial-gradient(ellipse at center, black 75%, transparent 100%)',
+                maskImage: 'radial-gradient(ellipse at center, black 75%, transparent 100%)'
+              }}
             />
           </div>
         </div>
 
-        {/* 2. Eyebrow Text */}
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#7a6040]"></div>
-          <span className={`text-[#7a6040] text-[10px] uppercase tracking-[0.3em] font-medium ${barlowCondensed.className}`}>
-            ELITE PERFORMANCE APPAREL
-          </span>
-          <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-[#7a6040]"></div>
-        </div>
-
-        {/* 3. Status Badge */}
-        <div className="mb-10 px-4 py-1.5 bg-[#111111] border border-[#2a2a2a] rounded-full flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#c9a96e] shadow-[0_0_8px_rgba(201,169,110,0.8)] animate-pulse-glow"></span>
-          <span className={`text-[10px] text-[#6b6460] uppercase font-semibold tracking-widest ${barlowCondensed.className}`}>
-            STATUS: FIRST DROP INCOMING
+        {/* Status Signal */}
+        <div className={`transition-all duration-1000 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+          <span className="text-[10px] md:text-sm font-black text-[#e63946] tracking-[0.4em] uppercase">
+            » STATUS: PRE-DROP «
           </span>
         </div>
+      </header>
 
-        {/* 4. Hero Headline */}
-        <div className="w-full flex flex-col items-center mb-6 overflow-hidden">
-          <div className={`overflow-hidden transition-all duration-900 ${isLoaded ? 'opacity-100 translate-y-0 skew-y-0' : 'opacity-0 translate-y-8 skew-y-3'}`}>
-            <h1 className={`text-[70px] md:text-[90px] leading-[0.85] text-[#f0ece4] uppercase ${bebasNeue.className}`}>
-              BUILT TO
-            </h1>
+      {/* 🌪️ MAIN HERO (Centered, Responsive) */}
+      <main className="relative z-20 w-full flex-grow flex flex-col items-center justify-center text-center px-4 -mt-6 md:-mt-10">
+        
+        {/* 🚀 High-Impact Ultra-Hype Danger Sign */}
+        <div className={`mb-4 flex flex-col items-center transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className="bg-[#e63946]/10 border-2 border-[#e63946] px-6 py-2 rounded-full shadow-[0_0_30px_rgba(230,57,70,0.3)] animate-bounce-slow flex items-center">
+            <span key={activeMessageIndex} className="text-[9px] md:text-[11px] font-black tracking-[0.4em] text-white uppercase animate-message-fade">
+              {messages[activeMessageIndex]}
+            </span>
           </div>
-          <div 
-            className={`overflow-hidden transition-all duration-900 delay-100 ${isLoaded ? 'opacity-100 translate-y-0 skew-y-0' : 'opacity-0 translate-y-8 skew-y-3'}`}
+        </div>
+
+        {/* Massive Headline - Fluid Mobile Scaling */}
+        <div className={`flex flex-col mb-4 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <h1 
+            className="font-barlow-condensed font-black uppercase tracking-tight leading-[0.9]"
+            style={{ fontSize: 'clamp(42px, 12vw, 95px)', color: 'white' }}
           >
-            <h1 className={`text-[70px] md:text-[90px] leading-[0.85] uppercase ${bebasNeue.className} text-transparent bg-clip-text font-black`}
-                style={{ backgroundImage: 'linear-gradient(to bottom, #e8d5a3, #c9a96e, #7a6040)' }}>
-              DOMINATE
-            </h1>
+            SOMETHING BIG
+          </h1>
+          <h1 
+            className="font-barlow-condensed font-black uppercase tracking-tight leading-[0.9]"
+            style={{ 
+              fontSize: 'clamp(42px, 12vw, 95px)',
+              background: 'linear-gradient(to bottom, #ffffff 0%, #444444 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}
+          >
+            IS COMING
+          </h1>
+        </div>
+
+        {/* Infinite Crimson Marquee Ticker */}
+        <div className={`w-full overflow-hidden mb-4 md:mb-6 transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100' : 'opacity-0 scale-x-0'}`}>
+          <div className="flex animate-marquee whitespace-nowrap gap-8 md:gap-12">
+            {[...Array(8)].map((_, i) => (
+              <span key={i} className="text-[8px] md:text-xs font-black tracking-[0.25em] md:tracking-[0.3em] text-[#e63946] uppercase">
+                WEAR THE GRIND · OWN THE GAME · MUSCFIT · TRAIN DIFFERENT · LIVE BOLD ·
+              </span>
+            ))}
           </div>
         </div>
 
-        {/* 5. Sub-description */}
-        <div className={`mb-10 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <p className="text-sm text-[#6b6460] leading-relaxed max-w-[320px] font-light">
-            Engineered for athletes who refuse to settle.<br/>
-            Our debut app drops soon — built for performance,<br/>
-            designed to turn heads. <span className="text-[#c9a96e]">Early access is limited.</span>
+        {/* Subtitle - Sharp Athletic Copy */}
+        <div className={`mb-6 md:mb-8 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <p className="font-barlow text-xs md:text-lg font-light text-white/50 tracking-wide px-6 lg:px-0">
+            Engineered for the ones who obsess over progress.
           </p>
         </div>
 
-        {/* 6. Countdown Timer */}
-        <div className={`flex gap-3 mb-10 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        {/* ⏳ Sharp Precision Countdown - Crimson Red */}
+        <div className={`flex gap-3 md:gap-14 mb-8 md:mb-12 transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           {[
-            { label: 'DAYS', value: timeLeft.days, active: true },
-            { label: 'HOURS', value: timeLeft.hours, active: false },
-            { label: 'MINUTES', value: timeLeft.minutes, active: false },
-            { label: 'SECONDS', value: timeLeft.seconds, active: false }
-          ].map((item) => (
-            <div key={item.label} className="flex flex-col items-center relative">
-              <div 
-                className={`w-[70px] h-[76px] bg-[#111111] flex items-center justify-center border-t-2 relative overflow-hidden transition-all duration-300 ${item.active ? 'border-[#c9a96e] shadow-[0_-5px_15px_rgba(201,169,110,0.15)]' : 'border-[#2a2a2a]'}`}
-              >
-                {/* Active glow inside box */}
-                {item.active && (
-                  <div className="absolute top-0 left-0 w-full h-[20px] bg-gradient-to-b from-[#c9a96e]/20 to-transparent"></div>
-                )}
-                
-                <span className={`text-[40px] leading-none ${item.active ? 'text-[#f0ece4]' : 'text-[#6b6460]'} ${bebasNeue.className}`}>
-                  {item.value}
+            { label: 'DAYS', value: timeLeft.days },
+            { label: 'HOURS', value: timeLeft.hours },
+            { label: 'MINUTES', value: timeLeft.minutes },
+            { label: 'SECONDS', value: timeLeft.seconds }
+          ].map((item, i) => (
+            <div key={i} className="flex relative items-center">
+              <div className="flex flex-col items-center">
+                <span 
+                  className={`font-barlow-condensed text-3xl md:text-6xl font-black transition-all duration-300 text-[#e63946]`}
+                  style={{ textShadow: '0 0 30px rgba(230,57,70,0.3)' }}
+                >
+                  {String(item.value).padStart(2, '0')}
                 </span>
+                <span className="text-[6px] md:text-[8px] font-black text-white/30 tracking-[0.3em] mt-1">{item.label}</span>
               </div>
-              <span className={`mt-2 text-[10px] text-[#6b6460] tracking-widest font-semibold ${barlowCondensed.className}`}>
-                {item.label}
-              </span>
+              {i < 3 && <div className="ml-3 md:ml-14 w-[1px] h-8 md:h-10 bg-white/10 self-center"></div>}
             </div>
           ))}
         </div>
 
-        {/* 7. Divider */}
-        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#2a2a2a] to-transparent mb-10"></div>
-
-        {/* 8. Email Capture Form */}
-        <div className={`w-full transition-all duration-1000 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          {status === 'success' ? (
-            <div className="py-5 px-6 border border-[#2a2a2a] bg-[#111111] animate-fade-in text-center flex flex-col items-center gap-2">
-              <span className="text-[#c9a96e] text-lg">✦</span>
-              <p className="text-sm font-medium text-[#f0ece4]">You&apos;re on the list.</p>
-              <p className="text-xs text-[#6b6460]">First drop alert incoming.</p>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-2 relative">
-              <label className={`text-[10px] text-[#6b6460] self-start tracking-widest uppercase font-semibold ${barlowCondensed.className}`}>
-                SECURE EARLY ACCESS
-              </label>
-              <form onSubmit={handleEmailSubmit} className="flex flex-col gap-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (status === 'error') setStatus('idle');
-                  }}
-                  disabled={status === 'loading'}
-                  placeholder="Your email address"
-                  className={`w-full bg-[#111111] border ${status === 'error' ? 'border-red-900/50 focus:border-red-500' : 'border-[#2a2a2a] focus:border-[#c9a96e]'} outline-none px-5 py-4 text-sm font-light text-[#f0ece4] placeholder-[#6b6460] transition-colors duration-300 disabled:opacity-50`}
-                />
-                
-                <button
-                  type="submit"
-                  disabled={status === 'loading'}
-                  className={`w-full bg-white text-black py-4 font-bold text-sm tracking-widest uppercase hover:bg-[#e8d5a3] transition-colors duration-300 disabled:opacity-50 ${barlowCondensed.className}`}
-                >
-                  {status === 'loading' ? 'SECURING...' : 'GET ACCESS'}
-                </button>
-              </form>
-            </div>
-          )}
+        {/* 📧 High-Intensity Notification Form - Crimson CTA */}
+        <div className={`w-full max-w-[450px] px-4 md:px-0 transition-all duration-1000 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <h3 className="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] text-white/60 mb-3 md:mb-4 font-barlow-condensed text-center">
+            BE FIRST. SECURE THE DROP.
+          </h3>
+          <form 
+            onSubmit={handleSubmit}
+            className="bg-[#111111] border-2 border-white/10 p-1 flex flex-col md:flex-row items-stretch focus-within:border-[#e63946]/50 transition-all rounded-sm gap-1 md:gap-0"
+          >
+            <input
+              type="email"
+              required
+              placeholder="YOUR@EMAIL.COM"
+              className="flex-grow bg-transparent px-4 py-3 md:py-4 text-[10px] md:text-xs font-bold tracking-[0.2em] outline-none border-none placeholder:text-white/10 text-white text-center md:text-left uppercase"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="bg-[#e63946] text-white font-barlow-condensed font-black px-6 md:px-10 py-3 md:py-4 text-[10px] md:text-xs tracking-[0.3em] uppercase transition-all duration-500 hover:bg-white hover:text-black shadow-xl"
+            >
+              NOTIFY ME →
+            </button>
+          </form>
         </div>
+        <div className="h-12 md:h-16"></div> {/* Added spacer to prevent overlap */}
+      </main>
 
-        {/* 9. Trust Line */}
-        <p className={`mt-6 text-[10px] text-[#6b6460] font-light ${barlow.className}`}>
-          Invitations are limited. No spam. Unsubscribe anytime.
+      {/* 📱 FOOTER Overlay (Instagram Exclusive) */}
+      <footer className={`w-full relative z-20 flex flex-col items-center pb-6 md:pb-8 transition-all duration-1000 delay-800 ${isLoaded ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+        
+        <a 
+          href="https://www.instagram.com/muscfitofficial/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex flex-col items-center group cursor-pointer"
+        >
+          <div className="text-white/20 group-hover:text-[#e63946] group-hover:-translate-y-1 transition-all duration-300 transform">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+          </div>
+          <span className="text-[8px] font-black tracking-widest mt-1 text-white/20 group-hover:text-[#e63946]">@MUSCFITOFFICIAL</span>
+        </a>
+        
+        <p className="text-[7px] md:text-[8px] uppercase font-bold tracking-[0.5em] text-white/5 mt-4 md:mt-6">
+          © 2025 MUSCFIT · BEYOND THE GRIND.
         </p>
-
-        {/* 10. Footer */}
-        <footer className={`absolute bottom-6 text-[10px] text-[#6b6460] font-light tracking-wider transition-all duration-1000 delay-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${barlow.className}`}>
-          © 2026 MUSCFIT — All Rights Reserved
-        </footer>
-
-      </div>
+      </footer>
 
       <style jsx global>{`
-        @keyframes float {
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 25s linear infinite;
+        }
+        @keyframes breathe-glow {
+          0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+          50% { transform: translate(-52%, -52%) scale(1.1); opacity: 0.9; }
+        }
+        .animate-breathe-glow {
+          animation: breathe-glow 6s ease-in-out infinite alternate;
+        }
+        @keyframes alert-pulse {
+          0%, 100% { border-color: #e63946; box-shadow: 0 0 10px rgba(230,57,70, 0.2); }
+          50% { border-color: #ffffff; box-shadow: 0 0 25px rgba(230,57,70, 0.5); }
+        }
+        .animate-alert-pulse {
+          animation: alert-pulse 2s ease-in-out infinite;
+        }
+        @keyframes bounce-slow {
           0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
+          50% { transform: translateY(-4px); }
         }
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
+        .animate-bounce-slow {
+          animation: bounce-slow 3s ease-in-out infinite;
+        }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 0.6; transform: scale(1.05); }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 6s ease-in-out infinite alternate;
         }
 
-        @keyframes pulse-glow {
-          0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px rgba(201,169,110,0.8); }
-          50% { opacity: 0.6; transform: scale(1.1); box-shadow: 0 0 15px rgba(201,169,110,0.4); }
+        @keyframes message-fade {
+          0%, 100% { opacity: 0; transform: translateY(4px); }
+          10%, 90% { opacity: 1; transform: translateY(0); }
         }
-        .animate-pulse-glow {
-          animation: pulse-glow 2s ease-in-out infinite alternate;
+        .animate-message-fade {
+          animation: message-fade 5s infinite;
         }
 
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(4px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-          animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+        .font-barlow { font-family: var(--font-barlow); }
+        .font-barlow-condensed { font-family: var(--font-barlow-condensed); }
+        
+        ::-webkit-scrollbar { display: none; }
+        * { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
     </div>
   );
