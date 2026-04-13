@@ -103,8 +103,8 @@ export default function LaunchingSoon() {
           <div 
             className="relative w-28 md:w-64 h-10 md:h-18"
             style={{ 
-              WebkitMaskImage: 'radial-gradient(ellipse 90% 80% at center, black 60%, transparent 100%)',
-              maskImage: 'radial-gradient(ellipse 90% 80% at center, black 60%, transparent 100%)'
+              WebkitMaskImage: 'radial-gradient(ellipse at center, black 65%, transparent 100%)',
+              maskImage: 'radial-gradient(ellipse at center, black 65%, transparent 100%)'
             }}
           >
             <img 
@@ -112,15 +112,7 @@ export default function LaunchingSoon() {
               alt="MUSCFIT Logo"
               className="w-full h-full object-contain mix-blend-screen"
               style={{ 
-                filter: 'brightness(2) contrast(1.5)',
-                WebkitMaskImage: 'url("/official-brand-logo-final.png")',
-                maskImage: 'url("/official-brand-logo-final.png")',
-                WebkitMaskSize: 'contain',
-                maskSize: 'contain',
-                WebkitMaskRepeat: 'no-repeat',
-                maskRepeat: 'no-repeat',
-                maskMode: 'luminance',
-                WebkitMaskMode: 'luminance'
+                filter: 'brightness(1.8) contrast(3.5) saturate(0.5)',
               }}
             />
           </div>
