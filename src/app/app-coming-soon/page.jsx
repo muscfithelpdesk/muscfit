@@ -24,8 +24,8 @@ export default function AppComingSoon() {
 
   // Countdown Logic using a fixed launch date for consistency
   useEffect(() => {
-    // Set a fixed launch date (e.g., May 1, 2026 at 00:00 UTC)
-    const launchDate = new Date('2026-05-13T17:00:00Z');
+    // Set a fixed launch date (e.g., June 21, 2026 at 17:00 UTC)
+    const launchDate = new Date('2026-06-21T17:00:00Z');
     const targetTime = launchDate.getTime();
 
     const timer = setInterval(() => {
